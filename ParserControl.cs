@@ -30,6 +30,9 @@ namespace PhatACCacheBinParser
 
 				propertyName = value;
 
+				chkWriteJSON.CheckedChanged -= chkWriteJSON_CheckedChanged;
+				chkWriteSQL.CheckedChanged -= chkWriteSQL_CheckedChanged;
+
 				if (!String.IsNullOrEmpty(ProperyName))
 				{
 					var property = new SettingsProperty(Settings.Default.Properties["SourceBin"]);
@@ -51,6 +54,9 @@ namespace PhatACCacheBinParser
 					SourceBin = (string)Settings.Default[ProperyName + "SourceBin"];
 					WriteJSON = (bool) Settings.Default[ProperyName + "WriteJSON"];
 					WriteSQL = (bool) Settings.Default[ProperyName + "WriteSQL"];
+
+					chkWriteJSON.CheckedChanged += chkWriteJSON_CheckedChanged;
+					chkWriteSQL.CheckedChanged += chkWriteSQL_CheckedChanged;
 				}
 				else
 				{
@@ -127,13 +133,20 @@ namespace PhatACCacheBinParser
 			Settings.Default.Save();
 		}
 
-		private void cmdDoParse_Click(object sender, EventArgs e)
+		private void chkWriteJSON_CheckedChanged(object sender, EventArgs e)
 		{
-			// This is a small hack to store these settings
 			Settings.Default[ProperyName + "WriteJSON"] = WriteJSON;
+			Settings.Default.Save();
+		}
+
+		private void chkWriteSQL_CheckedChanged(object sender, EventArgs e)
+		{
 			Settings.Default[ProperyName + "WriteSQL"] = WriteSQL;
 			Settings.Default.Save();
+		}
 
+		private void cmdDoParse_Click(object sender, EventArgs e)
+		{
 			if (DoParse != null)
 				DoParse(this);
 		}
