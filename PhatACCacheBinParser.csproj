@@ -78,10 +78,10 @@
     <Compile Include="Weenies\BodyPart.cs" />
     <Compile Include="Weenies\ArmorValues.cs" />
     <Compile Include="Weenies\BodyPartSD.cs" />
-    <Compile Include="Weenies\Extra3Item.cs" />
-    <Compile Include="Weenies\Extra1Item.cs" />
-    <Compile Include="Weenies\Extra2Item.cs" />
-    <Compile Include="Weenies\Extra1.cs" />
+    <Compile Include="Weenies\AnimPart.cs" />
+    <Compile Include="Weenies\SubPalette.cs" />
+    <Compile Include="Weenies\TextureMap.cs" />
+    <Compile Include="Weenies\Palette.cs" />
     <Compile Include="Weenies\Item.cs" />
     <Compile Include="Weenies\Emote.cs" />
     <Compile Include="Weenies\EmoteAction.cs" />

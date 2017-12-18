@@ -54,11 +54,11 @@ namespace PhatACCacheBinParser.Weenies
 		public List<Generator> Generators;
 
 
-		public Extra1 Extra1;
+		public Palette Palette;
 
-		public List<Extra2Item> Extra2Items;
+		public List<TextureMap> TextureMaps;
 
-		public List<Extra3Item> Extra3Items;
+		public List<AnimPart> AnimParts;
 
 
 		// Unix timestamp is seconds past epoch
@@ -343,73 +343,58 @@ namespace PhatACCacheBinParser.Weenies
 				}
 			}
 
-			// _cache_bin_parse_9_19
+
+			// _cache_bin_parse_9_19 - ObjDesc
 
 			// I believe this is a record segment end/start identifier
 			var unknown_footer_1 = binaryReader.ReadByte();    // 0x11
 			if (unknown_footer_1 != 0x11)
 				throw new Exception();
 
-			var count_1 = binaryReader.ReadByte();
-			var count_2 = binaryReader.ReadByte();
-			var count_3 = binaryReader.ReadByte();
+			var numberOfSubpallets = binaryReader.ReadByte();
+            var numberOfTextureMaps = binaryReader.ReadByte();
+            var numberOfAnimParts = binaryReader.ReadByte();
 
-			if (count_1 != 0 || count_2 != 0 || count_3 != 0)
-			{
-				if (count_1 > 0)
-				{
-					Extra1 = new Extra1();
+            if (numberOfSubpallets > 0)
+            {
+                Palette = new Palette();
 
-					Extra1.Parse(binaryReader, count_1);
-				}
+                Palette.Parse(binaryReader, numberOfSubpallets);
+            }
 
-				if (count_2 > 0)
-				{
-					Extra2Items = new List<Extra2Item>();
+            if (numberOfTextureMaps > 0)
+            {
+                TextureMaps = new List<TextureMap>();
 
-					for (int i = 0; i < count_2; i++)
-					{
-						var item = new Extra2Item();
-						item.Parse(binaryReader);
-						Extra2Items.Add(item);
-					}
-				}
+                for (int i = 0; i < numberOfTextureMaps; i++)
+                {
+                    var item = new TextureMap();
+                    item.Parse(binaryReader);
+                    TextureMaps.Add(item);
+                }
+            }
 
-				if (count_3 > 0)
-				{
-					Extra3Items = new List<Extra3Item>();
+            if (numberOfAnimParts > 0)
+            {
+                AnimParts = new List<AnimPart>();
 
-					for (int i = 0; i < count_3; i++)
-					{
-						var item = new Extra3Item();
-						item.Parse(binaryReader);
-						Extra3Items.Add(item);
-					}
-				}
+                for (int i = 0; i < numberOfAnimParts; i++)
+                {
+                    var item = new AnimPart();
+                    item.Parse(binaryReader);
+                    AnimParts.Add(item);
+                }
+            }
 
-				// This is a bit of a hack. I don't know how the code determines how many bytes to increment the main address index by.
-				// All segments end with 0x01, and the next segment starts with the WCID (little endian), and then 02 00 00 00 as a start of record identiifer.
-				// We look for that byte sequence, and then subtract our position accordingly
-				var startPosition = binaryReader.BaseStream.Position;
+            // Make sure our position is a multiple of 4
+            if (binaryReader.BaseStream.Position % 4 != 0)
+		        binaryReader.BaseStream.Position += 4 - (binaryReader.BaseStream.Position % 4);
 
-				for (long i = startPosition; i <= binaryReader.BaseStream.Length; i++)
-				{
-					binaryReader.BaseStream.Position = i;
 
-					var bytes = binaryReader.ReadBytes(6);
+            // _cache_bin_parse_9_1
 
-					if (bytes[0] == 0x01 && bytes[3] == 0x00 && bytes[4] == 0x00 && bytes[5] == 0x02)
-					{
-						binaryReader.BaseStream.Position -= 6;
-						break;
-					}
-				}
-			}
-
-			// _cache_bin_parse_9_1
-
-			// I believe this is an end of record identifier
-			var unknown_footer_9 = binaryReader.ReadByte();   // 0x01
+            // I believe this is an end of record identifier
+            var unknown_footer_9 = binaryReader.ReadByte();   // 0x01
 			if (unknown_footer_9 != 0x01)
 				throw new Exception();
 		}

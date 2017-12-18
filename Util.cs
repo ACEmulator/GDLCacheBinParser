@@ -49,5 +49,18 @@ namespace PhatACCacheBinParser
 
 			return Encoding.ASCII.GetString(bytes);
 		}
+
+	    public static int ReadPackedKnownType(BinaryReader binaryReader, int knownType)
+	    {
+	        int result = binaryReader.ReadUInt16();
+
+	        if ((result & 0x8000) == 0x8000)
+	        {
+	            var lower = binaryReader.ReadUInt16();
+                result = ((result & 0x3FFF) << 16) | lower; // Should this be masked with 0x7FFF instead?
+	        }
+
+            return knownType + result;
+	    }
 	}
 }

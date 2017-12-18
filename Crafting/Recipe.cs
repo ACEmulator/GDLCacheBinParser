@@ -71,31 +71,6 @@ namespace PhatACCacheBinParser.Crafting
             }
 
             DataID = binaryReader.ReadUInt32();
-
-
-
-            // Jump right here
-
-            // hack to find the next recipe
-            /*if (ID == 0x13C2)
-				return;
-
-			// Make sure our position is a multiple of 4
-			if (binaryReader.BaseStream.Position % 4 != 0)
-				binaryReader.BaseStream.Position += 4 - (binaryReader.BaseStream.Position % 4);
-
-			while (true)
-			{
-				var position = binaryReader.BaseStream.Position;
-
-				var temp = binaryReader.ReadUInt32();
-
-				if (temp == ID + 1)
-				{
-					binaryReader.BaseStream.Position = position;
-					return;
-				}
-			}*/
 		}
 
 
