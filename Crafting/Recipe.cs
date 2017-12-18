@@ -10,63 +10,74 @@ namespace PhatACCacheBinParser.Crafting
 
 		// _cache_bin_parse_4_2
 		public uint unknown_1;
-		public uint unknown_2;
-		public uint unknown_3;
+		public uint Skill;
+		public uint Difficulty;
 		public uint unknown_4;
 
-		public uint unknown_5;
-		public uint unknown_6;
-
+		public uint SuccessWCID;
+		public uint SuccessAmount;
 		public string SuccessMessage;
 
-		public uint unknown_7;
-		public uint unknown_8;
-
+		public uint FailWCID;
+		public uint FailAmount;
 		public string FailMessage;
 
-		public List<Recipe_Unknown_1> Unknowns_1 = new List<Recipe_Unknown_1>();
+		public List<Recipe_Component> Components = new List<Recipe_Component>();
 
-		public List<Recipe_Unknown_2> Unknowns_2 = new List<Recipe_Unknown_2>();
+		public List<Recipe_Requirement> Requirements = new List<Recipe_Requirement>();
 
+	    public List<Recipe_Mod> Mods = new List<Recipe_Mod>();
 
-		public void Parse(BinaryReader binaryReader)
-		{
+	    public uint DataID;
+
+        public void Parse(BinaryReader binaryReader)
+        {
 			// _cache_bin_parse_4_1
 			ID = binaryReader.ReadUInt32();
 
 			// _cache_bin_parse_4_2
 			unknown_1 = binaryReader.ReadUInt32();
-			unknown_2 = binaryReader.ReadUInt32();
-			unknown_3 = binaryReader.ReadUInt32();
+			Skill = binaryReader.ReadUInt32();
+			Difficulty = binaryReader.ReadUInt32();
 			unknown_4 = binaryReader.ReadUInt32();
-			unknown_5 = binaryReader.ReadUInt32();
-			unknown_6 = binaryReader.ReadUInt32();
 
+			SuccessWCID = binaryReader.ReadUInt32();
+			SuccessAmount = binaryReader.ReadUInt32();
 			SuccessMessage = Util.ReadString(binaryReader, true);
 
-			unknown_7 = binaryReader.ReadUInt32();
-			unknown_8 = binaryReader.ReadUInt32();
-
+			FailWCID = binaryReader.ReadUInt32();
+			FailAmount = binaryReader.ReadUInt32();
 			FailMessage = Util.ReadString(binaryReader, true);
 
 			for (int i = 0; i < 4; i++)
 			{
-				var unknown = new Recipe_Unknown_1();
-				unknown.Parse(binaryReader);
-				Unknowns_1.Add(unknown);
+				var item = new Recipe_Component();
+				item.Parse(binaryReader);
+				Components.Add(item);
 			}
 
 			for (int i = 0; i < 3; i++)
 			{
-				var unknown = new Recipe_Unknown_2();
-				unknown.Parse(binaryReader);
-				Unknowns_2.Add(unknown);
+				var item = new Recipe_Requirement();
+				item.Parse(binaryReader);
+				Requirements.Add(item);
 			}
 
-			// Jump right here
+		    for (int i = 0; i < 8; i++)
+		    {
+		        var item = new Recipe_Mod();
+		        item.Parse(binaryReader);
+		        Mods.Add(item);
+            }
 
-			// hack to find the next recipe
-			if (ID == 0x13C2)
+            DataID = binaryReader.ReadUInt32();
+
+
+
+            // Jump right here
+
+            // hack to find the next recipe
+            /*if (ID == 0x13C2)
 				return;
 
 			// Make sure our position is a multiple of 4
@@ -84,7 +95,7 @@ namespace PhatACCacheBinParser.Crafting
 					binaryReader.BaseStream.Position = position;
 					return;
 				}
-			}
+			}*/
 		}
 
 

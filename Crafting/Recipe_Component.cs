@@ -2,11 +2,11 @@
 
 namespace PhatACCacheBinParser.Crafting
 {
-	class Recipe_Unknown_1
+	class Recipe_Component
 	{
-		public double unknown_1;
+		public double unknown_1; // This is the % of failure? It's usually .1
 		public uint unknown_2;
-		public string unknown_3;
+		public string unknown_3; // This is the destroyed message
 
 		public void Parse(BinaryReader binaryReader)
 		{

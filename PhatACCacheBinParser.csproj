@@ -38,6 +38,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crafting\Mod.cs" />
+    <Compile Include="Crafting\Requirement.cs" />
     <Compile Include="Unknowns1\Unknown1.cs" />
     <Compile Include="Unknowns1\Unknown1_1.cs" />
     <Compile Include="UnknownsA\UnknownA.cs" />
@@ -46,9 +48,9 @@
     <Compile Include="UnknownsA\UnknownA_4.cs" />
     <Compile Include="UnknownsA\UnknownA_7.cs" />
     <Compile Include="Crafting\Recipe.cs" />
-    <Compile Include="Crafting\Recipe_Unknown_1.cs" />
-    <Compile Include="Crafting\Recipe_Unknown_2.cs" />
-    <Compile Include="Crafting\Recipe_Unknown_3.cs" />
+    <Compile Include="Crafting\Recipe_Component.cs" />
+    <Compile Include="Crafting\Recipe_Requirement.cs" />
+    <Compile Include="Crafting\Recipe_Mod.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
