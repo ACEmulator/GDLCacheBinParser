@@ -14,12 +14,12 @@ namespace PhatACCacheBinParser.Spells
 
 		public School School;
 		public uint IconID;
-		public uint Family; // aka Category
+		public uint Category; // aka Family
 		public uint Bitfield;
 		public uint Mana;
 		public float RangeConstant;
 		public float RangeMod;
-		public uint Difficulty; // aka Power
+		public uint Power; // aka Difficulty
 		public float EconomyMod;
 		public uint FormulaVersion;
 		public float ComponentLoss;
@@ -54,9 +54,9 @@ namespace PhatACCacheBinParser.Spells
 		public uint FizzleEffect;
 		public double RecoveryInterval;
 		public float RecoveryAmount;
-		public uint unknown_596;
-		public uint TargetMask; // aka non_component_target_type
-		public uint unknown_598;
+		public uint DisplayOrder;
+		public uint NonComponentTargetType; // aka Target Mask
+		public uint ManaMod;
 
 
 		public void Parse(BinaryReader binaryReader)
@@ -71,12 +71,12 @@ namespace PhatACCacheBinParser.Spells
 
 			School = (School)binaryReader.ReadUInt32();
 			IconID = binaryReader.ReadUInt32();
-			Family = binaryReader.ReadUInt32();
+			Category = binaryReader.ReadUInt32();
 			Bitfield = binaryReader.ReadUInt32();
 			Mana = binaryReader.ReadUInt32();
 			RangeConstant = binaryReader.ReadSingle();
 			RangeMod = binaryReader.ReadSingle();
-			Difficulty = binaryReader.ReadUInt32();
+			Power = binaryReader.ReadUInt32();
 			EconomyMod = binaryReader.ReadSingle();
 			FormulaVersion = binaryReader.ReadUInt32();
 			ComponentLoss = binaryReader.ReadSingle();
@@ -117,9 +117,9 @@ namespace PhatACCacheBinParser.Spells
 			FizzleEffect = binaryReader.ReadUInt32();
 			RecoveryInterval = binaryReader.ReadDouble();
 			RecoveryAmount = binaryReader.ReadSingle();
-			unknown_596 = binaryReader.ReadUInt32();
-			TargetMask = binaryReader.ReadUInt32();
-			unknown_598 = binaryReader.ReadUInt32();
+			DisplayOrder = binaryReader.ReadUInt32();
+			NonComponentTargetType = binaryReader.ReadUInt32();
+			ManaMod = binaryReader.ReadUInt32();
 		}
 	}
 }
