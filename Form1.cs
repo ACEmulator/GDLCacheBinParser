@@ -214,7 +214,19 @@ namespace PhatACCacheBinParser
 
 					parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = (int)(((double)parsedObjects.Count / totalObjects) * 100)));
 
-				    if (typeof(T).IsAssignableFrom(typeof(Landblock)))
+				    if (typeof(T).IsAssignableFrom(typeof(Recipe)))
+				    {
+				        // The recipe heap seems to have a map after the main recipe heap. Precursor maybe?
+				        var entries = binaryReader.ReadUInt32();
+
+				        for (int i = 0; i < entries; i++)
+				        {
+				            binaryReader.ReadUInt64(); // key       Even though this is 64 bits, it appears to be made up of 2 uint32 values
+				            binaryReader.ReadUInt32(); // value
+				        }
+				    }
+
+                    if (typeof(T).IsAssignableFrom(typeof(Landblock)))
 				    {
                         // This appears to be a heightmap of the world?
                         // There are 255 x 255 landblocks.
