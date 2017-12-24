@@ -213,6 +213,15 @@ namespace PhatACCacheBinParser
 					}
 
 					parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = (int)(((double)parsedObjects.Count / totalObjects) * 100)));
+
+				    if (typeof(T).IsAssignableFrom(typeof(Landblock)))
+				    {
+                        // This appears to be a heightmap of the world?
+                        // There are 255 x 255 landblocks.
+				        // Each landblock has a 9 * 9 group of WORDS (2 byte values).
+                        // Format is x by y I think
+                        var terrainData = binaryReader.ReadBytes((255 * 255) * (9 * 9) * 2);
+				    }
 				}
 
 
