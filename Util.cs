@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-using PhatACCacheBinParser.Regions;
+using PhatACCacheBinParser.Seg1_RegionDesc;
 
 namespace PhatACCacheBinParser
 {
@@ -80,7 +80,7 @@ namespace PhatACCacheBinParser
 
 			// For Segment 1, the first dword appears to simply be an is present flag
 			// The value is 256, which is probably tied to the number of landblocks or landblock width or something.
-			if (typeof(T).IsAssignableFrom(typeof(Region)) && totalObjects > 0)
+			if (typeof(T).IsAssignableFrom(typeof(RegionDesc)) && totalObjects > 0)
 				totalObjects = 1;
 
 			// ReSharper disable once NotAccessedVariable

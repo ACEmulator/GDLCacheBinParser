@@ -4,15 +4,15 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-using PhatACCacheBinParser.UnknownsA;
-using PhatACCacheBinParser.Crafting;
-using PhatACCacheBinParser.HousingPortals;
 using PhatACCacheBinParser.Properties;
-using PhatACCacheBinParser.Spells;
-using PhatACCacheBinParser.TriggersActionsEvents;
-using PhatACCacheBinParser.Regions;
-using PhatACCacheBinParser.TreasureTables;
-using PhatACCacheBinParser.WorldSpawns;
+using PhatACCacheBinParser.Seg1_RegionDesc;
+using PhatACCacheBinParser.Seg2_Spells;
+using PhatACCacheBinParser.Seg3_TreasureTables;
+using PhatACCacheBinParser.Seg4_Crafting;
+using PhatACCacheBinParser.Seg5_HousingPortals;
+using PhatACCacheBinParser.Seg6_WorldSpawns;
+using PhatACCacheBinParser.Seg8_TriggersActionsEvents;
+using PhatACCacheBinParser.SegA;
 
 namespace PhatACCacheBinParser
 {
@@ -25,7 +25,7 @@ namespace PhatACCacheBinParser
 			lblOutputFolder.Text = (string)Settings.Default["OutputFolder"];
 
 			parserControl1.ProperyName = "_1";
-			parserControl1.Label = "1 Regions";
+			parserControl1.Label = "1 Region Desc";
 			parserControl1.DoParse += ParserControl1_DoParse;
 
 			parserControl2.ProperyName = "_2";
@@ -91,9 +91,9 @@ namespace PhatACCacheBinParser
 
 		private void ParserControl1_DoParse(ParserControl parserControl)
 		{
-			string FileNameFormatter(Region obj) => "EncounterTables";
+			string FileNameFormatter(RegionDesc obj) => "Data";
 
-			ParserControl_DoParse(parserControl, (Func<Region, string>)FileNameFormatter);
+			ParserControl_DoParse(parserControl, (Func<RegionDesc, string>)FileNameFormatter);
 		}
 
 		private void ParserControl2_DoParse(ParserControl parserControl)
@@ -145,9 +145,9 @@ namespace PhatACCacheBinParser
 
 		private void ParserControl9_DoParse(ParserControl parserControl)
 		{
-			string FileNameFormatter(Weenies.Weenie obj) => obj.WCID.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Label, "_");
+			string FileNameFormatter(Seg9_Weenies.Weenie obj) => obj.WCID.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Label, "_");
 
-			ParserControl_DoParse(parserControl, (Func<Weenies.Weenie, string>)FileNameFormatter);
+			ParserControl_DoParse(parserControl, (Func<Seg9_Weenies.Weenie, string>)FileNameFormatter);
 		}
 
 		private void ParserControlA_DoParse(ParserControl parserControl)
@@ -202,7 +202,7 @@ namespace PhatACCacheBinParser
                     // Special Cases Below.. these segments have additional data chunks in different formats
                     // =====================================================================================
 
-                    if (typeof(T).IsAssignableFrom(typeof(Region)))
+                    if (typeof(T).IsAssignableFrom(typeof(RegionDesc)))
 				    {
 				        // There's extra data here to parse
 				    }
@@ -216,7 +216,7 @@ namespace PhatACCacheBinParser
 
 				            // Write out the parsed data
 				            if (parserControl.WriteJSON)
-					            Util.WriteJSONOutput<Unknown3_2>(parserControl, parsedObjects, outputFolder, FileNameFormatter2);
+					            Util.WriteJSONOutput(parserControl, parsedObjects, outputFolder, FileNameFormatter2);
 				        }
 
 				        {
@@ -233,7 +233,7 @@ namespace PhatACCacheBinParser
 
 				                // Write out the parsed data
 				                if (parserControl.WriteJSON)
-					                Util.WriteJSONOutput<Unknown3_3>(parserControl, parsedObject, outputFolderJSON2, FileNameFormatter3);
+					                Util.WriteJSONOutput(parserControl, parsedObject, outputFolderJSON2, FileNameFormatter3);
                             }
 
 				            /*var outputFolderJSON2 = lblOutputFolder.Text + "\\" + parserControl.Label + " 03\\" + "\\JSON\\";
@@ -264,7 +264,7 @@ namespace PhatACCacheBinParser
 
 				                    // Write out the parsed data
 				                    if (parserControl.WriteJSON)
-					                    Util.WriteJSONOutput<Unknown3_3_4>(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
+					                    Util.WriteJSONOutput(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
                                 }
 
 				                //parsedObjects.Add(items);
@@ -290,7 +290,7 @@ namespace PhatACCacheBinParser
 
                                 // Write out the parsed data
                                 if (parserControl.WriteJSON)
-	                                Util.WriteJSONOutput<Unknown3_3_4>(parserControl, parsedObjects[i].Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
+	                                Util.WriteJSONOutput(parserControl, parsedObjects[i].Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
                             }
                         }
 
@@ -313,7 +313,7 @@ namespace PhatACCacheBinParser
 
 				                    // Write out the parsed data
 				                    if (parserControl.WriteJSON)
-					                    Util.WriteJSONOutput<Unknown3_3_4>(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);}
+					                    Util.WriteJSONOutput(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);}
 
 				                //parsedObjects.Add(items);
 				            }
@@ -341,7 +341,7 @@ namespace PhatACCacheBinParser
 
 				                // Write out the parsed data
 				                if (parserControl.WriteJSON)
-					                Util.WriteJSONOutput<Unknown3_5_6>(parserControl, parsedObject, outputFolderJSON2, FileNameFormatter3);
+					                Util.WriteJSONOutput(parserControl, parsedObject, outputFolderJSON2, FileNameFormatter3);
                             }
 
 				            /*var outputFolderJSON2 = lblOutputFolder.Text + "\\" + parserControl.Label + " 07\\" + "\\JSON\\";
@@ -372,7 +372,7 @@ namespace PhatACCacheBinParser
 
 				                    // Write out the parsed data
 				                    if (parserControl.WriteJSON)
-					                    Util.WriteJSONOutput<Unknown3_3_4>(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
+					                    Util.WriteJSONOutput(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
                                 }
 
 				                //parsedObjects.Add(items);
@@ -398,7 +398,7 @@ namespace PhatACCacheBinParser
 
                                 // Write out the parsed data
                                 if (parserControl.WriteJSON)
-	                                Util.WriteJSONOutput<Unknown3_3_4>(parserControl, parsedObjects[i].Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
+	                                Util.WriteJSONOutput(parserControl, parsedObjects[i].Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
                             }
 
                             /*var outputFolderJSON2 = lblOutputFolder.Text + "\\" + parserControl.Label + " 09\\" + "\\JSON\\";
@@ -429,7 +429,7 @@ namespace PhatACCacheBinParser
 
 				                    // Write out the parsed data
 				                    if (parserControl.WriteJSON)
-					                    Util.WriteJSONOutput<Unknown3_3_4>(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
+					                    Util.WriteJSONOutput(parserControl, item.Unknown3_3_4, outputFolderJSON2, FileNameFormatter3);
                                 }
 
 				                //parsedObjects.Add(items);
@@ -450,12 +450,6 @@ namespace PhatACCacheBinParser
                         var pos = binaryReader.BaseStream.Position;
 				        binaryReader.ReadUInt32();
 				    }
-
-
-					if (typeof(T).IsAssignableFrom(typeof(Region)))
-					{
-						var encounterMap = binaryReader.ReadBytes(255 * 255);
-					}
 
 					if (typeof(T).IsAssignableFrom(typeof(Recipe)))
 				    {
