@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.chkWriteSQL = new System.Windows.Forms.CheckBox();
 			this.cmdChooseSource = new System.Windows.Forms.Button();
 			this.lblSourceBin = new System.Windows.Forms.Label();
 			this.cmdDoParse = new System.Windows.Forms.Button();
@@ -36,20 +35,7 @@
 			this.progressParseSource = new System.Windows.Forms.ProgressBar();
 			this.progressWriteJSONOutput = new System.Windows.Forms.ProgressBar();
 			this.label1 = new System.Windows.Forms.Label();
-			this.progressWriteSQLOutput = new System.Windows.Forms.ProgressBar();
 			this.SuspendLayout();
-			// 
-			// chkWriteSQL
-			// 
-			this.chkWriteSQL.AutoSize = true;
-			this.chkWriteSQL.Checked = true;
-			this.chkWriteSQL.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkWriteSQL.Location = new System.Drawing.Point(588, 32);
-			this.chkWriteSQL.Name = "chkWriteSQL";
-			this.chkWriteSQL.Size = new System.Drawing.Size(110, 17);
-			this.chkWriteSQL.TabIndex = 20;
-			this.chkWriteSQL.Text = "Write SQL Output";
-			this.chkWriteSQL.UseVisualStyleBackColor = true;
 			// 
 			// cmdChooseSource
 			// 
@@ -120,22 +106,11 @@
 			this.label1.TabIndex = 21;
 			this.label1.Text = "label1";
 			// 
-			// progressWriteSQLOutput
-			// 
-			this.progressWriteSQLOutput.Location = new System.Drawing.Point(588, 55);
-			this.progressWriteSQLOutput.Name = "progressWriteSQLOutput";
-			this.progressWriteSQLOutput.Size = new System.Drawing.Size(224, 23);
-			this.progressWriteSQLOutput.Step = 1;
-			this.progressWriteSQLOutput.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressWriteSQLOutput.TabIndex = 22;
-			// 
 			// ParserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.progressWriteSQLOutput);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.chkWriteSQL);
 			this.Controls.Add(this.cmdChooseSource);
 			this.Controls.Add(this.lblSourceBin);
 			this.Controls.Add(this.cmdDoParse);
@@ -143,14 +118,13 @@
 			this.Controls.Add(this.progressParseSource);
 			this.Controls.Add(this.progressWriteJSONOutput);
 			this.Name = "ParserControl";
-			this.Size = new System.Drawing.Size(818, 84);
+			this.Size = new System.Drawing.Size(588, 84);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.CheckBox chkWriteSQL;
 		private System.Windows.Forms.Button cmdChooseSource;
 		private System.Windows.Forms.Label lblSourceBin;
 		private System.Windows.Forms.Button cmdDoParse;
@@ -158,6 +132,5 @@
 		private System.Windows.Forms.ProgressBar progressParseSource;
 		private System.Windows.Forms.ProgressBar progressWriteJSONOutput;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ProgressBar progressWriteSQLOutput;
 	}
 }

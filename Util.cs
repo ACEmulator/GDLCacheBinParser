@@ -1,6 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+using PhatACCacheBinParser.Regions;
 
 namespace PhatACCacheBinParser
 {
@@ -62,5 +71,69 @@ namespace PhatACCacheBinParser
 
             return knownType + result;
 	    }
+
+
+		public static List<T> GetParsedObjects<T>(ParserControl parserControl, BinaryReader binaryReader) where T : IParseableObject, new()
+		{
+			var totalObjects = binaryReader.ReadUInt16();
+			binaryReader.ReadUInt16(); // Discard
+
+			// For Segment 1, the first dword appears to simply be an is present flag
+			// The value is 256, which is probably tied to the number of landblocks or landblock width or something.
+			if (typeof(T).IsAssignableFrom(typeof(Region)) && totalObjects > 0)
+				totalObjects = 1;
+
+			// ReSharper disable once NotAccessedVariable
+			T lastParsed; // Used for debugging
+
+			var parsedObjects = new List<T>();
+
+			while (parsedObjects.Count < totalObjects)
+			{
+				var parsedObject = new T();
+
+				parsedObject.Parse(binaryReader);
+
+				parsedObjects.Add(parsedObject);
+
+				// ReSharper disable once RedundantAssignment
+				lastParsed = parsedObject; // Used for debugging
+
+				if ((parsedObjects.Count % 100) == 0)
+					parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = (int)(((double)parsedObjects.Count / totalObjects) * 100)));
+			}
+
+			parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = (int)(((double)parsedObjects.Count / totalObjects) * 100)));
+
+			return parsedObjects;
+		}
+
+		public static void WriteJSONOutput<T>(ParserControl parserControl, List<T> parsedObjects, string outputFolder, Func<T, string> fileNameFormatter) where T : IParseableObject, new()
+		{
+			if (!Directory.Exists(outputFolder))
+				Directory.CreateDirectory(outputFolder);
+
+			JsonSerializer serializer = new JsonSerializer();
+			serializer.Converters.Add(new JavaScriptDateTimeConverter());
+			serializer.NullValueHandling = NullValueHandling.Ignore;
+
+			int processedCounter = 0;
+
+			Parallel.For(0, parsedObjects.Count, i =>
+			{
+				using (StreamWriter sw = new StreamWriter(outputFolder + fileNameFormatter(parsedObjects[i]) + ".json"))
+				using (JsonWriter writer = new JsonTextWriter(sw))
+				{
+					serializer.Serialize(writer, parsedObjects[i]);
+
+					var counter = Interlocked.Increment(ref processedCounter);
+
+					if ((counter % 1000) == 0)
+						parserControl.BeginInvoke((Action)(() => parserControl.WriteJSONOutputProgress = (int)(((double)counter / parsedObjects.Count) * 100)));
+				}
+			});
+
+			parserControl.BeginInvoke((Action)(() => parserControl.WriteJSONOutputProgress = (int)(((double)processedCounter / parsedObjects.Count) * 100)));
+		}
 	}
 }

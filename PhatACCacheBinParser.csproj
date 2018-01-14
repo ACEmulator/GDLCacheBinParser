@@ -40,8 +40,18 @@
   <ItemGroup>
     <Compile Include="Crafting\Mod.cs" />
     <Compile Include="Crafting\Requirement.cs" />
-    <Compile Include="Unknowns1\Unknown1.cs" />
-    <Compile Include="Unknowns1\Unknown1_1.cs" />
+    <Compile Include="HousingPortals\HousingPortal.cs" />
+    <Compile Include="Regions\Region.cs" />
+    <Compile Include="Regions\EncounterTable.cs" />
+    <Compile Include="TreasureTables\Unknown3_1.cs" />
+    <Compile Include="TreasureTables\Unknown3_1_4.cs" />
+    <Compile Include="TreasureTables\Unknown3_2.cs" />
+    <Compile Include="TreasureTables\Unknown3_2_2.cs" />
+    <Compile Include="TreasureTables\Unknown3_3.cs" />
+    <Compile Include="TreasureTables\Unknown3_3_3.cs" />
+    <Compile Include="TreasureTables\Unknown3_3_4.cs" />
+    <Compile Include="TreasureTables\Unknown3_5_6.cs" />
+    <Compile Include="TreasureTables\Unknown3_5_8.cs" />
     <Compile Include="UnknownsA\UnknownA.cs" />
     <Compile Include="UnknownsA\UnknownA_1.cs" />
     <Compile Include="UnknownsA\UnknownA_3.cs" />

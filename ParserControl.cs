@@ -31,7 +31,6 @@ namespace PhatACCacheBinParser
 				propertyName = value;
 
 				chkWriteJSON.CheckedChanged -= chkWriteJSON_CheckedChanged;
-				chkWriteSQL.CheckedChanged -= chkWriteSQL_CheckedChanged;
 
 				if (!String.IsNullOrEmpty(ProperyName))
 				{
@@ -53,16 +52,13 @@ namespace PhatACCacheBinParser
 
 					SourceBin = (string)Settings.Default[ProperyName + "SourceBin"];
 					WriteJSON = (bool) Settings.Default[ProperyName + "WriteJSON"];
-					WriteSQL = (bool) Settings.Default[ProperyName + "WriteSQL"];
 
 					chkWriteJSON.CheckedChanged += chkWriteJSON_CheckedChanged;
-					chkWriteSQL.CheckedChanged += chkWriteSQL_CheckedChanged;
 				}
 				else
 				{
 					SourceBin = null;
 					WriteJSON = false;
-					WriteSQL = false;
 				}
 			}
 		}
@@ -86,12 +82,6 @@ namespace PhatACCacheBinParser
 			set => chkWriteJSON.Checked = value;
 		}
 
-		public bool WriteSQL
-		{
-			get => chkWriteSQL.Checked;
-			set => chkWriteSQL.Checked = value;
-		}
-
 		public int ParseInputProgress
 		{
 			get => progressParseSource.Value;
@@ -102,12 +92,6 @@ namespace PhatACCacheBinParser
 		{
 			get => progressWriteJSONOutput.Value;
 			set => progressWriteJSONOutput.Value = value;
-		}
-
-		public int WriteSQLOutputProgress
-		{
-			get => progressWriteSQLOutput.Value;
-			set => progressWriteSQLOutput.Value = value;
 		}
 
 
@@ -136,12 +120,6 @@ namespace PhatACCacheBinParser
 		private void chkWriteJSON_CheckedChanged(object sender, EventArgs e)
 		{
 			Settings.Default[ProperyName + "WriteJSON"] = WriteJSON;
-			Settings.Default.Save();
-		}
-
-		private void chkWriteSQL_CheckedChanged(object sender, EventArgs e)
-		{
-			Settings.Default[ProperyName + "WriteSQL"] = WriteSQL;
 			Settings.Default.Save();
 		}
 
