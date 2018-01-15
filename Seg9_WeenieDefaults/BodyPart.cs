@@ -16,7 +16,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public readonly BodyPartSD SD = new BodyPartSD();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			DType = binaryReader.ReadInt32();
 
@@ -24,11 +24,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 			DVar = binaryReader.ReadSingle();
 
-			ArmorValues.Parse(binaryReader);
+			ArmorValues.Unpack(binaryReader);
 
 			BH = binaryReader.ReadInt32();
 
-			SD.Parse(binaryReader);
+			SD.Unpack(binaryReader);
+
+			return true;
 		}
 	}
 }

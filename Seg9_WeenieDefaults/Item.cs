@@ -11,7 +11,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public int StackSize;
 		public bool TryToBond;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			WCID = binaryReader.ReadInt32();
 			Palette = binaryReader.ReadInt32();
@@ -19,6 +19,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			Destination = binaryReader.ReadInt32();
 			StackSize = binaryReader.ReadInt32();
 			TryToBond = (binaryReader.ReadInt32() == 1);
+
+			return true;
 		}
 	}
 }

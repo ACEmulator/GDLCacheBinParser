@@ -14,9 +14,9 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Parse(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader binaryReader)
 		{
-			base.Parse(binaryReader);
+			base.Unpack(binaryReader);
 
 			// For Segment 1, the first dword appears to simply be an is present flag
 			// The value is 256, which is probably tied to the number of landblocks or landblock width or something.
@@ -27,7 +27,7 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 			for (int i = 0; i < numTableEntries; i++)
 			{
 				var item = new EncounterTable();
-				item.Parse(binaryReader);
+				item.Unpack(binaryReader);
 				EncounterTables.Add(item);
 			}
 

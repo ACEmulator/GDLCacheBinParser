@@ -8,7 +8,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public byte Offset;
 		public byte NumberOfColors;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			ID = Util.ReadPackedKnownType(binaryReader, 0x04000000);
 
@@ -16,8 +16,10 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		    //Offset *= 8;
 
             NumberOfColors = binaryReader.ReadByte();
-            //if (NumberOfColors == 0)
-            //    NumberOfColors = 256;
-        }
+			//if (NumberOfColors == 0)
+			//    NumberOfColors = 256;
+
+			return true;
+		}
 	}
 }

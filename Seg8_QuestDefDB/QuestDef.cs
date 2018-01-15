@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg8_QuestDefDB
 {
-	class QuestDef : IParseableObject
+	class QuestDef : IPackable
 	{
 		public string Name;
 
@@ -11,7 +11,7 @@ namespace PhatACCacheBinParser.Seg8_QuestDefDB
 
 		public string Message;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Name = Util.ReadString(binaryReader, true);
 
@@ -19,6 +19,8 @@ namespace PhatACCacheBinParser.Seg8_QuestDefDB
 			MaxSolves = binaryReader.ReadInt32();
 
 			Message = Util.ReadEncryptedString1(binaryReader, true);
+
+			return true;
 		}
 	}
 }

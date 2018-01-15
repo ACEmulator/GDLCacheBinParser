@@ -12,7 +12,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public string Text;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			AuthorID = binaryReader.ReadUInt32();
 
@@ -30,6 +30,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			IgnoreAuthor = Convert.ToBoolean(c);
 
 			Text = Util.ReadString(binaryReader, true);
+
+			return true;
 		}
 	}
 }

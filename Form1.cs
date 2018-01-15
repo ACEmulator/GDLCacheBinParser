@@ -97,13 +97,13 @@ namespace PhatACCacheBinParser
 
 		private void ParserControl2_DoParse(ParserControl parserControl)
 		{
-			ParserControl_DoParse<SpellTableExtendedData>(parserControl);
+			MessageBox.Show("Not implemented.");
+			//ParserControl_DoParse<SpellTableExtendedData>(parserControl);
 		}
 
 		private void ParserControl3_DoParse(ParserControl parserControl)
 		{
-			MessageBox.Show("Not implemented.");
-			//ParserControl_DoParse<TreasureTable>(parserControl);
+			ParserControl_DoParse<TreasureTable>(parserControl);
 		}
 
 		private void ParserControl4_DoParse(ParserControl parserControl)
@@ -176,7 +176,7 @@ namespace PhatACCacheBinParser
 
 					parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = 1));
 
-					if (segment.Parse(binaryReader))
+					if (segment.Unpack(binaryReader))
 					{
 						parserControl.BeginInvoke((Action)(() => parserControl.ParseInputProgress = 100));
 

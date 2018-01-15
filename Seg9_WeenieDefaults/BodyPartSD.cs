@@ -31,7 +31,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public float MRB;
 		public float LRB;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			HLF = binaryReader.ReadSingle();
 			MLF = binaryReader.ReadSingle();
@@ -48,6 +48,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			HRB = binaryReader.ReadSingle();
 			MRB = binaryReader.ReadSingle();
 			LRB = binaryReader.ReadSingle();
+
+			return true;
 		}
 	}
 }

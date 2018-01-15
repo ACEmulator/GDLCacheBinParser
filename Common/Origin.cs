@@ -8,11 +8,13 @@ namespace PhatACCacheBinParser.Common
 		public float Y;
 		public float Z;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			X = binaryReader.ReadSingle();
 			Y = binaryReader.ReadSingle();
 			Z = binaryReader.ReadSingle();
+
+			return true;
 		}
 	}
 }

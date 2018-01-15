@@ -12,7 +12,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	    public List<Requirement<string>> StringRequirements;
 	    public List<Requirement<bool>> BoolRequirements;
 
-        public void Parse(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader binaryReader)
 		{
             int count;
 
@@ -93,6 +93,8 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		        item.Message = Util.ReadString(binaryReader, true);
                 BoolRequirements.Add(item);
 		    }
+
+			return true;
 		}
 	}
 }

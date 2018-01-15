@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 {
-	class Landblock : IParseableObject
+	class Landblock : IPackable
 	{
 		public uint Key;
 
@@ -11,7 +11,7 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 
 		public List<Link> Links;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			int count;
 
@@ -29,7 +29,7 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 				{
 					var weenie = new Weenie();
 
-					weenie.Parse(binaryReader);
+					weenie.Unpack(binaryReader);
 
 					Weenies.Add(weenie);
 				}
@@ -46,11 +46,13 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 				{
 					var link = new Link();
 
-					link.Parse(binaryReader);
+					link.Unpack(binaryReader);
 
 					Links.Add(link);
 				}
 			}
+
+			return true;
 		}
 	}
 }

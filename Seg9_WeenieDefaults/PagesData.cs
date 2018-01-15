@@ -10,7 +10,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public List<PageData> Pages;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			MaxNumPages = binaryReader.ReadInt32();
 			MaxNumCharsPerPage = binaryReader.ReadInt32();
@@ -24,10 +24,12 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 				for (int i = 0; i < pagesCount; i++)
 				{
 					var page = new PageData();
-					page.Parse(binaryReader);
+					page.Unpack(binaryReader);
 					Pages.Add(page);
 				}
 			}
+
+			return true;
 		}
 	}
 }

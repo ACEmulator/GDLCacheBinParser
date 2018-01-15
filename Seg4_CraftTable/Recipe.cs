@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PhatACCacheBinParser.Seg4_CraftTable
 {
-	class Recipe : IParseableObject
+	class Recipe : IPackable
 	{
 		// _cache_bin_parse_4_1
 		public uint ID;
@@ -30,7 +30,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
 	    public uint DataID;
 
-        public void Parse(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader binaryReader)
         {
 			// _cache_bin_parse_4_1
 			ID = binaryReader.ReadUInt32();
@@ -52,25 +52,27 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 			for (int i = 0; i < 4; i++)
 			{
 				var item = new Recipe_Component();
-				item.Parse(binaryReader);
+				item.Unpack(binaryReader);
 				Components.Add(item);
 			}
 
 			for (int i = 0; i < 3; i++)
 			{
 				var item = new Recipe_Requirement();
-				item.Parse(binaryReader);
+				item.Unpack(binaryReader);
 				Requirements.Add(item);
 			}
 
 		    for (int i = 0; i < 8; i++)
 		    {
 		        var item = new Recipe_Mod();
-		        item.Parse(binaryReader);
+		        item.Unpack(binaryReader);
 		        Mods.Add(item);
             }
 
             DataID = binaryReader.ReadUInt32();
+
+	        return true;
 		}
 
 

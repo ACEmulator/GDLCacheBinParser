@@ -8,27 +8,16 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class WeenieDefaults : Segment
 	{
-		public readonly List<Weenie> Weenies = new List<Weenie>();
+		public readonly Dictionary<uint, Weenie> Weenies = new Dictionary<uint, Weenie>();
 
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Parse(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader binaryReader)
 		{
-			base.Parse(binaryReader);
+			base.Unpack(binaryReader);
 
-			var totalObjects = binaryReader.ReadUInt16();
-			binaryReader.ReadUInt16(); // Discard
-
-			for (int i = 0; i < totalObjects; i++)
-			{
-				// Skip the next 4 bytes. It is the wcid, but the code doesn't pull it from here.
-				binaryReader.ReadInt32();
-
-				var item = new Weenie();
-				item.Parse(binaryReader);
-				Weenies.Add(item);
-			}
+			Weenies.Unpack(binaryReader);
 
 			return true;
 		}
@@ -37,12 +26,12 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		{
 			base.WriteJSONOutput(outputFolder);
 
-			Parallel.For(0, Weenies.Count, i =>
+			Parallel.ForEach(Weenies, weenie =>
 			{
-				using (StreamWriter sw = new StreamWriter(outputFolder + Weenies[i].WCID.ToString("00000") + " " + Util.IllegalInFileName.Replace(Weenies[i].Description, "_") + ".json"))
+				using (StreamWriter sw = new StreamWriter(outputFolder + weenie.Value.WCID.ToString("00000") + " " + Util.IllegalInFileName.Replace(weenie.Value.Description, "_") + ".json"))
 				using (JsonWriter writer = new JsonTextWriter(sw))
 				{
-					Serializer.Serialize(writer, Weenies[i]);
+					Serializer.Serialize(writer, weenie.Value);
 				}
 			});
 

@@ -8,11 +8,13 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		public uint unknown_2;
 		public string unknown_3; // This is the destroyed message
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			unknown_1 = binaryReader.ReadDouble();
 			unknown_2 = binaryReader.ReadUInt32();
 			unknown_3 = Util.ReadString(binaryReader, true);
+
+			return true;
 		}
 	}
 }

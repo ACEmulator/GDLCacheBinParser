@@ -9,7 +9,7 @@ namespace PhatACCacheBinParser.SegA
 		public readonly List<UnknownA_4> AUnknown_4 = new List<UnknownA_4>();
 
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			int count;
 
@@ -19,9 +19,11 @@ namespace PhatACCacheBinParser.SegA
 			for (int i = 0; i < count; i++)
 			{
 				var aunknown_4 = new UnknownA_4();
-				aunknown_4.Parse(binaryReader);
+				aunknown_4.Unpack(binaryReader);
 				AUnknown_4.Add(aunknown_4);
 			}
+
+			return true;
 		}
 	}
 }

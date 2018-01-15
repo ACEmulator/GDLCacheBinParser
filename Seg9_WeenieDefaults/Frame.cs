@@ -10,13 +10,15 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public Angles Angles;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Origin = new Origin();
-			Origin.Parse(binaryReader);
+			Origin.Unpack(binaryReader);
 
 			Angles = new Angles();
-			Angles.Parse(binaryReader);
+			Angles.Unpack(binaryReader);
+
+			return true;
 		}
 	}
 }

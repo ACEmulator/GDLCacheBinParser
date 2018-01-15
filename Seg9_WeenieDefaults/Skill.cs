@@ -14,7 +14,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public int ResistanceAtLastCheck;
 		public double LastUsedTime;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			LevelFromPP = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // discard.. this contains a flag (0x10000) that doesn't seem used
@@ -23,6 +23,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			InitLevel = binaryReader.ReadInt32();
 			ResistanceAtLastCheck = binaryReader.ReadInt32();
 			LastUsedTime = binaryReader.ReadDouble();
+
+			return true;
 		}
 	}
 }

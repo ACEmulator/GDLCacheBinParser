@@ -25,7 +25,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	    public int Unknown9;
 	    public int InstanceID;
 
-        public void Parse(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader binaryReader)
         {
             int count;
 
@@ -119,6 +119,8 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
             Unknown9 = binaryReader.ReadInt32();
             InstanceID = binaryReader.ReadInt32();
-        }
+
+	        return true;
+		}
     }
 }

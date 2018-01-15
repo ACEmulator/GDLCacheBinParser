@@ -6,11 +6,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 	{
 		public int Current;
 
-		public override void Parse(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader binaryReader)
 		{
-			base.Parse(binaryReader);
+			base.Unpack(binaryReader);
 
 			Current = binaryReader.ReadInt32();
+
+			return true;
 		}
 	}
 }

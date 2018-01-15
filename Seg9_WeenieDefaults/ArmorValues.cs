@@ -14,7 +14,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public int ArmorVsElectric;
 		public int ArmorVsNether;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			BaseArmor = binaryReader.ReadInt32();
 			ArmorVsSlash = binaryReader.ReadInt32();
@@ -25,6 +25,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			ArmorVsAcid = binaryReader.ReadInt32();
 			ArmorVsElectric = binaryReader.ReadInt32();
 			ArmorVsNether = binaryReader.ReadInt32();
+
+			return true;
 		}
 	}
 }

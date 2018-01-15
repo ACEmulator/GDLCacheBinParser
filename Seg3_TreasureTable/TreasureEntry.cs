@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry
+	class TreasureEntry : IPackable
 	{
 		// Unknown3_1_4
 		public uint WCID;
@@ -23,7 +23,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public uint m_3C_AlwaysZero; // always zero
 		public uint m_40_AlwaysZero; // always zero
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			// Unknown3_1_4
 			WCID = binaryReader.ReadUInt32();
@@ -43,6 +43,8 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 			m_38_AlwaysZero = binaryReader.ReadUInt32();
 			m_3C_AlwaysZero = binaryReader.ReadUInt32();
 			m_40_AlwaysZero = binaryReader.ReadUInt32();
+
+			return true;
 		}
 	}
 }

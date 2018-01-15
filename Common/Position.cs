@@ -10,7 +10,7 @@ namespace PhatACCacheBinParser.Common
 
 		public readonly Angles Angles = new Angles();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			// This value (according to the PhatAC jsons) is stored in Big Endian order, not Little Endian like the rest of the file.
 			//var data = binaryReader.ReadBytes(4);
@@ -18,9 +18,11 @@ namespace PhatACCacheBinParser.Common
 			// To avoid being an exact copy, for now we just copy it as is.
 			ObjCellID = binaryReader.ReadUInt32();
 
-			Origin.Parse(binaryReader);
+			Origin.Unpack(binaryReader);
 
-			Angles.Parse(binaryReader);
+			Angles.Unpack(binaryReader);
+
+			return true;
 		}
 	}
 }

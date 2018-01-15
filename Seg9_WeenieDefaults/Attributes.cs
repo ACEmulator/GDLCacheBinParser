@@ -15,18 +15,20 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public readonly Attribute2 Stamina = new Attribute2();
 		public readonly Attribute2 Mana = new Attribute2();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
-			Strength.Parse(binaryReader);
-			Endurance.Parse(binaryReader);
-			Quickness.Parse(binaryReader);
-			Coordination.Parse(binaryReader);
-			Focus.Parse(binaryReader);
-			Self.Parse(binaryReader);
+			Strength.Unpack(binaryReader);
+			Endurance.Unpack(binaryReader);
+			Quickness.Unpack(binaryReader);
+			Coordination.Unpack(binaryReader);
+			Focus.Unpack(binaryReader);
+			Self.Unpack(binaryReader);
 
-			Health.Parse(binaryReader);
-			Stamina.Parse(binaryReader);
-			Mana.Parse(binaryReader);
+			Health.Unpack(binaryReader);
+			Stamina.Unpack(binaryReader);
+			Mana.Unpack(binaryReader);
+
+			return true;
 		}
 	}
 }

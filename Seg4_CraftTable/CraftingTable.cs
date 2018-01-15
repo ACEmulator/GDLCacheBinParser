@@ -17,22 +17,14 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Parse(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader binaryReader)
 		{
-			base.Parse(binaryReader);
+			base.Unpack(binaryReader);
 
-			var totalObjects = binaryReader.ReadUInt16();
-			binaryReader.ReadUInt16(); // Discard
-
-			for (int i = 0; i < totalObjects; i++)
-			{
-				var item = new Recipe();
-				item.Parse(binaryReader);
-				Recipes.Add(item);
-			}
+			Recipes.Unpack(binaryReader);
 
 			// The recipe heap seems to have a map after the main recipe heap. Precursor maybe?
-			totalObjects = binaryReader.ReadUInt16();
+			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard
 
 			for (int i = 0; i < totalObjects; i++)

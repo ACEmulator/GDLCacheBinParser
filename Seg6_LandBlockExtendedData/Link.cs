@@ -7,10 +7,12 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 		public uint Source;
 		public uint Target;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Source = binaryReader.ReadUInt32();
 			Target = binaryReader.ReadUInt32();
+
+			return true;
 		}
 	}
 }

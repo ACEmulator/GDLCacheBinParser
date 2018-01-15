@@ -7,10 +7,12 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public byte Index;
 		public int ID;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Index = binaryReader.ReadByte();
 		    ID = Util.ReadPackedKnownType(binaryReader, 0x01000000);
+
+			return true;
 		}
 	}
 }

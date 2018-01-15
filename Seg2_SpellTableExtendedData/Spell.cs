@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 {
-	class Spell
+	class Spell : IPackable
 	{
 		// _cache_bin_parse_2_4
 		public uint ID;
@@ -59,7 +59,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 		public uint ManaMod;
 
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			// _cache_bin_parse_2_4
 			ID = binaryReader.ReadUInt32();
@@ -120,6 +120,8 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 			DisplayOrder = binaryReader.ReadUInt32();
 			NonComponentTargetType = binaryReader.ReadUInt32();
 			ManaMod = binaryReader.ReadUInt32();
+
+			return true;
 		}
 	}
 }

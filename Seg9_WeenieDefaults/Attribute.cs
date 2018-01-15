@@ -9,11 +9,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public int InitLevel;
 		public int b;
 
-		public virtual void Parse(BinaryReader binaryReader)
+		public virtual bool Unpack(BinaryReader binaryReader)
 		{
 			a = binaryReader.ReadInt32();
 			InitLevel = binaryReader.ReadInt32();
 			b = binaryReader.ReadInt32();
+
+			return true;
 		}
 	}
 }

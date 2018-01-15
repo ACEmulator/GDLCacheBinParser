@@ -9,12 +9,14 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 
 		public readonly List<uint> Values = new List<uint>();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Index = binaryReader.ReadUInt32();
 
 			for (int i = 0; i < 16; i++)
 				Values.Add(binaryReader.ReadUInt32());
+
+			return true;
 		}
 	}
 }

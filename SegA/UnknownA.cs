@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PhatACCacheBinParser.SegA
 {
-	class UnknownA : IParseableObject
+	class UnknownA : IPackable
 	{
 		// _cache_bin_func_123458A
 		public uint Index;
@@ -13,7 +13,7 @@ namespace PhatACCacheBinParser.SegA
 		public readonly List<UnknownA_1> AUnknown_1 = new List<UnknownA_1>();
 
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			int count;
 
@@ -28,9 +28,11 @@ namespace PhatACCacheBinParser.SegA
 			for (int i = 0; i < count; i++)
 			{
 				var aunknown_1 = new UnknownA_1();
-				aunknown_1.Parse(binaryReader);
+				aunknown_1.Unpack(binaryReader);
 				AUnknown_1.Add(aunknown_1);
 			}
+
+			return true;
 		}
 	}
 }

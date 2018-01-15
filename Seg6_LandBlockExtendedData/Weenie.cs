@@ -14,14 +14,16 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 		public uint ID;
 		//public byte IDb;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			WCID = binaryReader.ReadUInt32();
 
-			Position.Parse(binaryReader);
+			Position.Unpack(binaryReader);
 
 			ID = binaryReader.ReadUInt32();
 			//IDb = (byte)ID;
+
+			return true;
 		}
 	}
 }

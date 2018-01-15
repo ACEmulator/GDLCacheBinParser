@@ -43,7 +43,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public Frame Frame;
 		public Position Position;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Type = binaryReader.ReadInt32();
 			Delay = binaryReader.ReadSingle();
@@ -161,13 +161,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 				case 3:
 				case 74:
 					Item = new Item();
-					Item.Parse(binaryReader);
+					Item.Unpack(binaryReader);
 					break;
 
 				case 76:
 					Message = Util.ReadString(binaryReader, true);
 					Item = new Item();
-					Item.Parse(binaryReader);
+					Item.Unpack(binaryReader);
 					break;
 
 				case 56:
@@ -186,7 +186,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 				case 11:
 				case 87:
 					Frame = new Frame();
-					Frame.Parse(binaryReader);
+					Frame.Unpack(binaryReader);
 					break;
 
 				case 7:
@@ -269,15 +269,17 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 				case 63:
 					Position = new Position();
-					Position.Parse(binaryReader);
+					Position.Unpack(binaryReader);
 					break;
 
 				case 99:
 				case 100:
 					Position = new Position();
-					Position.Parse(binaryReader);
+					Position.Unpack(binaryReader);
 					break;
 			}
+
+			return true;
 		}
 	}
 }

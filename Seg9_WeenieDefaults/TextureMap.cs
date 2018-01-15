@@ -8,11 +8,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public int OldTextureID;
 		public int NewTextureID;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Index = binaryReader.ReadByte();
 			OldTextureID = Util.ReadPackedKnownType(binaryReader, 0x05000000);
             NewTextureID = Util.ReadPackedKnownType(binaryReader, 0x05000000);
-        }
+
+			return true;
+		}
 	}
 }

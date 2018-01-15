@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PackableExtensions.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellTableExtendedData.cs" />
     <Compile Include="Seg3_TreasureTable\TreasureEntry.cs" />
     <Compile Include="Seg3_TreasureTable\TreasureEntry2.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="IParseableObject.cs" />
+    <Compile Include="IPackable.cs" />
     <Compile Include="ParserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

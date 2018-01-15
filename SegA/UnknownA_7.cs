@@ -20,7 +20,7 @@ namespace PhatACCacheBinParser.SegA
 		public ulong Unknown_7_22;
 
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			// _cache_bin_parse_A_7
 			Unknown_7_01 = binaryReader.ReadUInt32();
@@ -36,6 +36,8 @@ namespace PhatACCacheBinParser.SegA
 			// _cache_bin_parse_A_7
 			Unknown_7_21 = binaryReader.ReadUInt32();
 			Unknown_7_22 = binaryReader.ReadUInt64();
+
+			return true;
 		}
 	}
 }

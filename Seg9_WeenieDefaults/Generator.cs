@@ -26,7 +26,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public int Slot;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Probability = binaryReader.ReadSingle();
 			Type = binaryReader.ReadInt32();
@@ -40,9 +40,11 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			PalleteTypeID = binaryReader.ReadInt32();
 			Shade = binaryReader.ReadSingle();
 
-			Position.Parse(binaryReader);
+			Position.Unpack(binaryReader);
 
 			Slot = binaryReader.ReadInt32();
+
+			return true;
 		}
 	}
 }

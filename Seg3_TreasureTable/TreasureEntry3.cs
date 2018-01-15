@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry3
+	class TreasureEntry3 : IPackable
 	{
 		public int m_00;
 		public int m_04;
@@ -27,7 +27,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public int m_50;
 		public int m_54;
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			m_00 = binaryReader.ReadInt32();
 			m_04 = binaryReader.ReadInt32();
@@ -51,6 +51,8 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 			m_4C = binaryReader.ReadInt32();
 			m_50 = binaryReader.ReadInt32();
 			m_54 = binaryReader.ReadInt32();
+
+			return true;
 		}
 	}
 }

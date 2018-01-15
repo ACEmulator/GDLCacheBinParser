@@ -13,19 +13,11 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Parse(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader binaryReader)
 		{
-			base.Parse(binaryReader);
+			base.Unpack(binaryReader);
 
-			var totalObjects = binaryReader.ReadUInt16();
-			binaryReader.ReadUInt16(); // Discard
-
-			for (int i = 0; i < totalObjects; i++)
-			{
-				var item = new Spell();
-				item.Parse(binaryReader);
-				Spells.Add(item);
-			}
+			Spells.Unpack(binaryReader);
 
 			return true;
 		}

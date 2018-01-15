@@ -5,13 +5,13 @@ using PhatACCacheBinParser.Common;
 
 namespace PhatACCacheBinParser.Seg5_HousingPortals
 {
-	class HousingPortal : IParseableObject
+	class HousingPortal : IPackable
 	{
 		public uint Unknown1;
 
 		public List<Position> Destinations = new List<Position>();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Unknown1 = binaryReader.ReadUInt32();
 
@@ -19,9 +19,11 @@ namespace PhatACCacheBinParser.Seg5_HousingPortals
 			for (int i = 0; i < count; i++)
 			{
 				var position = new Position();
-				position.Parse(binaryReader);
+				position.Unpack(binaryReader);
 				Destinations.Add(position);
 			}
+
+			return true;
 		}
 	}
 }

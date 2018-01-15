@@ -86,7 +86,7 @@ namespace PhatACCacheBinParser
 				using (var memoryStream = new MemoryStream(data))
 				using (var binaryReader = new BinaryReader(memoryStream))
 				{
-					if (segment.Parse(binaryReader))
+					if (segment.Unpack(binaryReader))
 						return true;
 				}
 			}

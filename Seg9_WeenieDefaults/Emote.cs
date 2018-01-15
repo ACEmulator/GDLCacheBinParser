@@ -22,7 +22,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public readonly List<EmoteAction> EmoteActions = new List<EmoteAction>();
 
-		public void Parse(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader binaryReader)
 		{
 			Category = binaryReader.ReadInt32();
 			Probability = binaryReader.ReadSingle();
@@ -55,10 +55,12 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			{
 				var action = new EmoteAction();
 
-				action.Parse(binaryReader);
+				action.Unpack(binaryReader);
 
 				EmoteActions.Add(action);
 			}
+
+			return true;
 		}
 	}
 }
