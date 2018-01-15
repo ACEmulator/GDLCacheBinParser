@@ -85,13 +85,29 @@ namespace PhatACCacheBinParser
 		public int ParseInputProgress
 		{
 			get => progressParseSource.Value;
-			set => progressParseSource.Value = value;
+			set
+			{
+				if (value == 0 || value == 100)
+					progressParseSource.Style = ProgressBarStyle.Continuous;
+				else
+					progressParseSource.Style = ProgressBarStyle.Marquee;
+
+				progressParseSource.Value = value;
+			}
 		}
 
 		public int WriteJSONOutputProgress
 		{
 			get => progressWriteJSONOutput.Value;
-			set => progressWriteJSONOutput.Value = value;
+			set
+			{
+				if (value == 0 || value == 100)
+					progressWriteJSONOutput.Style = ProgressBarStyle.Continuous;
+				else
+					progressWriteJSONOutput.Style = ProgressBarStyle.Marquee;
+
+				progressWriteJSONOutput.Value = value;
+			}
 		}
 
 

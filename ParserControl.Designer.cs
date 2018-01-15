@@ -84,7 +84,6 @@
 			this.progressParseSource.Name = "progressParseSource";
 			this.progressParseSource.Size = new System.Drawing.Size(224, 23);
 			this.progressParseSource.Step = 1;
-			this.progressParseSource.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressParseSource.TabIndex = 15;
 			// 
 			// progressWriteJSONOutput
