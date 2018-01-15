@@ -34,8 +34,10 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Seg2_SpellTableExtendedData\SpellTableExtendedData.cs" />
@@ -87,6 +89,12 @@
     <Compile Include="Seg2_SpellTableExtendedData\SpellType.cs" />
     <Compile Include="Seg8_QuestDefDB\QuestDef.cs" />
     <Compile Include="Segment.cs" />
+    <Compile Include="SQLBuilderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SQLBuilderControl.Designer.cs">
+      <DependentUpon>SQLBuilderControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Common\Angles.cs" />
     <Compile Include="Seg9_WeenieDefaults\Attribute.cs" />
@@ -128,6 +136,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SQLBuilderControl.resx">
+      <DependentUpon>SQLBuilderControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
