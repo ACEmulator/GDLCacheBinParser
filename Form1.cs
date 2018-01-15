@@ -150,12 +150,14 @@ namespace PhatACCacheBinParser
 			if (!File.Exists(parserControl.SourceBin))
 			{
 				MessageBox.Show("Source bin path does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				parserControl.Enabled = true;
 				return;
 			}
 
 			if (!Directory.Exists(lblOutputFolder.Text))
 			{
 				MessageBox.Show("Output folder does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				parserControl.Enabled = true;
 				return;
 			}
 
