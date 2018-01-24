@@ -40,6 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Appraisal.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Enums\Inventory.cs" />
+    <Compile Include="Enums\Item.cs" />
+    <Compile Include="Enums\Physics.cs" />
+    <Compile Include="Enums\Spells.cs" />
+    <Compile Include="Enums\StatType.cs" />
+    <Compile Include="Enums\WeenieClasses.cs" />
     <Compile Include="Common\Attribute2nd.cs" />
     <Compile Include="Common\DamageType.cs" />
     <Compile Include="PackableExtensions.cs" />

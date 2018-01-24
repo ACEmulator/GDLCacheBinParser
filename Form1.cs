@@ -42,7 +42,7 @@ namespace PhatACCacheBinParser
 			parserControl4.DoParse += ParserControl4_DoParse;
 
 			parserControl5.ProperyName = "_5";
-			parserControl5.Label = "5 Housing Portals";
+			parserControl5.Label = "5 HousingPortals";
 			parserControl5.DoParse += ParserControl5_DoParse;
 
 			parserControl6.ProperyName = "_6";
