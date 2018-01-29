@@ -454,7 +454,7 @@ namespace PhatACCacheBinParser
                         foreach (var stat in parsed.SpellCastingProbability)
                         {
                             if (Enum.IsDefined(typeof(SpellID), stat.Key))
-                                spellsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}) /* {Enum.GetName(typeof(SpellID), stat.Key)} */" + Environment.NewLine;
+                                spellsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}, {stat.Value}) /* {Enum.GetName(typeof(SpellID), stat.Key)} */" + Environment.NewLine;
                         }
                     }
                     if (parsed.Attributes != null)
@@ -568,7 +568,7 @@ namespace PhatACCacheBinParser
                     }
                     if (spellsLine != "")
                     {
-                        spellsLine = $"{sqlCommand} INTO `ace_object_properties_spell` (`aceObjectId`, `spellId`)" + Environment.NewLine
+                        spellsLine = $"{sqlCommand} INTO `ace_object_properties_spell` (`aceObjectId`, `spellId`, `probability`)" + Environment.NewLine
                             + "VALUES " + spellsLine.TrimStart("     ,".ToCharArray());
                         spellsLine = spellsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(spellsLine);
