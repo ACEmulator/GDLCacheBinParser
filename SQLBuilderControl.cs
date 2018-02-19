@@ -376,21 +376,21 @@ namespace PhatACCacheBinParser
 
                     string line = $"/* Weenie - {name} ({parsed.WCID}) */" + Environment.NewLine;
 
-                    line += $"DELETE FROM ace_weenie_class WHERE weenieClassId = {parsed.WCID};" + Environment.NewLine + Environment.NewLine;
-                    line += $"{sqlCommand} INTO ace_weenie_class (`weenieClassId`, `weenieClassDescription`)" + Environment.NewLine +
-                           $"VALUES ({parsed.WCID}, '{weenieName}');" + Environment.NewLine;
+                    line += $"DELETE FROM weenie WHERE class_Id = {parsed.WCID};" + Environment.NewLine + Environment.NewLine;
+                    line += $"{sqlCommand} INTO weenie (`class_Id`, `class_Name`, `type`)" + Environment.NewLine +
+                           $"VALUES ({parsed.WCID}, '{weenieName}', /* {Enum.GetName(typeof(WeenieType), parsed.WeenieType)} */ {parsed.WeenieType});" + Environment.NewLine;
                     writer.WriteLine(line);
                     string intsLine = "", bigintsLine = "", floatsLine = "", boolsLine = "", strsLine = "", didsLine = "", iidsLine = "";
                     string skillsLine = "", attributesLine = "", attribute2ndsLine = "", bodyDamageValuesLine = "", bodyDamageVariancesLine = "", bodyArmorValuesLine = "", numsLine = "";
-                    string spellsLine = "", positionsLine = "", pagesLine = "", instancesLine = "", profilesLine = "";
-                    line = $"{sqlCommand} INTO `ace_object` (`" +
-                        "aceObjectId`, `aceObjectDescriptionFlags`, " +
-                        "`weenieClassId`" +
-                        ")" + Environment.NewLine + "VALUES (" +
-                    $"{parsed.WCID}, {(uint)aceObjectDescriptionFlags}, " +
-                    $"{parsed.WCID}"; //+
-                    line += ");" + Environment.NewLine;
-                    writer.WriteLine(line);
+                    string spellsLine = "", positionsLine = "", pagesLine = "", instancesLine = "", profilesLine = "", booksLine = "";
+                    //line = $"{sqlCommand} INTO `ace_object` (`" +
+                    //    "aceObjectId`, `aceObjectDescriptionFlags`, " +
+                    //    "`weenieClassId`" +
+                    //    ")" + Environment.NewLine + "VALUES (" +
+                    //$"{parsed.WCID}, {(uint)aceObjectDescriptionFlags}, " +
+                    //$"{parsed.WCID}"; //+
+                    //line += ");" + Environment.NewLine;
+                    //writer.WriteLine(line);
                     if (parsed.IntValues != null)
                     {
                         foreach (var stat in parsed.IntValues)
@@ -446,7 +446,8 @@ namespace PhatACCacheBinParser
                         foreach (var stat in parsed.IIDValues)
                         {
                             // wcid 30732 has -1 for an IID.. i think this was to make it so noone could wield
-                            iidsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}, {(uint)stat.Value}) /* {Enum.GetName(typeof(STypeIID), stat.Key)} */" + Environment.NewLine;
+                            // iidsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}, {(uint)stat.Value}) /* {Enum.GetName(typeof(STypeIID), stat.Key)} */" + Environment.NewLine;
+                            iidsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}, {stat.Value}) /* {Enum.GetName(typeof(STypeIID), stat.Key)} */" + Environment.NewLine;
                         }
                     }
                     if (parsed.SpellCastingProbability != null)
@@ -481,17 +482,21 @@ namespace PhatACCacheBinParser
                     }
                     if (parsed.PagesData != null)
                     {
-                        if (parsed.PagesData.MaxNumPages > 0 && parsed.PagesData.Pages != null)
-                            intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.APPRAISAL_PAGES_INT}, {(int)parsed.PagesData.Pages.Count}) /* {Enum.GetName(typeof(STypeInt), STypeInt.APPRAISAL_PAGES_INT)} */" + Environment.NewLine;
-                        if (parsed.PagesData.MaxNumPages > 0)
-                            intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.APPRAISAL_MAX_PAGES_INT}, {(int)parsed.PagesData.MaxNumPages}) /* {Enum.GetName(typeof(STypeInt), STypeInt.APPRAISAL_MAX_PAGES_INT)} */" + Environment.NewLine;
-                        if (parsed.PagesData.MaxNumCharsPerPage > 0) // pretty sure this is wrong
-                            intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.AVAILABLE_CHARACTER_INT}, {(int)parsed.PagesData.MaxNumCharsPerPage}) /* {Enum.GetName(typeof(STypeInt), STypeInt.AVAILABLE_CHARACTER_INT)} */" + Environment.NewLine;
+                        //if (parsed.PagesData.MaxNumPages > 0 && parsed.PagesData.Pages != null)
+                        //    intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.APPRAISAL_PAGES_INT}, {(int)parsed.PagesData.Pages.Count}) /* {Enum.GetName(typeof(STypeInt), STypeInt.APPRAISAL_PAGES_INT)} */" + Environment.NewLine;
+                        //if (parsed.PagesData.MaxNumPages > 0)
+                        //    intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.APPRAISAL_MAX_PAGES_INT}, {(int)parsed.PagesData.MaxNumPages}) /* {Enum.GetName(typeof(STypeInt), STypeInt.APPRAISAL_MAX_PAGES_INT)} */" + Environment.NewLine;
+                        //if (parsed.PagesData.MaxNumCharsPerPage > 0) // pretty sure this is wrong
+                        //    intsLine += $"     , ({parsed.WCID}, {(uint)STypeInt.AVAILABLE_CHARACTER_INT}, {(int)parsed.PagesData.MaxNumCharsPerPage}) /* {Enum.GetName(typeof(STypeInt), STypeInt.AVAILABLE_CHARACTER_INT)} */" + Environment.NewLine;
+                        //if (parsed.PagesData.MaxNumPages > 0 && parsed.PagesData.Pages != null && parsed.PagesData.MaxNumCharsPerPage > 0)
+                        //{
+                        booksLine += $"     , ({parsed.WCID}, {parsed.PagesData.MaxNumPages}, {parsed.PagesData.MaxNumCharsPerPage}) /* Book Data */" + Environment.NewLine;
+                        //}
                         if (parsed.PagesData.Pages != null)
                         {
                             foreach (var page in parsed.PagesData.Pages)
                             {
-                                pagesLine += $"     , ({parsed.WCID}, {parsed.PagesData.Pages.IndexOf(page)}, '{page.AuthorName.Replace("'", "''")}', '{page.AuthorAccount.Replace("'", "''")}', {page.AuthorID}, {page.IgnoreAuthor}, '{page.Text.Replace("'", "''")}')" + Environment.NewLine;
+                                pagesLine += $"     , ({parsed.WCID}, {parsed.PagesData.Pages.IndexOf(page)}, {page.AuthorID}, '{page.AuthorName.Replace("'", "''")}', '{page.AuthorAccount.Replace("'", "''")}', {page.IgnoreAuthor}, '{page.Text.Replace("'", "''")}')" + Environment.NewLine;
                             }
                         }
                     }
@@ -516,101 +521,110 @@ namespace PhatACCacheBinParser
                             $"/* Generate {label} (x{profile.InitCreate.ToString("N0")} up to max of {profile.MaxNum.ToString("N0")}) - {Enum.GetName(typeof(RegenerationType), profile.WhenCreate)} - {Enum.GetName(typeof(RegenLocationType), profile.WhereCreate)} */" + Environment.NewLine;
                         }
                     }
-                    intsLine += $"     , ({parsed.WCID}, {(uint)9007}, {parsed.WeenieType}) /* {Enum.GetName(typeof(WeenieType), parsed.WeenieType)} */" + Environment.NewLine;
+
+                    // intsLine += $"     , ({parsed.WCID}, {(uint)9007}, {parsed.WeenieType}) /* {Enum.GetName(typeof(WeenieType), parsed.WeenieType)} */" + Environment.NewLine;
+
                     if (strsLine != "")
                     {
-                        strsLine = $"{sqlCommand} INTO `ace_object_properties_string` (`aceObjectId`, `strPropertyId`, `propertyValue`)" + Environment.NewLine
+                        strsLine = $"{sqlCommand} INTO `weenie_properties_string` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + strsLine.TrimStart("     ,".ToCharArray());
                         strsLine = strsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(strsLine);
                     }
                     if (didsLine != "")
                     {
-                        didsLine = $"{sqlCommand} INTO `ace_object_properties_did` (`aceObjectId`, `didPropertyId`, `propertyValue`)" + Environment.NewLine
+                        didsLine = $"{sqlCommand} INTO `weenie_properties_d_i_d` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + didsLine.TrimStart("     ,".ToCharArray());
                         didsLine = didsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(didsLine);
                     }
                     if (iidsLine != "")
                     {
-                        iidsLine = $"{sqlCommand} INTO `ace_object_properties_iid` (`aceObjectId`, `iidPropertyId`, `propertyValue`)" + Environment.NewLine
+                        iidsLine = $"{sqlCommand} INTO `weenie_properties_i_i_d` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + iidsLine.TrimStart("     ,".ToCharArray());
                         iidsLine = iidsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(iidsLine);
                     }
                     if (intsLine != "")
                     {
-                        intsLine = $"{sqlCommand} INTO `ace_object_properties_int` (`aceObjectId`, `intPropertyId`, `propertyValue`)" + Environment.NewLine
+                        intsLine = $"{sqlCommand} INTO `weenie_properties_int` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + intsLine.TrimStart("     ,".ToCharArray());
                         intsLine = intsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(intsLine);
                     }
                     if (bigintsLine != "")
                     {
-                        bigintsLine = $"{sqlCommand} INTO `ace_object_properties_bigint` (`aceObjectId`, `bigIntPropertyId`, `propertyValue`)" + Environment.NewLine
+                        bigintsLine = $"{sqlCommand} INTO `weenie_properties_int64` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + bigintsLine.TrimStart("     ,".ToCharArray());
                         bigintsLine = bigintsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(bigintsLine);
                     }
                     if (floatsLine != "")
                     {
-                        floatsLine = $"{sqlCommand} INTO `ace_object_properties_double` (`aceObjectId`, `dblPropertyId`, `propertyValue`)" + Environment.NewLine
+                        floatsLine = $"{sqlCommand} INTO `weenie_properties_float` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + floatsLine.TrimStart("     ,".ToCharArray());
                         floatsLine = floatsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(floatsLine);
                     }
                     if (boolsLine != "")
                     {
-                        boolsLine = $"{sqlCommand} INTO `ace_object_properties_bool` (`aceObjectId`, `boolPropertyId`, `propertyValue`)" + Environment.NewLine
+                        boolsLine = $"{sqlCommand} INTO `weenie_properties_bool` (`object_Id`, `type`, `value`)" + Environment.NewLine
                             + "VALUES " + boolsLine.TrimStart("     ,".ToCharArray());
                         boolsLine = boolsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(boolsLine);
                     }
                     if (spellsLine != "")
                     {
-                        spellsLine = $"{sqlCommand} INTO `ace_object_properties_spell` (`aceObjectId`, `spellId`, `probability`)" + Environment.NewLine
+                        spellsLine = $"{sqlCommand} INTO `weenie_properties_spell_book` (`object_Id`, `spell`, `probability`)" + Environment.NewLine
                             + "VALUES " + spellsLine.TrimStart("     ,".ToCharArray());
                         spellsLine = spellsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(spellsLine);
                     }
                     if (attributesLine != "")
                     {
-                        attributesLine = $"{sqlCommand} INTO `ace_object_properties_attribute` (`aceObjectId`, `attributeId`, `attributeBase`)" + Environment.NewLine
+                        attributesLine = $"{sqlCommand} INTO `weenie_properties_attribute` (`object_Id`, `type`, `init_Level`)" + Environment.NewLine
                             + "VALUES " + attributesLine.TrimStart("     ,".ToCharArray());
                         attributesLine = attributesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(attributesLine);
                     }
                     if (attribute2ndsLine != "")
                     {
-                        attribute2ndsLine = $"{sqlCommand} INTO `ace_object_properties_attribute2nd` (`aceObjectId`, `attribute2ndId`, `attribute2ndValue`)" + Environment.NewLine
+                        attribute2ndsLine = $"{sqlCommand} INTO `weenie_properties_attribute_2nd` (`object_Id`, `type`, `init_Level`)" + Environment.NewLine
                             + "VALUES " + attribute2ndsLine.TrimStart("     ,".ToCharArray());
                         attribute2ndsLine = attribute2ndsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(attribute2ndsLine);
                     }
                     if (positionsLine != "")
                     {
-                        positionsLine = $"{sqlCommand} INTO `ace_position` (`aceObjectId`, `positionType`, `landblockRaw`, `posX`, `posY`, `posZ`, `qW`, `qX`, `qY`, `qZ`)" + Environment.NewLine
+                        positionsLine = $"{sqlCommand} INTO `weenie_properties_position` (`object_Id`, `position_Type`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
                             + "VALUES " + positionsLine.TrimStart("     ,".ToCharArray());
                         positionsLine = positionsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(positionsLine);
                     }
+                    if (booksLine != "")
+                    {
+                        booksLine = $"{sqlCommand} INTO `weenie_properties_book` (`object_Id`, `max_Num_Pages`, `max_Num_Chars_Per_Page`)" + Environment.NewLine
+                            + "VALUES " + booksLine.TrimStart("     ,".ToCharArray());
+                        booksLine = booksLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(booksLine);
+                    }
                     if (pagesLine != "")
                     {
-                        pagesLine = $"{sqlCommand} INTO `ace_object_properties_book` (`aceObjectId`, `page`, `authorName`, `authorAccount`, `authorId`, `ignoreAuthor`, `pageText`)" + Environment.NewLine
+                        pagesLine = $"{sqlCommand} INTO `weenie_properties_book_page_data` (`object_Id`, `page_Id`, `author_Id`, `author_Name`, `author_Account`, `ignore_Author`, `page_Text`)" + Environment.NewLine
                             + "VALUES " + pagesLine.TrimStart("     ,".ToCharArray());
                         pagesLine = pagesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(pagesLine);
                     }
                     if (instancesLine != "")
                     {
-                        instancesLine = $"{sqlCommand} INTO `ace_object_inventory` (`aceObjectId`, `destinationType`, `weenieClassId`, `stackSize`, `palette`, `shade`, `tryToBond`)" + Environment.NewLine
+                        instancesLine = $"{sqlCommand} INTO `weenie_properties_create_list` (`object_Id`, `destination_Type`, `weenie_Class_Id`, `stack_Size`, `palette`, `shade`, `try_To_Bond`)" + Environment.NewLine
                             + "VALUES " + instancesLine.TrimStart("     ,".ToCharArray());
                         instancesLine = instancesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(instancesLine);
                     }
                     if (profilesLine != "")
                     {
-                        profilesLine = $"{sqlCommand} INTO `ace_object_generator_profile` (`aceObjectId`, `probability`, `weenieClassId`, `delay`, `initCreate`, `maxCreate`, `whenCreate`, `whereCreate`, `stackSize`, `paletteId`, `shade`, `landblockRaw`, `posX`, `posY`, `posZ`, `qW`, `qX`, `qY`, `qZ`)" + Environment.NewLine
+                        profilesLine = $"{sqlCommand} INTO `weenie_properties_generator` (`object_Id`, `probability`, `weenie_Class_Id`, `delay`, `init_Create`, `max_Create`, `when_Create`, `where_Create`, `stack_Size`, `palette_Id`, `shade`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
                             + "VALUES " + profilesLine.TrimStart("     ,".ToCharArray());
                         profilesLine = profilesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(profilesLine);
@@ -703,11 +717,11 @@ namespace PhatACCacheBinParser
                     int slotId = 1;
                     foreach (var link in targets)
                     {
-                        targetsLine += $"UPDATE `ace_landblock` SET `linkSlot`='{slotId}', `linkSource`='1' WHERE `preassignedGuid`='{link.Key}'; /* {instanceNames[link.Key]} */" + Environment.NewLine; //+
+                        targetsLine += $"UPDATE `landblock_instances` SET `link_Slot`='{slotId}', `link_Controller`={true} WHERE `guid`='{link.Key}'; /* {instanceNames[link.Key]} */" + Environment.NewLine; //+
 
                         foreach (var source in link.Value)
                         {
-                            sourcesLine += $"UPDATE `ace_landblock` SET `linkSlot`='{slotId}' WHERE `preassignedGuid`='{source}'; /* {instanceNames[link.Key]} <- {instanceNames[source]} */" + Environment.NewLine;
+                            sourcesLine += $"UPDATE `landblock_instances` SET `link_Slot`='{slotId}' WHERE `guid`='{source}'; /* {instanceNames[link.Key]} <- {instanceNames[source]} */" + Environment.NewLine;
                         }
 
                         slotId++;
@@ -715,7 +729,7 @@ namespace PhatACCacheBinParser
 
                     if (instanceLine != "")
                     {
-                        instanceLine = $"{sqlCommand} INTO `ace_landblock` (`weenieClassId`, `preassignedGuid`, `landblockRaw`, `posX`, `posY`, `posZ`, `qW`, `qX`, `qY`, `qZ`)" + Environment.NewLine
+                        instanceLine = $"{sqlCommand} INTO `landblock_instances` (`weenie_Class_Id`, `guid`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
                             + "VALUES " + instanceLine.TrimStart("     ,".ToCharArray());
                         instanceLine = instanceLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(instanceLine);

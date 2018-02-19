@@ -40,22 +40,22 @@ namespace PhatACCacheBinParser.Enums
     public enum STypeAttribute
     {
         UNDEF_ATTRIBUTE,
-        STRENGTH_ATTRIBUTE = 1,
-        ENDURANCE_ATTRIBUTE = 2,
-        QUICKNESS_ATTRIBUTE = 8,
-        COORDINATION_ATTRIBUTE = 4,
-        FOCUS_ATTRIBUTE = 16,
-        SELF_ATTRIBUTE = 32
+        STRENGTH_ATTRIBUTE,
+        ENDURANCE_ATTRIBUTE,
+        QUICKNESS_ATTRIBUTE,
+        COORDINATION_ATTRIBUTE,
+        FOCUS_ATTRIBUTE,
+        SELF_ATTRIBUTE
     }
 
     public enum STypeAttribute2nd
     {
         UNDEF_ATTRIBUTE_2ND,
-        MAX_HEALTH_ATTRIBUTE_2ND = 64,
+        MAX_HEALTH_ATTRIBUTE_2ND,
         HEALTH_ATTRIBUTE_2ND,
-        MAX_STAMINA_ATTRIBUTE_2ND = 128,
+        MAX_STAMINA_ATTRIBUTE_2ND,
         STAMINA_ATTRIBUTE_2ND,
-        MAX_MANA_ATTRIBUTE_2ND = 256,
+        MAX_MANA_ATTRIBUTE_2ND,
         MANA_ATTRIBUTE_2ND
     }
 
