@@ -31,7 +31,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public Dictionary<int, Position> PositionValues;
 
-		public Dictionary<int, int> IIDValues;
+		public Dictionary<int, uint> IIDValues;
 
 		// _cache_bin_parse_9_8
 		public uint WCID;
