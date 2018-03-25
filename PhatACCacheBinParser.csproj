@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Appraisal.cs" />
+    <Compile Include="Enums\Emote.cs" />
+    <Compile Include="Enums\PacketOpcode.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Enums\Inventory.cs" />
+    <Compile Include="Enums\Combat.cs" />
     <Compile Include="Enums\Item.cs" />
     <Compile Include="Enums\Physics.cs" />
     <Compile Include="Enums\Spells.cs" />

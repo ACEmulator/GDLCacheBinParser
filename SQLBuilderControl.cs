@@ -381,8 +381,9 @@ namespace PhatACCacheBinParser
                            $"VALUES ({parsed.WCID}, '{weenieName}', /* {Enum.GetName(typeof(WeenieType), parsed.WeenieType)} */ {parsed.WeenieType});" + Environment.NewLine;
                     writer.WriteLine(line);
                     string intsLine = "", bigintsLine = "", floatsLine = "", boolsLine = "", strsLine = "", didsLine = "", iidsLine = "";
-                    string skillsLine = "", attributesLine = "", attribute2ndsLine = "", bodyDamageValuesLine = "", bodyDamageVariancesLine = "", bodyArmorValuesLine = "", numsLine = "";
+                    string skillsLine = "", attributesLine = "", attribute2ndsLine = ""; //, bodyDamageValuesLine = "", bodyDamageVariancesLine = "", bodyArmorValuesLine = "", numsLine = "";
                     string spellsLine = "", positionsLine = "", pagesLine = "", instancesLine = "", profilesLine = "", booksLine = "";
+                    string bodyPartsLine = "", eventsLine = "", emoteCategorysLine = "", emoteActionsLine = "";
                     //line = $"{sqlCommand} INTO `ace_object` (`" +
                     //    "aceObjectId`, `aceObjectDescriptionFlags`, " +
                     //    "`weenieClassId`" +
@@ -460,18 +461,18 @@ namespace PhatACCacheBinParser
                     }
                     if (parsed.Attributes != null)
                     {
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.STRENGTH_ATTRIBUTE}, {(uint)parsed.Attributes.Strength.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.STRENGTH_ATTRIBUTE)} */" + Environment.NewLine;
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.ENDURANCE_ATTRIBUTE}, {(uint)parsed.Attributes.Endurance.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.ENDURANCE_ATTRIBUTE)} */" + Environment.NewLine;
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.COORDINATION_ATTRIBUTE}, {(uint)parsed.Attributes.Coordination.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.COORDINATION_ATTRIBUTE)} */" + Environment.NewLine;
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.QUICKNESS_ATTRIBUTE}, {(uint)parsed.Attributes.Quickness.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.QUICKNESS_ATTRIBUTE)} */" + Environment.NewLine;
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.FOCUS_ATTRIBUTE}, {(uint)parsed.Attributes.Focus.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.FOCUS_ATTRIBUTE)} */" + Environment.NewLine;
-                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.SELF_ATTRIBUTE}, {(uint)parsed.Attributes.Self.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.SELF_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.STRENGTH_ATTRIBUTE}, {(uint)parsed.Attributes.Strength.InitLevel}, {parsed.Attributes.Strength.LevelFromCP}, {parsed.Attributes.Strength.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.STRENGTH_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.ENDURANCE_ATTRIBUTE}, {(uint)parsed.Attributes.Endurance.InitLevel}, {parsed.Attributes.Endurance.LevelFromCP}, {parsed.Attributes.Endurance.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.ENDURANCE_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.COORDINATION_ATTRIBUTE}, {(uint)parsed.Attributes.Coordination.InitLevel}, {parsed.Attributes.Coordination.LevelFromCP}, {parsed.Attributes.Coordination.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.COORDINATION_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.QUICKNESS_ATTRIBUTE}, {(uint)parsed.Attributes.Quickness.InitLevel}, {parsed.Attributes.Quickness.LevelFromCP}, {parsed.Attributes.Quickness.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.QUICKNESS_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.FOCUS_ATTRIBUTE}, {(uint)parsed.Attributes.Focus.InitLevel}, {parsed.Attributes.Focus.LevelFromCP}, {parsed.Attributes.Focus.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.FOCUS_ATTRIBUTE)} */" + Environment.NewLine;
+                        attributesLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute.SELF_ATTRIBUTE}, {(uint)parsed.Attributes.Self.InitLevel}, {parsed.Attributes.Self.LevelFromCP}, {parsed.Attributes.Self.CPSpent}) /* {Enum.GetName(typeof(STypeAttribute), STypeAttribute.SELF_ATTRIBUTE)} */" + Environment.NewLine;
                         ////attribute2ndsLine += $"     , ({parsed.i_objid}, {(uint)STypeAttribute2nd.HEALTH_ATTRIBUTE_2ND}, {(uint)parsed.i_prof._creatureProfileTable._health})" + Environment.NewLine;
                         ////attribute2ndsLine += $"     , ({parsed.i_objid}, {(uint)STypeAttribute2nd.STAMINA_ATTRIBUTE_2ND}, {(uint)parsed.i_prof._creatureProfileTable._stamina})" + Environment.NewLine;
                         ////attribute2ndsLine += $"     , ({parsed.i_objid}, {(uint)STypeAttribute2nd.MANA_ATTRIBUTE_2ND}, {(uint)parsed.i_prof._creatureProfileTable._mana})" + Environment.NewLine;
-                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_HEALTH_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Health.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_HEALTH_ATTRIBUTE_2ND)} */" + Environment.NewLine;
-                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_STAMINA_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Stamina.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_STAMINA_ATTRIBUTE_2ND)} */" + Environment.NewLine;
-                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_MANA_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Mana.InitLevel}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_MANA_ATTRIBUTE_2ND)} */" + Environment.NewLine;
+                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_HEALTH_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Health.InitLevel}, {parsed.Attributes.Health.LevelFromCP}, {parsed.Attributes.Health.CPSpent}, {parsed.Attributes.Health.Current}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_HEALTH_ATTRIBUTE_2ND)} */" + Environment.NewLine;
+                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_STAMINA_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Stamina.InitLevel}, {parsed.Attributes.Stamina.LevelFromCP}, {parsed.Attributes.Stamina.CPSpent}, {parsed.Attributes.Stamina.Current}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_STAMINA_ATTRIBUTE_2ND)} */" + Environment.NewLine;
+                        attribute2ndsLine += $"     , ({parsed.WCID}, {(uint)STypeAttribute2nd.MAX_MANA_ATTRIBUTE_2ND}, {(uint)parsed.Attributes.Mana.InitLevel}, {parsed.Attributes.Mana.LevelFromCP}, {parsed.Attributes.Mana.CPSpent}, {parsed.Attributes.Mana.Current}) /* {Enum.GetName(typeof(STypeAttribute2nd), STypeAttribute2nd.MAX_MANA_ATTRIBUTE_2ND)} */" + Environment.NewLine;
                     }
                     if (parsed.PositionValues != null)
                     {
@@ -519,6 +520,79 @@ namespace PhatACCacheBinParser
                             $", {profile.Position.ObjCellID}, {profile.Position.Origin.X}, {profile.Position.Origin.Y}, {profile.Position.Origin.Z}" +
                             $", {profile.Position.Angles.W}, {profile.Position.Angles.X}, {profile.Position.Angles.Y}, {profile.Position.Angles.Z})" +
                             $"/* Generate {label} (x{profile.InitCreate.ToString("N0")} up to max of {profile.MaxNum.ToString("N0")}) - {Enum.GetName(typeof(RegenerationType), profile.WhenCreate)} - {Enum.GetName(typeof(RegenLocationType), profile.WhereCreate)} */" + Environment.NewLine;
+                        }
+                    }
+
+                    if (parsed.BodyParts != null)
+                    {
+                        foreach (var bodypart in parsed.BodyParts)
+                        {
+                            //(`object_Id`, `key`, `d_Type`, `d_Val`, `d_Var`, `base_Armor`, `armor_Vs_Slash`, `armor_Vs_Pierce`, `armor_Vs_Bludgeon`, `armor_Vs_Cold`, `armor_Vs_Fire`, `armor_Vs_Acid`, `armor_Vs_Electric`, `armor_Vs_Nether`, `b_h`, `h_l_f`, `m_l_f`, `l_l_f`, `h_r_f`, `m_r_f`, `l_r_f`, `h_l_b`, `m_l_b`, `l_l_b`, `h_r_b`, `m_r_b`, `l_r_b`)
+                            bodyPartsLine += $"     , ({parsed.WCID}, {bodypart.Key}, {bodypart.Value.DType}, {bodypart.Value.DVal}, {bodypart.Value.DVar}, {bodypart.Value.ArmorValues.BaseArmor}, {bodypart.Value.ArmorValues.ArmorVsSlash}, {bodypart.Value.ArmorValues.ArmorVsPierce}, {bodypart.Value.ArmorValues.ArmorVsBludgeon}, {bodypart.Value.ArmorValues.ArmorVsCold}, {bodypart.Value.ArmorValues.ArmorVsFire}, {bodypart.Value.ArmorValues.ArmorVsAcid}, {bodypart.Value.ArmorValues.ArmorVsElectric}, {bodypart.Value.ArmorValues.ArmorVsNether}, {bodypart.Value.BH}, {bodypart.Value.SD.HLF}, {bodypart.Value.SD.MLF}, {bodypart.Value.SD.LLF}, {bodypart.Value.SD.HRF}, {bodypart.Value.SD.MRF}, {bodypart.Value.SD.LRF}, {bodypart.Value.SD.HLB}, {bodypart.Value.SD.MLB}, {bodypart.Value.SD.LLB}, {bodypart.Value.SD.HRB}, {bodypart.Value.SD.MRB}, {bodypart.Value.SD.LRB}) " + $"/* {Enum.GetName(typeof(Enums.BodyPart), bodypart.Key)} */" + Environment.NewLine;
+                        }
+                    }
+
+                    if (parsed.EventFilters != null)
+                    {
+                        foreach (var filter in parsed.EventFilters)
+                        {
+                            eventsLine += $"     , ({parsed.WCID}, {filter}) " + $"/* {Enum.GetName(typeof(PacketOpcode), filter)} */" + Environment.NewLine;
+                        }
+                    }
+
+                    if (parsed.Skills != null)
+                    {
+                        //(`object_Id`, `type`, `level_From_P_P`, `adjust_P_P`, `s_a_c`, `p_p`, `init_Level`, `resistance_At_Last_Check`, `last_Used_Time`)
+                        foreach (var skill in parsed.Skills)
+                        {
+                            skillsLine += $"     , ({parsed.WCID}, {skill.Key}, {skill.Value.LevelFromPP}, {skill.Value.Sac}, {skill.Value.PP}, {skill.Value.InitLevel}, {skill.Value.ResistanceAtLastCheck}, {skill.Value.LastUsedTime}) " + $"/* {Enum.GetName(typeof(STypeSkill), skill.Key)} */" + Environment.NewLine;
+                        }
+                    }
+
+                    if (parsed.Emotes != null)
+                    {
+                        foreach (var emote in parsed.Emotes)
+                        {
+                            var emoteSetId = 0;
+                            foreach (var category in emote.Value)
+                            {
+                                //(`object_Id`, `category`, `probability`, `weenie_Class_Id`, `style`, `substyle`, `quest`, `vendor_Type`, `min_Health`, `max_Health`)
+                                string quest = "";
+                                if (category.Quest != null)
+                                {
+                                    quest = category.Quest.ToString().Replace("'", "''");
+                                    quest = quest.Insert(0, "'").Insert(quest.Length + 1, "'");
+                                }
+                                emoteCategorysLine += $"     , ({parsed.WCID}, {category.Probability}, {category.Category}, {emoteSetId}, {((category.ClassID.HasValue) ? category.ClassID.ToString() : "NULL")}, {((category.Style.HasValue) ? category.Style.ToString() : "NULL")}, {((category.Substyle.HasValue) ? category.Substyle.ToString() : "NULL")}, {((category.Quest != null) ? quest : "NULL")}, {((category.VendorType.HasValue) ? category.VendorType.ToString() : "NULL")}, {((category.MinHealth.HasValue) ? category.MinHealth.ToString() : "NULL")}, {((category.MaxHealth.HasValue) ? category.MaxHealth.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteCategory), category.Category)} */" + Environment.NewLine;
+                                if (category.EmoteActions != null)
+                                {
+                                    var order = 0;
+                                    foreach (var action in category.EmoteActions)
+                                    {
+                                        //(`object_Id`, `emote_Category`, `type`, `order`, `delay`, `extent`, `motion`, `message`, `test_String`, `min`, `max`, `min_64`, `max_64`, `min_Dbl`, `max_Dbl`, `stat`, `display`, `amount`, `amount_64`, `hero_X_P_64`, `percent`, `spell_Id`, `wealth_Rating`, `treasure_Class`, `treasure_Type`, `p_Script`, `sound`, `destination_Type`, `weenie_Class_Id`, `stack_Size`, `palette`, `shade`, `try_To_Bond`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)
+                                        string message = "";
+                                        if (action.Message != null)
+                                        {
+                                            message = action.Message.ToString().Replace("'", "''");
+                                            message = message.Insert(0, "'").Insert(message.Length + 1, "'");
+                                        }
+                                        string testString = "";
+                                        if (action.TestString != null)
+                                        {
+                                            testString = action.TestString.ToString().Replace("'", "''");
+                                            testString = testString.Insert(0, "'").Insert(testString.Length + 1, "'");
+                                        }
+                                        if (action.Position != null)
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                        else if (action.Frame != null)
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.X.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Y.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Z.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.W.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.X.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Y.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                        else
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                        order++;
+                                    }
+                                }
+                                emoteSetId++;
+                            }
                         }
                     }
 
@@ -582,14 +656,14 @@ namespace PhatACCacheBinParser
                     }
                     if (attributesLine != "")
                     {
-                        attributesLine = $"{sqlCommand} INTO `weenie_properties_attribute` (`object_Id`, `type`, `init_Level`)" + Environment.NewLine
+                        attributesLine = $"{sqlCommand} INTO `weenie_properties_attribute` (`object_Id`, `type`, `init_Level`, `level_From_C_P`, `c_P_Spent`)" + Environment.NewLine
                             + "VALUES " + attributesLine.TrimStart("     ,".ToCharArray());
                         attributesLine = attributesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(attributesLine);
                     }
                     if (attribute2ndsLine != "")
                     {
-                        attribute2ndsLine = $"{sqlCommand} INTO `weenie_properties_attribute_2nd` (`object_Id`, `type`, `init_Level`)" + Environment.NewLine
+                        attribute2ndsLine = $"{sqlCommand} INTO `weenie_properties_attribute_2nd` (`object_Id`, `type`, `init_Level`, `level_From_C_P`, `c_P_Spent`, `current_Level`)" + Environment.NewLine
                             + "VALUES " + attribute2ndsLine.TrimStart("     ,".ToCharArray());
                         attribute2ndsLine = attribute2ndsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(attribute2ndsLine);
@@ -628,6 +702,42 @@ namespace PhatACCacheBinParser
                             + "VALUES " + profilesLine.TrimStart("     ,".ToCharArray());
                         profilesLine = profilesLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(profilesLine);
+                    }
+                    if (bodyPartsLine != "")
+                    {
+                        bodyPartsLine = $"{sqlCommand} INTO `weenie_properties_body_part` (`object_Id`, `key`, `d_Type`, `d_Val`, `d_Var`, `base_Armor`, `armor_Vs_Slash`, `armor_Vs_Pierce`, `armor_Vs_Bludgeon`, `armor_Vs_Cold`, `armor_Vs_Fire`, `armor_Vs_Acid`, `armor_Vs_Electric`, `armor_Vs_Nether`, `b_h`, `h_l_f`, `m_l_f`, `l_l_f`, `h_r_f`, `m_r_f`, `l_r_f`, `h_l_b`, `m_l_b`, `l_l_b`, `h_r_b`, `m_r_b`, `l_r_b`)" + Environment.NewLine
+                            + "VALUES " + bodyPartsLine.TrimStart("     ,".ToCharArray());
+                        bodyPartsLine = bodyPartsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(bodyPartsLine);
+                    }
+                    if (eventsLine != "")
+                    {
+                        eventsLine = $"{sqlCommand} INTO `weenie_properties_event_filter` (`object_Id`, `event`)" + Environment.NewLine
+                            + "VALUES " + eventsLine.TrimStart("     ,".ToCharArray());
+                        eventsLine = eventsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(eventsLine);
+                    }
+                    if (skillsLine != "")
+                    {
+                        //skillsLine = $"{sqlCommand} INTO `weenie_properties_skill` (`object_Id`, `type`, `level_From_P_P`, `adjust_P_P`, `s_a_c`, `p_p`, `init_Level`, `resistance_At_Last_Check`, `last_Used_Time`)" + Environment.NewLine
+                        skillsLine = $"{sqlCommand} INTO `weenie_properties_skill` (`object_Id`, `type`, `level_From_P_P`, `s_a_c`, `p_p`, `init_Level`, `resistance_At_Last_Check`, `last_Used_Time`)" + Environment.NewLine
+                            + "VALUES " + skillsLine.TrimStart("     ,".ToCharArray());
+                        skillsLine = skillsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(skillsLine);
+                    }
+                    if (emoteCategorysLine != "")
+                    {
+                        emoteCategorysLine = $"{sqlCommand} INTO `weenie_properties_emote` (`object_Id`, `probability`, `category`, `emote_Set_Id`, `weenie_Class_Id`, `style`, `substyle`, `quest`, `vendor_Type`, `min_Health`, `max_Health`)" + Environment.NewLine
+                            + "VALUES " + emoteCategorysLine.TrimStart("     ,".ToCharArray());
+                        emoteCategorysLine = emoteCategorysLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(emoteCategorysLine);
+                    }
+                    if (emoteActionsLine != "")
+                    {
+                        emoteActionsLine = $"{sqlCommand} INTO `weenie_properties_emote_action` (`object_Id`, `emote_Category`, `emote_Set_Id`, `order`, `type`, `delay`, `extent`, `motion`, `message`, `test_String`, `min`, `max`, `min_64`, `max_64`, `min_Dbl`, `max_Dbl`, `stat`, `display`, `amount`, `amount_64`, `hero_X_P_64`, `percent`, `spell_Id`, `wealth_Rating`, `treasure_Class`, `treasure_Type`, `p_Script`, `sound`, `destination_Type`, `weenie_Class_Id`, `stack_Size`, `palette`, `shade`, `try_To_Bond`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
+                            + "VALUES " + emoteActionsLine.TrimStart("     ,".ToCharArray());
+                        emoteActionsLine = emoteActionsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(emoteActionsLine);
                     }
                     var counter = Interlocked.Increment(ref processedCounter);
                     if ((counter % 1000) == 0)
