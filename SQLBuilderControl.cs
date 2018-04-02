@@ -12,7 +12,7 @@ using PhatACCacheBinParser.Seg5_HousingPortals;
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 using PhatACCacheBinParser.Seg8_QuestDefDB;
 using PhatACCacheBinParser.Seg9_WeenieDefaults;
-using PhatACCacheBinParser.SegA;
+using PhatACCacheBinParser.SegA_MutationFilters;
 
 namespace PhatACCacheBinParser
 {
@@ -33,7 +33,7 @@ namespace PhatACCacheBinParser
 		// Segment 7
 		private readonly QuestDefDB QuestDefDB = new QuestDefDB();
 		private readonly WeenieDefaults WeenieDefaults = new WeenieDefaults();
-		private readonly UnknownATables UnknownATables = new UnknownATables();
+		private readonly MutationFilters UnknownATables = new MutationFilters();
 		// Segment B
 
 

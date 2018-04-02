@@ -13,7 +13,7 @@ using PhatACCacheBinParser.Seg5_HousingPortals;
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 using PhatACCacheBinParser.Seg8_QuestDefDB;
 using PhatACCacheBinParser.Seg9_WeenieDefaults;
-using PhatACCacheBinParser.SegA;
+using PhatACCacheBinParser.SegA_MutationFilters;
 
 namespace PhatACCacheBinParser
 {
@@ -62,7 +62,7 @@ namespace PhatACCacheBinParser
 			parserControl9.DoParse += ParserControl9_DoParse;
 
 			parserControlA.ProperyName = "_A";
-			parserControlA.Label = "A Unknown";
+			parserControlA.Label = "A MutationFilters";
 			parserControlA.DoParse += ParserControlA_DoParse;
 		}
 
@@ -137,7 +137,7 @@ namespace PhatACCacheBinParser
 
 		private void ParserControlA_DoParse(ParserControl parserControl)
 		{
-			ParserControl_DoParse<UnknownATables>(parserControl);
+			ParserControl_DoParse<MutationFilters>(parserControl);
 		}
 
 		private void ParserControl_DoParse<T>(ParserControl parserControl) where T : Segment, new()
