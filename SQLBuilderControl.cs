@@ -1231,7 +1231,7 @@ namespace PhatACCacheBinParser
                     }
 
                     spellLineHdr += $")" + Environment.NewLine + "VALUES ";
-                    spellLine += $")";
+                    spellLine += $");";
 
                     if (spellLine != "")
                     {
