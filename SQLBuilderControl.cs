@@ -898,5 +898,415 @@ namespace PhatACCacheBinParser
                 }));
             });
         }
+
+        private void WriteSpellFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            //uint highestWeenieFound = 0;
+
+            //Parallel.For(0, parsedObjects.Count, i =>
+            foreach (var spell in SpellTableExtendedData.Spells)
+            {
+                string FileNameFormatter(Spell obj) => obj.ID.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
+
+                string fileNameFormatter = FileNameFormatter(spell);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    // var parsed = parsedObjects[i] as Landblock;
+                    var parsed = spell;
+
+                    string spellLine = "";
+                    //`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`
+
+                    spellLine = $"     , ({spell.ID}, '{spell.Name.Replace("'", "''")}', '{spell.Description.Replace("'", "''")}', {(int)spell.School} /* {Enum.GetName(typeof(School), spell.School)} */, {spell.IconID}, {spell.Category} , {spell.Bitfield}, {spell.Mana}, {spell.RangeConstant}, {spell.RangeMod}, {spell.Power}, {spell.EconomyMod}, {spell.FormulaVersion}, {spell.ComponentLoss}, {(int)spell.MetaSpellType} /* {Enum.GetName(typeof(Enums.SpellType), spell.MetaSpellType)} */, {spell.MetaSpellId}, {spell.SpellFormula.Comps[0]}, {spell.SpellFormula.Comps[1]}, {spell.SpellFormula.Comps[2]}, {spell.SpellFormula.Comps[3]}, {spell.SpellFormula.Comps[4]}, {spell.SpellFormula.Comps[5]}, {spell.SpellFormula.Comps[6]}, {spell.SpellFormula.Comps[7]}, {spell.CasterEffect}, {spell.TargetEffect}, {spell.FizzleEffect}, {spell.RecoveryInterval}, {spell.RecoveryAmount}, {spell.DisplayOrder}, {spell.NonComponentTargetType}, {spell.ManaMod}";
+
+                    if (spell.Duration.HasValue)
+                        spellLine += $", {spell.Duration}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DegradeModifier.HasValue)
+                        spellLine += $", {spell.DegradeModifier}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DegradeLimit.HasValue)
+                        spellLine += $", {spell.DegradeLimit}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.SpellStatMod != null)
+                        spellLine += $", {spell.SpellStatMod.Type} /* {Enum.GetName(typeof(StatType), spell.SpellStatMod.Type)} */, {spell.SpellStatMod.Key}, {spell.SpellStatMod.Val}";
+                    else
+                        spellLine += $", NULL, NULL, NULL";
+
+                    if (spell.EType.HasValue)
+                        spellLine += $", {spell.EType}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.BaseIntensity.HasValue)
+                        spellLine += $", {spell.BaseIntensity}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Variance.HasValue)
+                        spellLine += $", {spell.Variance}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.WCID.HasValue)
+                        spellLine += $", {spell.WCID} /* {weenieNames[spell.WCID.Value]} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.NumProjectiles.HasValue)
+                        spellLine += $", {spell.NumProjectiles}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.NumProjectilesVariance.HasValue)
+                        spellLine += $", {spell.NumProjectilesVariance}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.SpreadAngle.HasValue)
+                        spellLine += $", {spell.SpreadAngle}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.VerticalAngle.HasValue)
+                        spellLine += $", {spell.VerticalAngle}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DefaultLaunchAngle.HasValue)
+                        spellLine += $", {spell.DefaultLaunchAngle}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.NonTracking.HasValue)
+                        spellLine += $", {spell.NonTracking}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.CreateOffset != null)
+                        spellLine += $", {spell.CreateOffset.X}, {spell.CreateOffset.Y}, {spell.CreateOffset.Z}";
+                    else
+                        spellLine += $", NULL, NULL, NULL";
+
+                    if (spell.Padding != null)
+                        spellLine += $", {spell.Padding.X}, {spell.Padding.Y}, {spell.Padding.Z}";
+                    else
+                        spellLine += $", NULL, NULL, NULL";
+
+                    if (spell.Dims != null)
+                        spellLine += $", {spell.Dims.X}, {spell.Dims.Y}, {spell.Dims.Z}";
+                    else
+                        spellLine += $", NULL, NULL, NULL";
+
+                    if (spell.Peturbation != null)
+                        spellLine += $", {spell.Peturbation.X}, {spell.Peturbation.Y}, {spell.Peturbation.Z}";
+                    else
+                        spellLine += $", NULL, NULL, NULL";
+
+                    if (spell.ImbuedEffect.HasValue)
+                        spellLine += $", {spell.ImbuedEffect} /* {Enum.GetName(typeof(ImbuedEffectType), spell.ImbuedEffect)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.SlayerCreatureType.HasValue)
+                        spellLine += $", {spell.SlayerCreatureType} /* {Enum.GetName(typeof(CreatureType), spell.SlayerCreatureType)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.SlayerDamageBonus.HasValue)
+                        spellLine += $", {spell.SlayerDamageBonus}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.CritFreq.HasValue)
+                        spellLine += $", {spell.CritFreq}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.CritMultiplier.HasValue)
+                        spellLine += $", {spell.CritMultiplier}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.IgnoreMagicResist.HasValue)
+                        spellLine += $", {spell.IgnoreMagicResist}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.ElementalModifier.HasValue)
+                        spellLine += $", {spell.ElementalModifier}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DrainPercentage.HasValue)
+                        spellLine += $", {spell.DrainPercentage}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DamageRatio.HasValue)
+                        spellLine += $", {spell.DamageRatio}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DamageType.HasValue)
+                        spellLine += $", {(int)spell.DamageType} /* {Enum.GetName(typeof(DAMAGE_TYPE), spell.DamageType)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Boost.HasValue)
+                        spellLine += $", {spell.Boost}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.BoostVariance.HasValue)
+                        spellLine += $", {spell.BoostVariance}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Source.HasValue)
+                        spellLine += $", {(int)spell.Source} /* {Enum.GetName(typeof(STypeAttribute2nd), spell.Source)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Destination.HasValue)
+                        spellLine += $", {(int)spell.Destination} /* {Enum.GetName(typeof(STypeAttribute2nd), spell.Destination)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Proportion.HasValue)
+                        spellLine += $", {spell.Proportion}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.LossPercent.HasValue)
+                        spellLine += $", {spell.LossPercent}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.SourceLoss.HasValue)
+                        spellLine += $", {spell.SourceLoss}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.TransferCap.HasValue)
+                        spellLine += $", {spell.TransferCap}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.MaxBoostAllowed.HasValue)
+                        spellLine += $", {spell.MaxBoostAllowed}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.TransferBitfield.HasValue)
+                        spellLine += $", {spell.TransferBitfield}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Index.HasValue)
+                        spellLine += $", {spell.Index}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.PortalLifetime.HasValue)
+                        spellLine += $", {spell.PortalLifetime}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Link.HasValue)
+                        spellLine += $", {spell.Link}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Position != null)
+                        spellLine += $", {spell.Position.ObjCellID}, {spell.Position.Origin.X}, {spell.Position.Origin.Y}, {spell.Position.Origin.Z}, {spell.Position.Angles.W}, {spell.Position.Angles.X}, {spell.Position.Angles.Y}, {spell.Position.Angles.Z}";
+                    else
+                        spellLine += $", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL";
+
+                    if (spell.MinPower.HasValue)
+                        spellLine += $", {spell.MinPower}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.MaxPower.HasValue)
+                        spellLine += $", {spell.MaxPower}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.PowerVariance.HasValue)
+                        spellLine += $", {spell.PowerVariance}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.DispelSchool.HasValue)
+                        spellLine += $", {(int)spell.DispelSchool} /* {Enum.GetName(typeof(School), spell.DispelSchool)} */";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Align.HasValue)
+                        spellLine += $", {spell.Align}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.Number.HasValue)
+                        spellLine += $", {spell.Number}";
+                    else
+                        spellLine += $", NULL";
+
+                    if (spell.NumberVariance.HasValue)
+                        spellLine += $", {spell.NumberVariance}";
+                    else
+                        spellLine += $", NULL";
+
+                    spellLine += $") /*  */" + Environment.NewLine;
+
+                    if (spellLine != "")
+                    {
+                        spellLine = $"{sqlCommand} INTO `spell` (`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`, `duration`, `degrade_Modifier`, `degrade_Limit`, `stat_Mod_Type`, `stat_Mod_Key`, `stat_Mod_Val`, `e_Type`, `base_Intensity`, `variance`, `wcid`, `num_Projectiles`, `num_Projectiles_Variance`, `spread_Angle`, `vertical_Angle`, `default_Launch_Angle`, `non_Tracking`, `create_Offset_Origin_X`, `create_Offset_Origin_Y`, `create_Offset_Origin_Z`, `padding_Origin_X`, `padding_Origin_Y`, `padding_Origin_Z`, `dims_Origin_X`, `dims_Origin_Y`, `dims_Origin_Z`, `peturbation_Origin_X`, `peturbation_Origin_Y`, `peturbation_Origin_Z`, `imbued_Effect`, `slayer_Creature_Type`, `slayer_Damage_Bonus`, `crit_Freq`, `crit_Multiplier`, `ignore_Magic_Resist`, `elemental_Modifier`, `drain_Percentage`, `damage_Ratio`, `damage_Type`, `boost`, `boost_Variance`, `source`, `destination`, `proportion`, `loss_Percent`, `source_Loss`, `transfer_Cap`, `max_Boost_Allowed`, `transfer_Bitfield`, `index`, `portal_Lifetime`, `link`, `position_Obj_Cell_ID`, `position_Origin_X`, `position_Origin_Y`, `position_Origin_Z`, `position_Angles_W`, `position_Angles_X`, `position_Angles_Y`, `position_Angles_Z`, `min_Power`, `max_Power`, `power_Variance`, `dispel_School`, `align`, `number`, `number_Variance`)" + Environment.NewLine
+                            + "VALUES " + spellLine.TrimStart("     ,".ToCharArray());
+                        spellLine = spellLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(spellLine);
+                    }
+
+                    //string instanceLine = "", sourcesLine = "", targetsLine = "";
+
+                    //Dictionary<uint, List<uint>> targets = new Dictionary<uint, List<uint>>();
+
+                    //Dictionary<uint, string> instanceNames = new Dictionary<uint, string>();
+
+                    //if (parsed. != null)
+                    //{
+                    //    foreach (var instance in parsed.Weenies)
+                    //    {
+                    //        if (instance.WCID > highestWeenieFound)
+                    //            highestWeenieFound = instance.WCID;
+
+                    //        // Somebody goofed and a guid was used in two places... I'm not sure that it ultimately was a problem on retail worlds but this fixes it for ACE
+                    //        if (instance.ID == 1975799995)
+                    //        {
+                    //            if (instance.WCID == 22775)
+                    //                instance.ID = 1975799994; // Unused guid.
+                    //        }
+
+                    //        //// ACE has a problem currently dealing with objects placed at xxxx0000 of a landblock, this moves any object to xxxx0001 for now
+                    //        //string landblockHex = instance.Position.ObjCellID.ToString("X8");
+                    //        //if (landblockHex.EndsWith("0000"))
+                    //        //{
+                    //        //    landblockHex = landblockHex.Substring(0, 4) + "0001";
+                    //        //    instance.Position.ObjCellID = Convert.ToUInt32(landblockHex, 16);
+                    //        //}
+
+                    //        instanceLine += $"     , ({instance.WCID}, {instance.ID}, " +
+                    //            $"{instance.Position.ObjCellID}, " +
+                    //            $"{instance.Position.Origin.X}, {instance.Position.Origin.Y}, {instance.Position.Origin.Z}, " +
+                    //            $"{instance.Position.Angles.W}, {instance.Position.Angles.X}, {instance.Position.Angles.Y}, {instance.Position.Angles.Z}" +
+                    //        $") /* {weenieNames[instance.WCID]} */" + Environment.NewLine;
+
+                    //        if (!instanceNames.ContainsKey(instance.ID))
+                    //            instanceNames.Add(instance.ID, weenieNames[instance.WCID]);
+                    //    }
+                    //}
+
+                    //if (parsed.Links != null)
+                    //{
+                    //    foreach (var link in parsed.Links)
+                    //    {
+                    //        if (!targets.ContainsKey(link.Target))
+                    //            targets.Add(link.Target, new List<uint>());
+
+                    //        targets[link.Target].Add(link.Source);
+                    //    }
+                    //}
+
+                    //int slotId = 1;
+                    //foreach (var link in targets)
+                    //{
+                    //    targetsLine += $"UPDATE `landblock_instances` SET `link_Slot`='{slotId}', `link_Controller`={true} WHERE `guid`='{link.Key}'; /* {instanceNames[link.Key]} */" + Environment.NewLine; //+
+
+                    //    foreach (var source in link.Value)
+                    //    {
+                    //        sourcesLine += $"UPDATE `landblock_instances` SET `link_Slot`='{slotId}' WHERE `guid`='{source}'; /* {instanceNames[link.Key]} <- {instanceNames[source]} */" + Environment.NewLine;
+                    //    }
+
+                    //    slotId++;
+                    //}
+
+                    //if (instanceLine != "")
+                    //{
+                    //    instanceLine = $"{sqlCommand} INTO `landblock_instances` (`weenie_Class_Id`, `guid`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
+                    //        + "VALUES " + instanceLine.TrimStart("     ,".ToCharArray());
+                    //    instanceLine = instanceLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                    //    writer.WriteLine(instanceLine);
+                    //}
+
+                    //if (targetsLine != "")
+                    //{
+                    //    targetsLine = targetsLine.TrimEnd(Environment.NewLine.ToCharArray()) + "" + Environment.NewLine;
+                    //    writer.WriteLine(targetsLine);
+                    //}
+
+                    //if (sourcesLine != "")
+                    //{
+                    //    sourcesLine = sourcesLine.TrimEnd(Environment.NewLine.ToCharArray()) + "" + Environment.NewLine;
+                    //    writer.WriteLine(sourcesLine);
+                    //}
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBar3.Value = (int)(((double)counter / SpellTableExtendedData.Spells.Count) * 100)));
+                }
+                //});
+            }
+
+            //parserControl.BeginInvoke((Action)(() => parserControl.WriteSQLOutputProgress = (int)(((double)processedCounter / parsedObjects.Count) * 100)));
+            //System.Diagnostics.Debug.WriteLine($"Highest Weenie Exported in WorldSpawn was: {highestWeenieFound}");
+        }
+
+        private void cmdAction3_Click(object sender, EventArgs e)
+        {
+            cmdAction3.Enabled = false;
+
+            //progressParseSources.Style = ProgressBarStyle.Continuous;
+            //progressParseSources.Value = 0;
+
+            progressBar3.Style = ProgressBarStyle.Continuous;
+            progressBar3.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                // For example
+                //foreach (var weenie in WeenieDefaults.Weenies)
+                //	;
+
+                WriteSpellFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBar3.Style = ProgressBarStyle.Continuous;
+                    progressBar3.Value = 100;
+
+                    cmdAction3.Enabled = true;
+                }));
+            });
+        }
     }
 }

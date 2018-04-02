@@ -30,10 +30,12 @@
 		{
             this.cmdParseAll = new System.Windows.Forms.Button();
             this.progressParseSources = new System.Windows.Forms.ProgressBar();
-            this.cmdAction1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.cmdAction3 = new System.Windows.Forms.Button();
+            this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.cmdAction2 = new System.Windows.Forms.Button();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.cmdAction1 = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // cmdParseAll
@@ -54,24 +56,24 @@
             this.progressParseSources.Step = 1;
             this.progressParseSources.TabIndex = 17;
             // 
-            // cmdAction1
+            // cmdAction3
             // 
-            this.cmdAction1.Enabled = false;
-            this.cmdAction1.Location = new System.Drawing.Point(3, 41);
-            this.cmdAction1.Name = "cmdAction1";
-            this.cmdAction1.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction1.TabIndex = 18;
-            this.cmdAction1.Text = "9 Weenies";
-            this.cmdAction1.UseVisualStyleBackColor = true;
-            this.cmdAction1.Click += new System.EventHandler(this.cmdAction1_Click);
+            this.cmdAction3.Enabled = false;
+            this.cmdAction3.Location = new System.Drawing.Point(3, 41);
+            this.cmdAction3.Name = "cmdAction3";
+            this.cmdAction3.Size = new System.Drawing.Size(119, 23);
+            this.cmdAction3.TabIndex = 18;
+            this.cmdAction3.Text = "2 Spells";
+            this.cmdAction3.UseVisualStyleBackColor = true;
+            this.cmdAction3.Click += new System.EventHandler(this.cmdAction3_Click);
             // 
-            // progressBar1
+            // progressBar3
             // 
-            this.progressBar1.Location = new System.Drawing.Point(125, 41);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(224, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.TabIndex = 19;
+            this.progressBar3.Location = new System.Drawing.Point(125, 41);
+            this.progressBar3.Name = "progressBar3";
+            this.progressBar3.Size = new System.Drawing.Size(224, 23);
+            this.progressBar3.Step = 1;
+            this.progressBar3.TabIndex = 19;
             // 
             // cmdAction2
             // 
@@ -92,14 +94,35 @@
             this.progressBar2.Step = 1;
             this.progressBar2.TabIndex = 21;
             // 
+            // cmdAction1
+            // 
+            this.cmdAction1.Enabled = false;
+            this.cmdAction1.Location = new System.Drawing.Point(3, 187);
+            this.cmdAction1.Name = "cmdAction1";
+            this.cmdAction1.Size = new System.Drawing.Size(119, 23);
+            this.cmdAction1.TabIndex = 22;
+            this.cmdAction1.Text = "9 Weenies";
+            this.cmdAction1.UseVisualStyleBackColor = true;
+            this.cmdAction1.Click += new System.EventHandler(this.cmdAction1_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(125, 187);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(224, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 23;
+            // 
             // SQLBuilderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cmdAction2);
-            this.Controls.Add(this.progressBar2);
             this.Controls.Add(this.cmdAction1);
             this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.cmdAction2);
+            this.Controls.Add(this.progressBar2);
+            this.Controls.Add(this.cmdAction3);
+            this.Controls.Add(this.progressBar3);
             this.Controls.Add(this.cmdParseAll);
             this.Controls.Add(this.progressParseSources);
             this.Name = "SQLBuilderControl";
@@ -112,9 +135,11 @@
 
 		private System.Windows.Forms.Button cmdParseAll;
 		private System.Windows.Forms.ProgressBar progressParseSources;
-		private System.Windows.Forms.Button cmdAction1;
-		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.Button cmdAction3;
+		private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.Button cmdAction2;
         private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.Button cmdAction1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

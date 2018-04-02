@@ -6,6 +6,209 @@ using System.Threading.Tasks;
 
 namespace PhatACCacheBinParser.Enums
 {
+    public enum EnchantmentVersion
+    {
+        Undef_EnchantmentVersion,
+        SpellSetID_EnchantmentVersion,
+        Newest_EnchantmentVersion = SpellSetID_EnchantmentVersion
+    }
+
+    public enum SpellBanks
+    {
+        SPELLCAST_BANK_1,
+        SPELLCAST_BANK_2,
+        SPELLCAST_BANK_3,
+        SPELLCAST_BANK_4,
+        SPELLCAST_BANK_5,
+        SPELLCAST_BANK_6,
+        SPELLCAST_BANK_7,
+        SPELLCAST_BANK_8,
+        NUM_SPELLCAST_BANKS
+    }
+
+    public enum SpellIndex
+    {
+        Undef_SpellIndex = 0,
+        Resistable_SpellIndex = (1 << 0),
+        PKSensitive_SpellIndex = (1 << 1),
+        Beneficial_SpellIndex = (1 << 2),
+        SelfTargeted_SpellIndex = (1 << 3),
+        Reversed_SpellIndex = (1 << 4),
+        NotIndoor_SpellIndex = (1 << 5),
+        NotOutdoor_SpellIndex = (1 << 6),
+        NotResearchable_SpellIndex = (1 << 7),
+        Projectile_SpellIndex = (1 << 8),
+        CreatureSpell_SpellIndex = (1 << 9),
+        ExcludedFromItemDescriptions_SpellIndex = (1 << 10),
+        IgnoresManaConversion_SpellIndex = (1 << 11),
+        NonTrackingProjectile_SpellIndex = (1 << 12),
+        FellowshipSpell_SpellIndex = (1 << 13),
+        FastCast_SpellIndex = (1 << 14),
+        IndoorLongRange_SpellIndex = (1 << 15),
+        DamageOverTime_SpellIndex = (1 << 16),
+        UNKNOWN_SpellIndex = (1 << 17) // There are some spells with this index but its use is unknown
+    }
+
+    public enum SpellComponentType
+    {
+        Undef_SpellComponentType,
+        Power_SpellComponentType,
+        Action_SpellComponentType,
+        ConceptPrefix_SpellComponentType,
+        ConceptSuffix_SpellComponentType,
+        Target_SpellComponentType,
+        Accent_SpellComponentType,
+        Pea_SpellComponentType
+    }
+
+    public enum SpellComponentCategory
+    {
+        Scarab_SpellComponentCategory,
+        Herb_SpellComponentCategory,
+        PowderedGem_SpellComponentCategory,
+        AlchemicalSubstance_SpellComponentCategory,
+        Talisman_SpellComponentCategory,
+        Taper_SpellComponentCategory,
+        Pea_SpellComponentCategory,
+        Num_SpellComponentCategories,
+        Undef_SpellComponentCategory
+    }
+
+    public enum SpellType
+    {
+        Undef_SpellType,
+        Enchantment_SpellType,
+        Projectile_SpellType,
+        Boost_SpellType,
+        Transfer_SpellType,
+        PortalLink_SpellType,
+        PortalRecall_SpellType,
+        PortalSummon_SpellType,
+        PortalSending_SpellType,
+        Dispel_SpellType,
+        LifeProjectile_SpellType,
+        FellowBoost_SpellType,
+        FellowEnchantment_SpellType,
+        FellowPortalSending_SpellType,
+        FellowDispel_SpellType,
+        EnchantmentProjectile_SpellType
+    }
+
+    public enum SpellSetID
+    {
+        Invalid_SpellSetID,
+        Test_SpellSetID,
+        Test_EquipmentSet_SpellSetID,
+        UNKNOWN__GUESSEDNAME, // NOTE: Missing 1
+        CarraidasBenediction_EquipmentSet_SpellSetID,
+        NobleRelic_EquipmentSet_SpellSetID,
+        AncientRelic_EquipmentSet_SpellSetID,
+        AlduressaRelic_EquipmentSet_SpellSetID,
+        Ninja_EquipmentSet_SpellSetID,
+        EmpyreanRings_EquipmentSet_SpellSetID,
+        ArmMindHeart_EquipmentSet_SpellSetID,
+        ArmorPerfectLight_EquipmentSet_SpellSetID,
+        ArmorPerfectLight2_EquipmentSet_SpellSetID,
+        Soldiers_EquipmentSet_SpellSetID,
+        Adepts_EquipmentSet_SpellSetID,
+        Archers_EquipmentSet_SpellSetID,
+        Defenders_EquipmentSet_SpellSetID,
+        Tinkers_EquipmentSet_SpellSetID,
+        Crafters_EquipmentSet_SpellSetID,
+        Hearty_EquipmentSet_SpellSetID,
+        Dexterous_EquipmentSet_SpellSetID,
+        Wise_EquipmentSet_SpellSetID,
+        Swift_EquipmentSet_SpellSetID,
+        Hardened_EquipmentSet_SpellSetID,
+        Reinforced_EquipmentSet_SpellSetID,
+        Interlocking_EquipmentSet_SpellSetID,
+        Flameproof_EquipmentSet_SpellSetID,
+        Acidproof_EquipmentSet_SpellSetID,
+        Coldproof_EquipmentSet_SpellSetID,
+        Lightningproof_EquipmentSet_SpellSetID,
+        SocietyArmor_EquipmentSet_SpellSetID,
+        ColosseumClothing_EquipmentSet_SpellSetID,
+        GraveyardClothing_EquipmentSet_SpellSetID,
+        OlthoiClothing_EquipmentSet_SpellSetID,
+        NoobieArmor_EquipmentSet_SpellSetID,
+        AetheriaDefense_EquipmentSet_SpellSetID,
+        AetheriaDestruction_EquipmentSet_SpellSetID,
+        AetheriaFury_EquipmentSet_SpellSetID,
+        AetheriaGrowth_EquipmentSet_SpellSetID,
+        AetheriaVigor_EquipmentSet_SpellSetID,
+        RareDamageResistance_EquipmentSet_SpellSetID,
+        RareDamageBoost_EquipmentSet_SpellSetID,
+        OlthoiArmorDRed_Set_SpellSetID,
+        OlthoiArmorCRat_Set_SpellSetID,
+        OlthoiArmorCRed_Set_SpellSetID,
+        OlthoiArmorDRat_Set_SpellSetID,
+        AlduressaRelicUpgrade_EquipmentSet_SpellSetID,
+        AncientRelicUpgrade_EquipmentSet_SpellSetID,
+        NobleRelicUpgrade_EquipmentSet_SpellSetID,
+        CloakAlchemy_EquipmentSet_SpellSetID,
+        CloakArcaneLore_EquipmentSet_SpellSetID,
+        CloakArmorTinkering_EquipmentSet_SpellSetID,
+        CloakAssessPerson_EquipmentSet_SpellSetID,
+        CloakAxe_EquipmentSet_SpellSetID,
+        CloakBow_EquipmentSet_SpellSetID,
+        CloakCooking_EquipmentSet_SpellSetID,
+        CloakCreatureEnchantment_EquipmentSet_SpellSetID,
+        CloakCrossbow_EquipmentSet_SpellSetID,
+        CloakDagger_EquipmentSet_SpellSetID,
+        CloakDeception_EquipmentSet_SpellSetID,
+        CloakFletching_EquipmentSet_SpellSetID,
+        CloakHealing_EquipmentSet_SpellSetID,
+        CloakItemEnchantment_EquipmentSet_SpellSetID,
+        CloakItemTinkering_EquipmentSet_SpellSetID,
+        CloakLeadership_EquipmentSet_SpellSetID,
+        CloakLifeMagic_EquipmentSet_SpellSetID,
+        CloakLoyalty_EquipmentSet_SpellSetID,
+        CloakMace_EquipmentSet_SpellSetID,
+        CloakMagicDefense_EquipmentSet_SpellSetID,
+        CloakMagicItemTinkering_EquipmentSet_SpellSetID,
+        CloakManaConversion_EquipmentSet_SpellSetID,
+        CloakMeleeDefense_EquipmentSet_SpellSetID,
+        CloakMissileDefense_EquipmentSet_SpellSetID,
+        CloakSalvaging_EquipmentSet_SpellSetID,
+        CloakSpear_EquipmentSet_SpellSetID,
+        CloakStaff_EquipmentSet_SpellSetID,
+        CloakSword_EquipmentSet_SpellSetID,
+        CloakThrownWeapon_EquipmentSet_SpellSetID,
+        CloakTwoHandedCombat_EquipmentSet_SpellSetID,
+        CloakUnarmedCombat_EquipmentSet_SpellSetID,
+        CloakVoidMagic_EquipmentSet_SpellSetID,
+        CloakWarMagic_EquipmentSet_SpellSetID,
+        CloakWeaponTinkering_EquipmentSet_SpellSetID,
+        CloakAssessCreature_EquipmentSet_SpellSetID,
+        CloakDirtyFighting_EquipmentSet_SpellSetID,
+        CloakDualWield_EquipmentSet_SpellSetID,
+        CloakRecklessness_EquipmentSet_SpellSetID,
+        CloakShield_EquipmentSet_SpellSetID,
+        CloakSneakAttack_EquipmentSet_SpellSetID,
+        Ninja_New_EquipmentSet_SpellSetID,
+        CloakSummoning_EquipmentSet_SpellSetID,
+        // Gleaned SpellSet IDs
+        ShroudedSoul_EquipmentSet_SpellSetID, // Shrouded Soul Shadow Armor
+        DarkenedMind_EquipmentSet_SpellSetID, // Darkened Mind Shadow Armor
+        CloudedSpirit_EquipmentSet_SpellSetID, // Clouded Spirit Shadow Armor
+                                               // Missing 94-119
+        EnhancedShroudedSoul_EquipmentSet_SpellSetID = 120, // Enhanced Shrouded Soul Shadow Armor
+                                                            // Missing 121-125
+        EnhancedCloudedSpirit_EquipmentSet_SpellSetID = 126, // Enhanced Clouded Spirit Shadow Armor
+                                                             // Missing 127-129
+        ShimmeringShadow_EquipmentSet_SpellSetID = 130, // Shimmering Shadow Prismatic Shadow Armor
+        BrownSocietyLocket_EquipmentSet_SpellSetID = 131, // Brown Society Locket
+        YellowSocietyLocket_EquipmentSet_SpellSetID = 132, // Yellow Society Locket
+        RedSocietyBand_EquipmentSet_SpellSetID = 133, // Red Society Band
+        GreenSocietyBand_EquipmentSet_SpellSetID = 134, // Green Society Band
+        PurpleSocietyBand_EquipmentSet_SpellSetID = 135, // Purple Society Band
+        BlueSocietyBand_EquipmentSet_SpellSetID = 136, // Blue Society Band
+        GauntletGarb_EquipmentSet_SpellSetID = 137, // Gauntlet Garb Set
+        UNKNOWN_138_EquipmentSet_SpellSetID = 138, // Unknown examples: Dark Frost Compound Crossbow, Dark Acid Bow, Dark Acid Crossbow, Spell Bound Crossbow
+        UNKNOWN_139_EquipmentSet_SpellSetID = 139, // Unknown examples: Gharu'ndim Wand, Soul Bound Staff
+        UNKNOWN_140_EquipmentSet_SpellSetID = 140 // Unknown examples: Nodachi, Purified Mouryou Katana, Frost Shashqa (Possibly cleaving two handed weapons?)
+    }
+
     public enum SpellID
     {
         Undef_SpellID,
@@ -6349,6 +6552,31 @@ namespace PhatACCacheBinParser.Enums
         GauntletVitalityI_SpellID,
         GauntletVitalityII_SpellID,
         GauntletVitalityIII_SpellID,
-        NumSpells_SpellID = 8192
+        NumSpells_SpellID = 8192,
+        // Gleaned cooldown spell IDs
+        JesterDecksCooldown_SpellID = 32769, // Deck of Eyes, Deck of Hands
+        AsheronsBenedictionCooldown_SpellID = 32770,
+        BlackmoorsFavorCooldown_SpellID = 32771,
+        HealthElixirCooldown_SpellID = 32772,   // Health elixir's with a cooldown
+        ManaElixirCooldown_SpellID = 32773,     // Mana elixir's with a cooldown
+        CallOfLeadershipCooldown_SpellID = 32774,
+        AnswerOfLoyaltyStaminaCooldown_SpellID = 32775,
+        AnswerOfLoyaltyManaCooldown_SpellID = 32776,
+        VirindiEssenceCooldown_SpellID = 32777,
+        SurgingStrengthCooldown_SpellID = 32778,
+        ToweringDefenseCooldown_SpellID = 32779,
+        // Skip 39
+        MhoireCastleItemsCooldown_SpellID = 32818, // (Strange Jewel and Crystal of Spectral Blood)
+        MiscTenSecondCooldown_SpellID = 32819, // Skull of One Thousand Torments, Enchanted Mana Stone, Aligned Mana Stone, Attuned Essence Gem
+                                               // Skip 49
+        ContractCooldown_SpellID = 32868, // 2 second cooldown
+                                          // Skip 113
+        SummonCreatureCooldown_SpellID = 32981, // 45 second cooldown
+                                                // Skip 8
+        FacilityHubPortalGemCooldown_SpellID = 32989, // 30 second cooldown
+                                                      // Skip 279
+        ScryingRodCooldown_SpellID = 33268, // (Slave Master Quest)
+                                            // Skip 500
+        PortalGemCooldown_SpellID = 33768 // 15 second cooldown
     }
 }
