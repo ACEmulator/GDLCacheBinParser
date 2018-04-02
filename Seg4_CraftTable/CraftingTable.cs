@@ -17,20 +17,20 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Unpack(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader reader)
 		{
-			base.Unpack(binaryReader);
+			base.Unpack(reader);
 
-			Recipes.Unpack(binaryReader);
+			Recipes.Unpack(reader);
 
 			// The recipe heap seems to have a map after the main recipe heap. Precursor maybe?
-			var totalObjects = binaryReader.ReadUInt16();
-			binaryReader.ReadUInt16(); // Discard
+			var totalObjects = reader.ReadUInt16();
+			reader.ReadUInt16(); // Discard
 
 			for (int i = 0; i < totalObjects; i++)
 			{
-				var key = binaryReader.ReadUInt64(); // key       Even though this is 64 bits, it appears to be made up of 2 uint32 values
-				var value = binaryReader.ReadUInt32(); // value
+				var key = reader.ReadUInt64(); // key       Even though this is 64 bits, it appears to be made up of 2 uint32 values
+				var value = reader.ReadUInt32(); // value
 
 				Precursors.Add(new Tuple<ulong, uint>(key, value));
 			}

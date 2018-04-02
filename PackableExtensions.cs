@@ -5,7 +5,7 @@ namespace PhatACCacheBinParser
 {
 	static class PackableExtensions
 	{
-		public static bool Unpack<T>(this List<T> value, BinaryReader binaryReader) where T : IPackable, new()
+		public static bool Unpack<T>(this List<T> value, BinaryReader binaryReader) where T : IUnpackable, new()
 		{
 			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard
@@ -20,7 +20,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this List<T> value, BinaryReader binaryReader, int fixedQuantity) where T : IPackable, new()
+		public static bool Unpack<T>(this List<T> value, BinaryReader binaryReader, int fixedQuantity) where T : IUnpackable, new()
 		{
 			for (int i = 0; i < fixedQuantity; i++)
 			{
@@ -32,7 +32,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this List<List<T>> value, BinaryReader binaryReader) where T : IPackable, new()
+		public static bool Unpack<T>(this List<List<T>> value, BinaryReader binaryReader) where T : IUnpackable, new()
 		{
 			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard
@@ -54,7 +54,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this List<List<T>> value, BinaryReader binaryReader, int fixedQuantity) where T : IPackable, new()
+		public static bool Unpack<T>(this List<List<T>> value, BinaryReader binaryReader, int fixedQuantity) where T : IUnpackable, new()
 		{
 			for (int i = 0; i < fixedQuantity; i++)
 			{
@@ -73,7 +73,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this List<Dictionary<uint, List<T>>> value, BinaryReader binaryReader, int fixedQuantity) where T : IPackable, new()
+		public static bool Unpack<T>(this List<Dictionary<uint, List<T>>> value, BinaryReader binaryReader, int fixedQuantity) where T : IUnpackable, new()
 		{
 			for (int i = 0; i < fixedQuantity; i++)
 			{
@@ -106,7 +106,7 @@ namespace PhatACCacheBinParser
 		}
 
 
-		public static bool Unpack<T>(this Dictionary<uint, T> value, BinaryReader binaryReader) where T : IPackable, new ()
+		public static bool Unpack<T>(this Dictionary<uint, T> value, BinaryReader binaryReader) where T : IUnpackable, new ()
 		{
 			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard
@@ -123,7 +123,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this Dictionary<uint, List<T>> value, BinaryReader binaryReader) where T : IPackable, new()
+		public static bool Unpack<T>(this Dictionary<uint, List<T>> value, BinaryReader binaryReader) where T : IUnpackable, new()
 		{
 			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard
@@ -148,7 +148,7 @@ namespace PhatACCacheBinParser
 			return true;
 		}
 
-		public static bool Unpack<T>(this Dictionary<uint, Dictionary<uint, List<T>>> value, BinaryReader binaryReader) where T : IPackable, new()
+		public static bool Unpack<T>(this Dictionary<uint, Dictionary<uint, List<T>>> value, BinaryReader binaryReader) where T : IUnpackable, new()
 		{
 			var totalObjects = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // Discard

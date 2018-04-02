@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry4 : IPackable
+	class TreasureEntry4 : IUnpackable
 	{
 		public int m_00;
 		public int m_04;
@@ -24,27 +24,27 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public int m_44;
 		public int m_48;
 
-		public bool Unpack(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader reader)
 		{
-			m_00 = binaryReader.ReadInt32();
-			m_04 = binaryReader.ReadInt32();
-			m_08 = binaryReader.ReadInt32();
-			m_0C = binaryReader.ReadInt32();
-			m_10 = binaryReader.ReadInt32();
-			m_14 = binaryReader.ReadInt32();
-			m_18 = binaryReader.ReadInt32();
-			m_1C = binaryReader.ReadInt32();
-			m_20 = binaryReader.ReadInt32();
-			m_24 = binaryReader.ReadInt32();
-			m_28 = binaryReader.ReadInt32();
-			m_2C = binaryReader.ReadInt32();
-			m_30 = binaryReader.ReadInt32();
-			m_34 = binaryReader.ReadInt32();
-			m_38 = binaryReader.ReadInt32();
-			m_3C = binaryReader.ReadInt32();
-			m_40 = binaryReader.ReadInt32();
-			m_44 = binaryReader.ReadInt32();
-			m_48 = binaryReader.ReadInt32();
+			m_00 = reader.ReadInt32();
+			m_04 = reader.ReadInt32();
+			m_08 = reader.ReadInt32();
+			m_0C = reader.ReadInt32();
+			m_10 = reader.ReadInt32();
+			m_14 = reader.ReadInt32();
+			m_18 = reader.ReadInt32();
+			m_1C = reader.ReadInt32();
+			m_20 = reader.ReadInt32();
+			m_24 = reader.ReadInt32();
+			m_28 = reader.ReadInt32();
+			m_2C = reader.ReadInt32();
+			m_30 = reader.ReadInt32();
+			m_34 = reader.ReadInt32();
+			m_38 = reader.ReadInt32();
+			m_3C = reader.ReadInt32();
+			m_40 = reader.ReadInt32();
+			m_44 = reader.ReadInt32();
+			m_48 = reader.ReadInt32();
 
 			return true;
 		}

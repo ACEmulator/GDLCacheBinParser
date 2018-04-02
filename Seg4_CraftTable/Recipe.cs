@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PhatACCacheBinParser.Seg4_CraftTable
 {
-	class Recipe : IPackable
+	class Recipe : IUnpackable
 	{
 		// _cache_bin_parse_4_1
 		public uint ID;
@@ -30,47 +30,47 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
 	    public uint DataID;
 
-        public bool Unpack(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader reader)
         {
 			// _cache_bin_parse_4_1
-			ID = binaryReader.ReadUInt32();
+			ID = reader.ReadUInt32();
 
 			// _cache_bin_parse_4_2
-			unknown_1 = binaryReader.ReadUInt32();
-			Skill = binaryReader.ReadUInt32();
-			Difficulty = binaryReader.ReadUInt32();
-			unknown_4 = binaryReader.ReadUInt32();
+			unknown_1 = reader.ReadUInt32();
+			Skill = reader.ReadUInt32();
+			Difficulty = reader.ReadUInt32();
+			unknown_4 = reader.ReadUInt32();
 
-			SuccessWCID = binaryReader.ReadUInt32();
-			SuccessAmount = binaryReader.ReadUInt32();
-			SuccessMessage = Util.ReadString(binaryReader, true);
+			SuccessWCID = reader.ReadUInt32();
+			SuccessAmount = reader.ReadUInt32();
+			SuccessMessage = Util.ReadString(reader, true);
 
-			FailWCID = binaryReader.ReadUInt32();
-			FailAmount = binaryReader.ReadUInt32();
-			FailMessage = Util.ReadString(binaryReader, true);
+			FailWCID = reader.ReadUInt32();
+			FailAmount = reader.ReadUInt32();
+			FailMessage = Util.ReadString(reader, true);
 
 			for (int i = 0; i < 4; i++)
 			{
 				var item = new Recipe_Component();
-				item.Unpack(binaryReader);
+				item.Unpack(reader);
 				Components.Add(item);
 			}
 
 			for (int i = 0; i < 3; i++)
 			{
 				var item = new Recipe_Requirement();
-				item.Unpack(binaryReader);
+				item.Unpack(reader);
 				Requirements.Add(item);
 			}
 
 		    for (int i = 0; i < 8; i++)
 		    {
 		        var item = new Recipe_Mod();
-		        item.Unpack(binaryReader);
+		        item.Unpack(reader);
 		        Mods.Add(item);
             }
 
-            DataID = binaryReader.ReadUInt32();
+            DataID = reader.ReadUInt32();
 
 	        return true;
 		}

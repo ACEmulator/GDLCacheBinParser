@@ -15,13 +15,13 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Unpack(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader reader)
 		{
-			base.Unpack(binaryReader);
+			base.Unpack(reader);
 
-			Landblocks.Unpack(binaryReader);
+			Landblocks.Unpack(reader);
 
-			TerrainData = binaryReader.ReadBytes((255 * 255) * (9 * 9) * 2);
+			TerrainData = reader.ReadBytes((255 * 255) * (9 * 9) * 2);
 
 			return true;
 		}

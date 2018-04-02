@@ -13,11 +13,11 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Unpack(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader reader)
 		{
-			base.Unpack(binaryReader);
+			base.Unpack(reader);
 
-			Weenies.Unpack(binaryReader);
+			Weenies.Unpack(reader);
 
 			return true;
 		}

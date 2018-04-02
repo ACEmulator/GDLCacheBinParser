@@ -51,72 +51,72 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Unpack(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader reader)
 		{
-			base.Unpack(binaryReader);
+			base.Unpack(reader);
 
 			int totalObjects;
 
 
-			WieldedTreasure.Unpack(binaryReader);
+			WieldedTreasure.Unpack(reader);
 
-			_treasure2.Unpack(binaryReader);
-			_treasure3.Unpack(binaryReader, 4);
-			_treasure7.Unpack(binaryReader, 48);
-			_treasure8.Unpack(binaryReader);
-
-
-			HealerChances.Unpack(binaryReader);
-			LockpickChances.Unpack(binaryReader);
-			ConsumableChances.Unpack(binaryReader);
-			PeaChances.Unpack(binaryReader);
+			_treasure2.Unpack(reader);
+			_treasure3.Unpack(reader, 4);
+			_treasure7.Unpack(reader, 48);
+			_treasure8.Unpack(reader);
 
 
-			ItemBaneSpells.Unpack(binaryReader);
-			MeleeWeaponSpells.Unpack(binaryReader);
-			MissileWeaponSpells.Unpack(binaryReader);
-			CasterWeaponSpells.Unpack(binaryReader);
+			HealerChances.Unpack(reader);
+			LockpickChances.Unpack(reader);
+			ConsumableChances.Unpack(reader);
+			PeaChances.Unpack(reader);
 
 
-			_spellLevelProbabilitiesMaybe.Unpack(binaryReader);
-			KeyedSpells.Unpack(binaryReader);
+			ItemBaneSpells.Unpack(reader);
+			MeleeWeaponSpells.Unpack(reader);
+			MissileWeaponSpells.Unpack(reader);
+			CasterWeaponSpells.Unpack(reader);
 
 
-			OtherBuffCasterSpell.Unpack(binaryReader);
-			OtherWarCasterSpell.Unpack(binaryReader);
+			_spellLevelProbabilitiesMaybe.Unpack(reader);
+			KeyedSpells.Unpack(reader);
 
 
-			ScrollChances.Unpack(binaryReader);
-			ManaStoneChances.Unpack(binaryReader);
-			MaterialCodeToBaseMaterialMap.Unpack(binaryReader);
+			OtherBuffCasterSpell.Unpack(reader);
+			OtherWarCasterSpell.Unpack(reader);
 
 
-			CeramicMaterials.Unpack(binaryReader);
-			ClothMaterials.Unpack(binaryReader);
-			LeatherMaterials.Unpack(binaryReader);
-			MetalMaterials.Unpack(binaryReader);
-			StoneMaterials.Unpack(binaryReader);
-			WoodMaterials.Unpack(binaryReader);
+			ScrollChances.Unpack(reader);
+			ManaStoneChances.Unpack(reader);
+			MaterialCodeToBaseMaterialMap.Unpack(reader);
 
 
-			_treasure18.Unpack(binaryReader, 2);
-			_treasure19.Unpack(binaryReader);
-			_treasure20.Unpack(binaryReader);
-			_gemProbabilitiesMaybe.Unpack(binaryReader);
-			GemMaterials.Unpack(binaryReader);
+			CeramicMaterials.Unpack(reader);
+			ClothMaterials.Unpack(reader);
+			LeatherMaterials.Unpack(reader);
+			MetalMaterials.Unpack(reader);
+			StoneMaterials.Unpack(reader);
+			WoodMaterials.Unpack(reader);
 
-			totalObjects = binaryReader.ReadUInt16();
-			binaryReader.ReadUInt16(); // Discard
+
+			_treasure18.Unpack(reader, 2);
+			_treasure19.Unpack(reader);
+			_treasure20.Unpack(reader);
+			_gemProbabilitiesMaybe.Unpack(reader);
+			GemMaterials.Unpack(reader);
+
+			totalObjects = reader.ReadUInt16();
+			reader.ReadUInt16(); // Discard
 			for (int i = 0; i < totalObjects; i++)
 			{
-				var key = binaryReader.ReadUInt32();
-				var value = binaryReader.ReadSingle();
+				var key = reader.ReadUInt32();
+				var value = reader.ReadSingle();
 				_materialValueAddedPossibly.Add(key, value);
 			}
 
-			_treasure24.Unpack(binaryReader, 3);
-			MaterialColorKeyMap.Unpack(binaryReader);
-			CantripChances.Unpack(binaryReader, 5);
+			_treasure24.Unpack(reader, 3);
+			MaterialColorKeyMap.Unpack(reader);
+			CantripChances.Unpack(reader, 5);
 
 			return true;
 		}

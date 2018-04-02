@@ -2,17 +2,17 @@
 
 namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 {
-    class SpellStatMod : IPackable
+    class SpellStatMod : IUnpackable
     {
         public uint Type;
         public uint Key;
         public float Val;
 
-        public bool Unpack(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader reader)
         {
-            Type = binaryReader.ReadUInt32();
-            Key = binaryReader.ReadUInt32();
-            Val = binaryReader.ReadSingle();
+            Type = reader.ReadUInt32();
+            Key = reader.ReadUInt32();
+            Val = reader.ReadSingle();
 
             return true;
         }

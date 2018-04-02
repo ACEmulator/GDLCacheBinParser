@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry : IPackable
+	class TreasureEntry : IUnpackable
 	{
 		// Unknown3_1_4
 		public uint WCID;
@@ -23,26 +23,26 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public uint m_3C_AlwaysZero; // always zero
 		public uint m_40_AlwaysZero; // always zero
 
-		public bool Unpack(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader reader)
 		{
 			// Unknown3_1_4
-			WCID = binaryReader.ReadUInt32();
-			PTID = binaryReader.ReadUInt32();
-			m_08_AlwaysZero = binaryReader.ReadUInt32();
-			Shade = binaryReader.ReadSingle();
-			Amount = binaryReader.ReadUInt32();
-			m_f14 = binaryReader.ReadSingle();
-			Chance = binaryReader.ReadSingle();
-			m_1C_AlwaysZero = binaryReader.ReadUInt32();
-			m_20_AlwaysZero = binaryReader.ReadUInt32();
-			m_24_AlwaysZero = binaryReader.ReadUInt32();
-			m_b28 = (binaryReader.ReadUInt32() == 1);
-			m_b2C = (binaryReader.ReadUInt32() == 1);
-			m_b30 = (binaryReader.ReadUInt32() == 1);
-			m_34_AlwaysZero = binaryReader.ReadUInt32();
-			m_38_AlwaysZero = binaryReader.ReadUInt32();
-			m_3C_AlwaysZero = binaryReader.ReadUInt32();
-			m_40_AlwaysZero = binaryReader.ReadUInt32();
+			WCID = reader.ReadUInt32();
+			PTID = reader.ReadUInt32();
+			m_08_AlwaysZero = reader.ReadUInt32();
+			Shade = reader.ReadSingle();
+			Amount = reader.ReadUInt32();
+			m_f14 = reader.ReadSingle();
+			Chance = reader.ReadSingle();
+			m_1C_AlwaysZero = reader.ReadUInt32();
+			m_20_AlwaysZero = reader.ReadUInt32();
+			m_24_AlwaysZero = reader.ReadUInt32();
+			m_b28 = (reader.ReadUInt32() == 1);
+			m_b2C = (reader.ReadUInt32() == 1);
+			m_b30 = (reader.ReadUInt32() == 1);
+			m_34_AlwaysZero = reader.ReadUInt32();
+			m_38_AlwaysZero = reader.ReadUInt32();
+			m_3C_AlwaysZero = reader.ReadUInt32();
+			m_40_AlwaysZero = reader.ReadUInt32();
 
 			return true;
 		}

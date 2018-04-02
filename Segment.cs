@@ -6,7 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PhatACCacheBinParser
 {
-	abstract class Segment : IPackable
+	abstract class Segment : IUnpackable
 	{
 		protected static JsonSerializer Serializer = new JsonSerializer();
 
@@ -22,7 +22,7 @@ namespace PhatACCacheBinParser
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public virtual bool Unpack(BinaryReader binaryReader)
+		public virtual bool Unpack(BinaryReader reader)
 		{
 			if (parsed)
 				throw new InvalidOperationException();

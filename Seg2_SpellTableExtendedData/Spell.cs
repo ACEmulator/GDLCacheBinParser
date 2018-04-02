@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
+
 using PhatACCacheBinParser.Common;
 
 namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 {
-    class Spell : IPackable
+    class Spell : IUnpackable
     {
         public uint ID;
 
@@ -111,137 +112,137 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public uint ManaMod;
 
 
-        public bool Unpack(BinaryReader binaryReader)
+        public bool Unpack(BinaryReader reader)
         {
-            ID = binaryReader.ReadUInt32();
+            ID = reader.ReadUInt32();
 
-            Name = Util.ReadString(binaryReader, true);
+            Name = Util.ReadString(reader, true);
 
-            Description = Util.ReadString(binaryReader, true);
+            Description = Util.ReadString(reader, true);
 
-            School = (School)binaryReader.ReadUInt32();
-            IconID = binaryReader.ReadUInt32();
-            Category = binaryReader.ReadUInt32();
-            Bitfield = binaryReader.ReadUInt32();
-            Mana = binaryReader.ReadUInt32();
-            RangeConstant = binaryReader.ReadSingle();
-            RangeMod = binaryReader.ReadSingle();
-            Power = binaryReader.ReadUInt32();
-            EconomyMod = binaryReader.ReadSingle();
-            FormulaVersion = binaryReader.ReadUInt32();
-            ComponentLoss = binaryReader.ReadSingle();
+            School = (School)reader.ReadUInt32();
+            IconID = reader.ReadUInt32();
+            Category = reader.ReadUInt32();
+            Bitfield = reader.ReadUInt32();
+            Mana = reader.ReadUInt32();
+            RangeConstant = reader.ReadSingle();
+            RangeMod = reader.ReadSingle();
+            Power = reader.ReadUInt32();
+            EconomyMod = reader.ReadSingle();
+            FormulaVersion = reader.ReadUInt32();
+            ComponentLoss = reader.ReadSingle();
 
-            MetaSpellType = (SpellType)binaryReader.ReadUInt32();
-            MetaSpellId = binaryReader.ReadUInt32();
+            MetaSpellType = (SpellType)reader.ReadUInt32();
+            MetaSpellId = reader.ReadUInt32();
 
             if (MetaSpellType == SpellType.Enchantment || MetaSpellType == SpellType.FellowEnchantment)
             {
-                Duration = binaryReader.ReadDouble();
-                DegradeModifier = binaryReader.ReadSingle();
-                DegradeLimit = binaryReader.ReadSingle();
+                Duration = reader.ReadDouble();
+                DegradeModifier = reader.ReadSingle();
+                DegradeLimit = reader.ReadSingle();
 
-                var spellCategory = binaryReader.ReadUInt32();
+                var spellCategory = reader.ReadUInt32();
                 if (spellCategory != Category)
                     throw new Exception();
 
                 SpellStatMod = new SpellStatMod();
-                SpellStatMod.Unpack(binaryReader);
+                SpellStatMod.Unpack(reader);
             }
             else if (MetaSpellType == SpellType.Projectile || MetaSpellType == SpellType.LifeProjectile)
             {
-                EType = binaryReader.ReadUInt32();
-                BaseIntensity = binaryReader.ReadInt32();
-                Variance = binaryReader.ReadInt32();
-                WCID = binaryReader.ReadUInt32();
-                NumProjectiles = binaryReader.ReadInt32();
-                NumProjectilesVariance = binaryReader.ReadInt32();
-                SpreadAngle = binaryReader.ReadSingle();
-                VerticalAngle = binaryReader.ReadSingle();
-                DefaultLaunchAngle = binaryReader.ReadSingle();
-                NonTracking = (binaryReader.ReadInt32() == 1);
+                EType = reader.ReadUInt32();
+                BaseIntensity = reader.ReadInt32();
+                Variance = reader.ReadInt32();
+                WCID = reader.ReadUInt32();
+                NumProjectiles = reader.ReadInt32();
+                NumProjectilesVariance = reader.ReadInt32();
+                SpreadAngle = reader.ReadSingle();
+                VerticalAngle = reader.ReadSingle();
+                DefaultLaunchAngle = reader.ReadSingle();
+                NonTracking = (reader.ReadInt32() == 1);
 
                 CreateOffset = new Origin();
                 Padding = new Origin();
                 Dims = new Origin();
                 Peturbation = new Origin();
 
-                CreateOffset.Unpack(binaryReader);
-                Padding.Unpack(binaryReader);
-                Dims.Unpack(binaryReader);
-                Peturbation.Unpack(binaryReader);
+                CreateOffset.Unpack(reader);
+                Padding.Unpack(reader);
+                Dims.Unpack(reader);
+                Peturbation.Unpack(reader);
 
-                ImbuedEffect = binaryReader.ReadUInt32();
-                SlayerCreatureType = binaryReader.ReadInt32();
-                SlayerDamageBonus = binaryReader.ReadSingle();
-                CritFreq = binaryReader.ReadDouble();
-                CritMultiplier = binaryReader.ReadDouble();
-                IgnoreMagicResist = binaryReader.ReadInt32();
-                ElementalModifier = binaryReader.ReadDouble();
+                ImbuedEffect = reader.ReadUInt32();
+                SlayerCreatureType = reader.ReadInt32();
+                SlayerDamageBonus = reader.ReadSingle();
+                CritFreq = reader.ReadDouble();
+                CritMultiplier = reader.ReadDouble();
+                IgnoreMagicResist = reader.ReadInt32();
+                ElementalModifier = reader.ReadDouble();
 
                 if (MetaSpellType == SpellType.LifeProjectile)
                 {
-                    DrainPercentage = binaryReader.ReadSingle();
-                    DamageRatio = binaryReader.ReadSingle();
+                    DrainPercentage = reader.ReadSingle();
+                    DamageRatio = reader.ReadSingle();
                 }
             }
             else if (MetaSpellType == SpellType.Boost || MetaSpellType == SpellType.FellowBoost)
             {
-                DamageType = (DamageType)binaryReader.ReadInt32();
-                Boost = binaryReader.ReadInt32();
-                BoostVariance = binaryReader.ReadInt32();
+                DamageType = (DamageType)reader.ReadInt32();
+                Boost = reader.ReadInt32();
+                BoostVariance = reader.ReadInt32();
             }
             else if (MetaSpellType == SpellType.Transfer)
             {
-                Source = (Attribute2nd)binaryReader.ReadInt32();
-                Destination = (Attribute2nd)binaryReader.ReadInt32();
-                Proportion = binaryReader.ReadSingle();
-                LossPercent = binaryReader.ReadSingle();
-                SourceLoss = binaryReader.ReadInt32();
-                TransferCap = binaryReader.ReadInt32();
-                MaxBoostAllowed = binaryReader.ReadInt32();
-                TransferBitfield = binaryReader.ReadUInt32();
+                Source = (Attribute2nd)reader.ReadInt32();
+                Destination = (Attribute2nd)reader.ReadInt32();
+                Proportion = reader.ReadSingle();
+                LossPercent = reader.ReadSingle();
+                SourceLoss = reader.ReadInt32();
+                TransferCap = reader.ReadInt32();
+                MaxBoostAllowed = reader.ReadInt32();
+                TransferBitfield = reader.ReadUInt32();
             }
             else if (MetaSpellType == SpellType.PortalLink)
             {
-                Index = binaryReader.ReadInt32();
+                Index = reader.ReadInt32();
             }
             else if (MetaSpellType == SpellType.PortalRecall)
             {
-                Index = binaryReader.ReadInt32();
+                Index = reader.ReadInt32();
             }
             else if (MetaSpellType == SpellType.PortalSummon)
             {
-                PortalLlifetime = binaryReader.ReadDouble();
-                Link = binaryReader.ReadInt32();
+                PortalLlifetime = reader.ReadDouble();
+                Link = reader.ReadInt32();
             }
             else if (MetaSpellType == SpellType.PortalSending || MetaSpellType == SpellType.FellowPortalSending)
             {
                 Position = new Position();
-                Position.Unpack(binaryReader);
+                Position.Unpack(reader);
             }
             else if (MetaSpellType == SpellType.Dispel || MetaSpellType == SpellType.FellowDispel)
             {
-                MinPower = binaryReader.ReadInt32();
-                MaxPower = binaryReader.ReadInt32();
-                PowerVariance = binaryReader.ReadSingle();
-                DispelSchool = (School)binaryReader.ReadInt32();
-                Align = binaryReader.ReadInt32();
-                Number = binaryReader.ReadInt32();
-                NumberVariance = binaryReader.ReadSingle();
+                MinPower = reader.ReadInt32();
+                MaxPower = reader.ReadInt32();
+                PowerVariance = reader.ReadSingle();
+                DispelSchool = (School)reader.ReadInt32();
+                Align = reader.ReadInt32();
+                Number = reader.ReadInt32();
+                NumberVariance = reader.ReadSingle();
             }
             else
                 throw new NotImplementedException();
 
-            SpellFormula.Unpack(binaryReader);
+            SpellFormula.Unpack(reader);
 
-            CasterEffect = binaryReader.ReadUInt32();
-            TargetEffect = binaryReader.ReadUInt32();
-            FizzleEffect = binaryReader.ReadUInt32();
-            RecoveryInterval = binaryReader.ReadDouble();
-            RecoveryAmount = binaryReader.ReadSingle();
-            DisplayOrder = binaryReader.ReadUInt32();
-            NonComponentTargetType = binaryReader.ReadUInt32();
-            ManaMod = binaryReader.ReadUInt32();
+            CasterEffect = reader.ReadUInt32();
+            TargetEffect = reader.ReadUInt32();
+            FizzleEffect = reader.ReadUInt32();
+            RecoveryInterval = reader.ReadDouble();
+            RecoveryAmount = reader.ReadSingle();
+            DisplayOrder = reader.ReadUInt32();
+            NonComponentTargetType = reader.ReadUInt32();
+            ManaMod = reader.ReadUInt32();
 
             return true;
         }

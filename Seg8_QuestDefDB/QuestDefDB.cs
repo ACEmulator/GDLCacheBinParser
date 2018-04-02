@@ -13,11 +13,11 @@ namespace PhatACCacheBinParser.Seg8_QuestDefDB
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
 		/// </summary>
-		public override bool Unpack(BinaryReader binaryReader)
+		public override bool Unpack(BinaryReader reader)
 		{
-			base.Unpack(binaryReader);
+			base.Unpack(reader);
 
-			QuestDefs.Unpack(binaryReader);
+			QuestDefs.Unpack(reader);
 
 			return true;
 		}

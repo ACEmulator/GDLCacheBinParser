@@ -2,7 +2,7 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry2 : IPackable
+	class TreasureEntry2 : IUnpackable
 	{
 		// Unknown3_2_2
 		public int Tier;
@@ -21,23 +21,23 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public int m_34;
 		public int m_38;
 
-		public bool Unpack(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader reader)
 		{
-			Tier = binaryReader.ReadInt32();
-			m_f04 = binaryReader.ReadSingle();
-			m_08 = binaryReader.ReadInt32();
-			m_0C = binaryReader.ReadInt32();
-			m_10 = binaryReader.ReadInt32();
-			m_14 = binaryReader.ReadInt32();
-			m_18 = binaryReader.ReadInt32();
-			m_1C = binaryReader.ReadInt32();
-			m_20 = binaryReader.ReadInt32();
-			m_24 = binaryReader.ReadInt32();
-			m_28 = binaryReader.ReadInt32();
-			m_2C = binaryReader.ReadInt32();
-			m_30 = binaryReader.ReadInt32();
-			m_34 = binaryReader.ReadInt32();
-			m_38 = binaryReader.ReadInt32();
+			Tier = reader.ReadInt32();
+			m_f04 = reader.ReadSingle();
+			m_08 = reader.ReadInt32();
+			m_0C = reader.ReadInt32();
+			m_10 = reader.ReadInt32();
+			m_14 = reader.ReadInt32();
+			m_18 = reader.ReadInt32();
+			m_1C = reader.ReadInt32();
+			m_20 = reader.ReadInt32();
+			m_24 = reader.ReadInt32();
+			m_28 = reader.ReadInt32();
+			m_2C = reader.ReadInt32();
+			m_30 = reader.ReadInt32();
+			m_34 = reader.ReadInt32();
+			m_38 = reader.ReadInt32();
 
 			return true;
 		}

@@ -2,20 +2,20 @@
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
-	class TreasureEntry6 : IPackable
+	class TreasureEntry6 : IUnpackable
 	{
 		// Unknown3_5_8
 		public float[] Chances = new float[6];
 
-		public bool Unpack(BinaryReader binaryReader)
+		public bool Unpack(BinaryReader reader)
 		{
 			// Unknown3_5_8
-			Chances[0] = binaryReader.ReadSingle();
-			Chances[1] = binaryReader.ReadSingle();
-			Chances[2] = binaryReader.ReadSingle();
-			Chances[3] = binaryReader.ReadSingle();
-			Chances[4] = binaryReader.ReadSingle();
-			Chances[5] = binaryReader.ReadSingle();
+			Chances[0] = reader.ReadSingle();
+			Chances[1] = reader.ReadSingle();
+			Chances[2] = reader.ReadSingle();
+			Chances[3] = reader.ReadSingle();
+			Chances[4] = reader.ReadSingle();
+			Chances[5] = reader.ReadSingle();
 
 			return true;
 		}
