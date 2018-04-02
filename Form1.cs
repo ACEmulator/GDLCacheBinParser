@@ -97,8 +97,7 @@ namespace PhatACCacheBinParser
 
 		private void ParserControl2_DoParse(ParserControl parserControl)
 		{
-			MessageBox.Show("Not implemented.");
-			//ParserControl_DoParse<SpellTableExtendedData>(parserControl);
+			ParserControl_DoParse<SpellTableExtendedData>(parserControl);
 		}
 
 		private void ParserControl3_DoParse(ParserControl parserControl)
