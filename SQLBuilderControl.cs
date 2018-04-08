@@ -213,7 +213,7 @@ namespace PhatACCacheBinParser
 
                 var outFolder = itFolder;
 
-                var aceObjectDescriptionFlags = 0;
+                //var aceObjectDescriptionFlags = 0;
                 //// ACE currently relies on aceObjectDescriptionFlags in ace_object to set the base.. In the future that column should be ignored entirely
                 //// the WeenieType classes should set their default base aceObjectDescriptionFlags similar to below
                 //var aceObjectDescriptionFlags = new PublicWeenieDesc.BitfieldIndex();
@@ -1265,6 +1265,74 @@ namespace PhatACCacheBinParser
                     progressBar3.Value = 100;
 
                     cmdAction3.Enabled = true;
+                }));
+            });
+        }
+
+        private void WriteQuestFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            foreach (var quest in QuestDefDB.QuestDefs)
+            {
+                //string FileNameFormatter(QuestDef obj) => obj.Name.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
+                string FileNameFormatter(QuestDef obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
+
+                string fileNameFormatter = FileNameFormatter(quest);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    var parsed = quest;
+
+                    string questLineHdr = "";
+                    string questLine = "";
+                    // `name`, `min_Delta`, `max_Solves`, `message`
+
+                    questLineHdr = $"{sqlCommand} INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`";
+                    questLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
+
+                    questLineHdr += $")" + Environment.NewLine + "VALUES ";
+                    questLine += $");";
+
+                    if (questLine != "")
+                    {
+                        writer.WriteLine(questLineHdr + questLine);
+                    }
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBar4.Value = (int)(((double)counter / QuestDefDB.QuestDefs.Count) * 100)));
+                }
+            }
+        }
+
+        private void cmdAction4_Click(object sender, EventArgs e)
+        {
+            cmdAction4.Enabled = false;
+
+            progressBar4.Style = ProgressBarStyle.Continuous;
+            progressBar4.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                WriteQuestFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBar4.Style = ProgressBarStyle.Continuous;
+                    progressBar4.Value = 100;
+
+                    cmdAction4.Enabled = true;
                 }));
             });
         }

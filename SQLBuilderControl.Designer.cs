@@ -36,6 +36,8 @@
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.cmdAction1 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.cmdAction4 = new System.Windows.Forms.Button();
+            this.progressBar4 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // cmdParseAll
@@ -113,10 +115,31 @@
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 23;
             // 
+            // cmdAction4
+            // 
+            this.cmdAction4.Enabled = false;
+            this.cmdAction4.Location = new System.Drawing.Point(3, 149);
+            this.cmdAction4.Name = "cmdAction4";
+            this.cmdAction4.Size = new System.Drawing.Size(119, 23);
+            this.cmdAction4.TabIndex = 24;
+            this.cmdAction4.Text = "8 Quests";
+            this.cmdAction4.UseVisualStyleBackColor = true;
+            this.cmdAction4.Click += new System.EventHandler(this.cmdAction4_Click);
+            // 
+            // progressBar4
+            // 
+            this.progressBar4.Location = new System.Drawing.Point(125, 149);
+            this.progressBar4.Name = "progressBar4";
+            this.progressBar4.Size = new System.Drawing.Size(224, 23);
+            this.progressBar4.Step = 1;
+            this.progressBar4.TabIndex = 25;
+            // 
             // SQLBuilderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cmdAction4);
+            this.Controls.Add(this.progressBar4);
             this.Controls.Add(this.cmdAction1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.cmdAction2);
@@ -141,5 +164,7 @@
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.Button cmdAction1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button cmdAction4;
+        private System.Windows.Forms.ProgressBar progressBar4;
     }
 }
