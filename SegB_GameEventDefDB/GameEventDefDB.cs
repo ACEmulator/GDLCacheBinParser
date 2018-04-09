@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-namespace PhatACCacheBinParser.Seg5_HousingPortals
+namespace PhatACCacheBinParser.SegB_GameEventDefDB
 {
-	class HousingPortalsTable : Segment
+	class GameEventDefDB : Segment
 	{
-		public readonly List<HousingPortal> HousingPortals = new List<HousingPortal>();
+		public readonly List<GameEventDef> GameEventDefs = new List<GameEventDef>();
 
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
@@ -17,7 +17,7 @@ namespace PhatACCacheBinParser.Seg5_HousingPortals
 		{
 			base.Unpack(reader);
 
-			HousingPortals.Unpack(reader);
+            GameEventDefs.Unpack(reader);
 
 			return true;
 		}
@@ -26,12 +26,12 @@ namespace PhatACCacheBinParser.Seg5_HousingPortals
 		{
 			base.WriteJSONOutput(outputFolder);
 
-			Parallel.For(0, HousingPortals.Count, i =>
+			Parallel.For(0, GameEventDefs.Count, i =>
 			{
-				using (StreamWriter sw = new StreamWriter(outputFolder + HousingPortals[i].HouseId.ToString("X4") + ".json"))
+				using (StreamWriter sw = new StreamWriter(outputFolder + Util.IllegalInFileName.Replace(GameEventDefs[i].Name, "_") + ".json"))
 				using (JsonWriter writer = new JsonTextWriter(sw))
 				{
-					Serializer.Serialize(writer, HousingPortals[i]);
+					Serializer.Serialize(writer, GameEventDefs[i]);
 				}
 			});
 

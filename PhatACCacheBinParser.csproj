@@ -73,6 +73,8 @@
     <Compile Include="Seg1_RegionDescExtendedData\EncounterTable.cs" />
     <Compile Include="Seg5_HousingPortals\HousingPortalsTable.cs" />
     <Compile Include="Seg6_LandBlockExtendedData\LandBlockData.cs" />
+    <Compile Include="SegB_GameEventDefDB\GameEventDef.cs" />
+    <Compile Include="SegB_GameEventDefDB\GameEventDefDB.cs" />
     <Compile Include="Seg8_QuestDefDB\QuestDefDB.cs" />
     <Compile Include="Seg9_WeenieDefaults\WeenieDefaults.cs" />
     <Compile Include="SegA_MutationFilters\EffectArgument.cs" />

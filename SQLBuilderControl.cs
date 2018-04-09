@@ -1347,33 +1347,46 @@ namespace PhatACCacheBinParser
 
             string sqlCommand = "INSERT";
 
-            int houseId = 1;
-
             foreach (var house in HousingPortalsTable.HousingPortals)
             {
                 //string FileNameFormatter(QuestDef obj) => obj.Name.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
                 //string FileNameFormatter(HousingPortal obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
-                string FileNameFormatter(int obj) => obj.ToString("00000") + " " + "HousingPortal";
+                //string FileNameFormatter(int obj) => obj.ToString("00000") + " " + "HousingPortal";
+                string FileNameFormatter(HousingPortal obj) => obj.HouseId.ToString("00000"); //+ " " + Util.IllegalInFileName.Replace(obj.Name, "_");
 
-                string fileNameFormatter = FileNameFormatter(houseId);
+                string fileNameFormatter = FileNameFormatter(house);
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
                     var parsed = house;
 
-                    string houseLineHdr = "";
+                    // string houseLineHdr = "";
                     string houseLine = "";
                     // `house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`
 
-                    houseLineHdr = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`";
+                    //houseLineHdr = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`";
                     //houseLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
 
-                    houseLineHdr += $")" + Environment.NewLine + "VALUES ";
-                    houseLine += $");";
+                    foreach (var destination in house.Destinations)
+                    {
+                        //houseLine = $"({house.HouseId}, {destination.ObjCellID}, {destination.Origin.X}, {destination.Origin.Y}, {destination.Origin.Z}, {destination.Angles.W}, {destination.Angles.X}, {destination.Angles.Y}, {destination.Angles.Z}";
+                        houseLine += $"     , ({house.HouseId}, {destination.ObjCellID}, {destination.Origin.X}, {destination.Origin.Y}, {destination.Origin.Z}, {destination.Angles.W}, {destination.Angles.X}, {destination.Angles.Y}, {destination.Angles.Z})" + Environment.NewLine;
+                    }
+
+                    //houseLineHdr += $")" + Environment.NewLine + "VALUES ";
+                    //houseLine += $");";
+
+                    //if (houseLine != "")
+                    //{
+                    //    writer.WriteLine(houseLineHdr + houseLine);
+                    //}
 
                     if (houseLine != "")
                     {
-                        writer.WriteLine(houseLineHdr + houseLine);
+                        houseLine = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
+                            + "VALUES " + houseLine.TrimStart("     ,".ToCharArray());
+                        houseLine = houseLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(houseLine);
                     }
 
                     var counter = Interlocked.Increment(ref processedCounter);
