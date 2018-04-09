@@ -1,24 +1,29 @@
-﻿using System.IO;
+﻿using PhatACCacheBinParser.Common;
+using System.IO;
 
 namespace PhatACCacheBinParser.SegB_GameEventDefDB
 {
 	class GameEventDef : IUnpackable
 	{
-		public string Name;
+        public string Name;
 
-		public uint MinDelta;
-		public int MaxSolves;
+        public int StartTime;
+		public int EndTime;
 
-		public string Message;
+        public GameEventState GameEventState;
+
+		//public string Message;
 
 		public bool Unpack(BinaryReader reader)
 		{
-			Name = Util.ReadString(reader, true);
+            Name = Util.ReadString(reader, true);
 
-			MinDelta = reader.ReadUInt32();
-			MaxSolves = reader.ReadInt32();
+            StartTime = reader.ReadInt32();
+            EndTime = reader.ReadInt32();
 
-			Message = Util.ReadEncryptedString1(reader, true);
+            GameEventState = (GameEventState)reader.ReadInt32();
+
+			//Message = Util.ReadEncryptedString1(reader, true);
 
 			return true;
 		}

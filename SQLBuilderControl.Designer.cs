@@ -50,6 +50,8 @@
             this.progressBar9 = new System.Windows.Forms.ProgressBar();
             this.cmdActionA = new System.Windows.Forms.Button();
             this.progressBarA = new System.Windows.Forms.ProgressBar();
+            this.cmdActionB = new System.Windows.Forms.Button();
+            this.progressBarB = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // cmdParseAll
@@ -171,8 +173,9 @@
             this.cmdAction5.Name = "cmdAction5";
             this.cmdAction5.Size = new System.Drawing.Size(119, 23);
             this.cmdAction5.TabIndex = 28;
-            this.cmdAction5.Text = "1 Region Gens";
+            this.cmdAction5.Text = "1 Regions";
             this.cmdAction5.UseVisualStyleBackColor = true;
+            this.cmdAction5.Click += new System.EventHandler(this.cmdAction5_Click);
             // 
             // progressBar5
             // 
@@ -255,10 +258,31 @@
             this.progressBarA.Step = 1;
             this.progressBarA.TabIndex = 37;
             // 
+            // cmdActionB
+            // 
+            this.cmdActionB.Enabled = false;
+            this.cmdActionB.Location = new System.Drawing.Point(3, 398);
+            this.cmdActionB.Name = "cmdActionB";
+            this.cmdActionB.Size = new System.Drawing.Size(119, 23);
+            this.cmdActionB.TabIndex = 38;
+            this.cmdActionB.Text = "B Events";
+            this.cmdActionB.UseVisualStyleBackColor = true;
+            this.cmdActionB.Click += new System.EventHandler(this.cmdActionB_Click);
+            // 
+            // progressBarB
+            // 
+            this.progressBarB.Location = new System.Drawing.Point(125, 398);
+            this.progressBarB.Name = "progressBarB";
+            this.progressBarB.Size = new System.Drawing.Size(224, 23);
+            this.progressBarB.Step = 1;
+            this.progressBarB.TabIndex = 39;
+            // 
             // SQLBuilderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cmdActionB);
+            this.Controls.Add(this.progressBarB);
             this.Controls.Add(this.cmdActionA);
             this.Controls.Add(this.progressBarA);
             this.Controls.Add(this.cmdAction9);
@@ -282,7 +306,7 @@
             this.Controls.Add(this.cmdParseAll);
             this.Controls.Add(this.progressParseSources);
             this.Name = "SQLBuilderControl";
-            this.Size = new System.Drawing.Size(353, 397);
+            this.Size = new System.Drawing.Size(353, 430);
             this.ResumeLayout(false);
 
 		}
@@ -311,5 +335,7 @@
         private System.Windows.Forms.ProgressBar progressBar9;
         private System.Windows.Forms.Button cmdActionA;
         private System.Windows.Forms.ProgressBar progressBarA;
+        private System.Windows.Forms.Button cmdActionB;
+        private System.Windows.Forms.ProgressBar progressBarB;
     }
 }

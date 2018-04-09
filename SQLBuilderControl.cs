@@ -15,6 +15,7 @@ using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 using PhatACCacheBinParser.Seg8_QuestDefDB;
 using PhatACCacheBinParser.Seg9_WeenieDefaults;
 using PhatACCacheBinParser.SegA_MutationFilters;
+using PhatACCacheBinParser.SegB_GameEventDefDB;
 
 namespace PhatACCacheBinParser
 {
@@ -35,8 +36,8 @@ namespace PhatACCacheBinParser
 		// Segment 7
 		private readonly QuestDefDB QuestDefDB = new QuestDefDB();
 		private readonly WeenieDefaults WeenieDefaults = new WeenieDefaults();
-		private readonly MutationFilters UnknownATables = new MutationFilters();
-		// Segment B
+		private readonly MutationFilters MutationFilters = new MutationFilters();
+        private readonly GameEventDefDB GameEventDefDB = new GameEventDefDB();
 
         private Dictionary<uint, string> weenieNames = new Dictionary<uint, string>();
 
@@ -58,8 +59,8 @@ namespace PhatACCacheBinParser
 				// Segment 7
 				TryParseSegment((string) Settings.Default["_8SourceBin"], QuestDefDB);
 				TryParseSegment((string) Settings.Default["_9SourceBin"], WeenieDefaults);
-				TryParseSegment((string) Settings.Default["_ASourceBin"], UnknownATables);
-                // Segment B
+				TryParseSegment((string) Settings.Default["_ASourceBin"], MutationFilters);
+                TryParseSegment((string) Settings.Default["_BSourceBin"], GameEventDefDB);
 
                 BeginInvoke((Action)(() => CollectWeenieNames()));
 
@@ -563,7 +564,7 @@ namespace PhatACCacheBinParser
                                     quest = category.Quest.ToString().Replace("'", "''");
                                     quest = quest.Insert(0, "'").Insert(quest.Length + 1, "'");
                                 }
-                                emoteCategorysLine += $"     , ({parsed.WCID}, {category.Probability}, {category.Category}, {emoteSetId}, {((category.ClassID.HasValue) ? category.ClassID.ToString() : "NULL")}, {((category.Style.HasValue) ? category.Style.ToString() : "NULL")}, {((category.Substyle.HasValue) ? category.Substyle.ToString() : "NULL")}, {((category.Quest != null) ? quest : "NULL")}, {((category.VendorType.HasValue) ? category.VendorType.ToString() : "NULL")}, {((category.MinHealth.HasValue) ? category.MinHealth.ToString() : "NULL")}, {((category.MaxHealth.HasValue) ? category.MaxHealth.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteCategory), category.Category)} */" + Environment.NewLine;
+                                emoteCategorysLine += $"     , ({parsed.WCID}, {category.Probability}, {category.Category}, {emoteSetId}, {((category.ClassID.HasValue) ? category.ClassID.ToString() + $" /* {weenieNames[(uint)category.ClassID]} */" : "NULL")}, {((category.Style.HasValue) ? category.Style.ToString() : "NULL")}, {((category.Substyle.HasValue) ? category.Substyle.ToString() : "NULL")}, {((category.Quest != null) ? quest : "NULL")}, {((category.VendorType.HasValue) ? category.VendorType.ToString() : "NULL")}, {((category.MinHealth.HasValue) ? category.MinHealth.ToString() : "NULL")}, {((category.MaxHealth.HasValue) ? category.MaxHealth.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteCategory), category.Category)} */" + Environment.NewLine;
                                 if (category.EmoteActions != null)
                                 {
                                     var order = 0;
@@ -583,11 +584,11 @@ namespace PhatACCacheBinParser
                                             testString = testString.Insert(0, "'").Insert(testString.Length + 1, "'");
                                         }
                                         if (action.Position != null)
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
                                         else if (action.Frame != null)
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.X.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Y.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Z.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.W.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.X.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Y.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.X.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Y.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Z.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.W.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.X.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Y.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
                                         else
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category}, {emoteSetId}, {order}, {action.Type}, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? action.Motion.ToString() : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? action.SpellID.ToString() : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? action.PScript.ToString() : "NULL")}, {((action.Sound.HasValue) ? action.Sound.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Z.ToString() : "NULL")}) " + $"/* {Enum.GetName(typeof(EmoteType), action.Type)} */" + Environment.NewLine;
                                         order++;
                                     }
                                 }
@@ -1349,10 +1350,7 @@ namespace PhatACCacheBinParser
 
             foreach (var house in HousingPortalsTable.HousingPortals)
             {
-                //string FileNameFormatter(QuestDef obj) => obj.Name.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
-                //string FileNameFormatter(HousingPortal obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
-                //string FileNameFormatter(int obj) => obj.ToString("00000") + " " + "HousingPortal";
-                string FileNameFormatter(HousingPortal obj) => obj.HouseId.ToString("00000"); //+ " " + Util.IllegalInFileName.Replace(obj.Name, "_");
+                string FileNameFormatter(HousingPortal obj) => obj.HouseId.ToString("00000");
 
                 string fileNameFormatter = FileNameFormatter(house);
 
@@ -1360,26 +1358,12 @@ namespace PhatACCacheBinParser
                 {
                     var parsed = house;
 
-                    // string houseLineHdr = "";
                     string houseLine = "";
-                    // `house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`
-
-                    //houseLineHdr = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`";
-                    //houseLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
 
                     foreach (var destination in house.Destinations)
                     {
-                        //houseLine = $"({house.HouseId}, {destination.ObjCellID}, {destination.Origin.X}, {destination.Origin.Y}, {destination.Origin.Z}, {destination.Angles.W}, {destination.Angles.X}, {destination.Angles.Y}, {destination.Angles.Z}";
                         houseLine += $"     , ({house.HouseId}, {destination.ObjCellID}, {destination.Origin.X}, {destination.Origin.Y}, {destination.Origin.Z}, {destination.Angles.W}, {destination.Angles.X}, {destination.Angles.Y}, {destination.Angles.Z})" + Environment.NewLine;
                     }
-
-                    //houseLineHdr += $")" + Environment.NewLine + "VALUES ";
-                    //houseLine += $");";
-
-                    //if (houseLine != "")
-                    //{
-                    //    writer.WriteLine(houseLineHdr + houseLine);
-                    //}
 
                     if (houseLine != "")
                     {
@@ -1392,7 +1376,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / HousingPortalsTable.HousingPortals.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBar8.Value = (int)(((double)counter / HousingPortalsTable.HousingPortals.Count) * 100)));
                 }
             }
         }
@@ -1416,6 +1400,169 @@ namespace PhatACCacheBinParser
                     progressBar8.Value = 100;
 
                     cmdAction8.Enabled = true;
+                }));
+            });
+        }
+
+        private void WriteEventFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            foreach (var gameEvent in GameEventDefDB.GameEventDefs)
+            {
+                string FileNameFormatter(GameEventDef obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
+
+                string fileNameFormatter = FileNameFormatter(gameEvent);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    var parsed = gameEvent;
+
+                    string eventLine = "";
+
+                    eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {gameEvent.StartTime}, {gameEvent.EndTime}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
+
+                    if (eventLine != "")
+                    {
+                        eventLine = $"{sqlCommand} INTO `event` (`name`, `start_Time`, `end_Time`, `state`)" + Environment.NewLine
+                            + "VALUES " + eventLine.TrimStart("     ,".ToCharArray());
+                        eventLine = eventLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(eventLine);
+                    }
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBarB.Value = (int)(((double)counter / GameEventDefDB.GameEventDefs.Count) * 100)));
+                }
+            }
+        }
+
+        private void cmdActionB_Click(object sender, EventArgs e)
+        {
+            cmdActionB.Enabled = false;
+
+            progressBarB.Style = ProgressBarStyle.Continuous;
+            progressBarB.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                WriteEventFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBarB.Style = ProgressBarStyle.Continuous;
+                    progressBarB.Value = 100;
+
+                    cmdActionB.Enabled = true;
+                }));
+            });
+        }
+
+        private void WriteRegionFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            foreach (var encounter in RegionDescExtendedData.EncounterTables)
+            {
+                string FileNameFormatter(EncounterTable obj) => obj.Index.ToString("00000");
+
+                string fileNameFormatter = FileNameFormatter(encounter);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    var parsed = encounter;
+
+                    string encounterLine = "";
+
+                    foreach (var generator in encounter.Values)
+                    {
+                        weenieNames.TryGetValue(generator, out string label);
+                        encounterLine += $"     , ({encounter.Index}, {generator})" + $" /* {label} */" + Environment.NewLine;
+                    }
+
+                    if (encounterLine != "")
+                    {
+                        encounterLine = $"{sqlCommand} INTO `encounter` (`index`, `weenie_Class_Id`)" + Environment.NewLine
+                            + "VALUES " + encounterLine.TrimStart("     ,".ToCharArray());
+                        encounterLine = encounterLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(encounterLine);
+                    }
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / RegionDescExtendedData.EncounterTables.Count) * 100)));
+                }
+            }
+
+            //string FileNameFormatter(EncounterTable obj) => obj.Index.ToString("00000");
+
+            //string fileNameFormatter = FileNameFormatter(encounter);
+
+            using (StreamWriter writer = new StreamWriter(outputFolder + "00000" + ".sql"))
+            {
+                //var parsed = encounter;
+
+                string encounterLine = "";
+
+                //foreach (var generator in encounter.Values)
+                //{
+                //    weenieNames.TryGetValue(generator, out string label);
+                //encounterLine += $"     , (0, 0, {System.Text.Encoding.UTF8.GetString(RegionDescExtendedData.EncounterMap, 0, RegionDescExtendedData.EncounterMap.Length).ToString("X")})" + Environment.NewLine;
+                encounterLine += $"     , (0, 0, '{Convert.ToBase64String(RegionDescExtendedData.EncounterMap)}')" + Environment.NewLine;
+                //}
+
+                if (encounterLine != "")
+                {
+                    encounterLine = $"{sqlCommand} INTO `encounter` (`index`, `weenie_Class_Id`, `encounter_Map`)" + Environment.NewLine
+                        + "VALUES " + encounterLine.TrimStart("     ,".ToCharArray());
+                    encounterLine = encounterLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                    writer.WriteLine(encounterLine);
+                }
+
+                //var counter = Interlocked.Increment(ref processedCounter);
+
+                //if ((counter % 1000) == 0)
+                //    BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / RegionDescExtendedData.EncounterTables.Count) * 100)));
+            }
+        }
+
+        private void cmdAction5_Click(object sender, EventArgs e)
+        {
+            cmdAction5.Enabled = false;
+
+            progressBar5.Style = ProgressBarStyle.Continuous;
+            progressBar5.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                WriteRegionFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBar5.Style = ProgressBarStyle.Continuous;
+                    progressBar5.Value = 100;
+
+                    cmdAction5.Enabled = true;
                 }));
             });
         }

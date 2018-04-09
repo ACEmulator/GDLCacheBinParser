@@ -26,16 +26,16 @@ namespace PhatACCacheBinParser.SegB_GameEventDefDB
 		{
 			base.WriteJSONOutput(outputFolder);
 
-			Parallel.For(0, GameEventDefs.Count, i =>
-			{
-				using (StreamWriter sw = new StreamWriter(outputFolder + Util.IllegalInFileName.Replace(GameEventDefs[i].Name, "_") + ".json"))
-				using (JsonWriter writer = new JsonTextWriter(sw))
-				{
-					Serializer.Serialize(writer, GameEventDefs[i]);
-				}
-			});
+            Parallel.For(0, GameEventDefs.Count, i =>
+            {
+                using (StreamWriter sw = new StreamWriter(outputFolder + Util.IllegalInFileName.Replace(GameEventDefs[i].Name, "_") + ".json"))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    Serializer.Serialize(writer, GameEventDefs[i]);
+                }
+            });
 
-			return true;
+            return true;
 		}
 	}
 }

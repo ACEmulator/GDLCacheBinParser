@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GameEventState.cs" />
     <Compile Include="Enums\Appraisal.cs" />
     <Compile Include="Enums\Emote.cs" />
     <Compile Include="Enums\PacketOpcode.cs" />

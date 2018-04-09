@@ -31,6 +31,7 @@
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.cmdOutputFolder = new System.Windows.Forms.Button();
             this.lblOutputFolder = new System.Windows.Forms.Label();
+            this.parserControlB = new PhatACCacheBinParser.ParserControl();
             this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
             this.parserControl7 = new PhatACCacheBinParser.ParserControl();
             this.parserControl5 = new PhatACCacheBinParser.ParserControl();
@@ -51,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.Location = new System.Drawing.Point(965, 12);
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(535, 923);
+            this.txtOutput.Size = new System.Drawing.Size(535, 1009);
             this.txtOutput.TabIndex = 11;
             this.txtOutput.Text = "";
             // 
@@ -74,12 +75,25 @@
             this.lblOutputFolder.TabIndex = 23;
             this.lblOutputFolder.Text = "label1";
             // 
+            // parserControlB
+            // 
+            this.parserControlB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControlB.Label = "label1";
+            this.parserControlB.Location = new System.Drawing.Point(12, 940);
+            this.parserControlB.Name = "parserControlB";
+            this.parserControlB.ParseInputProgress = 0;
+            this.parserControlB.Size = new System.Drawing.Size(588, 84);
+            this.parserControlB.SourceBin = "label1";
+            this.parserControlB.TabIndex = 25;
+            this.parserControlB.WriteJSON = true;
+            this.parserControlB.WriteJSONOutputProgress = 0;
+            // 
             // sqlBuilderControl1
             // 
             this.sqlBuilderControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.sqlBuilderControl1.Location = new System.Drawing.Point(606, 39);
             this.sqlBuilderControl1.Name = "sqlBuilderControl1";
-            this.sqlBuilderControl1.Size = new System.Drawing.Size(353, 397);
+            this.sqlBuilderControl1.Size = new System.Drawing.Size(353, 431);
             this.sqlBuilderControl1.TabIndex = 24;
             // 
             // parserControl7
@@ -216,7 +230,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1512, 947);
+            this.ClientSize = new System.Drawing.Size(1512, 1033);
+            this.Controls.Add(this.parserControlB);
             this.Controls.Add(this.sqlBuilderControl1);
             this.Controls.Add(this.cmdOutputFolder);
             this.Controls.Add(this.lblOutputFolder);
@@ -254,6 +269,7 @@
 		private System.Windows.Forms.Button cmdOutputFolder;
 		private System.Windows.Forms.Label lblOutputFolder;
 		private SQLBuilderControl sqlBuilderControl1;
-	}
+        private ParserControl parserControlB;
+    }
 }
 
