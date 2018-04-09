@@ -1282,7 +1282,6 @@ namespace PhatACCacheBinParser
 
             foreach (var quest in QuestDefDB.QuestDefs)
             {
-                //string FileNameFormatter(QuestDef obj) => obj.Name.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
                 string FileNameFormatter(QuestDef obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
 
                 string fileNameFormatter = FileNameFormatter(quest);
@@ -1333,6 +1332,77 @@ namespace PhatACCacheBinParser
                     progressBar4.Value = 100;
 
                     cmdAction4.Enabled = true;
+                }));
+            });
+        }
+
+        private void WriteHouseFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            int houseId = 1;
+
+            foreach (var house in HousingPortalsTable.HousingPortals)
+            {
+                //string FileNameFormatter(QuestDef obj) => obj.Name.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
+                //string FileNameFormatter(HousingPortal obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
+                string FileNameFormatter(int obj) => obj.ToString("00000") + " " + "HousingPortal";
+
+                string fileNameFormatter = FileNameFormatter(houseId);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    var parsed = house;
+
+                    string houseLineHdr = "";
+                    string houseLine = "";
+                    // `house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`
+
+                    houseLineHdr = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`";
+                    //houseLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
+
+                    houseLineHdr += $")" + Environment.NewLine + "VALUES ";
+                    houseLine += $");";
+
+                    if (houseLine != "")
+                    {
+                        writer.WriteLine(houseLineHdr + houseLine);
+                    }
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / HousingPortalsTable.HousingPortals.Count) * 100)));
+                }
+            }
+        }
+
+        private void cmdAction8_Click(object sender, EventArgs e)
+        {
+            cmdAction8.Enabled = false;
+
+            progressBar8.Style = ProgressBarStyle.Continuous;
+            progressBar8.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                WriteHouseFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBar8.Style = ProgressBarStyle.Continuous;
+                    progressBar8.Value = 100;
+
+                    cmdAction8.Enabled = true;
                 }));
             });
         }
