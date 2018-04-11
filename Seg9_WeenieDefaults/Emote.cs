@@ -44,8 +44,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 			if (Category == 15)
 			{
-				MinHealth = binaryReader.ReadInt32();
-				MaxHealth = binaryReader.ReadInt32();
+				MinHealth = binaryReader.ReadSingle();
+				MaxHealth = binaryReader.ReadSingle();
 			}
 
 			var count = binaryReader.ReadUInt16();
