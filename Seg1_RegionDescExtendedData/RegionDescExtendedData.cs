@@ -9,21 +9,20 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 	{
 		public readonly List<EncounterTable> EncounterTables = new List<EncounterTable>();
 
-		public byte[] EncounterMap;
+        //public byte[] EncounterMap;
 
-		/// <summary>
-		/// You can only call Parse() once on an instantiated object.
-		/// </summary>
-		public override bool Unpack(BinaryReader reader)
+        public List<EncounterMap> EncounterMaps = new List<EncounterMap>();
+
+        /// <summary>
+        /// You can only call Parse() once on an instantiated object.
+        /// </summary>
+        public override bool Unpack(BinaryReader reader)
 		{
 			base.Unpack(reader);
 
-			// For Segment 1, the first dword appears to simply be an is present flag
-			// The value is 256, which is probably tied to the number of landblocks or landblock width or something.
-			/*var totalObjects = */reader.ReadUInt16();
-			reader.ReadUInt16(); // Discard
+            var totalObjects = reader.ReadUInt32();
 
-			var numTableEntries = reader.ReadInt32();
+            var numTableEntries = reader.ReadUInt32();
 			for (int i = 0; i < numTableEntries; i++)
 			{
 				var item = new EncounterTable();
@@ -31,9 +30,18 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 				EncounterTables.Add(item);
 			}
 
-			EncounterMap = reader.ReadBytes(255 * 255);
+            //EncounterMap = reader.ReadBytes(255 * 255);
 
-			return true;
+            for (var i = 0; i < (255 * 255); i++)
+            {
+                var item = new EncounterMap();
+                item.Unpack(reader);
+                EncounterMaps.Add(item);
+            }
+
+            reader.ReadBytes(3); // discard
+
+            return true;
 		}
 
 		public override bool WriteJSONOutput(string outputFolder)
@@ -46,12 +54,12 @@ namespace PhatACCacheBinParser.Seg1_RegionDescExtendedData
 				Serializer.Serialize(writer, EncounterTables);
 			}
 
-			using (StreamWriter sw = new StreamWriter(outputFolder + "EncounterMap.json"))
+			using (StreamWriter sw = new StreamWriter(outputFolder + "EncounterMaps.json"))
 			using (JsonWriter writer = new JsonTextWriter(sw))
 			{
-				Serializer.Serialize(writer, EncounterMap);
+                Serializer.Serialize(writer, EncounterMaps);
 
-			}
+            }
 			return true;
 		}
 	}

@@ -12,8 +12,6 @@ namespace PhatACCacheBinParser.SegB_GameEventDefDB
 
         public GameEventState GameEventState;
 
-		//public string Message;
-
 		public bool Unpack(BinaryReader reader)
 		{
             Name = Util.ReadString(reader, true);
@@ -22,8 +20,6 @@ namespace PhatACCacheBinParser.SegB_GameEventDefDB
             EndTime = reader.ReadInt32();
 
             GameEventState = (GameEventState)reader.ReadInt32();
-
-			//Message = Util.ReadEncryptedString1(reader, true);
 
 			return true;
 		}

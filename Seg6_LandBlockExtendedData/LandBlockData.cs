@@ -10,7 +10,9 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 	{
 		public readonly List<Landblock> Landblocks = new List<Landblock>();
 
-		public byte[] TerrainData;
+        //public byte[] TerrainData;
+
+        public List<TerrainData> TerrainLandblocks = new List<TerrainData>();
 
 		/// <summary>
 		/// You can only call Parse() once on an instantiated object.
@@ -21,9 +23,16 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 
 			Landblocks.Unpack(reader);
 
-			TerrainData = reader.ReadBytes((255 * 255) * (9 * 9) * 2);
+            //TerrainData = reader.ReadBytes((255 * 255) * (9 * 9) * 2);
 
-			return true;
+            for (var i = 0; i < (255 * 255); i++)
+            {
+                var item = new TerrainData();
+                item.Unpack(reader);
+                TerrainLandblocks.Add(item);
+            }
+
+            return true;
 		}
 
 		public override bool WriteJSONOutput(string outputFolder)
@@ -45,8 +54,8 @@ namespace PhatACCacheBinParser.Seg6_LandBlockExtendedData
 			using (StreamWriter sw = new StreamWriter(outputFolder + "TerrainData.json"))
 			using (JsonWriter writer = new JsonTextWriter(sw))
 			{
-				Serializer.Serialize(writer, TerrainData);
-			}
+                Serializer.Serialize(writer, TerrainLandblocks);
+            }
 
 			return true;
 		}

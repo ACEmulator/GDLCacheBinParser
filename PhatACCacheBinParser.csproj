@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Encounter.cs" />
     <Compile Include="Common\GameEventState.cs" />
     <Compile Include="Enums\Appraisal.cs" />
     <Compile Include="Enums\Emote.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Common\Attribute2nd.cs" />
     <Compile Include="Common\DamageType.cs" />
     <Compile Include="PackableExtensions.cs" />
+    <Compile Include="Seg1_RegionDescExtendedData\EncounterMap.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellFormula.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellStatMod.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellTableExtendedData.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Seg1_RegionDescExtendedData\EncounterTable.cs" />
     <Compile Include="Seg5_HousingPortals\HousingPortalsTable.cs" />
     <Compile Include="Seg6_LandBlockExtendedData\LandBlockData.cs" />
+    <Compile Include="Seg6_LandBlockExtendedData\TerrainData.cs" />
     <Compile Include="SegB_GameEventDefDB\GameEventDef.cs" />
     <Compile Include="SegB_GameEventDefDB\GameEventDefDB.cs" />
     <Compile Include="Seg8_QuestDefDB\QuestDefDB.cs" />
