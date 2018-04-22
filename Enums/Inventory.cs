@@ -31,6 +31,7 @@ namespace PhatACCacheBinParser.Enums
         DROPITEM_IS_ALIAS = DROPITEM_IS_VENDOR | DROPITEM_IS_SHORTCUT | DROPITEM_IS_SALVAGE // 14
     }
 
+    [Flags]
     public enum INVENTORY_LOC
     {
         NONE_LOC = 0,

@@ -26,6 +26,7 @@ namespace PhatACCacheBinParser.Enums
         NUM_SPELLCAST_BANKS
     }
 
+    [Flags]
     public enum SpellIndex
     {
         Undef_SpellIndex = 0,

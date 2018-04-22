@@ -17,6 +17,7 @@ namespace PhatACCacheBinParser.Enums
         COMBAT_COMBAT_MODE = MELEE_COMBAT_MODE | MISSILE_COMBAT_MODE | MAGIC_COMBAT_MODE // 14
     }
 
+    [Flags]
     public enum CombatStyle
     {
         Undef_CombatStyle = 0,

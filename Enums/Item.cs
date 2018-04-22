@@ -30,6 +30,7 @@ namespace PhatACCacheBinParser.Enums
         AMMO_ATLATL_CHORIZITE
     }
 
+    [Flags]
     public enum ITEM_TYPE
     {
         TYPE_UNDEF = 0,
@@ -78,6 +79,7 @@ namespace PhatACCacheBinParser.Enums
         TYPE_GAMEBOARD = (1 << 31),
     }
 
+    [Flags]
     public enum ITEM_USEABLE
     {
         USEABLE_UNDEF = 0,
@@ -185,6 +187,7 @@ namespace PhatACCacheBinParser.Enums
         Sticky_BondedStatus = 2
     }
 
+    [Flags]
     public enum EnchantmentTypeEnum
     {
         Undef_EnchantmentType = 0,
@@ -359,6 +362,7 @@ namespace PhatACCacheBinParser.Enums
         ParagonMelee = 140,
     }
 
+    [Flags]
     public enum CoverageMask : uint
     {
         UnderwearUpperLegs = 0x00000002,
@@ -484,6 +488,7 @@ namespace PhatACCacheBinParser.Enums
         DYESPRINGBLACK_PALETTE_TEMPLATE
     }
 
+    [Flags]
     public enum WieldRequirement
     {
         Invalid_WieldRequirement,
@@ -509,4 +514,58 @@ namespace PhatACCacheBinParser.Enums
         // This appears to be another "scales with level type" that appears in the client but was never used
         Unknown
     }
+
+    public enum Placement
+    {
+        Default = 0,
+        RightHandCombat = 1,
+        RightHandNonCombat = 2,
+        LeftHand = 3,
+        Belt = 4,
+        Quiver = 5,
+        Shield = 6,
+        LeftWeapon = 7,
+        LeftUnarmed = 8,
+        SpecialCrowssbowBolt = 51,
+        MissileFlight = 52,
+        Resting = 101,
+        Other = 102,
+        Hook = 103,
+        Random1 = 121,
+        Random2 = 122,
+        Random3 = 123,
+        Random4 = 124,
+        Random5 = 125,
+        Random6 = 126,
+        Random7 = 127,
+        Random8 = 128,
+        Random9 = 129,
+        Random10 = 130,
+
+        XXXUnknownA = 0x0000000A,
+        XXXUnknownF = 0x0000000F,
+        XXXUnknown14 = 0x00000014,
+        XXXUnknown1E = 0x0000001E,
+        XXXUnknown20 = 0x00000020,
+        XXXUnknown3C = 0x0000003C,
+        XXXUnknown69 = 0x00000069,
+        XXXUnknown6A = 0x0000006A,
+        XXXUnknown63 = 0x00000063,
+        XXXUnknown68 = 0x00000068,
+        XXXUnknown78 = 0x00000078,
+        XXXUnknown84 = 0x00000084,
+        XXXUnknownF0 = 0x000000F0,
+        XXXUnknown3F2 = 0x000003F2,
+    }
+
+    enum ActivationResponseEnum
+    {
+        Undef_ActivationResponse = 0,
+        Use_ActivationResponse = 2,
+        Animate_ActivationResponse = 4,
+        Talk_ActivationResponse = 0x10,
+        Unk800_ActivationResponse = 0x800,
+        CastSpell_ActivationResponse = 0x1000,
+        Generate_ActivationResponse = 0x10000
+    };
 }

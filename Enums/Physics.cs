@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhatACCacheBinParser.Enums
 {
+    [Flags]
     public enum PhysicsState
     {
         STATIC_PS = (1 << 0),
@@ -50,6 +51,7 @@ namespace PhatACCacheBinParser.Enums
         }
     }
 
+    [Flags]
     public enum HookTypeEnum
     {
         Undef_HookTypeEnum = 0,
@@ -212,6 +214,7 @@ namespace PhatACCacheBinParser.Enums
             PWD2_Packed_PetOwner = (1 << 3),
         }
 
+        [Flags]
         public enum BitfieldIndex
         {
             BF_OPENABLE = (1 << 0),
@@ -287,6 +290,7 @@ namespace PhatACCacheBinParser.Enums
             PWD_Packed_MaterialType = (1 << 31)
         }
 
+        [Flags]
         public enum BitfieldIndex
         {
             BF_OPENABLE = (1 << 0),
