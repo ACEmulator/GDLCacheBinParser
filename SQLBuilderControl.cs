@@ -572,6 +572,11 @@ namespace PhatACCacheBinParser
                                 case STypeInt.WIELD_SKILLTYPE_INT:
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(STypeSkill), stat.Value)} */)" + Environment.NewLine;
                                     break;
+                                case STypeInt.GENERATOR_START_TIME_INT:
+                                case STypeInt.GENERATOR_END_TIME_INT:
+                                    //intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(stat.Value)).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {DateTimeOffset.FromUnixTimeSeconds(stat.Value).DateTime.ToUniversalTime().ToString()} */)" + Environment.NewLine;
+                                    break;
                                 default:                                    
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     break;
@@ -1726,7 +1731,7 @@ namespace PhatACCacheBinParser
 
                     string eventLine = "";
 
-                    eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {gameEvent.StartTime}, {gameEvent.EndTime}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
+                    eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {(gameEvent.StartTime == -1 ? $"{gameEvent.StartTime}" : $"{gameEvent.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.StartTime).DateTime.ToUniversalTime().ToString()} */")}, {(gameEvent.EndTime == -1 ? $"{gameEvent.EndTime}" : $"{gameEvent.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.EndTime).DateTime.ToUniversalTime().ToString()} */")}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
 
                     if (eventLine != "")
                     {
