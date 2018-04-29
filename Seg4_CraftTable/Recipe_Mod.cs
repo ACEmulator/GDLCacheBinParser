@@ -6,8 +6,8 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	class Recipe_Mod
 	{
 	    public List<Mod<int>> IntMods;
-	    public List<Mod<int>> DIDMods;
-	    public List<Mod<int>> IIDMods;
+	    public List<Mod<uint>> DIDMods;
+	    public List<Mod<uint>> IIDMods;
 	    public List<Mod<double>> FloatMods;
 	    public List<Mod<string>> StringMods;
 	    public List<Mod<bool>> BoolMods;
@@ -44,27 +44,27 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
             count = binaryReader.ReadUInt16();
             binaryReader.ReadUInt16();
-            if (count > 0) DIDMods = new List<Mod<int>>();
+            if (count > 0) DIDMods = new List<Mod<uint>>();
             for (int i = 0; i < count; i++)
             {
-                var item = new Mod<int>();
+                var item = new Mod<uint>();
                 item.Unknown1 = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
-                item.Value = binaryReader.ReadInt32();
+                item.Value = binaryReader.ReadUInt32();
                 DIDMods.Add(item);
             }
 
             count = binaryReader.ReadUInt16();
             binaryReader.ReadUInt16();
-            if (count > 0) IIDMods = new List<Mod<int>>();
+            if (count > 0) IIDMods = new List<Mod<uint>>();
             for (int i = 0; i < count; i++)
             {
-                var item = new Mod<int>();
+                var item = new Mod<uint>();
                 item.Unknown1 = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
-                item.Value = binaryReader.ReadInt32();
+                item.Value = binaryReader.ReadUInt32();
                 IIDMods.Add(item);
             }
 

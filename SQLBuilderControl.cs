@@ -423,7 +423,7 @@ namespace PhatACCacheBinParser
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {((INVENTORY_LOC)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case STypeInt.DAMAGE_TYPE_INT:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(DAMAGE_TYPE), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {((DAMAGE_TYPE)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case STypeInt.DEFAULT_COMBAT_STYLE_INT:
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CombatStyle), stat.Value)} */)" + Environment.NewLine;
@@ -531,7 +531,7 @@ namespace PhatACCacheBinParser
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ATTACK_HEIGHT), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case STypeInt.ATTACK_TYPE_INT:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AttackType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {((AttackType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case STypeInt.BONDED_INT:
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(BondedStatusEnum), stat.Value)} */)" + Environment.NewLine;
@@ -576,6 +576,13 @@ namespace PhatACCacheBinParser
                                 case STypeInt.GENERATOR_END_TIME_INT:
                                     //intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(stat.Value)).ToString()} */)" + Environment.NewLine;
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {DateTimeOffset.FromUnixTimeSeconds(stat.Value).DateTime.ToUniversalTime().ToString()} */)" + Environment.NewLine;
+                                    break;
+                                case STypeInt.IMBUED_EFFECT_2_INT:
+                                case STypeInt.IMBUED_EFFECT_3_INT:
+                                case STypeInt.IMBUED_EFFECT_4_INT:
+                                case STypeInt.IMBUED_EFFECT_5_INT:
+                                case STypeInt.IMBUED_EFFECT_INT:
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value} /* {((ImbuedEffectType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 default:                                    
                                     intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeInt), stat.Key)} */, {stat.Value})" + Environment.NewLine;
@@ -2085,6 +2092,387 @@ namespace PhatACCacheBinParser
 
                     if ((counter % 1000) == 0)
                         BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / Encounters.Count) * 100)));
+                }
+            }
+        }
+
+        private void cmdAction7_Click(object sender, EventArgs e)
+        {
+            cmdAction7.Enabled = false;
+
+            progressBar7.Style = ProgressBarStyle.Continuous;
+            progressBar7.Value = 0;
+
+            ThreadPool.QueueUserWorkItem(o =>
+            {
+                // Do some output thing here
+
+                WriteRecipeFiles();
+
+                BeginInvoke((Action)(() =>
+                {
+                    progressBar7.Style = ProgressBarStyle.Continuous;
+                    progressBar7.Value = 100;
+
+                    cmdAction7.Enabled = true;
+                }));
+            });
+        }
+
+        private void WriteRecipeFiles()
+        {
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL\\";
+
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            int processedCounter = 0;
+
+            string sqlCommand = "INSERT";
+
+            foreach (var recipe in CraftingTable.Recipes)
+            {
+                string FileNameFormatter(Recipe obj) => obj.ID.ToString("00000");
+
+                string fileNameFormatter = FileNameFormatter(recipe);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                {
+                    var parsed = recipe;
+
+                    string recipeLine = "";
+
+                    //`recipe_Id`, `unknown_1`, `skill`, `difficulty`, `unknown_4`, `success_W_C_I_D`, `success_Amount`, `success_Message`, `fail_W_C_I_D`, `fail_Amount`, `fail_Message`, `data_Id`
+                    //eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {(gameEvent.StartTime == -1 ? $"{gameEvent.StartTime}" : $"{gameEvent.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.StartTime).DateTime.ToUniversalTime().ToString()} */")}, {(gameEvent.EndTime == -1 ? $"{gameEvent.EndTime}" : $"{gameEvent.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.EndTime).DateTime.ToUniversalTime().ToString()} */")}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
+                    recipeLine += $"     , ({recipe.ID}, {recipe.unknown_1}, {recipe.Skill} /* {Enum.GetName(typeof(STypeSkill), recipe.Skill)} */, {recipe.Difficulty}, {recipe.unknown_4}, {(recipe.SuccessWCID > 0 ? $"{recipe.SuccessWCID} /* {weenieNames[recipe.SuccessWCID]} */" : $"{recipe.SuccessWCID}")}, {recipe.SuccessAmount}, '{recipe.SuccessMessage.Replace("'", "''")}', {(recipe.FailWCID > 0 ? $"{recipe.FailWCID} /* {weenieNames[recipe.FailWCID]} */" : $"{recipe.FailWCID}")}, {recipe.FailAmount}, '{recipe.FailMessage.Replace("'", "''")}', {recipe.DataID})" + Environment.NewLine;
+
+                    string cookbookLine = "";
+                    
+                    foreach (var entry in CraftingTable.Precursors[recipe.ID])
+                    {
+                        cookbookLine += $"     , ({recipe.ID}, {(entry.Target > 0 ? $"{entry.Target} /* {weenieNames[entry.Target]} */" : $"{entry.Target}")}, {(entry.Source > 0 ? $"{entry.Source} /* {weenieNames[entry.Source]} */" : $"{entry.Source}")})" + Environment.NewLine;
+                    }
+
+                    string componentsLine = "";
+
+                    //`recipe_Id`, `percent`, `unknown_2`, `message`
+                    foreach (var component in recipe.Components)
+                    {
+                        componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}')" + Environment.NewLine;
+                    }
+
+                    string requirementsIntLine = "", requirementsDIDLine = "", requirementsIIDLine = "", requirementsFloatLine = "",requirementsStringLine = "", requirementsBoolLine = "";
+
+                    //`recipe_Id`, `stat`, `value`, `enum`, `message`
+                    if (recipe.Requirements != null)
+                    {
+                        foreach (var requirement in recipe.Requirements)
+                        {
+                            //requirementsLine += $"     , ({recipe.ID}, {requirement.}, {recipe.Skill} /* {Enum.GetName(typeof(STypeSkill), recipe.Skill)} */, {recipe.Difficulty}, {recipe.unknown_4}, {(recipe.SuccessWCID > 0 ? $"{recipe.SuccessWCID} /* {weenieNames[recipe.SuccessWCID]} */" : $"{recipe.SuccessWCID}")}, {recipe.SuccessAmount}, '{recipe.SuccessMessage.Replace("'", "''")}', {(recipe.FailWCID > 0 ? $"{recipe.FailWCID} /* {weenieNames[recipe.FailWCID]} */" : $"{recipe.FailWCID}")}, {recipe.FailAmount}, '{recipe.FailMessage.Replace("'", "''")}', {recipe.DataID})" + Environment.NewLine;
+                            //`recipe_Id`, `stat`, `value`, `enum`, `message`
+                            if (requirement.IntRequirements != null)
+                            {
+                                foreach (var req in requirement.IntRequirements)
+                                {
+                                    switch ((STypeInt)req.Stat)
+                                    {
+                                        case STypeInt.IMBUED_EFFECT_2_INT:
+                                        case STypeInt.IMBUED_EFFECT_3_INT:
+                                        case STypeInt.IMBUED_EFFECT_4_INT:
+                                        case STypeInt.IMBUED_EFFECT_5_INT:
+                                        case STypeInt.IMBUED_EFFECT_INT:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                        case STypeInt.ATTACK_TYPE_INT:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                        case STypeInt.ATTUNED_INT:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                        case STypeInt.BONDED_INT:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                        case STypeInt.PALETTE_TEMPLATE_INT:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                        default:
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            break;
+                                    }
+                                }
+                            }
+
+                            if (requirement.DIDRequirements != null)
+                            {
+                                foreach (var req in requirement.DIDRequirements)
+                                {
+                                    requirementsDIDLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeDID), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                }
+                            }
+
+                            if (requirement.IIDRequirements != null)
+                            {
+                                foreach (var req in requirement.IIDRequirements)
+                                {
+                                    requirementsIIDLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeIID), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                }
+                            }
+
+                            if (requirement.StringRequirements != null)
+                            {
+                                foreach (var req in requirement.StringRequirements)
+                                {
+                                    requirementsStringLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                }
+                            }
+
+                            if (requirement.FloatRequirements != null)
+                            {
+                                foreach (var req in requirement.FloatRequirements)
+                                {
+                                    requirementsFloatLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeFloat), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                }
+                            }
+
+                            if (requirement.BoolRequirements != null)
+                            {
+                                foreach (var req in requirement.BoolRequirements)
+                                {
+                                    requirementsBoolLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeBool), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                }
+                            }
+                        }
+                    }
+
+                    string modsLine = "";
+                    string modsIntLine = "", modsDIDLine = "", modsIIDLine = "", modsFloatLine = "", modsStringLine = "", modsBoolLine = "";
+
+                    if (recipe.Mods != null)
+                    {
+                        int modSet = 1;
+                        foreach (var mod in recipe.Mods)
+                        {
+                            //`recipe_Id`, `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `data_Id`, `unknown_9`, `instance_Id`
+                            modsLine += $"     , ({recipe.ID}, {modSet}, {mod.Unknown1}, {mod.Unknown2}, {mod.Unknown3}, {mod.Unknown4}, {mod.Unknown5}, {mod.Unknown6}, {mod.Unknown7}, {mod.DataID}, {mod.Unknown9}, {mod.InstanceID})" + Environment.NewLine;
+
+                            if (mod.IntMods != null)
+                            {
+                                //`recipe_Id`, `stat`, `value`, `enum`, `unknown_1`
+                                foreach (var req in mod.IntMods)
+                                {
+                                    switch (req.Enum)
+                                    {
+                                        case 7:
+                                            modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat} /* {Enum.GetName(typeof(SpellID), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                            break;
+                                        default:
+                                            switch ((STypeInt)req.Stat)
+                                            {
+                                                case STypeInt.IMBUED_EFFECT_2_INT:
+                                                case STypeInt.IMBUED_EFFECT_3_INT:
+                                                case STypeInt.IMBUED_EFFECT_4_INT:
+                                                case STypeInt.IMBUED_EFFECT_5_INT:
+                                                case STypeInt.IMBUED_EFFECT_INT:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                                case STypeInt.ATTACK_TYPE_INT:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                                case STypeInt.ATTUNED_INT:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                                case STypeInt.BONDED_INT:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                                case STypeInt.PALETTE_TEMPLATE_INT:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                                default:
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeInt), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    break;
+                                            }
+                                            break;
+                                    }
+                                }                                
+                            }
+
+                            if (mod.DIDMods != null)
+                            {
+                                foreach (var req in mod.DIDMods)
+                                {
+                                    modsDIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeDID), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                }
+                            }
+
+                            if (mod.IIDMods != null)
+                            {
+                                foreach (var req in mod.IIDMods)
+                                {
+                                    modsIIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeIID), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                }
+                            }
+
+                            if (mod.StringMods != null)
+                            {
+                                foreach (var req in mod.StringMods)
+                                {
+                                    modsStringLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                }
+                            }
+
+                            if (mod.FloatMods != null)
+                            {
+                                foreach (var req in mod.FloatMods)
+                                {
+                                    modsFloatLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeFloat), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                }
+                            }
+
+                            if (mod.BoolMods != null)
+                            {
+                                foreach (var req in mod.BoolMods)
+                                {
+                                    modsBoolLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(STypeBool), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                }
+                            }
+
+                            modSet++;
+                        }
+                    }
+
+                    if (recipeLine != "")
+                    {
+                        recipeLine = $"{sqlCommand} INTO `recipe` (`recipe_Id`, `unknown_1`, `skill`, `difficulty`, `salvage_Type`, `success_W_C_I_D`, `success_Amount`, `success_Message`, `fail_W_C_I_D`, `fail_Amount`, `fail_Message`, `data_Id`)" + Environment.NewLine
+                            + "VALUES " + recipeLine.TrimStart("     ,".ToCharArray());
+                        recipeLine = recipeLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(recipeLine);
+                    }
+
+                    if (cookbookLine != "")
+                    {
+                        cookbookLine = $"{sqlCommand} INTO `cook_book` (`recipe_Id`, `target_W_C_I_D`, `source_W_C_I_D`)" + Environment.NewLine
+                            + "VALUES " + cookbookLine.TrimStart("     ,".ToCharArray());
+                        cookbookLine = cookbookLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(cookbookLine);
+                    }
+
+                    if (componentsLine != "")
+                    {
+                        componentsLine = $"{sqlCommand} INTO `recipe_component` (`recipe_Id`, `percent`, `unknown_2`, `message`)" + Environment.NewLine
+                            + "VALUES " + componentsLine.TrimStart("     ,".ToCharArray());
+                        componentsLine = componentsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(componentsLine);
+                    }
+
+                    if (requirementsIntLine != "")
+                    {
+                        requirementsIntLine = $"{sqlCommand} INTO `recipe_requirements_int` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsIntLine.TrimStart("     ,".ToCharArray());
+                        requirementsIntLine = requirementsIntLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsIntLine);
+                    }
+
+                    if (requirementsDIDLine != "")
+                    {
+                        requirementsDIDLine = $"{sqlCommand} INTO `recipe_requirements_d_i_d` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsDIDLine.TrimStart("     ,".ToCharArray());
+                        requirementsDIDLine = requirementsDIDLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsDIDLine);
+                    }
+
+                    if (requirementsIIDLine != "")
+                    {
+                        requirementsIIDLine = $"{sqlCommand} INTO `recipe_requirements_i_i_d` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsIIDLine.TrimStart("     ,".ToCharArray());
+                        requirementsIIDLine = requirementsIIDLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsIIDLine);
+                    }
+
+                    if (requirementsStringLine != "")
+                    {
+                        requirementsStringLine = $"{sqlCommand} INTO `recipe_requirements_string` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsStringLine.TrimStart("     ,".ToCharArray());
+                        requirementsStringLine = requirementsStringLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsStringLine);
+                    }
+
+                    if (requirementsFloatLine != "")
+                    {
+                        requirementsFloatLine = $"{sqlCommand} INTO `recipe_requirements_float` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsFloatLine.TrimStart("     ,".ToCharArray());
+                        requirementsFloatLine = requirementsFloatLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsFloatLine);
+                    }
+
+                    if (requirementsBoolLine != "")
+                    {
+                        requirementsBoolLine = $"{sqlCommand} INTO `recipe_requirements_bool` (`recipe_Id`, `stat`, `value`, `enum`, `message`)" + Environment.NewLine
+                            + "VALUES " + requirementsBoolLine.TrimStart("     ,".ToCharArray());
+                        requirementsBoolLine = requirementsBoolLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(requirementsBoolLine);
+                    }
+
+                    if (modsLine != "")
+                    {
+                        modsLine = $"{sqlCommand} INTO `recipe_mod` (`recipe_Id`, `mod_Set_Id`, `health`, `unknown_2`, `mana`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `data_Id`, `unknown_9`, `instance_Id`)" + Environment.NewLine
+                            + "VALUES " + modsLine.TrimStart("     ,".ToCharArray());
+                        modsLine = modsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsLine);
+                    }
+
+                    if (modsIntLine != "")
+                    {
+                        modsIntLine = $"{sqlCommand} INTO `recipe_mods_int` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsIntLine.TrimStart("     ,".ToCharArray());
+                        modsIntLine = modsIntLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsIntLine);
+                    }
+
+                    if (modsDIDLine != "")
+                    {
+                        modsDIDLine = $"{sqlCommand} INTO `recipe_mods_d_i_d` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsDIDLine.TrimStart("     ,".ToCharArray());
+                        modsDIDLine = modsDIDLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsDIDLine);
+                    }
+
+                    if (modsIIDLine != "")
+                    {
+                        modsIIDLine = $"{sqlCommand} INTO `recipe_mods_i_i_d` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsIIDLine.TrimStart("     ,".ToCharArray());
+                        modsIIDLine = modsIIDLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsIIDLine);
+                    }
+
+                    if (modsStringLine != "")
+                    {
+                        modsStringLine = $"{sqlCommand} INTO `recipe_mods_string` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsStringLine.TrimStart("     ,".ToCharArray());
+                        modsStringLine = modsStringLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsStringLine);
+                    }
+
+                    if (modsFloatLine != "")
+                    {
+                        modsFloatLine = $"{sqlCommand} INTO `recipe_mods_float` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsFloatLine.TrimStart("     ,".ToCharArray());
+                        modsFloatLine = modsFloatLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsFloatLine);
+                    }
+
+                    if (modsBoolLine != "")
+                    {
+                        modsBoolLine = $"{sqlCommand} INTO `recipe_mods_bool` (`recipe_Id`, `mod_Set_Id`, `stat`, `value`, `enum`, `unknown_1`)" + Environment.NewLine
+                            + "VALUES " + modsBoolLine.TrimStart("     ,".ToCharArray());
+                        modsBoolLine = modsBoolLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
+                        writer.WriteLine(modsBoolLine);
+                    }
+
+
+                    var counter = Interlocked.Increment(ref processedCounter);
+
+                    if ((counter % 1000) == 0)
+                        BeginInvoke((Action)(() => progressBar7.Value = (int)(((double)counter / CraftingTable.Recipes.Count) * 100)));
                 }
             }
         }

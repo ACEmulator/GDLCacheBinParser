@@ -82,6 +82,7 @@
     <Compile Include="Seg3_TreasureTable\TreasureTable.cs" />
     <Compile Include="Seg4_CraftTable\CraftingTable.cs" />
     <Compile Include="Seg4_CraftTable\Mod.cs" />
+    <Compile Include="Seg4_CraftTable\Precursor.cs" />
     <Compile Include="Seg4_CraftTable\Requirement.cs" />
     <Compile Include="Seg5_HousingPortals\HousingPortal.cs" />
     <Compile Include="Seg1_RegionDescExtendedData\RegionDescExtendedData.cs" />

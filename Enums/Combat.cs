@@ -56,6 +56,7 @@ namespace PhatACCacheBinParser.Enums
         NUM_BODY_HEIGHTS
     }
 
+    [Flags]
     public enum DAMAGE_TYPE
     {
         UNDEF_DAMAGE_TYPE = 0,
@@ -74,6 +75,7 @@ namespace PhatACCacheBinParser.Enums
         BASE_DAMAGE_TYPE = (1 << 28),
     }
 
+    [Flags]
     public enum AttackType
     {
         Undef_AttackType = 0,

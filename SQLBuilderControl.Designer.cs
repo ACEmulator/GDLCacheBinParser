@@ -194,6 +194,7 @@
             this.cmdAction7.TabIndex = 30;
             this.cmdAction7.Text = "4 Crafting";
             this.cmdAction7.UseVisualStyleBackColor = true;
+            this.cmdAction7.Click += new System.EventHandler(this.cmdAction7_Click);
             // 
             // progressBar7
             // 

@@ -123,6 +123,7 @@ namespace PhatACCacheBinParser.Enums
         USEABLE_TARGET_MASK = -65536,
     }
 
+    [Flags]
     public enum ImbuedEffectType
     {
         Undef_ImbuedEffectType = 0,

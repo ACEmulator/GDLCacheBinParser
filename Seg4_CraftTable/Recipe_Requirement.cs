@@ -6,8 +6,8 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	class Recipe_Requirement
 	{
 	    public List<Requirement<int>> IntRequirements;
-	    public List<Requirement<int>> DIDRequirements;
-	    public List<Requirement<int>> IIDRequirements;
+	    public List<Requirement<uint>> DIDRequirements;
+	    public List<Requirement<uint>> IIDRequirements;
 	    public List<Requirement<double>> FloatRequirements;
 	    public List<Requirement<string>> StringRequirements;
 	    public List<Requirement<bool>> BoolRequirements;
@@ -31,12 +31,12 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
 		    count = binaryReader.ReadUInt16();
 		    binaryReader.ReadUInt16();
-		    if (count > 0) DIDRequirements = new List<Requirement<int>>();
+		    if (count > 0) DIDRequirements = new List<Requirement<uint>>();
             for (int i = 0; i < count; i++)
 		    {
-		        var item = new Requirement<int>();
+		        var item = new Requirement<uint>();
 		        item.Stat = binaryReader.ReadInt32();
-		        item.Value = binaryReader.ReadInt32();
+		        item.Value = binaryReader.ReadUInt32();
 		        item.Enum = binaryReader.ReadInt32();
 		        item.Message = Util.ReadString(binaryReader, true);
                 DIDRequirements.Add(item);
@@ -44,12 +44,12 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 
 		    count = binaryReader.ReadUInt16();
 		    binaryReader.ReadUInt16();
-		    if (count > 0) IIDRequirements = new List<Requirement<int>>();
+		    if (count > 0) IIDRequirements = new List<Requirement<uint>>();
             for (int i = 0; i < count; i++)
 		    {
-		        var item = new Requirement<int>();
+		        var item = new Requirement<uint>();
 		        item.Stat = binaryReader.ReadInt32();
-		        item.Value = binaryReader.ReadInt32();
+		        item.Value = binaryReader.ReadUInt32();
 		        item.Enum = binaryReader.ReadInt32();
 		        item.Message = Util.ReadString(binaryReader, true);
                 IIDRequirements.Add(item);
