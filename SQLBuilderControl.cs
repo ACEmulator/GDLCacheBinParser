@@ -2146,18 +2146,34 @@ namespace PhatACCacheBinParser
                     recipeLine += $"     , ({recipe.ID}, {recipe.unknown_1}, {recipe.Skill} /* {Enum.GetName(typeof(STypeSkill), recipe.Skill)} */, {recipe.Difficulty}, {recipe.unknown_4}, {(recipe.SuccessWCID > 0 ? $"{recipe.SuccessWCID} /* {weenieNames[recipe.SuccessWCID]} */" : $"{recipe.SuccessWCID}")}, {recipe.SuccessAmount}, '{recipe.SuccessMessage.Replace("'", "''")}', {(recipe.FailWCID > 0 ? $"{recipe.FailWCID} /* {weenieNames[recipe.FailWCID]} */" : $"{recipe.FailWCID}")}, {recipe.FailAmount}, '{recipe.FailMessage.Replace("'", "''")}', {recipe.DataID})" + Environment.NewLine;
 
                     string cookbookLine = "";
-                    
+
+                    uint sourceWCID = 0;
+
                     foreach (var entry in CraftingTable.Precursors[recipe.ID])
                     {
                         cookbookLine += $"     , ({recipe.ID}, {(entry.Target > 0 ? $"{entry.Target} /* {weenieNames[entry.Target]} */" : $"{entry.Target}")}, {(entry.Source > 0 ? $"{entry.Source} /* {weenieNames[entry.Source]} */" : $"{entry.Source}")})" + Environment.NewLine;
+                        if (entry.Source > 0)
+                            sourceWCID = entry.Source;
                     }
 
                     string componentsLine = "";
 
                     //`recipe_Id`, `percent`, `unknown_2`, `message`
+                    int compidx = 1;
                     foreach (var component in recipe.Components)
                     {
-                        componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}')" + Environment.NewLine;
+                        switch (compidx)
+                        {
+                            case 1:
+                            case 3:
+                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') /* Target */" + Environment.NewLine;
+                                break;
+                            case 2:
+                            case 4:
+                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') {(sourceWCID > 0 ? $"/* {weenieNames[sourceWCID]} */" : $"/* Source */")}" + Environment.NewLine;
+                                break;
+                        }
+                        compidx++;
                     }
 
                     string requirementsIntLine = "", requirementsDIDLine = "", requirementsIIDLine = "", requirementsFloatLine = "",requirementsStringLine = "", requirementsBoolLine = "";
@@ -2356,7 +2372,7 @@ namespace PhatACCacheBinParser
 
                     if (componentsLine != "")
                     {
-                        componentsLine = $"{sqlCommand} INTO `recipe_component` (`recipe_Id`, `percent`, `unknown_2`, `message`)" + Environment.NewLine
+                        componentsLine = $"{sqlCommand} INTO `recipe_component` (`recipe_Id`, `destroy_Chance`, `destroy_Amount`, `destroy_Message`)" + Environment.NewLine
                             + "VALUES " + componentsLine.TrimStart("     ,".ToCharArray());
                         componentsLine = componentsLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
                         writer.WriteLine(componentsLine);
