@@ -2143,7 +2143,6 @@ namespace PhatACCacheBinParser
                     string recipeLine = "";
 
                     //`recipe_Id`, `unknown_1`, `skill`, `difficulty`, `unknown_4`, `success_W_C_I_D`, `success_Amount`, `success_Message`, `fail_W_C_I_D`, `fail_Amount`, `fail_Message`, `data_Id`
-                    //eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {(gameEvent.StartTime == -1 ? $"{gameEvent.StartTime}" : $"{gameEvent.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.StartTime).DateTime.ToUniversalTime().ToString()} */")}, {(gameEvent.EndTime == -1 ? $"{gameEvent.EndTime}" : $"{gameEvent.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.EndTime).DateTime.ToUniversalTime().ToString()} */")}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
                     recipeLine += $"     , ({recipe.ID}, {recipe.unknown_1}, {recipe.Skill} /* {Enum.GetName(typeof(STypeSkill), recipe.Skill)} */, {recipe.Difficulty}, {recipe.unknown_4}, {(recipe.SuccessWCID > 0 ? $"{recipe.SuccessWCID} /* {weenieNames[recipe.SuccessWCID]} */" : $"{recipe.SuccessWCID}")}, {recipe.SuccessAmount}, '{recipe.SuccessMessage.Replace("'", "''")}', {(recipe.FailWCID > 0 ? $"{recipe.FailWCID} /* {weenieNames[recipe.FailWCID]} */" : $"{recipe.FailWCID}")}, {recipe.FailAmount}, '{recipe.FailMessage.Replace("'", "''")}', {recipe.DataID})" + Environment.NewLine;
 
                     string cookbookLine = "";
@@ -2168,7 +2167,6 @@ namespace PhatACCacheBinParser
                     {
                         foreach (var requirement in recipe.Requirements)
                         {
-                            //requirementsLine += $"     , ({recipe.ID}, {requirement.}, {recipe.Skill} /* {Enum.GetName(typeof(STypeSkill), recipe.Skill)} */, {recipe.Difficulty}, {recipe.unknown_4}, {(recipe.SuccessWCID > 0 ? $"{recipe.SuccessWCID} /* {weenieNames[recipe.SuccessWCID]} */" : $"{recipe.SuccessWCID}")}, {recipe.SuccessAmount}, '{recipe.SuccessMessage.Replace("'", "''")}', {(recipe.FailWCID > 0 ? $"{recipe.FailWCID} /* {weenieNames[recipe.FailWCID]} */" : $"{recipe.FailWCID}")}, {recipe.FailAmount}, '{recipe.FailMessage.Replace("'", "''")}', {recipe.DataID})" + Environment.NewLine;
                             //`recipe_Id`, `stat`, `value`, `enum`, `message`
                             if (requirement.IntRequirements != null)
                             {
