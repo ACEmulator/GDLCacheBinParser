@@ -157,6 +157,7 @@
             this.cmdAction6.TabIndex = 26;
             this.cmdAction6.Text = "3 Treasure";
             this.cmdAction6.UseVisualStyleBackColor = true;
+            this.cmdAction6.Click += new System.EventHandler(this.cmdAction6_Click);
             // 
             // progressBar6
             // 

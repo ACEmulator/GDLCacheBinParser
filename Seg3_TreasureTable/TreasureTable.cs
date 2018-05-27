@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
@@ -125,8 +126,19 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		{
 			base.WriteJSONOutput(outputFolder);
 
+            using (StreamWriter sw = new StreamWriter(outputFolder + "WieldedTreasure.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                Serializer.Serialize(writer, WieldedTreasure);
+            }
 
-			return false;
+            using (StreamWriter sw = new StreamWriter(outputFolder + "DeathTreasure.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                Serializer.Serialize(writer, _treasure2);
+            }
+
+            return true;
 		}
 	}
 }
