@@ -708,6 +708,54 @@ namespace PhatACCacheBinParser
                                 case STypeDID.YELLOW_SURGE_SPELL_DID:
                                     didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
+                                case STypeDID.WIELDED_TREASURE_TYPE_DID:                                    
+                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[(uint)stat.Key].Tier} */)" + Environment.NewLine;
+                                    if (TreasureTable.WieldedTreasure.ContainsKey(stat.Value))
+                                    {
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+
+                                        foreach (var item in TreasureTable.WieldedTreasure[stat.Value])
+                                        {
+                                            didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance * 100}% */" + Environment.NewLine;
+                                        }
+                                    }
+                                    else if (TreasureTable.DeathTreasure.ContainsKey(stat.Value))
+                                    {
+                                        //foreach (var item in TreasureTable.DeathTreasure[stat.Value])
+                                        //{
+                                        //    didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance / 1}% */" + Environment.NewLine;
+                                        //}
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                    }
+                                    else
+                                    {
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                    }
+                                    break;
+                                case STypeDID.DEATH_TREASURE_TYPE_DID:
+                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                    if (TreasureTable.WieldedTreasure.ContainsKey(stat.Value))
+                                    {
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+
+                                        foreach (var item in TreasureTable.WieldedTreasure[stat.Value])
+                                        {
+                                            didsLine += $"     /* Contain {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance * 100}% */" + Environment.NewLine;
+                                        }
+                                    }
+                                    else if (TreasureTable.DeathTreasure.ContainsKey(stat.Value))
+                                    {
+                                        //foreach (var item in TreasureTable.DeathTreasure[stat.Value])
+                                        //{
+                                        //    didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance / 1}% */" + Environment.NewLine;
+                                        //}
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                    }
+                                    else
+                                    {
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                    }
+                                    break;
                                 default:
                                     didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     break;
@@ -779,7 +827,63 @@ namespace PhatACCacheBinParser
                         {
                             weenieNames.TryGetValue(Convert.ToUInt32(instance.WCID), out string label);
                             if (instance.WCID == 0)
-                                label = "RANDOMLY GENERATED TREASURE";
+                            {
+                                if (parsed.DIDValues.ContainsKey((int)STypeDID.DEATH_TREASURE_TYPE_DID))
+                                {
+                                    if (TreasureTable.DeathTreasure.ContainsKey(parsed.DIDValues[(int)STypeDID.DEATH_TREASURE_TYPE_DID]))
+                                    {
+                                        label = $"RANDOMLY GENERATED TREASURE from Loot Tier {TreasureTable.DeathTreasure[parsed.DIDValues[(int)STypeDID.DEATH_TREASURE_TYPE_DID]].Tier}";
+                                    }
+                                    else if (TreasureTable.WieldedTreasure.ContainsKey(parsed.DIDValues[(int)STypeDID.DEATH_TREASURE_TYPE_DID]))
+                                    {
+                                        label = "";
+                                        foreach (var item in TreasureTable.WieldedTreasure[parsed.DIDValues[(int)STypeDID.DEATH_TREASURE_TYPE_DID]])
+                                        {
+                                            label += $"{(item.Amount > 0 ? $"{item.Amount}" : "1")}x {weenieNames[item.WCID]} ({item.WCID}), ";
+                                        }
+                                        label = label.Substring(0, label.Length - 2) + " from Wielded Treasure Table";
+                                    }
+                                    else
+                                    {
+                                        label = "RANDOMLY GENERATED TREASURE";
+                                    }
+                                }
+                                else
+                                {
+                                    label = "RANDOMLY GENERATED TREASURE";
+                                }
+                            }
+                            //else if ((instance.Destination & (int)DestinationType.Treasure_DestinationType) != 0)
+                            //else if (instance.Destination == (int)DestinationType.ContainTreasure_DestinationType)
+                            //{
+                            //    //if (TreasureTable.DeathTreasure.ContainsKey((uint)instance.WCID))
+                            //    //{
+                            //    //    label = $"RANDOM TREASURE from Loot Tier {TreasureTable.DeathTreasure[(uint)instance.WCID].Tier}";
+                            //    //}
+                            //    //else if (TreasureTable.WieldedTreasure.ContainsKey((uint)instance.WCID))
+                            //    //{
+                            //    //    label = "";
+                            //    //    foreach (var item in TreasureTable.WieldedTreasure[(uint)instance.WCID])
+                            //    //    {
+                            //    //        label += $"{(item.Amount > 0 ? $"{item.Amount}" : "1")}x {weenieNames[item.WCID]} ({item.WCID}) {item.Chance * 100}% of the time, ";
+                            //    //    }
+                            //    //    label = label.Substring(0, label.Length - 2) + " from Wielded Treasure Table";
+                            //    //}
+                            //    //if (TreasureTable.DeathTreasure.ContainsKey((uint)instance.WCID))
+                            //    //{
+                            //    //    label = $"RANDOM TREASURE from Loot Tier {TreasureTable.DeathTreasure[(uint)instance.WCID].Tier}";
+                            //    //}
+                            //    //else
+                            //    if (TreasureTable.WieldedTreasure.ContainsKey((uint)instance.WCID))
+                            //    {
+                            //        label = "";
+                            //        foreach (var item in TreasureTable.WieldedTreasure[(uint)instance.WCID])
+                            //        {
+                            //            label += $"{(item.Amount > 0 ? $"{item.Amount}" : "1")}x {weenieNames[item.WCID]} ({item.WCID}) {item.Chance * 100}% of the time, ";
+                            //        }
+                            //        label = label.Substring(0, label.Length - 2) + " from Wielded Treasure Table";
+                            //    }
+                            //}
                             instancesLine += $"     , ({parsed.WCID}, {(uint)instance.Destination}, {instance.WCID}, {instance.StackSize}, {instance.Palette}, {instance.Shade}, {instance.TryToBond}" +
                                 $") /* Create {label} for {Enum.GetName(typeof(DestinationType), instance.Destination)} */" + Environment.NewLine;
                         }
@@ -789,6 +893,27 @@ namespace PhatACCacheBinParser
                         foreach (var profile in parsed.Generators)
                         {
                             weenieNames.TryGetValue(Convert.ToUInt32(profile.Type), out string label);
+                            if ((profile.WhereCreate & (int)RegenLocationType.Treasure_RegenLocationType) != 0)
+                            {
+                                //label = "";
+                                if (TreasureTable.DeathTreasure.ContainsKey((uint)profile.Type))
+                                {
+                                    label = $"RANDOM TREASURE from Loot Tier {TreasureTable.DeathTreasure[(uint)profile.Type].Tier}";
+                                }
+                                else if (TreasureTable.WieldedTreasure.ContainsKey((uint)profile.Type))
+                                {
+                                    label = "";
+                                    foreach (var item in TreasureTable.WieldedTreasure[(uint)profile.Type])
+                                    {
+                                        label += $"{(item.Amount > 0 ? $"{item.Amount}" : "1")}x {weenieNames[item.WCID]} ({item.WCID}) {item.Chance * 100}% of the time, ";
+                                    }
+                                    label = label.Substring(0, label.Length - 2) + " from Wielded Treasure Table";
+                                }
+                                else
+                                {
+
+                                }
+                            }
                             profilesLine += $"     , ({parsed.WCID}, {profile.Probability}, {profile.Type}, {profile.Delay}, {(uint)profile.InitCreate}, {(uint)profile.MaxNum}" +
                             $", {profile.WhenCreate}, {profile.WhereCreate}, {profile.StackSize}, {profile.PalleteTypeID}, {profile.Shade}" +
                             $", {profile.Position.ObjCellID}, {profile.Position.Origin.X}, {profile.Position.Origin.Y}, {profile.Position.Origin.Z}" +
@@ -2569,7 +2694,7 @@ namespace PhatACCacheBinParser
             if (!Directory.Exists(outputFolder + subFolder))
                 Directory.CreateDirectory(outputFolder + subFolder);
 
-            foreach (var entry in TreasureTable._treasure2)
+            foreach (var entry in TreasureTable.DeathTreasure)
             {
                 //string FileNameFormatter(TreasureEntry obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
 
@@ -2601,7 +2726,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar6.Value = (int)(((double)counter / TreasureTable._treasure2.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBar6.Value = (int)(((double)counter / TreasureTable.DeathTreasure.Count) * 100)));
                 }
             }
         }
