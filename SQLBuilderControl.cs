@@ -716,7 +716,7 @@ namespace PhatACCacheBinParser
 
                                         foreach (var item in TreasureTable.WieldedTreasure[stat.Value])
                                         {
-                                            didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance * 100}% */" + Environment.NewLine;
+                                            didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"| Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"| Shade: {item.Shade}" : "")} | Chance: {item.Chance * 100}% */" + Environment.NewLine;
                                         }
                                     }
                                     else if (TreasureTable.DeathTreasure.ContainsKey(stat.Value))
@@ -740,7 +740,7 @@ namespace PhatACCacheBinParser
 
                                         foreach (var item in TreasureTable.WieldedTreasure[stat.Value])
                                         {
-                                            didsLine += $"     /* Contain {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance * 100}% */" + Environment.NewLine;
+                                            didsLine += $"     /* Contain {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"| Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"| Shade: {item.Shade}" : "")} | Chance: {item.Chance * 100}% */" + Environment.NewLine;
                                         }
                                     }
                                     else if (TreasureTable.DeathTreasure.ContainsKey(stat.Value))
