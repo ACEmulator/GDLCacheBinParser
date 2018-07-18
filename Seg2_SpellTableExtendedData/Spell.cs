@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+using ACE.Entity.Enum;
+
 using PhatACCacheBinParser.Common;
 
 namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
@@ -69,8 +71,8 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public int? BoostVariance;
 
         // Transfer
-        public Attribute2nd? Source;
-        public Attribute2nd? Destination;
+        public Vital? Source;
+        public Vital? Destination;
         public float? Proportion;
         public float? LossPercent;
         public int? SourceLoss;
@@ -193,8 +195,8 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
             }
             else if (MetaSpellType == SpellType.Transfer)
             {
-                Source = (Attribute2nd)reader.ReadInt32();
-                Destination = (Attribute2nd)reader.ReadInt32();
+                Source = (Vital)reader.ReadInt32();
+                Destination = (Vital)reader.ReadInt32();
                 Proportion = reader.ReadSingle();
                 LossPercent = reader.ReadSingle();
                 SourceLoss = reader.ReadInt32();

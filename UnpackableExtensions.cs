@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PhatACCacheBinParser
 {
-	static class PackableExtensions
+	static class UnpackableExtensions
 	{
 		public static bool Unpack<T>(this List<T> value, BinaryReader binaryReader) where T : IUnpackable, new()
 		{

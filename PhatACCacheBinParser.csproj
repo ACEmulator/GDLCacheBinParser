@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,7 +33,35 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ACE.Common">
+      <HintPath>lib\ACE.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ACE.Database">
+      <HintPath>lib\ACE.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="ACE.Entity">
+      <HintPath>lib\ACE.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -41,33 +71,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Encounter.cs" />
-    <Compile Include="Common\GameEventState.cs" />
     <Compile Include="Enums\Account.cs" />
-    <Compile Include="Enums\Appraisal.cs" />
     <Compile Include="Enums\Character.cs" />
-    <Compile Include="Enums\Chat.cs" />
-    <Compile Include="Enums\Emote.cs" />
     <Compile Include="Enums\House.cs" />
-    <Compile Include="Enums\MaterialType.cs" />
-    <Compile Include="Enums\Movement.cs" />
     <Compile Include="Enums\PacketOpcode.cs" />
-    <Compile Include="Enums\Enums.cs" />
-    <Compile Include="Enums\Inventory.cs" />
     <Compile Include="Enums\Combat.cs" />
     <Compile Include="Enums\Item.cs" />
     <Compile Include="Enums\Physics.cs" />
-    <Compile Include="Enums\Portals.cs" />
-    <Compile Include="Enums\Script.cs" />
-    <Compile Include="Enums\Shop.cs" />
-    <Compile Include="Enums\Skills.cs" />
-    <Compile Include="Enums\Sound.cs" />
     <Compile Include="Enums\Spells.cs" />
     <Compile Include="Enums\StatType.cs" />
-    <Compile Include="Enums\UI.cs" />
     <Compile Include="Enums\WeenieClasses.cs" />
-    <Compile Include="Common\Attribute2nd.cs" />
-    <Compile Include="Common\DamageType.cs" />
-    <Compile Include="PackableExtensions.cs" />
+    <Compile Include="UnpackableExtensions.cs" />
     <Compile Include="Seg1_RegionDescExtendedData\EncounterMap.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellFormula.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellStatMod.cs" />
@@ -170,6 +184,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SQLBuilderControl.resx">
       <DependentUpon>SQLBuilderControl.cs</DependentUpon>

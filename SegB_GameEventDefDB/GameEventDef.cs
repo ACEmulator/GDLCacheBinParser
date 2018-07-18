@@ -1,5 +1,6 @@
-﻿using PhatACCacheBinParser.Common;
-using System.IO;
+﻿using System.IO;
+
+using ACE.Entity.Enum;
 
 namespace PhatACCacheBinParser.SegB_GameEventDefDB
 {
