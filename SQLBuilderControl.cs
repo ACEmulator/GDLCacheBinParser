@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -150,7 +151,7 @@ namespace PhatACCacheBinParser
                         name = Enum.GetName(typeof(WeenieClasses), weenie.Value.WCID).Substring(2);
                     else
                     {
-                        name = "ace" + weenie.Value.WCID.ToString(); //+ "-" + parsed.Label.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
+                        name = "ace" + weenie.Value.WCID; //+ "-" + parsed.Label.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
                     }
                     //name = name.Substring(2); // W_
                     if (name.Contains("_CLASS"))
@@ -198,7 +199,7 @@ namespace PhatACCacheBinParser
                         if (Enum.IsDefined(typeof(CreatureType), ct))
                             ctFolder = wtFolder + Enum.GetName(typeof(CreatureType), parsed.IntValues[(int)PropertyInt.CreatureType]).Replace("_CreatureType", "").Replace("_", "") + "\\";
                         else
-                            ctFolder = wtFolder + "UnknownCT_" + parsed.IntValues[(int)PropertyInt.CreatureType].ToString() + "\\";
+                            ctFolder = wtFolder + "UnknownCT_" + parsed.IntValues[(int)PropertyInt.CreatureType] + "\\";
                     }
                     else
                         ctFolder = wtFolder + "Unsorted" + "\\";
@@ -359,14 +360,14 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outFolder + fileNameFormatter + ".sql"))
                 {
-                    string weenieName = "";
+                    string weenieName;
                     if (Enum.IsDefined(typeof(WeenieClasses), (ushort)parsed.WCID))
                     {
                         weenieName = Enum.GetName(typeof(WeenieClasses), parsed.WCID).Substring(2);
                         weenieName = weenieName.Substring(0, weenieName.Length - 6).Replace("_", "-").ToLower();
                     }
                     else
-                        weenieName = "ace" + parsed.WCID.ToString(); //+ "-" + parsed.Label.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
+                        weenieName = "ace" + parsed.WCID; //+ "-" + parsed.Label.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
 
                     string name = parsed.Description;
                     if (name == "")
@@ -374,7 +375,7 @@ namespace PhatACCacheBinParser
                         if (Enum.IsDefined(typeof(WeenieClasses), (ushort)parsed.WCID))
                             name = Enum.GetName(typeof(WeenieClasses), parsed.WCID).Substring(2);
                         else
-                            name = "ace" + parsed.WCID.ToString();
+                            name = "ace" + parsed.WCID;
 
                         if (name.Contains("_CLASS"))
                             name = name.Remove(name.LastIndexOf("_CLASS")).Replace("_", "-").ToLower();
@@ -406,190 +407,190 @@ namespace PhatACCacheBinParser
                             switch ((PropertyInt)stat.Key)
                             {
                                 case PropertyInt.AmmoType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AmmoType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AmmoType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.BoosterEnum:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PropertyAttribute2nd), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PropertyAttribute2nd), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ClothingPriority:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((CoverageMask)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((CoverageMask)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.CombatMode:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CombatMode), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CombatMode), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.CombatUse:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(COMBAT_USE), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(COMBAT_USE), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.CreatureType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.CurrentWieldedLocation:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((EquipMask)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((EquipMask)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.DamageType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((DamageType)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((DamageType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.DefaultCombatStyle:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CombatStyle), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CombatStyle), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.Gender:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Gender), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Gender), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.GeneratorDestructionType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorDestruct), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorDestruct), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.GeneratorEndDestructionType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorDestruct), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorDestruct), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.GeneratorTimeType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorTimeType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorTimeType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.GeneratorType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(GeneratorType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.HeritageGroup:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(HeritageGroup), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(HeritageGroup), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 //case PropertyInt.HOOK_GROUP_INT:
-                                //    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((HookTypeEnum)stat.Value).ToString()} */)" + Environment.NewLine;
+                                //    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((HookTypeEnum)stat.Value).ToString()} */)" + Environment.NewLine;
                                 //    break;
                                 case PropertyInt.HookItemType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.HookPlacement:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Placement), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Placement), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.HookType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((HookTypeEnum)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((HookTypeEnum)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.HouseType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(HouseType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(HouseType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ItemType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ItemUseable:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ITEM_USEABLE)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ITEM_USEABLE)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ItemXpStyle:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemXpStyle), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ItemXpStyle), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ValidLocations:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((EquipMask)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((EquipMask)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.MaterialType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Material), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Material), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.MerchandiseItemTypes:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ItemType)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ItemType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.PaletteTemplate:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.PhysicsState:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((PhysicsState)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((PhysicsState)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.Placement:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Placement), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(Placement), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.PlayerKillerStatus:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PlayerKillerStatus), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PlayerKillerStatus), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.PortalBitmask:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PortalBitmask), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(PortalBitmask), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.RadarBlipColor:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(RadarColor), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(RadarColor), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ShowableOnRadar:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(RadarBehavior), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(RadarBehavior), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.SlayerCreatureType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.SummoningMastery:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(SummoningMastery), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(SummoningMastery), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.TargetType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ItemType)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ItemType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.UiEffects:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(UiEffects), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(UiEffects), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.WeaponSkill:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ACE.Entity.Enum.Skill), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ACE.Entity.Enum.Skill), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.WeaponType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(WeaponType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(WeaponType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ActivationCreateClass:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {weenieNames[(uint)stat.Value]} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {weenieNames[(uint)stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ActivationResponse:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ActivationResponseEnum), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ActivationResponseEnum), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.Attuned:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.AttackHeight:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AttackHeight), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(AttackHeight), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.AttackType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((AttackType)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((AttackType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.Bonded:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(BondedStatusEnum), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(BondedStatusEnum), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ChannelsActive:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((Channel)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((Channel)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ChannelsAllowed:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((Channel)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((Channel)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.AccountRequirements:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(SubscriptionStatus__guessedname), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(SubscriptionStatus__guessedname), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.AetheriaBitfield:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((AetheriaBitfield)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((AetheriaBitfield)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.AiAllowedCombatStyle:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((CombatStyle)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((CombatStyle)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.EquipmentSetId:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(EquipmentSet), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(EquipmentSet), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.FoeType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.FriendType:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(CreatureType), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.WieldRequirements2:
                                 case PropertyInt.WieldRequirements3:
                                 case PropertyInt.WieldRequirements4:
                                 case PropertyInt.WieldRequirements:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((WieldRequirement)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((WieldRequirement)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.WieldSkilltype2:
                                 case PropertyInt.WieldSkilltype3:
                                 case PropertyInt.WieldSkilltype4:
                                 case PropertyInt.WieldSkilltype:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ACE.Entity.Enum.Skill), stat.Value)} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {Enum.GetName(typeof(ACE.Entity.Enum.Skill), stat.Value)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.GeneratorStartTime:
                                 case PropertyInt.GeneratorEndTime:
-                                    //intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(stat.Value)).ToString()} */)" + Environment.NewLine;
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {DateTimeOffset.FromUnixTimeSeconds(stat.Value).DateTime.ToUniversalTime().ToString()} */)" + Environment.NewLine;
+                                    //intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(stat.Value)).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {DateTimeOffset.FromUnixTimeSeconds(stat.Value).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture)} */)" + Environment.NewLine;
                                     break;
                                 case PropertyInt.ImbuedEffect2:
                                 case PropertyInt.ImbuedEffect3:
                                 case PropertyInt.ImbuedEffect4:
                                 case PropertyInt.ImbuedEffect5:
                                 case PropertyInt.ImbuedEffect:
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ImbuedEffectType)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value} /* {((ImbuedEffectType)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 default:                                    
-                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                    intsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     break;
                             }
                         }
@@ -598,21 +599,21 @@ namespace PhatACCacheBinParser
                     {
                         foreach (var stat in parsed.LongValues.OrderBy(x => x.Key))
                         {
-                            bigintsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInt64), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                            bigintsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInt64), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                         }
                     }
                     if (parsed.DoubleValues != null)
                     {
                         foreach (var stat in parsed.DoubleValues.OrderBy(x => x.Key))
                         {
-                            floatsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyFloat), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                            floatsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyFloat), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                         }
                     }
                     if (parsed.BoolValues != null)
                     {
                         foreach (var stat in parsed.BoolValues.OrderBy(x => x.Key))
                         {
-                            boolsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyBool), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                            boolsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyBool), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                         }
                     }
                     if (parsed.StringValues != null)
@@ -620,13 +621,13 @@ namespace PhatACCacheBinParser
                         foreach (var stat in parsed.StringValues.OrderBy(x => x.Key))
                         {
                             if (stat.Key != (uint)PropertyString.Name)
-                                strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{stat.Value.Replace("'", "''")}')" + Environment.NewLine;
+                                strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{stat.Value.Replace("'", "''")}')" + Environment.NewLine;
                             else
                             {
                                 if (stat.Value != "")
-                                    strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{stat.Value.Replace("'", "''")}')" + Environment.NewLine;
+                                    strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{stat.Value.Replace("'", "''")}')" + Environment.NewLine;
                                 else
-                                    strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{name.Replace("'", "''")}')" + Environment.NewLine;
+                                    strsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyString), stat.Key)} */, '{name.Replace("'", "''")}')" + Environment.NewLine;
                             }
                         }
                     }
@@ -634,89 +635,89 @@ namespace PhatACCacheBinParser
                     {
                         foreach (var stat in parsed.DIDValues.OrderBy(x => x.Key))
                         {
-                            // didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                            // didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                             switch ((PropertyDataId)stat.Key)
                             {
                                 case PropertyDataId.ActivationAnimation:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.ActivationSound:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((Sound)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((Sound)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.AlternateCurrency:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.AugmentationCreateItem:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.BlueSurgeSpell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.DeathSpell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.InitMotion:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.LastPortal:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.LinkedPortalOne:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.LinkedPortalTwo:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.OriginalPortal:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.PhysicsScript:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((PlayScript)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((PlayScript)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.ProcSpell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.RedSurgeSpell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.RestrictionEffect:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((PlayScript)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((PlayScript)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 //case STypeDID.SPELL_COMPONENT_DID:
-                                //    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                //    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                 //    break;
                                 case PropertyDataId.Spell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseCreateItem:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseSound:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((Sound)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((Sound)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseTargetAnimation:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseTargetFailureAnimation:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseTargetSuccessAnimation:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.UseUserAnimation:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((MotionCommand)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.VendorsClassId:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {weenieNames[stat.Value]} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.YellowSurgeSpell:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* {((SpellID)stat.Value).ToString()} */)" + Environment.NewLine;
                                     break;
                                 case PropertyDataId.WieldedTreasureType:                                    
-                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[(uint)stat.Key].Tier} */)" + Environment.NewLine;
+                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[(uint)stat.Key].Tier} */)" + Environment.NewLine;
                                     if (treasureTable.WieldedTreasure.ContainsKey(stat.Value))
                                     {
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
 
                                         foreach (var item in treasureTable.WieldedTreasure[stat.Value])
                                         {
@@ -729,18 +730,18 @@ namespace PhatACCacheBinParser
                                         //{
                                         //    didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance / 1}% */" + Environment.NewLine;
                                         //}
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* Loot Tier: {treasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* Loot Tier: {treasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
                                     }
                                     else
                                     {
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     }
                                     break;
                                 case PropertyDataId.DeathTreasureType:
-                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                    //didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(STypeDID), stat.Key)} */, {stat.Value} /* Loot Tier: {TreasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
                                     if (treasureTable.WieldedTreasure.ContainsKey(stat.Value))
                                     {
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
 
                                         foreach (var item in treasureTable.WieldedTreasure[stat.Value])
                                         {
@@ -753,15 +754,15 @@ namespace PhatACCacheBinParser
                                         //{
                                         //    didsLine += $"     /* Wield {(item.Amount > 1 ? $"{item.Amount}x" : "")} {weenieNames[item.WCID]} ({item.WCID}) {(item.PTID > 0 ? $"Palette: {Enum.GetName(typeof(PALETTE_TEMPLATE), item.PTID)} ({item.PTID})" : "")} {(item.Shade > 0 ? $"Shade: {item.Shade})" : "")} Chance: {item.Chance / 1}% */" + Environment.NewLine;
                                         //}
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* Loot Tier: {treasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value} /* Loot Tier: {treasureTable.DeathTreasure[stat.Value].Tier} */)" + Environment.NewLine;
                                     }
                                     else
                                     {
-                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                        didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     }
                                     break;
                                 default:
-                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                                    didsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyDataId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                                     break;
                             }
                         }
@@ -772,7 +773,7 @@ namespace PhatACCacheBinParser
                         {
                             // wcid 30732 has -1 for an IID.. i think this was to make it so noone could wield
                             // iidsLine += $"     , ({parsed.WCID}, {(uint)stat.Key}, {(uint)stat.Value}) /* {Enum.GetName(typeof(STypeIID), stat.Key)} */" + Environment.NewLine;
-                            iidsLine += $"     , ({parsed.WCID}, {((uint)stat.Key).ToString("000")} /* {Enum.GetName(typeof(PropertyInstanceId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
+                            iidsLine += $"     , ({parsed.WCID}, {((uint)stat.Key):000} /* {Enum.GetName(typeof(PropertyInstanceId), stat.Key)} */, {stat.Value})" + Environment.NewLine;
                         }
                     }
                     if (parsed.SpellCastingProbability != null)
@@ -922,7 +923,7 @@ namespace PhatACCacheBinParser
                             $", {profile.WhenCreate}, {profile.WhereCreate}, {profile.StackSize}, {profile.PalleteTypeID}, {profile.Shade}" +
                             $", {profile.Position.ObjCellID}, {profile.Position.Origin.X}, {profile.Position.Origin.Y}, {profile.Position.Origin.Z}" +
                             $", {profile.Position.Angles.W}, {profile.Position.Angles.X}, {profile.Position.Angles.Y}, {profile.Position.Angles.Z})" +
-                            $"/* Generate {label} (x{profile.InitCreate.ToString("N0")} up to max of {profile.MaxNum.ToString("N0")}) - {Enum.GetName(typeof(RegenerationType), profile.WhenCreate)} - {Enum.GetName(typeof(RegenLocationType), profile.WhereCreate)} */" + Environment.NewLine;
+                            $"/* Generate {label} (x{profile.InitCreate:N0} up to max of {profile.MaxNum:N0}) - {Enum.GetName(typeof(RegenerationType), profile.WhenCreate)} - {Enum.GetName(typeof(RegenLocationType), profile.WhereCreate)} */" + Environment.NewLine;
                         }
                     }
 
@@ -963,10 +964,10 @@ namespace PhatACCacheBinParser
                                 string quest = "";
                                 if (category.Quest != null)
                                 {
-                                    quest = category.Quest.ToString().Replace("'", "''");
+                                    quest = category.Quest.Replace("'", "''");
                                     quest = quest.Insert(0, "'").Insert(quest.Length + 1, "'");
                                 }
-                                emoteCategorysLine += $"     , ({parsed.WCID}, {category.Probability}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {((category.ClassID.HasValue) ? category.ClassID.ToString() + $" /* {weenieNames[(uint)category.ClassID]} */" : "NULL")}, {((category.Style.HasValue) ? (category.Style.ToString() + $" /* {((MotionStance)category.Style).ToString()} */") : "NULL")}, {((category.Substyle.HasValue) ? (category.Substyle.ToString() + $" /* {((MotionCommand)category.Substyle).ToString()} */") : "NULL")}, {((category.Quest != null) ? quest : "NULL")}, {((category.VendorType.HasValue) ? (category.VendorType.ToString() + $" /* {((VendorType)category.VendorType).ToString()} */") : "NULL")}, {((category.MinHealth.HasValue) ? category.MinHealth.ToString() : "NULL")}, {((category.MaxHealth.HasValue) ? category.MaxHealth.ToString() : "NULL")})" + Environment.NewLine;
+                                emoteCategorysLine += $"     , ({parsed.WCID}, {category.Probability}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {((category.ClassID.HasValue) ? category.ClassID + $" /* {weenieNames[(uint)category.ClassID]} */" : "NULL")}, {((category.Style.HasValue) ? (category.Style + $" /* {((MotionStance)category.Style).ToString()} */") : "NULL")}, {((category.Substyle.HasValue) ? (category.Substyle + $" /* {((MotionCommand)category.Substyle).ToString()} */") : "NULL")}, {((category.Quest != null) ? quest : "NULL")}, {((category.VendorType.HasValue) ? (category.VendorType + $" /* {((VendorType)category.VendorType).ToString()} */") : "NULL")}, {((category.MinHealth.HasValue) ? category.MinHealth.ToString() : "NULL")}, {((category.MaxHealth.HasValue) ? category.MaxHealth.ToString() : "NULL")})" + Environment.NewLine;
                                 if (category.EmoteActions != null)
                                 {
                                     var order = 0;
@@ -976,21 +977,21 @@ namespace PhatACCacheBinParser
                                         string message = "";
                                         if (action.Message != null)
                                         {
-                                            message = action.Message.ToString().Replace("'", "''");
+                                            message = action.Message.Replace("'", "''");
                                             message = message.Insert(0, "'").Insert(message.Length + 1, "'");
                                         }
                                         string testString = "";
                                         if (action.TestString != null)
                                         {
-                                            testString = action.TestString.ToString().Replace("'", "''");
+                                            testString = action.TestString.Replace("'", "''");
                                             testString = testString.Insert(0, "'").Insert(testString.Length + 1, "'");
                                         }
                                         if (action.Position != null)
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion.ToString() + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID.ToString() + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript.ToString() + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound.ToString() + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Z.ToString() : "NULL")})" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Origin != null) ? action.Position.Origin.Z.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.W.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position.Angles != null) ? action.Position.Angles.Z.ToString(CultureInfo.InvariantCulture) : "NULL")})" + Environment.NewLine;
                                         else if (action.Frame != null)
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion.ToString() + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID.ToString() + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript.ToString() + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound.ToString() + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.X.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Y.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Z.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.W.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.X.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Y.ToString() : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Z.ToString() : "NULL")})" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Origin != null) ? action.Frame.Origin.Z.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.W.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Frame.Angles != null) ? action.Frame.Angles.Z.ToString(CultureInfo.InvariantCulture) : "NULL")})" + Environment.NewLine;
                                         else
-                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion.ToString() + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID.ToString() + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript.ToString() + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound.ToString() + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID.ToString() + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString() : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.Z.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.W.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.X.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Y.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Angles.Z.ToString() : "NULL")})" + Environment.NewLine;
+                                            emoteActionsLine += $"     , ({parsed.WCID}, {category.Category} /* {Enum.GetName(typeof(EmoteCategory), category.Category)} */, {emoteSetId}, {order}, {action.Type} /* {Enum.GetName(typeof(EmoteType), action.Type)} */, {action.Delay}, {action.Extent}, {((action.Motion.HasValue) ? (action.Motion + $" /* {((MotionCommand)action.Motion).ToString()} */") : "NULL")}, {((action.Message != null) ? message : "NULL")}, {((action.TestString != null) ? testString : "NULL")}, {((action.Min.HasValue) ? action.Min.ToString() : "NULL")}, {((action.Max.HasValue) ? action.Max.ToString() : "NULL")}, {((action.Min64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.Max64.HasValue) ? action.Min64.ToString() : "NULL")}, {((action.MinDbl.HasValue) ? action.MinDbl.ToString() : "NULL")}, {((action.MaxDbl.HasValue) ? action.MaxDbl.ToString() : "NULL")}, {((action.Stat.HasValue) ? action.Stat.ToString() : "NULL")}, {((action.Display.HasValue) ? action.Display.ToString() : "NULL")}, {((action.Amount.HasValue) ? action.Amount.ToString() : "NULL")}, {((action.Amount64.HasValue) ? action.Amount64.ToString() : "NULL")}, {((action.HeroXP64.HasValue) ? action.HeroXP64.ToString() : "NULL")}, {((action.Percent.HasValue) ? action.Percent.ToString() : "NULL")}, {((action.SpellID.HasValue) ? (action.SpellID + $" /* {((SpellID)action.SpellID).ToString()} */") : "NULL")}, {((action.WealthRating.HasValue) ? action.WealthRating.ToString() : "NULL")}, {((action.TreasureClass.HasValue) ? action.TreasureClass.ToString() : "NULL")}, {((action.TreasureType.HasValue) ? action.TreasureType.ToString() : "NULL")}, {((action.PScript.HasValue) ? (action.PScript + $" /* {((PlayScript)action.PScript).ToString()} */") : "NULL")}, {((action.Sound.HasValue) ? (action.Sound + $" /* {((Sound)action.Sound).ToString()} */") : "NULL")}, {((action.Item != null) ? action.Item.Destination.ToString() : "NULL")}, {((action.Item != null) ? action.Item.WCID + $" /* {weenieNames[(uint)action.Item.WCID]} */" : "NULL")}, {((action.Item != null) ? action.Item.StackSize.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Palette.ToString() : "NULL")}, {((action.Item != null) ? action.Item.Shade.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Item != null) ? action.Item.TryToBond.ToString() : "NULL")}, {((action.Position != null) ? action.Position.ObjCellID.ToString() : "NULL")}, {((action.Position != null) ? action.Position.Origin.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Origin.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Origin.Z.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Angles.W.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Angles.X.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Angles.Y.ToString(CultureInfo.InvariantCulture) : "NULL")}, {((action.Position != null) ? action.Position.Angles.Z.ToString(CultureInfo.InvariantCulture) : "NULL")})" + Environment.NewLine;
                                         order++;
                                     }
                                 }
@@ -1359,14 +1360,10 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = spell;
-
-                    string spellLineHdr = "";
-                    string spellLine = "";
                     //`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`
 
-                    spellLineHdr = $"{sqlCommand} INTO `spell` (`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`";
-                    spellLine = $"({spell.ID}, '{spell.Name.Replace("'", "''")}', '{spell.Description.Replace("'", "''")}', {(int)spell.School} /* {Enum.GetName(typeof(School), spell.School)} */, {spell.IconID}, {spell.Category}, {spell.Bitfield} /* {((SpellBitfield)spell.Bitfield).ToString()} */, {spell.Mana}, {spell.RangeConstant}, {spell.RangeMod}, {spell.Power}, {spell.EconomyMod}, {spell.FormulaVersion}, {spell.ComponentLoss}, {(int)spell.MetaSpellType} /* {Enum.GetName(typeof(ACE.Entity.Enum.SpellType), spell.MetaSpellType)} */, {spell.MetaSpellId}, {spell.SpellFormula.Comps[0]}, {spell.SpellFormula.Comps[1]}, {spell.SpellFormula.Comps[2]}, {spell.SpellFormula.Comps[3]}, {spell.SpellFormula.Comps[4]}, {spell.SpellFormula.Comps[5]}, {spell.SpellFormula.Comps[6]}, {spell.SpellFormula.Comps[7]}, {spell.CasterEffect}, {spell.TargetEffect}, {spell.FizzleEffect}, {spell.RecoveryInterval}, {spell.RecoveryAmount}, {spell.DisplayOrder}, {spell.NonComponentTargetType}, {spell.ManaMod}";
+                    var spellLineHdr = $"{sqlCommand} INTO `spell` (`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`";
+                    var spellLine = $"({spell.ID}, '{spell.Name.Replace("'", "''")}', '{spell.Description.Replace("'", "''")}', {(int)spell.School} /* {Enum.GetName(typeof(School), spell.School)} */, {spell.IconID}, {spell.Category}, {spell.Bitfield} /* {((SpellBitfield)spell.Bitfield).ToString()} */, {spell.Mana}, {spell.RangeConstant}, {spell.RangeMod}, {spell.Power}, {spell.EconomyMod}, {spell.FormulaVersion}, {spell.ComponentLoss}, {(int)spell.MetaSpellType} /* {Enum.GetName(typeof(ACE.Entity.Enum.SpellType), spell.MetaSpellType)} */, {spell.MetaSpellId}, {spell.SpellFormula.Comps[0]}, {spell.SpellFormula.Comps[1]}, {spell.SpellFormula.Comps[2]}, {spell.SpellFormula.Comps[3]}, {spell.SpellFormula.Comps[4]}, {spell.SpellFormula.Comps[5]}, {spell.SpellFormula.Comps[6]}, {spell.SpellFormula.Comps[7]}, {spell.CasterEffect}, {spell.TargetEffect}, {spell.FizzleEffect}, {spell.RecoveryInterval}, {spell.RecoveryAmount}, {spell.DisplayOrder}, {spell.NonComponentTargetType}, {spell.ManaMod}";
 
                     //, `duration`, `degrade_Modifier`, `degrade_Limit`, `stat_Mod_Type`, `stat_Mod_Key`, `stat_Mod_Val`, `e_Type`, `base_Intensity`, `variance`, `wcid`, `num_Projectiles` 
                     //, `num_Projectiles_Variance`, `spread_Angle`, `vertical_Angle`, `default_Launch_Angle`, `non_Tracking`, `create_Offset_Origin_X`, `create_Offset_Origin_Y`
@@ -1729,14 +1726,10 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = quest;
-
-                    string questLineHdr = "";
-                    string questLine = "";
                     // `name`, `min_Delta`, `max_Solves`, `message`
 
-                    questLineHdr = $"{sqlCommand} INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`";
-                    questLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
+                    var questLineHdr = $"{sqlCommand} INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`";
+                    var questLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
 
                     questLineHdr += $")" + Environment.NewLine + "VALUES ";
                     questLine += $");";
@@ -1796,8 +1789,6 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = house;
-
                     string houseLine = "";
 
                     foreach (var destination in house.Destinations)
@@ -1863,11 +1854,9 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = gameEvent;
-
                     string eventLine = "";
 
-                    eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {(gameEvent.StartTime == -1 ? $"{gameEvent.StartTime}" : $"{gameEvent.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.StartTime).DateTime.ToUniversalTime().ToString()} */")}, {(gameEvent.EndTime == -1 ? $"{gameEvent.EndTime}" : $"{gameEvent.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.EndTime).DateTime.ToUniversalTime().ToString()} */")}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
+                    eventLine += $"     , ('{gameEvent.Name.Replace("'", "''")}', {(gameEvent.StartTime == -1 ? $"{gameEvent.StartTime}" : $"{gameEvent.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.StartTime).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture)} */")}, {(gameEvent.EndTime == -1 ? $"{gameEvent.EndTime}" : $"{gameEvent.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(gameEvent.EndTime).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture)} */")}, {(int)gameEvent.GameEventState})" + Environment.NewLine;
 
                     if (eventLine != "")
                     {
@@ -1927,8 +1916,6 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = encounter;
-
                     string encounterLine = "";
 
                     foreach (var generator in encounter.Values)
@@ -2267,8 +2254,6 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = recipe;
-
                     string recipeLine = "";
 
                     //`recipe_Id`, `unknown_1`, `skill`, `difficulty`, `unknown_4`, `success_W_C_I_D`, `success_Amount`, `success_Message`, `fail_W_C_I_D`, `fail_Amount`, `fail_Message`, `data_Id`
@@ -2299,7 +2284,7 @@ namespace PhatACCacheBinParser
                                 break;
                             case 2:
                             case 4:
-                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') {(sourceWCID > 0 ? $"/* {weenieNames[sourceWCID]} */" : $"/* Source */")}" + Environment.NewLine;
+                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') {(sourceWCID > 0 ? $"/* {weenieNames[sourceWCID]} */" : "/* Source */")}" + Environment.NewLine;
                                 break;
                         }
                         compidx++;
@@ -2324,22 +2309,22 @@ namespace PhatACCacheBinParser
                                         case PropertyInt.ImbuedEffect4:
                                         case PropertyInt.ImbuedEffect5:
                                         case PropertyInt.ImbuedEffect:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.AttackType:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.Attuned:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.Bonded:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.PaletteTemplate:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         default:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                     }
                                 }
@@ -2349,7 +2334,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in requirement.DIDRequirements)
                                 {
-                                    requirementsDIDLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                    requirementsDIDLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyDataId), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                 }
                             }
 
@@ -2357,7 +2342,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in requirement.IIDRequirements)
                                 {
-                                    requirementsIIDLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInstanceId), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                    requirementsIIDLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInstanceId), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                 }
                             }
 
@@ -2365,7 +2350,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in requirement.StringRequirements)
                                 {
-                                    requirementsStringLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                    requirementsStringLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                 }
                             }
 
@@ -2373,7 +2358,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in requirement.FloatRequirements)
                                 {
-                                    requirementsFloatLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyFloat), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                    requirementsFloatLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyFloat), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                 }
                             }
 
@@ -2381,7 +2366,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in requirement.BoolRequirements)
                                 {
-                                    requirementsBoolLine += $"     , ({recipe.ID}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyBool), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                    requirementsBoolLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyBool), req.Stat)} */, {req.Value}, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                 }
                             }
                         }
@@ -2416,22 +2401,22 @@ namespace PhatACCacheBinParser
                                                 case PropertyInt.ImbuedEffect4:
                                                 case PropertyInt.ImbuedEffect5:
                                                 case PropertyInt.ImbuedEffect:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((ImbuedEffectType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.AttackType:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.Attuned:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.Bonded:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.PaletteTemplate:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 default:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                             }
                                             break;
@@ -2443,7 +2428,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in mod.DIDMods)
                                 {
-                                    modsDIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyDataId), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                    modsDIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyDataId), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                 }
                             }
 
@@ -2451,7 +2436,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in mod.IIDMods)
                                 {
-                                    modsIIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyInstanceId), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                    modsIIDLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInstanceId), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                 }
                             }
 
@@ -2459,7 +2444,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in mod.StringMods)
                                 {
-                                    modsStringLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                    modsStringLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyString), req.Stat)} */, '{req.Value.Replace("'", "''")}', {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                 }
                             }
 
@@ -2467,7 +2452,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in mod.FloatMods)
                                 {
-                                    modsFloatLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyFloat), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                    modsFloatLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyFloat), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                 }
                             }
 
@@ -2475,7 +2460,7 @@ namespace PhatACCacheBinParser
                             {
                                 foreach (var req in mod.BoolMods)
                                 {
-                                    modsBoolLine += $"     , ({recipe.ID}, {modSet}, {req.Stat.ToString("000")} /* {Enum.GetName(typeof(PropertyBool), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                    modsBoolLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyBool), req.Stat)} */, {req.Value}, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                 }
                             }
 
@@ -2668,8 +2653,6 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + subFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = entry;
-
                     string entryLine = "";
 
                     foreach (var treasure in entry.Value)
@@ -2708,8 +2691,6 @@ namespace PhatACCacheBinParser
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + subFolder + fileNameFormatter + ".sql"))
                 {
-                    var parsed = entry;
-
                     string entryLine = "";
 
                     //foreach (var treasure in entry.Value)
