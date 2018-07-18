@@ -68,7 +68,7 @@ namespace PhatACCacheBinParser
 				TryParseSegment((string) Settings.Default["_ASourceBin"], mutationFilters);
                 TryParseSegment((string) Settings.Default["_BSourceBin"], gameEventDefDB);
 
-                BeginInvoke((Action)(() => CollectWeenieNames()));
+                BeginInvoke((Action)CollectWeenieNames);
 
                 BeginInvoke((Action)(() =>
 				{                    
@@ -109,15 +109,12 @@ namespace PhatACCacheBinParser
 		}
 
 
-		private void cmdAction1_Click(object sender, EventArgs e)
+		private void cmd9WeeniesParse_Click(object sender, EventArgs e)
 		{
-			cmdAction1.Enabled = false;
+			cmd9WeeniesParse.Enabled = false;
 
-			//progressParseSources.Style = ProgressBarStyle.Continuous;
-			//progressParseSources.Value = 0;
-
-			progressBar1.Style = ProgressBarStyle.Continuous;
-            progressBar1.Value = 0;
+			progressBarWeenies.Style = ProgressBarStyle.Continuous;
+            progressBarWeenies.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
 			{
@@ -131,10 +128,10 @@ namespace PhatACCacheBinParser
                                 
                 BeginInvoke((Action)(() =>
 				{
-					progressBar1.Style = ProgressBarStyle.Continuous;
-					progressBar1.Value = 100;
+					progressBarWeenies.Style = ProgressBarStyle.Continuous;
+					progressBarWeenies.Value = 100;
 
-					cmdAction1.Enabled = true;
+					cmd9WeeniesParse.Enabled = true;
 				}));
 			});
 		}
@@ -1145,7 +1142,7 @@ namespace PhatACCacheBinParser
                     }
                     var counter = Interlocked.Increment(ref processedCounter);
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar1.Value = (int)(((double)counter / weenieDefaults.Weenies.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarWeenies.Value = (int)(((double)counter / weenieDefaults.Weenies.Count) * 100)));
                 }
                 //});
             }
@@ -1264,7 +1261,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar2.Value = (int)(((double)counter / landBlockData.Landblocks.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarLandblocks.Value = (int)(((double)counter / landBlockData.Landblocks.Count) * 100)));
                 }
                 //});               
                 }
@@ -1311,15 +1308,12 @@ namespace PhatACCacheBinParser
             //System.Diagnostics.Debug.WriteLine($"Highest Weenie Exported in WorldSpawn was: {highestWeenieFound}");
         }
 
-        private void cmdAction2_Click(object sender, EventArgs e)
+        private void cmd6LandblocksParse_Click(object sender, EventArgs e)
         {
-            cmdAction2.Enabled = false;
+            cmd6LandblocksParse.Enabled = false;
 
-            //progressParseSources.Style = ProgressBarStyle.Continuous;
-            //progressParseSources.Value = 0;
-
-            progressBar2.Style = ProgressBarStyle.Continuous;
-            progressBar2.Value = 0;
+            progressBarLandblocks.Style = ProgressBarStyle.Continuous;
+            progressBarLandblocks.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -1333,10 +1327,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar2.Style = ProgressBarStyle.Continuous;
-                    progressBar2.Value = 100;
+                    progressBarLandblocks.Style = ProgressBarStyle.Continuous;
+                    progressBarLandblocks.Value = 100;
 
-                    cmdAction2.Enabled = true;
+                    cmd6LandblocksParse.Enabled = true;
                 }));
             });
         }
@@ -1668,8 +1662,8 @@ namespace PhatACCacheBinParser
                         spellLine += $", {spell.NumberVariance}";
                     }
 
-                    spellLineHdr += $")" + Environment.NewLine + "VALUES ";
-                    spellLine += $");";
+                    spellLineHdr += ")" + Environment.NewLine + "VALUES ";
+                    spellLine += ");";
 
                     if (spellLine != "")
                     {
@@ -1679,17 +1673,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar3.Value = (int)(((double)counter / spellTableExtendedData.Spells.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarSpells.Value = (int)(((double)counter / spellTableExtendedData.Spells.Count) * 100)));
                 }
             }
         }
 
-        private void cmdAction3_Click(object sender, EventArgs e)
+        private void cmd2SpellsParse_Click(object sender, EventArgs e)
         {
-            cmdAction3.Enabled = false;
+            cmd2SpellsParse.Enabled = false;
 
-            progressBar3.Style = ProgressBarStyle.Continuous;
-            progressBar3.Value = 0;
+            progressBarSpells.Style = ProgressBarStyle.Continuous;
+            progressBarSpells.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -1699,10 +1693,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar3.Style = ProgressBarStyle.Continuous;
-                    progressBar3.Value = 100;
+                    progressBarSpells.Style = ProgressBarStyle.Continuous;
+                    progressBarSpells.Value = 100;
 
-                    cmdAction3.Enabled = true;
+                    cmd2SpellsParse.Enabled = true;
                 }));
             });
         }
@@ -1731,8 +1725,8 @@ namespace PhatACCacheBinParser
                     var questLineHdr = $"{sqlCommand} INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`";
                     var questLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
 
-                    questLineHdr += $")" + Environment.NewLine + "VALUES ";
-                    questLine += $");";
+                    questLineHdr += ")" + Environment.NewLine + "VALUES ";
+                    questLine += ");";
 
                     if (questLine != "")
                     {
@@ -1742,17 +1736,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar4.Value = (int)(((double)counter / questDefDB.QuestDefs.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarQuests.Value = (int)(((double)counter / questDefDB.QuestDefs.Count) * 100)));
                 }
             }
         }
 
-        private void cmdAction4_Click(object sender, EventArgs e)
+        private void cmd8QuestsParse_Click(object sender, EventArgs e)
         {
-            cmdAction4.Enabled = false;
+            cmd8QuestsParse.Enabled = false;
 
-            progressBar4.Style = ProgressBarStyle.Continuous;
-            progressBar4.Value = 0;
+            progressBarQuests.Style = ProgressBarStyle.Continuous;
+            progressBarQuests.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -1762,10 +1756,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar4.Style = ProgressBarStyle.Continuous;
-                    progressBar4.Value = 100;
+                    progressBarQuests.Style = ProgressBarStyle.Continuous;
+                    progressBarQuests.Value = 100;
 
-                    cmdAction4.Enabled = true;
+                    cmd8QuestsParse.Enabled = true;
                 }));
             });
         }
@@ -1807,17 +1801,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar8.Value = (int)(((double)counter / housingPortalsTable.HousingPortals.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarHousing.Value = (int)(((double)counter / housingPortalsTable.HousingPortals.Count) * 100)));
                 }
             }
         }
 
-        private void cmdAction8_Click(object sender, EventArgs e)
+        private void cmd5HousingParse_Click(object sender, EventArgs e)
         {
-            cmdAction8.Enabled = false;
+            cmd5HousingParse.Enabled = false;
 
-            progressBar8.Style = ProgressBarStyle.Continuous;
-            progressBar8.Value = 0;
+            progressBarHousing.Style = ProgressBarStyle.Continuous;
+            progressBarHousing.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -1827,10 +1821,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar8.Style = ProgressBarStyle.Continuous;
-                    progressBar8.Value = 100;
+                    progressBarHousing.Style = ProgressBarStyle.Continuous;
+                    progressBarHousing.Value = 100;
 
-                    cmdAction8.Enabled = true;
+                    cmd5HousingParse.Enabled = true;
                 }));
             });
         }
@@ -1869,17 +1863,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBarB.Value = (int)(((double)counter / gameEventDefDB.GameEventDefs.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarEvents.Value = (int)(((double)counter / gameEventDefDB.GameEventDefs.Count) * 100)));
                 }
             }
         }
 
-        private void cmdActionB_Click(object sender, EventArgs e)
+        private void cmdBEventsParse_Click(object sender, EventArgs e)
         {
-            cmdActionB.Enabled = false;
+            cmdBEventsParse.Enabled = false;
 
-            progressBarB.Style = ProgressBarStyle.Continuous;
-            progressBarB.Value = 0;
+            progressBarEvents.Style = ProgressBarStyle.Continuous;
+            progressBarEvents.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -1889,10 +1883,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBarB.Style = ProgressBarStyle.Continuous;
-                    progressBarB.Value = 100;
+                    progressBarEvents.Style = ProgressBarStyle.Continuous;
+                    progressBarEvents.Value = 100;
 
-                    cmdActionB.Enabled = true;
+                    cmdBEventsParse.Enabled = true;
                 }));
             });
         }
@@ -1935,7 +1929,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / regionDescExtendedData.EncounterTables.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarRegions.Value = (int)(((double)counter / regionDescExtendedData.EncounterTables.Count) * 100)));
                 }
             }
 
@@ -2097,12 +2091,12 @@ namespace PhatACCacheBinParser
                 yield return str.Substring(i, chunkSize);
         }
 
-        private void cmdAction5_Click(object sender, EventArgs e)
+        private void cmd1RegionsParse_Click(object sender, EventArgs e)
         {
-            cmdAction5.Enabled = false;
+            cmd1RegionsParse.Enabled = false;
 
-            progressBar5.Style = ProgressBarStyle.Continuous;
-            progressBar5.Value = 0;
+            progressBarRegions.Style = ProgressBarStyle.Continuous;
+            progressBarRegions.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -2114,17 +2108,17 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar5.Style = ProgressBarStyle.Continuous;
-                    progressBar5.Value = 100;
+                    progressBarRegions.Style = ProgressBarStyle.Continuous;
+                    progressBarRegions.Value = 100;
 
-                    cmdAction5.Enabled = true;
+                    cmd1RegionsParse.Enabled = true;
                 }));
             });
         }
 
         private void WriteEnounterLandblockInstances()
         {
-            var Encounters = new Dictionary<int, List<Encounter>>();
+            var encounters = new Dictionary<int, List<Encounter>>();
             
             for (var landblock = 0; landblock < (255 * 255); landblock++)
             {
@@ -2162,10 +2156,10 @@ namespace PhatACCacheBinParser
                         {
                             var objCellId = (landblock << 16) | 0;
 
-                            if (!Encounters.ContainsKey(landblock))
-                                Encounters.Add(landblock, new List<Encounter>());
+                            if (!encounters.ContainsKey(landblock))
+                                encounters.Add(landblock, new List<Encounter>());
 
-                            Encounters[landblock].Add(new Encounter { Landblock = landblock, WeenieClassId = wcid, CellX = cell_x, CellY = cell_y });
+                            encounters[landblock].Add(new Encounter { Landblock = landblock, WeenieClassId = wcid, CellX = cell_x, CellY = cell_y });
                         }
                     }
                 }
@@ -2180,7 +2174,7 @@ namespace PhatACCacheBinParser
 
             string sqlCommand = "INSERT";
 
-            foreach (var landblock in Encounters)
+            foreach (var landblock in encounters)
             {
                 string fileNameFormatter = landblock.Key.ToString("X4");
 
@@ -2207,17 +2201,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / Encounters.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarRegions.Value = (int)(((double)counter / encounters.Count) * 100)));
                 }
             }
         }
 
-        private void cmdAction7_Click(object sender, EventArgs e)
+        private void cmd4CraftingParse_Click(object sender, EventArgs e)
         {
-            cmdAction7.Enabled = false;
+            cmd4CraftingParse.Enabled = false;
 
-            progressBar7.Style = ProgressBarStyle.Continuous;
-            progressBar7.Value = 0;
+            progressBarCrafting.Style = ProgressBarStyle.Continuous;
+            progressBarCrafting.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -2227,10 +2221,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar7.Style = ProgressBarStyle.Continuous;
-                    progressBar7.Value = 100;
+                    progressBarCrafting.Style = ProgressBarStyle.Continuous;
+                    progressBarCrafting.Value = 100;
 
-                    cmdAction7.Enabled = true;
+                    cmd4CraftingParse.Enabled = true;
                 }));
             });
         }
@@ -2600,17 +2594,17 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar7.Value = (int)(((double)counter / craftingTable.Recipes.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarCrafting.Value = (int)(((double)counter / craftingTable.Recipes.Count) * 100)));
                 }
             }
         }
 
-        private void cmdAction6_Click(object sender, EventArgs e)
+        private void cmd3TreasureParse_Click(object sender, EventArgs e)
         {
-            cmdAction6.Enabled = false;
+            cmd3TreasureParse.Enabled = false;
 
-            progressBar6.Style = ProgressBarStyle.Continuous;
-            progressBar6.Value = 0;
+            progressBarTreasure.Style = ProgressBarStyle.Continuous;
+            progressBarTreasure.Value = 0;
 
             ThreadPool.QueueUserWorkItem(o =>
             {
@@ -2620,10 +2614,10 @@ namespace PhatACCacheBinParser
 
                 BeginInvoke((Action)(() =>
                 {
-                    progressBar6.Style = ProgressBarStyle.Continuous;
-                    progressBar6.Value = 100;
+                    progressBarTreasure.Style = ProgressBarStyle.Continuous;
+                    progressBarTreasure.Value = 100;
 
-                    cmdAction6.Enabled = true;
+                    cmd3TreasureParse.Enabled = true;
                 }));
             });
         }
@@ -2673,7 +2667,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar6.Value = (int)(((double)counter / treasureTable.WieldedTreasure.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarTreasure.Value = (int)(((double)counter / treasureTable.WieldedTreasure.Count) * 100)));
                 }
             }
 
@@ -2711,7 +2705,7 @@ namespace PhatACCacheBinParser
                     var counter = Interlocked.Increment(ref processedCounter);
 
                     if ((counter % 1000) == 0)
-                        BeginInvoke((Action)(() => progressBar6.Value = (int)(((double)counter / treasureTable.DeathTreasure.Count) * 100)));
+                        BeginInvoke((Action)(() => progressBarTreasure.Value = (int)(((double)counter / treasureTable.DeathTreasure.Count) * 100)));
                 }
             }
         }

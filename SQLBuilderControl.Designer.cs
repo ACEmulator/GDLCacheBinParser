@@ -30,28 +30,28 @@
 		{
             this.cmdParseAll = new System.Windows.Forms.Button();
             this.progressParseSources = new System.Windows.Forms.ProgressBar();
-            this.cmdAction3 = new System.Windows.Forms.Button();
-            this.progressBar3 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction2 = new System.Windows.Forms.Button();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction4 = new System.Windows.Forms.Button();
-            this.progressBar4 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction6 = new System.Windows.Forms.Button();
-            this.progressBar6 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction5 = new System.Windows.Forms.Button();
-            this.progressBar5 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction7 = new System.Windows.Forms.Button();
-            this.progressBar7 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction8 = new System.Windows.Forms.Button();
-            this.progressBar8 = new System.Windows.Forms.ProgressBar();
-            this.cmdAction9 = new System.Windows.Forms.Button();
-            this.progressBar9 = new System.Windows.Forms.ProgressBar();
-            this.cmdActionA = new System.Windows.Forms.Button();
-            this.progressBarA = new System.Windows.Forms.ProgressBar();
-            this.cmdActionB = new System.Windows.Forms.Button();
-            this.progressBarB = new System.Windows.Forms.ProgressBar();
+            this.cmd2SpellsParse = new System.Windows.Forms.Button();
+            this.progressBarSpells = new System.Windows.Forms.ProgressBar();
+            this.cmd6LandblocksParse = new System.Windows.Forms.Button();
+            this.progressBarLandblocks = new System.Windows.Forms.ProgressBar();
+            this.cmd9WeeniesParse = new System.Windows.Forms.Button();
+            this.progressBarWeenies = new System.Windows.Forms.ProgressBar();
+            this.cmd8QuestsParse = new System.Windows.Forms.Button();
+            this.progressBarQuests = new System.Windows.Forms.ProgressBar();
+            this.cmd3TreasureParse = new System.Windows.Forms.Button();
+            this.progressBarTreasure = new System.Windows.Forms.ProgressBar();
+            this.cmd1RegionsParse = new System.Windows.Forms.Button();
+            this.progressBarRegions = new System.Windows.Forms.ProgressBar();
+            this.cmd4CraftingParse = new System.Windows.Forms.Button();
+            this.progressBarCrafting = new System.Windows.Forms.ProgressBar();
+            this.cmd5HousingParse = new System.Windows.Forms.Button();
+            this.progressBarHousing = new System.Windows.Forms.ProgressBar();
+            this.cmd7JumpsuitsParse = new System.Windows.Forms.Button();
+            this.progressBarJumpsuits = new System.Windows.Forms.ProgressBar();
+            this.cmdAMutationParse = new System.Windows.Forms.Button();
+            this.progressBarMutation = new System.Windows.Forms.ProgressBar();
+            this.cmdBEventsParse = new System.Windows.Forms.Button();
+            this.progressBarEvents = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // cmdParseAll
@@ -72,239 +72,239 @@
             this.progressParseSources.Step = 1;
             this.progressParseSources.TabIndex = 17;
             // 
-            // cmdAction3
+            // cmd2SpellsParse
             // 
-            this.cmdAction3.Enabled = false;
-            this.cmdAction3.Location = new System.Drawing.Point(3, 72);
-            this.cmdAction3.Name = "cmdAction3";
-            this.cmdAction3.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction3.TabIndex = 18;
-            this.cmdAction3.Text = "2 Spells";
-            this.cmdAction3.UseVisualStyleBackColor = true;
-            this.cmdAction3.Click += new System.EventHandler(this.cmdAction3_Click);
+            this.cmd2SpellsParse.Enabled = false;
+            this.cmd2SpellsParse.Location = new System.Drawing.Point(3, 72);
+            this.cmd2SpellsParse.Name = "cmd2SpellsParse";
+            this.cmd2SpellsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd2SpellsParse.TabIndex = 18;
+            this.cmd2SpellsParse.Text = "2 Spells";
+            this.cmd2SpellsParse.UseVisualStyleBackColor = true;
+            this.cmd2SpellsParse.Click += new System.EventHandler(this.cmd2SpellsParse_Click);
             // 
-            // progressBar3
+            // progressBarSpells
             // 
-            this.progressBar3.Location = new System.Drawing.Point(125, 72);
-            this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(224, 23);
-            this.progressBar3.Step = 1;
-            this.progressBar3.TabIndex = 19;
+            this.progressBarSpells.Location = new System.Drawing.Point(125, 72);
+            this.progressBarSpells.Name = "progressBarSpells";
+            this.progressBarSpells.Size = new System.Drawing.Size(224, 23);
+            this.progressBarSpells.Step = 1;
+            this.progressBarSpells.TabIndex = 19;
             // 
-            // cmdAction2
+            // cmd6LandblocksParse
             // 
-            this.cmdAction2.Enabled = false;
-            this.cmdAction2.Location = new System.Drawing.Point(3, 222);
-            this.cmdAction2.Name = "cmdAction2";
-            this.cmdAction2.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction2.TabIndex = 20;
-            this.cmdAction2.Text = "6 Landblocks";
-            this.cmdAction2.UseVisualStyleBackColor = true;
-            this.cmdAction2.Click += new System.EventHandler(this.cmdAction2_Click);
+            this.cmd6LandblocksParse.Enabled = false;
+            this.cmd6LandblocksParse.Location = new System.Drawing.Point(3, 222);
+            this.cmd6LandblocksParse.Name = "cmd6LandblocksParse";
+            this.cmd6LandblocksParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd6LandblocksParse.TabIndex = 20;
+            this.cmd6LandblocksParse.Text = "6 Landblocks";
+            this.cmd6LandblocksParse.UseVisualStyleBackColor = true;
+            this.cmd6LandblocksParse.Click += new System.EventHandler(this.cmd6LandblocksParse_Click);
             // 
-            // progressBar2
+            // progressBarLandblocks
             // 
-            this.progressBar2.Location = new System.Drawing.Point(125, 222);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(224, 23);
-            this.progressBar2.Step = 1;
-            this.progressBar2.TabIndex = 21;
+            this.progressBarLandblocks.Location = new System.Drawing.Point(125, 222);
+            this.progressBarLandblocks.Name = "progressBarLandblocks";
+            this.progressBarLandblocks.Size = new System.Drawing.Size(224, 23);
+            this.progressBarLandblocks.Step = 1;
+            this.progressBarLandblocks.TabIndex = 21;
             // 
-            // cmdAction1
+            // cmd9WeeniesParse
             // 
-            this.cmdAction1.Enabled = false;
-            this.cmdAction1.Location = new System.Drawing.Point(3, 330);
-            this.cmdAction1.Name = "cmdAction1";
-            this.cmdAction1.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction1.TabIndex = 22;
-            this.cmdAction1.Text = "9 Weenies";
-            this.cmdAction1.UseVisualStyleBackColor = true;
-            this.cmdAction1.Click += new System.EventHandler(this.cmdAction1_Click);
+            this.cmd9WeeniesParse.Enabled = false;
+            this.cmd9WeeniesParse.Location = new System.Drawing.Point(3, 330);
+            this.cmd9WeeniesParse.Name = "cmd9WeeniesParse";
+            this.cmd9WeeniesParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd9WeeniesParse.TabIndex = 22;
+            this.cmd9WeeniesParse.Text = "9 Weenies";
+            this.cmd9WeeniesParse.UseVisualStyleBackColor = true;
+            this.cmd9WeeniesParse.Click += new System.EventHandler(this.cmd9WeeniesParse_Click);
             // 
-            // progressBar1
+            // progressBarWeenies
             // 
-            this.progressBar1.Location = new System.Drawing.Point(125, 330);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(224, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.TabIndex = 23;
+            this.progressBarWeenies.Location = new System.Drawing.Point(125, 330);
+            this.progressBarWeenies.Name = "progressBarWeenies";
+            this.progressBarWeenies.Size = new System.Drawing.Size(224, 23);
+            this.progressBarWeenies.Step = 1;
+            this.progressBarWeenies.TabIndex = 23;
             // 
-            // cmdAction4
+            // cmd8QuestsParse
             // 
-            this.cmdAction4.Enabled = false;
-            this.cmdAction4.Location = new System.Drawing.Point(3, 296);
-            this.cmdAction4.Name = "cmdAction4";
-            this.cmdAction4.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction4.TabIndex = 24;
-            this.cmdAction4.Text = "8 Quests";
-            this.cmdAction4.UseVisualStyleBackColor = true;
-            this.cmdAction4.Click += new System.EventHandler(this.cmdAction4_Click);
+            this.cmd8QuestsParse.Enabled = false;
+            this.cmd8QuestsParse.Location = new System.Drawing.Point(3, 296);
+            this.cmd8QuestsParse.Name = "cmd8QuestsParse";
+            this.cmd8QuestsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd8QuestsParse.TabIndex = 24;
+            this.cmd8QuestsParse.Text = "8 Quests";
+            this.cmd8QuestsParse.UseVisualStyleBackColor = true;
+            this.cmd8QuestsParse.Click += new System.EventHandler(this.cmd8QuestsParse_Click);
             // 
-            // progressBar4
+            // progressBarQuests
             // 
-            this.progressBar4.Location = new System.Drawing.Point(125, 296);
-            this.progressBar4.Name = "progressBar4";
-            this.progressBar4.Size = new System.Drawing.Size(224, 23);
-            this.progressBar4.Step = 1;
-            this.progressBar4.TabIndex = 25;
+            this.progressBarQuests.Location = new System.Drawing.Point(125, 296);
+            this.progressBarQuests.Name = "progressBarQuests";
+            this.progressBarQuests.Size = new System.Drawing.Size(224, 23);
+            this.progressBarQuests.Step = 1;
+            this.progressBarQuests.TabIndex = 25;
             // 
-            // cmdAction6
+            // cmd3TreasureParse
             // 
-            this.cmdAction6.Enabled = false;
-            this.cmdAction6.Location = new System.Drawing.Point(3, 109);
-            this.cmdAction6.Name = "cmdAction6";
-            this.cmdAction6.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction6.TabIndex = 26;
-            this.cmdAction6.Text = "3 Treasure";
-            this.cmdAction6.UseVisualStyleBackColor = true;
-            this.cmdAction6.Click += new System.EventHandler(this.cmdAction6_Click);
+            this.cmd3TreasureParse.Enabled = false;
+            this.cmd3TreasureParse.Location = new System.Drawing.Point(3, 109);
+            this.cmd3TreasureParse.Name = "cmd3TreasureParse";
+            this.cmd3TreasureParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd3TreasureParse.TabIndex = 26;
+            this.cmd3TreasureParse.Text = "3 Treasure";
+            this.cmd3TreasureParse.UseVisualStyleBackColor = true;
+            this.cmd3TreasureParse.Click += new System.EventHandler(this.cmd3TreasureParse_Click);
             // 
-            // progressBar6
+            // progressBarTreasure
             // 
-            this.progressBar6.Location = new System.Drawing.Point(125, 109);
-            this.progressBar6.Name = "progressBar6";
-            this.progressBar6.Size = new System.Drawing.Size(224, 23);
-            this.progressBar6.Step = 1;
-            this.progressBar6.TabIndex = 27;
+            this.progressBarTreasure.Location = new System.Drawing.Point(125, 109);
+            this.progressBarTreasure.Name = "progressBarTreasure";
+            this.progressBarTreasure.Size = new System.Drawing.Size(224, 23);
+            this.progressBarTreasure.Step = 1;
+            this.progressBarTreasure.TabIndex = 27;
             // 
-            // cmdAction5
+            // cmd1RegionsParse
             // 
-            this.cmdAction5.Enabled = false;
-            this.cmdAction5.Location = new System.Drawing.Point(3, 37);
-            this.cmdAction5.Name = "cmdAction5";
-            this.cmdAction5.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction5.TabIndex = 28;
-            this.cmdAction5.Text = "1 Regions";
-            this.cmdAction5.UseVisualStyleBackColor = true;
-            this.cmdAction5.Click += new System.EventHandler(this.cmdAction5_Click);
+            this.cmd1RegionsParse.Enabled = false;
+            this.cmd1RegionsParse.Location = new System.Drawing.Point(3, 37);
+            this.cmd1RegionsParse.Name = "cmd1RegionsParse";
+            this.cmd1RegionsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd1RegionsParse.TabIndex = 28;
+            this.cmd1RegionsParse.Text = "1 Regions";
+            this.cmd1RegionsParse.UseVisualStyleBackColor = true;
+            this.cmd1RegionsParse.Click += new System.EventHandler(this.cmd1RegionsParse_Click);
             // 
-            // progressBar5
+            // progressBarRegions
             // 
-            this.progressBar5.Location = new System.Drawing.Point(125, 37);
-            this.progressBar5.Name = "progressBar5";
-            this.progressBar5.Size = new System.Drawing.Size(224, 23);
-            this.progressBar5.Step = 1;
-            this.progressBar5.TabIndex = 29;
+            this.progressBarRegions.Location = new System.Drawing.Point(125, 37);
+            this.progressBarRegions.Name = "progressBarRegions";
+            this.progressBarRegions.Size = new System.Drawing.Size(224, 23);
+            this.progressBarRegions.Step = 1;
+            this.progressBarRegions.TabIndex = 29;
             // 
-            // cmdAction7
+            // cmd4CraftingParse
             // 
-            this.cmdAction7.Enabled = false;
-            this.cmdAction7.Location = new System.Drawing.Point(3, 146);
-            this.cmdAction7.Name = "cmdAction7";
-            this.cmdAction7.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction7.TabIndex = 30;
-            this.cmdAction7.Text = "4 Crafting";
-            this.cmdAction7.UseVisualStyleBackColor = true;
-            this.cmdAction7.Click += new System.EventHandler(this.cmdAction7_Click);
+            this.cmd4CraftingParse.Enabled = false;
+            this.cmd4CraftingParse.Location = new System.Drawing.Point(3, 146);
+            this.cmd4CraftingParse.Name = "cmd4CraftingParse";
+            this.cmd4CraftingParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd4CraftingParse.TabIndex = 30;
+            this.cmd4CraftingParse.Text = "4 Crafting";
+            this.cmd4CraftingParse.UseVisualStyleBackColor = true;
+            this.cmd4CraftingParse.Click += new System.EventHandler(this.cmd4CraftingParse_Click);
             // 
-            // progressBar7
+            // progressBarCrafting
             // 
-            this.progressBar7.Location = new System.Drawing.Point(125, 146);
-            this.progressBar7.Name = "progressBar7";
-            this.progressBar7.Size = new System.Drawing.Size(224, 23);
-            this.progressBar7.Step = 1;
-            this.progressBar7.TabIndex = 31;
+            this.progressBarCrafting.Location = new System.Drawing.Point(125, 146);
+            this.progressBarCrafting.Name = "progressBarCrafting";
+            this.progressBarCrafting.Size = new System.Drawing.Size(224, 23);
+            this.progressBarCrafting.Step = 1;
+            this.progressBarCrafting.TabIndex = 31;
             // 
-            // cmdAction8
+            // cmd5HousingParse
             // 
-            this.cmdAction8.Enabled = false;
-            this.cmdAction8.Location = new System.Drawing.Point(3, 184);
-            this.cmdAction8.Name = "cmdAction8";
-            this.cmdAction8.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction8.TabIndex = 32;
-            this.cmdAction8.Text = "5 Housing";
-            this.cmdAction8.UseVisualStyleBackColor = true;
-            this.cmdAction8.Click += new System.EventHandler(this.cmdAction8_Click);
+            this.cmd5HousingParse.Enabled = false;
+            this.cmd5HousingParse.Location = new System.Drawing.Point(3, 184);
+            this.cmd5HousingParse.Name = "cmd5HousingParse";
+            this.cmd5HousingParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd5HousingParse.TabIndex = 32;
+            this.cmd5HousingParse.Text = "5 Housing";
+            this.cmd5HousingParse.UseVisualStyleBackColor = true;
+            this.cmd5HousingParse.Click += new System.EventHandler(this.cmd5HousingParse_Click);
             // 
-            // progressBar8
+            // progressBarHousing
             // 
-            this.progressBar8.Location = new System.Drawing.Point(125, 184);
-            this.progressBar8.Name = "progressBar8";
-            this.progressBar8.Size = new System.Drawing.Size(224, 23);
-            this.progressBar8.Step = 1;
-            this.progressBar8.TabIndex = 33;
+            this.progressBarHousing.Location = new System.Drawing.Point(125, 184);
+            this.progressBarHousing.Name = "progressBarHousing";
+            this.progressBarHousing.Size = new System.Drawing.Size(224, 23);
+            this.progressBarHousing.Step = 1;
+            this.progressBarHousing.TabIndex = 33;
             // 
-            // cmdAction9
+            // cmd7JumpsuitsParse
             // 
-            this.cmdAction9.Enabled = false;
-            this.cmdAction9.Location = new System.Drawing.Point(3, 260);
-            this.cmdAction9.Name = "cmdAction9";
-            this.cmdAction9.Size = new System.Drawing.Size(119, 23);
-            this.cmdAction9.TabIndex = 34;
-            this.cmdAction9.Text = "7 Jumpsuits";
-            this.cmdAction9.UseVisualStyleBackColor = true;
+            this.cmd7JumpsuitsParse.Enabled = false;
+            this.cmd7JumpsuitsParse.Location = new System.Drawing.Point(3, 260);
+            this.cmd7JumpsuitsParse.Name = "cmd7JumpsuitsParse";
+            this.cmd7JumpsuitsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmd7JumpsuitsParse.TabIndex = 34;
+            this.cmd7JumpsuitsParse.Text = "7 Jumpsuits";
+            this.cmd7JumpsuitsParse.UseVisualStyleBackColor = true;
             // 
-            // progressBar9
+            // progressBarJumpsuits
             // 
-            this.progressBar9.Location = new System.Drawing.Point(125, 260);
-            this.progressBar9.Name = "progressBar9";
-            this.progressBar9.Size = new System.Drawing.Size(224, 23);
-            this.progressBar9.Step = 1;
-            this.progressBar9.TabIndex = 35;
+            this.progressBarJumpsuits.Location = new System.Drawing.Point(125, 260);
+            this.progressBarJumpsuits.Name = "progressBarJumpsuits";
+            this.progressBarJumpsuits.Size = new System.Drawing.Size(224, 23);
+            this.progressBarJumpsuits.Step = 1;
+            this.progressBarJumpsuits.TabIndex = 35;
             // 
-            // cmdActionA
+            // cmdAMutationParse
             // 
-            this.cmdActionA.Enabled = false;
-            this.cmdActionA.Location = new System.Drawing.Point(3, 364);
-            this.cmdActionA.Name = "cmdActionA";
-            this.cmdActionA.Size = new System.Drawing.Size(119, 23);
-            this.cmdActionA.TabIndex = 36;
-            this.cmdActionA.Text = "A Mutation";
-            this.cmdActionA.UseVisualStyleBackColor = true;
+            this.cmdAMutationParse.Enabled = false;
+            this.cmdAMutationParse.Location = new System.Drawing.Point(3, 364);
+            this.cmdAMutationParse.Name = "cmdAMutationParse";
+            this.cmdAMutationParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdAMutationParse.TabIndex = 36;
+            this.cmdAMutationParse.Text = "A Mutation";
+            this.cmdAMutationParse.UseVisualStyleBackColor = true;
             // 
-            // progressBarA
+            // progressBarMutation
             // 
-            this.progressBarA.Location = new System.Drawing.Point(125, 364);
-            this.progressBarA.Name = "progressBarA";
-            this.progressBarA.Size = new System.Drawing.Size(224, 23);
-            this.progressBarA.Step = 1;
-            this.progressBarA.TabIndex = 37;
+            this.progressBarMutation.Location = new System.Drawing.Point(125, 364);
+            this.progressBarMutation.Name = "progressBarMutation";
+            this.progressBarMutation.Size = new System.Drawing.Size(224, 23);
+            this.progressBarMutation.Step = 1;
+            this.progressBarMutation.TabIndex = 37;
             // 
-            // cmdActionB
+            // cmdBEventsParse
             // 
-            this.cmdActionB.Enabled = false;
-            this.cmdActionB.Location = new System.Drawing.Point(3, 398);
-            this.cmdActionB.Name = "cmdActionB";
-            this.cmdActionB.Size = new System.Drawing.Size(119, 23);
-            this.cmdActionB.TabIndex = 38;
-            this.cmdActionB.Text = "B Events";
-            this.cmdActionB.UseVisualStyleBackColor = true;
-            this.cmdActionB.Click += new System.EventHandler(this.cmdActionB_Click);
+            this.cmdBEventsParse.Enabled = false;
+            this.cmdBEventsParse.Location = new System.Drawing.Point(3, 398);
+            this.cmdBEventsParse.Name = "cmdBEventsParse";
+            this.cmdBEventsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdBEventsParse.TabIndex = 38;
+            this.cmdBEventsParse.Text = "B Events";
+            this.cmdBEventsParse.UseVisualStyleBackColor = true;
+            this.cmdBEventsParse.Click += new System.EventHandler(this.cmdBEventsParse_Click);
             // 
-            // progressBarB
+            // progressBarEvents
             // 
-            this.progressBarB.Location = new System.Drawing.Point(125, 398);
-            this.progressBarB.Name = "progressBarB";
-            this.progressBarB.Size = new System.Drawing.Size(224, 23);
-            this.progressBarB.Step = 1;
-            this.progressBarB.TabIndex = 39;
+            this.progressBarEvents.Location = new System.Drawing.Point(125, 398);
+            this.progressBarEvents.Name = "progressBarEvents";
+            this.progressBarEvents.Size = new System.Drawing.Size(224, 23);
+            this.progressBarEvents.Step = 1;
+            this.progressBarEvents.TabIndex = 39;
             // 
             // SQLBuilderControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cmdActionB);
-            this.Controls.Add(this.progressBarB);
-            this.Controls.Add(this.cmdActionA);
-            this.Controls.Add(this.progressBarA);
-            this.Controls.Add(this.cmdAction9);
-            this.Controls.Add(this.progressBar9);
-            this.Controls.Add(this.cmdAction8);
-            this.Controls.Add(this.progressBar8);
-            this.Controls.Add(this.cmdAction7);
-            this.Controls.Add(this.progressBar7);
-            this.Controls.Add(this.cmdAction5);
-            this.Controls.Add(this.progressBar5);
-            this.Controls.Add(this.cmdAction6);
-            this.Controls.Add(this.progressBar6);
-            this.Controls.Add(this.cmdAction4);
-            this.Controls.Add(this.progressBar4);
-            this.Controls.Add(this.cmdAction1);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.cmdAction2);
-            this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.cmdAction3);
-            this.Controls.Add(this.progressBar3);
+            this.Controls.Add(this.cmdBEventsParse);
+            this.Controls.Add(this.progressBarEvents);
+            this.Controls.Add(this.cmdAMutationParse);
+            this.Controls.Add(this.progressBarMutation);
+            this.Controls.Add(this.cmd7JumpsuitsParse);
+            this.Controls.Add(this.progressBarJumpsuits);
+            this.Controls.Add(this.cmd5HousingParse);
+            this.Controls.Add(this.progressBarHousing);
+            this.Controls.Add(this.cmd4CraftingParse);
+            this.Controls.Add(this.progressBarCrafting);
+            this.Controls.Add(this.cmd1RegionsParse);
+            this.Controls.Add(this.progressBarRegions);
+            this.Controls.Add(this.cmd3TreasureParse);
+            this.Controls.Add(this.progressBarTreasure);
+            this.Controls.Add(this.cmd8QuestsParse);
+            this.Controls.Add(this.progressBarQuests);
+            this.Controls.Add(this.cmd9WeeniesParse);
+            this.Controls.Add(this.progressBarWeenies);
+            this.Controls.Add(this.cmd6LandblocksParse);
+            this.Controls.Add(this.progressBarLandblocks);
+            this.Controls.Add(this.cmd2SpellsParse);
+            this.Controls.Add(this.progressBarSpells);
             this.Controls.Add(this.cmdParseAll);
             this.Controls.Add(this.progressParseSources);
             this.Name = "SQLBuilderControl";
@@ -317,27 +317,27 @@
 
 		private System.Windows.Forms.Button cmdParseAll;
 		private System.Windows.Forms.ProgressBar progressParseSources;
-		private System.Windows.Forms.Button cmdAction3;
-		private System.Windows.Forms.ProgressBar progressBar3;
-        private System.Windows.Forms.Button cmdAction2;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Button cmdAction1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button cmdAction4;
-        private System.Windows.Forms.ProgressBar progressBar4;
-        private System.Windows.Forms.Button cmdAction6;
-        private System.Windows.Forms.ProgressBar progressBar6;
-        private System.Windows.Forms.Button cmdAction5;
-        private System.Windows.Forms.ProgressBar progressBar5;
-        private System.Windows.Forms.Button cmdAction7;
-        private System.Windows.Forms.ProgressBar progressBar7;
-        private System.Windows.Forms.Button cmdAction8;
-        private System.Windows.Forms.ProgressBar progressBar8;
-        private System.Windows.Forms.Button cmdAction9;
-        private System.Windows.Forms.ProgressBar progressBar9;
-        private System.Windows.Forms.Button cmdActionA;
-        private System.Windows.Forms.ProgressBar progressBarA;
-        private System.Windows.Forms.Button cmdActionB;
-        private System.Windows.Forms.ProgressBar progressBarB;
+		private System.Windows.Forms.Button cmd2SpellsParse;
+		private System.Windows.Forms.ProgressBar progressBarSpells;
+        private System.Windows.Forms.Button cmd6LandblocksParse;
+        private System.Windows.Forms.ProgressBar progressBarLandblocks;
+        private System.Windows.Forms.Button cmd9WeeniesParse;
+        private System.Windows.Forms.ProgressBar progressBarWeenies;
+        private System.Windows.Forms.Button cmd8QuestsParse;
+        private System.Windows.Forms.ProgressBar progressBarQuests;
+        private System.Windows.Forms.Button cmd3TreasureParse;
+        private System.Windows.Forms.ProgressBar progressBarTreasure;
+        private System.Windows.Forms.Button cmd1RegionsParse;
+        private System.Windows.Forms.ProgressBar progressBarRegions;
+        private System.Windows.Forms.Button cmd4CraftingParse;
+        private System.Windows.Forms.ProgressBar progressBarCrafting;
+        private System.Windows.Forms.Button cmd5HousingParse;
+        private System.Windows.Forms.ProgressBar progressBarHousing;
+        private System.Windows.Forms.Button cmd7JumpsuitsParse;
+        private System.Windows.Forms.ProgressBar progressBarJumpsuits;
+        private System.Windows.Forms.Button cmdAMutationParse;
+        private System.Windows.Forms.ProgressBar progressBarMutation;
+        private System.Windows.Forms.Button cmdBEventsParse;
+        private System.Windows.Forms.ProgressBar progressBarEvents;
     }
 }
