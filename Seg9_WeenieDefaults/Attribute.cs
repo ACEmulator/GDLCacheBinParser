@@ -4,16 +4,15 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class Attribute
 	{
-		// cp_spent, level_from_cp
-		public int a;
+		public int LevelFromCP;
 		public int InitLevel;
-		public int b;
+		public int CPSpent;
 
 		public virtual bool Unpack(BinaryReader binaryReader)
 		{
-			a = binaryReader.ReadInt32();
+			LevelFromCP = binaryReader.ReadInt32();
 			InitLevel = binaryReader.ReadInt32();
-			b = binaryReader.ReadInt32();
+			CPSpent = binaryReader.ReadInt32();
 
 			return true;
 		}

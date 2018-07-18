@@ -14,6 +14,7 @@ using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 using PhatACCacheBinParser.Seg8_QuestDefDB;
 using PhatACCacheBinParser.Seg9_WeenieDefaults;
 using PhatACCacheBinParser.SegA_MutationFilters;
+using PhatACCacheBinParser.SegB_GameEventDefDB;
 
 namespace PhatACCacheBinParser
 {
@@ -42,7 +43,7 @@ namespace PhatACCacheBinParser
 			parserControl4.DoParse += ParserControl4_DoParse;
 
 			parserControl5.ProperyName = "_5";
-			parserControl5.Label = "5 Housing Portals";
+			parserControl5.Label = "5 HousingPortals";
 			parserControl5.DoParse += ParserControl5_DoParse;
 
 			parserControl6.ProperyName = "_6";
@@ -64,7 +65,11 @@ namespace PhatACCacheBinParser
 			parserControlA.ProperyName = "_A";
 			parserControlA.Label = "A MutationFilters";
 			parserControlA.DoParse += ParserControlA_DoParse;
-		}
+
+            parserControlB.ProperyName = "_B";
+            parserControlB.Label = "B GameEventDefDB";
+            parserControlB.DoParse += ParserControlB_DoParse;
+        }
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
@@ -140,7 +145,12 @@ namespace PhatACCacheBinParser
 			ParserControl_DoParse<MutationFilters>(parserControl);
 		}
 
-		private void ParserControl_DoParse<T>(ParserControl parserControl) where T : Segment, new()
+        private void ParserControlB_DoParse(ParserControl parserControl)
+        {
+            ParserControl_DoParse<GameEventDefDB>(parserControl);
+        }
+
+        private void ParserControl_DoParse<T>(ParserControl parserControl) where T : Segment, new()
 		{
 			parserControl.Enabled = false;
 

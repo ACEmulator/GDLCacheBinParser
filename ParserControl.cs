@@ -123,7 +123,7 @@ namespace PhatACCacheBinParser
 
 				SourceBin = null;
 
-				dialog.Filter = "Bin Files (bin)|*.bin";
+				dialog.Filter = "Raw Chunk Files (raw)|*.raw";
 
 				if (dialog.ShowDialog() == DialogResult.OK)
 					SourceBin = dialog.FileName;

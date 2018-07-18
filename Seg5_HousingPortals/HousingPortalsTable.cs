@@ -28,7 +28,7 @@ namespace PhatACCacheBinParser.Seg5_HousingPortals
 
 			Parallel.For(0, HousingPortals.Count, i =>
 			{
-				using (StreamWriter sw = new StreamWriter(outputFolder + HousingPortals[i].Unknown1.ToString("X4") + ".json"))
+				using (StreamWriter sw = new StreamWriter(outputFolder + HousingPortals[i].HouseId.ToString("X4") + ".json"))
 				using (JsonWriter writer = new JsonTextWriter(sw))
 				{
 					Serializer.Serialize(writer, HousingPortals[i]);

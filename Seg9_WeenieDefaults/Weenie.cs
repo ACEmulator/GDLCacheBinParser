@@ -31,7 +31,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public Dictionary<int, Position> PositionValues;
 
-		public Dictionary<int, int> IIDValues;
+		public Dictionary<int, uint> IIDValues;
 
 		// _cache_bin_parse_9_8
 		public uint WCID;
@@ -172,13 +172,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 			if ((basicFlags & 0x40) == 0x40)
 			{
-				IIDValues = new Dictionary<int, int>();
+				IIDValues = new Dictionary<int, uint>();
 
 				count = reader.ReadUInt16();
 				reader.ReadUInt16(); // discard
 
 				for (int i = 0; i < count; i++)
-					IIDValues.Add(reader.ReadInt32(), reader.ReadInt32());
+					IIDValues.Add(reader.ReadInt32(), reader.ReadUInt32());
 			}
 
 			// _cache_bin_parse_9_8

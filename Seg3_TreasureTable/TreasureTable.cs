@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
@@ -6,7 +7,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 	class TreasureTable : Segment
 	{
 		public readonly Dictionary<uint, List<TreasureEntry>> WieldedTreasure =new Dictionary<uint, List<TreasureEntry>>(); // hashA
-		public readonly Dictionary<uint, TreasureEntry2> _treasure2 = new Dictionary<uint, TreasureEntry2>(); // hashB
+		public readonly Dictionary<uint, TreasureEntry2> DeathTreasure = new Dictionary<uint, TreasureEntry2>(); // hashB
 		public readonly List<Dictionary<uint, List<TreasureEntry5>>> _treasure3 = new List<Dictionary<uint, List<TreasureEntry5>>>();
 		public readonly List<TreasureEntry7> _treasure7 = new List<TreasureEntry7>();
 		public readonly Dictionary<uint, List<TreasureEntry5>> _treasure8 = new Dictionary<uint, List<TreasureEntry5>>(); // hash D
@@ -60,7 +61,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 
 			WieldedTreasure.Unpack(reader);
 
-			_treasure2.Unpack(reader);
+			DeathTreasure.Unpack(reader);
 			_treasure3.Unpack(reader, 4);
 			_treasure7.Unpack(reader, 48);
 			_treasure8.Unpack(reader);
@@ -125,8 +126,19 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		{
 			base.WriteJSONOutput(outputFolder);
 
+            using (StreamWriter sw = new StreamWriter(outputFolder + "WieldedTreasure.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                Serializer.Serialize(writer, WieldedTreasure);
+            }
 
-			return false;
+            using (StreamWriter sw = new StreamWriter(outputFolder + "DeathTreasure.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                Serializer.Serialize(writer, DeathTreasure);
+            }
+
+            return true;
 		}
 	}
 }

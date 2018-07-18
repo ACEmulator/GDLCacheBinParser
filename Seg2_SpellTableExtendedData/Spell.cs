@@ -85,7 +85,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         //public int? Index; Reusd PortalLink index var
 
         // PortalSummon
-        public double? PortalLlifetime;
+        public double? PortalLifetime;
         public int? Link;
 
         // PortalSending, FellowPortalSending
@@ -212,7 +212,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
             }
             else if (MetaSpellType == SpellType.PortalSummon)
             {
-                PortalLlifetime = reader.ReadDouble();
+                PortalLifetime = reader.ReadDouble();
                 Link = reader.ReadInt32();
             }
             else if (MetaSpellType == SpellType.PortalSending || MetaSpellType == SpellType.FellowPortalSending)
