@@ -183,7 +183,7 @@ namespace PhatACCacheBinParser
                 if (parsed.WCID > highestWeenieAllowed && highestWeenieAllowed > 0)
                     break;
 
-                var wtFolder = outputFolder + Enum.GetName(typeof(WeenieType), parsed.WeenieType).Replace("_WeenieType", "") + "\\";
+                var wtFolder = outputFolder + Enum.GetName(typeof(WeenieType), parsed.WeenieType) + "\\";
                 if (!Directory.Exists(wtFolder))
                     Directory.CreateDirectory(wtFolder);
 
@@ -194,7 +194,7 @@ namespace PhatACCacheBinParser
                     {
                         Enum.TryParse(parsed.IntValues[(int)PropertyInt.CreatureType].ToString(), out CreatureType ct);
                         if (Enum.IsDefined(typeof(CreatureType), ct))
-                            ctFolder = wtFolder + Enum.GetName(typeof(CreatureType), parsed.IntValues[(int)PropertyInt.CreatureType]).Replace("_CreatureType", "").Replace("_", "") + "\\";
+                            ctFolder = wtFolder + Enum.GetName(typeof(CreatureType), parsed.IntValues[(int)PropertyInt.CreatureType]) + "\\";
                         else
                             ctFolder = wtFolder + "UnknownCT_" + parsed.IntValues[(int)PropertyInt.CreatureType] + "\\";
                     }
@@ -208,9 +208,9 @@ namespace PhatACCacheBinParser
                 if (parsed.WeenieType != (uint)WeenieType.Creature)
                 {
                     if (parsed.IntValues.ContainsKey((int)PropertyInt.ItemType))
-                        itFolder = ctFolder + Enum.GetName(typeof(ItemType), (uint)parsed.IntValues[(int)PropertyInt.ItemType]).Replace("TYPE_", "").Replace("_", "") + "\\";
+                        itFolder = ctFolder + Enum.GetName(typeof(ItemType), (uint)parsed.IntValues[(int)PropertyInt.ItemType]) + "\\";
                     else
-                        itFolder = ctFolder + Enum.GetName(typeof(ItemType), ItemType.None).Replace("TYPE_", "").Replace("_", "") + "\\";
+                        itFolder = ctFolder + Enum.GetName(typeof(ItemType), ItemType.None) + "\\";
                     if (!Directory.Exists(itFolder))
                         Directory.CreateDirectory(itFolder);
                 }
