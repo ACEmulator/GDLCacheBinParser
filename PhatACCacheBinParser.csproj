@@ -79,7 +79,6 @@
     <Compile Include="Enums\Item.cs" />
     <Compile Include="Enums\Physics.cs" />
     <Compile Include="Enums\Spells.cs" />
-    <Compile Include="Enums\StatType.cs" />
     <Compile Include="Enums\WeenieClasses.cs" />
     <Compile Include="UnpackableExtensions.cs" />
     <Compile Include="Seg1_RegionDescExtendedData\EncounterMap.cs" />
