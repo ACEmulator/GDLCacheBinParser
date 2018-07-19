@@ -1,18 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.SegB_GameEventDefDB;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class EventSQLWriter
     {
-        public static void WriteEventFiles(GameEventDefDB gameEventDefDB)
+        public static void WriteEventFiles(GameEventDefDB gameEventDefDB, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
@@ -38,6 +36,17 @@ namespace PhatACCacheBinParser.SQLWriters
                         writer.WriteLine(eventLine);
                     }
                 }
+            }
+        }
+
+        public static void WriteEventFiles(ICollection<ACE.Database.Models.World.Event> events, string outputFolder, bool updteIfAlreadyExists)
+        {
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            foreach (var gemEvent in events)
+            {
+                // todo
             }
         }
     }
