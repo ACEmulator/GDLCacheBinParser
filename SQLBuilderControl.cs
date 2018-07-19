@@ -1,5 +1,12 @@
-﻿using ACE.Database.Models.World;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using ACE.Database.Models.World;
 using ACE.Entity.Enum.Properties;
+
 using PhatACCacheBinParser.Enums;
 using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
@@ -13,11 +20,6 @@ using PhatACCacheBinParser.Seg9_WeenieDefaults;
 using PhatACCacheBinParser.SegA_MutationFilters;
 using PhatACCacheBinParser.SegB_GameEventDefDB;
 using PhatACCacheBinParser.SQLWriters;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PhatACCacheBinParser
 {
