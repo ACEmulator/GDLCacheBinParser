@@ -10,7 +10,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteHouseFiles(HousingPortalsTable housingPortalsTable)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

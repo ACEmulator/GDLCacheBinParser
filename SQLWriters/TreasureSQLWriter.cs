@@ -11,7 +11,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteTreasureFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

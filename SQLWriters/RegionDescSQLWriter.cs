@@ -14,7 +14,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteRegionFiles(RegionDescExtendedData regionDescExtendedData, Dictionary<uint, string> weenieNames)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

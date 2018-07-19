@@ -14,7 +14,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteCraftingFiles(CraftingTable craftingTable, Dictionary<uint, string> weenieNames)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

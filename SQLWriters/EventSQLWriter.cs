@@ -11,7 +11,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteEventFiles(GameEventDefDB gameEventDefDB)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

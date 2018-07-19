@@ -15,7 +15,7 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteSpellFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL\\";
+            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
