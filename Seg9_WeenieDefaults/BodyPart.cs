@@ -5,9 +5,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 	class BodyPart
 	{
 		public int DType;
-
 		public int DVal;
-
 		public float DVar;
 
 		public readonly ArmorValues ArmorValues = new ArmorValues();
@@ -19,9 +17,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public bool Unpack(BinaryReader binaryReader)
 		{
 			DType = binaryReader.ReadInt32();
-
 			DVal = binaryReader.ReadInt32();
-
 			DVar = binaryReader.ReadSingle();
 
 			ArmorValues.Unpack(binaryReader);
