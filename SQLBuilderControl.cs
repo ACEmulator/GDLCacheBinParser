@@ -145,8 +145,12 @@ namespace PhatACCacheBinParser
             progressBarRegions.Style = ProgressBarStyle.Marquee;
             progressBarRegions.Value = 0;
 
-            //await Task.Run(() => WriteRegionFiles());
-            await Task.Run(() => RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames));
+            await Task.Run(() =>
+            {
+                // Old method
+                //WriteRegionFiles();
+                RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames);
+            });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
             progressBarRegions.Value = 100;
@@ -161,7 +165,11 @@ namespace PhatACCacheBinParser
             progressBarSpells.Style = ProgressBarStyle.Marquee;
             progressBarSpells.Value = 0;
 
-            await Task.Run(() => SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames));
+            await Task.Run(() =>
+            {
+                // Old method
+                SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames);
+            });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
             progressBarSpells.Value = 100;
@@ -176,7 +184,11 @@ namespace PhatACCacheBinParser
             progressBarTreasure.Style = ProgressBarStyle.Marquee;
             progressBarTreasure.Value = 0;
 
-            await Task.Run(() => TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames));
+            await Task.Run(() =>
+            {
+                // Old method
+                TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames);
+            });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
             progressBarTreasure.Value = 100;
@@ -191,7 +203,11 @@ namespace PhatACCacheBinParser
             progressBarCrafting.Style = ProgressBarStyle.Marquee;
             progressBarCrafting.Value = 0;
 
-            await Task.Run(() => CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames));
+            await Task.Run(() =>
+            {
+                // Old method
+                CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames);
+            });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
             progressBarCrafting.Value = 100;
@@ -206,7 +222,11 @@ namespace PhatACCacheBinParser
             progressBarHousing.Style = ProgressBarStyle.Marquee;
             progressBarHousing.Value = 0;
 
-            await Task.Run(() => HouseSQLWriter.WriteHouseFiles(housingPortalsTable));
+            await Task.Run(() =>
+            {
+                // Old method
+                HouseSQLWriter.WriteHouseFiles(housingPortalsTable);
+            });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
             progressBarHousing.Value = 100;
@@ -221,7 +241,11 @@ namespace PhatACCacheBinParser
             progressBarLandblocks.Style = ProgressBarStyle.Marquee;
             progressBarLandblocks.Value = 0;
 
-            await Task.Run(() => LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames));
+            await Task.Run(() =>
+            {
+                // Old method
+                LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames);
+            });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
             progressBarLandblocks.Value = 100;
@@ -236,7 +260,11 @@ namespace PhatACCacheBinParser
             progressBarQuests.Style = ProgressBarStyle.Marquee;
             progressBarQuests.Value = 0;
 
-            await Task.Run(() => QuestSQLWriter.WriteQuestFiles(questDefDB));
+            await Task.Run(() =>
+            {
+                // Old method
+                QuestSQLWriter.WriteQuestFiles(questDefDB);
+            });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;
             progressBarQuests.Value = 100;
@@ -582,6 +610,9 @@ namespace PhatACCacheBinParser
                     efWeenies.Add(efWeenie);
                 }
 
+                // todo do something with efWeenies
+
+                // Old method
                 WeenieSQLWriter.WriteWeenieFiles(weenieDefaults, treasureTable, weenieNames);
             });
 
@@ -598,7 +629,28 @@ namespace PhatACCacheBinParser
             progressBarEvents.Style = ProgressBarStyle.Marquee;
             progressBarEvents.Value = 0;
 
-            await Task.Run(() => EventSQLWriter.WriteEventFiles(gameEventDefDB));
+            await Task.Run(() =>
+            {
+                var efEvents = new List<ACE.Database.Models.World.Event>();
+
+                foreach (var gameEventDef in this.gameEventDefDB.GameEventDefs)
+                {
+                    efEvents.Add(new ACE.Database.Models.World.Event
+                    {
+                        Name = gameEventDef.Name,
+
+                        StartTime = gameEventDef.StartTime,
+                        EndTime = gameEventDef.EndTime,
+
+                        State =  (int)gameEventDef.GameEventState
+                    });
+                }
+
+                // todo do something with efEvents
+
+                // Old method
+                EventSQLWriter.WriteEventFiles(gameEventDefDB);
+            });
 
             progressBarEvents.Style = ProgressBarStyle.Continuous;
             progressBarEvents.Value = 100;
