@@ -262,6 +262,23 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                var efQuests = new List<ACE.Database.Models.World.Quest>();
+
+                foreach (var questDefs in questDefDB.QuestDefs)
+                {
+                    efQuests.Add(new ACE.Database.Models.World.Quest
+                    {
+                        Name = questDefs.Name,
+
+                        MinDelta = questDefs.MinDelta,
+                        MaxSolves = questDefs.MaxSolves,
+
+                        Message = questDefs.Message
+                    });
+                }
+
+                // todo do something with efQuests
+
                 // Old method
                 QuestSQLWriter.WriteQuestFiles(questDefDB);
             });
@@ -633,7 +650,7 @@ namespace PhatACCacheBinParser
             {
                 var efEvents = new List<ACE.Database.Models.World.Event>();
 
-                foreach (var gameEventDef in this.gameEventDefDB.GameEventDefs)
+                foreach (var gameEventDef in gameEventDefDB.GameEventDefs)
                 {
                     efEvents.Add(new ACE.Database.Models.World.Event
                     {
