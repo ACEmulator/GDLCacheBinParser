@@ -62,9 +62,10 @@
     <Reference Include="ACE.Entity">
       <HintPath>lib\ACE.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -80,6 +81,7 @@
     <Compile Include="Enums\Physics.cs" />
     <Compile Include="Enums\Spells.cs" />
     <Compile Include="Enums\WeenieClasses.cs" />
+    <Compile Include="Enums\WeenieClassesExtensions.cs" />
     <Compile Include="SQLWriters\EventSQLWriter.cs" />
     <Compile Include="SQLWriters\HouseSQLWriter.cs" />
     <Compile Include="SQLWriters\LandblockSQLWriter.cs" />
@@ -197,6 +199,7 @@
     <EmbeddedResource Include="SQLBuilderControl.resx">
       <DependentUpon>SQLBuilderControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
