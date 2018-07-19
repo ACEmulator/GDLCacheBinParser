@@ -80,6 +80,15 @@
     <Compile Include="Enums\Physics.cs" />
     <Compile Include="Enums\Spells.cs" />
     <Compile Include="Enums\WeenieClasses.cs" />
+    <Compile Include="SQLWriters\EventSQLWriter.cs" />
+    <Compile Include="SQLWriters\HouseSQLWriter.cs" />
+    <Compile Include="SQLWriters\LandblockSQLWriter.cs" />
+    <Compile Include="SQLWriters\QuestSQLWriter.cs" />
+    <Compile Include="SQLWriters\CraftingSQLWriter.cs" />
+    <Compile Include="SQLWriters\RegionDescSQLWriter.cs" />
+    <Compile Include="SQLWriters\SpellsSQLWriter.cs" />
+    <Compile Include="SQLWriters\TreasureSQLWriter.cs" />
+    <Compile Include="SQLWriters\WeenieSQLWriter.cs" />
     <Compile Include="UnpackableExtensions.cs" />
     <Compile Include="Seg1_RegionDescExtendedData\EncounterMap.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\SpellFormula.cs" />
