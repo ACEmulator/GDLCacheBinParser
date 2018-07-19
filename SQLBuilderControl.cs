@@ -224,6 +224,32 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                var efHousingPortals = new List<ACE.Database.Models.World.HousePortal>();
+
+                foreach (var housingPortal in housingPortalsTable.HousingPortals)
+                {
+                    foreach (var destination in housingPortal.Destinations)
+                    {
+                        efHousingPortals.Add(new ACE.Database.Models.World.HousePortal
+                        {
+                            HouseId = housingPortal.HouseId,
+
+                            ObjCellId = destination.ObjCellID,
+
+                            OriginX = destination.Origin.X,
+                            OriginY = destination.Origin.Y,
+                            OriginZ = destination.Origin.Z,
+
+                            AnglesX = destination.Angles.X,
+                            AnglesY = destination.Angles.Y,
+                            AnglesZ = destination.Angles.Z,
+                            AnglesW = destination.Angles.W
+                        });
+                    }
+                }
+
+                // todo do something with efHousingPortals
+
                 // Old method
                 HouseSQLWriter.WriteHouseFiles(housingPortalsTable);
             });
