@@ -55,11 +55,11 @@ namespace PhatACCacheBinParser.SQLWriters
                         {
                             case 1:
                             case 3:
-                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') /* Target */" + Environment.NewLine;
+                                componentsLine += $"     , ({recipe.ID}, {component.DestroyChance}, {component.DestroyAmount}, '{component.DestroyMessage.Replace("'", "''")}') /* Target */" + Environment.NewLine;
                                 break;
                             case 2:
                             case 4:
-                                componentsLine += $"     , ({recipe.ID}, {component.unknown_1}, {component.unknown_2}, '{component.unknown_3.Replace("'", "''")}') {(sourceWCID > 0 ? $"/* {weenieNames[sourceWCID]} */" : "/* Source */")}" + Environment.NewLine;
+                                componentsLine += $"     , ({recipe.ID}, {component.DestroyChance}, {component.DestroyAmount}, '{component.DestroyMessage.Replace("'", "''")}') {(sourceWCID > 0 ? $"/* {weenieNames[sourceWCID]} */" : "/* Source */")}" + Environment.NewLine;
                                 break;
                         }
                         compidx++;
@@ -156,7 +156,7 @@ namespace PhatACCacheBinParser.SQLWriters
                         foreach (var mod in recipe.Mods)
                         {
                             //`recipe_Id`, `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `data_Id`, `unknown_9`, `instance_Id`
-                            modsLine += $"     , ({recipe.ID}, {modSet}, {mod.Unknown1}, {mod.Unknown2}, {mod.Unknown3}, {mod.Unknown4}, {mod.Unknown5}, {mod.Unknown6}, {mod.Unknown7}, {mod.DataID}, {mod.Unknown9}, {mod.InstanceID})" + Environment.NewLine;
+                            modsLine += $"     , ({recipe.ID}, {modSet}, {mod.Health}, {mod.Unknown2}, {mod.Mana}, {mod.Unknown4}, {mod.Unknown5}, {mod.Unknown6}, {mod.Unknown7}, {mod.DataID}, {mod.Unknown9}, {mod.InstanceID})" + Environment.NewLine;
 
                             if (mod.IntMods != null)
                             {

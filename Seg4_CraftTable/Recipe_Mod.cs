@@ -12,9 +12,9 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	    public List<Mod<string>> StringMods;
 	    public List<Mod<bool>> BoolMods;
 
-        public int Unknown1;
-	    public int Unknown2;
-	    public int Unknown3;
+        public int Health;
+	    public int Unknown2; // Probably Stamina?
+	    public int Mana;
 	    public int Unknown4;
 	    public int Unknown5;
 	    public int Unknown6;
@@ -107,9 +107,9 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
                 BoolMods.Add(item);
             }
 
-            Unknown1 = binaryReader.ReadInt32();
+            Health = binaryReader.ReadInt32();
             Unknown2 = binaryReader.ReadInt32();
-            Unknown3 = binaryReader.ReadInt32();
+            Mana = binaryReader.ReadInt32();
             Unknown4 = binaryReader.ReadInt32();
             Unknown5 = binaryReader.ReadInt32();
             Unknown6 = binaryReader.ReadInt32();

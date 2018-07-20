@@ -4,15 +4,15 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 {
 	class Recipe_Component
 	{
-		public double unknown_1; // This is the % of failure? It's usually .1
-		public uint unknown_2;
-		public string unknown_3; // This is the destroyed message
+		public double DestroyChance; // This is the % of failure? It's usually .1
+		public uint DestroyAmount;
+		public string DestroyMessage; // This is the destroyed message
 
 		public bool Unpack(BinaryReader binaryReader)
 		{
-			unknown_1 = binaryReader.ReadDouble();
-			unknown_2 = binaryReader.ReadUInt32();
-			unknown_3 = Util.ReadString(binaryReader, true);
+			DestroyChance = binaryReader.ReadDouble();
+			DestroyAmount = binaryReader.ReadUInt32();
+			DestroyMessage = Util.ReadString(binaryReader, true);
 
 			return true;
 		}

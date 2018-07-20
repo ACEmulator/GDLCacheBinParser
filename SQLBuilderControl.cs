@@ -200,7 +200,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // todo
+                var aceRecipies = craftingTable.ConvertToACE();
 
                 // New method
                 // todo
