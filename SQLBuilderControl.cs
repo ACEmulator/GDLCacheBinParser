@@ -128,10 +128,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
+
+                // New method
                 // todo
 
                 // Old method
-                //WriteRegionFiles();
                 RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames);
             });
 
@@ -150,6 +152,9 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                var aceSpells = spellTableExtendedData.ConvertToACE();
+
+                // New method
                 // todo
 
                 // Old method
@@ -173,6 +178,9 @@ namespace PhatACCacheBinParser
             {
                 // todo
 
+                // New method
+                // todo
+
                 // Old method
                 TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames);
             });
@@ -192,6 +200,9 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
+                // New method
                 // todo
 
                 // Old method
@@ -215,7 +226,8 @@ namespace PhatACCacheBinParser
             {
                 var aceHouePortals = housingPortalsTable.ConvertToACE();
 
-                // todo do something with aceHouePortals
+                // New method
+                // todo
 
                 // Old method
                 HouseSQLWriter.WriteHouseFiles(housingPortalsTable);
@@ -236,6 +248,9 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
+                // New method
                 // todo
 
                 // Old method
@@ -259,7 +274,8 @@ namespace PhatACCacheBinParser
             {
                 var aceQuests = questDefDB.ConvertToACE();
 
-                // todo do something with aceQuests
+                // New method
+                // todo
 
                 // Old method
                 QuestSQLWriter.WriteQuestFiles(questDefDB);
@@ -282,7 +298,8 @@ namespace PhatACCacheBinParser
             {
                 var aceWeenies = weenieDefaults.ConvertToACE();
 
-                // todo do something with aceWeenies
+                // New method
+                // todo
 
                 // Old method
                 WeenieSQLWriter.WriteWeenieFiles(weenieDefaults, treasureTable, weenieNames);
