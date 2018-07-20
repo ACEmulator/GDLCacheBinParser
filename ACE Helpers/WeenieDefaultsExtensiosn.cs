@@ -7,8 +7,22 @@ using PhatACCacheBinParser.Enums;
 
 namespace PhatACCacheBinParser.ACE_Helpers
 {
-    static class WeenieExtensiosn
+    static class WeenieDefaultsExtensiosn
     {
+        public static List<Weenie> ConvertToACE(this Seg9_WeenieDefaults.WeenieDefaults input)
+        {
+            var results = new List<Weenie>();
+
+            foreach (var value in input.Weenies)
+            {
+                var converted = value.ConvertToACE();
+
+                results.Add(converted);
+            }
+
+            return results;
+        }
+
         public static Weenie ConvertToACE(this KeyValuePair<uint, Seg9_WeenieDefaults.Weenie> input)
         {
             var result = new Weenie();

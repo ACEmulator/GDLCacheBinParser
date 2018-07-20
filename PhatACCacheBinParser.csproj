@@ -71,10 +71,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACE Helpers\GameEventDefExtensions.cs" />
-    <Compile Include="ACE Helpers\HousingPortalExtensions.cs" />
-    <Compile Include="ACE Helpers\QuestDefExtensions.cs" />
-    <Compile Include="ACE Helpers\WeenieExtensiosn.cs" />
+    <Compile Include="ACE Helpers\GameEventDefDBExtensions.cs" />
+    <Compile Include="ACE Helpers\HousingPortalsExtensions.cs" />
+    <Compile Include="ACE Helpers\QuestDefDBExtensions.cs" />
+    <Compile Include="ACE Helpers\WeenieDefaultsExtensiosn.cs" />
     <Compile Include="Common\Encounter.cs" />
     <Compile Include="Enums\Account.cs" />
     <Compile Include="Enums\Character.cs" />

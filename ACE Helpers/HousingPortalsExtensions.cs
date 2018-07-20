@@ -4,8 +4,13 @@ using ACE.Database.Models.World;
 
 namespace PhatACCacheBinParser.ACE_Helpers
 {
-    static class HousingPortalExtensions
+    static class HousingPortalsExtensions
     {
+        public static List<HousePortal> ConvertToACE(this Seg5_HousingPortals.HousingPortalsTable input)
+        {
+            return input.HousingPortals.ConvertToACE();
+        }
+
         public static List<HousePortal> ConvertToACE(this List<Seg5_HousingPortals.HousingPortal> input)
         {
             var results = new List<HousePortal>();

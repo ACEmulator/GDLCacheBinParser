@@ -113,24 +113,7 @@ namespace PhatACCacheBinParser
                 var name = weenie.Value.Description;
 
                 if (String.IsNullOrEmpty(name))
-                {
-                    if (Enum.IsDefined(typeof(WeenieClasses), (ushort)weenie.Value.WCID))
-                        name = Enum.GetName(typeof(WeenieClasses), weenie.Value.WCID).Substring(2);
-                    else
-                    {
-                        name = "ace" + weenie.Value.WCID; //+ "-" + parsed.Label.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
-                    }
-
-                    if (name.StartsWith("W_"))
-                        name = name.Remove(0, 2);
-
-                    if (name.EndsWith("_CLASS"))
-                        name = name.Remove(name.LastIndexOf("_CLASS", StringComparison.Ordinal));
-
-                    name = name.Replace("_", "-");
-
-                    name = name.ToLower();
-                }
+                    name = ((WeenieClasses)weenie.Value.WCID).GetNameFormattedForDatabase();
 
                 weenieNames.Add(weenie.Value.WCID, name);
             }
@@ -145,6 +128,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
                 // Old method
                 //WriteRegionFiles();
                 RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames);
@@ -165,6 +150,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
                 // Old method
                 SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames);
             });
@@ -184,6 +171,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
                 // Old method
                 TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames);
             });
@@ -203,6 +192,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
                 // Old method
                 CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames);
             });
@@ -222,7 +213,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceHouePortals = housingPortalsTable.HousingPortals.ConvertToACE();
+                var aceHouePortals = housingPortalsTable.ConvertToACE();
 
                 // todo do something with aceHouePortals
 
@@ -245,6 +236,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
+                // todo
+
                 // Old method
                 LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames);
             });
@@ -264,14 +257,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceQuests = new List<ACE.Database.Models.World.Quest>();
-
-                foreach (var value in questDefDB.QuestDefs)
-                {
-                    var converted = value.ConvertToACE();
-
-                    aceQuests.Add(converted);
-                }
+                var aceQuests = questDefDB.ConvertToACE();
 
                 // todo do something with aceQuests
 
@@ -294,14 +280,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceWeenies = new List<ACE.Database.Models.World.Weenie>();
-
-                foreach (var value in weenieDefaults.Weenies)
-                {
-                    var converted = value.ConvertToACE();
-
-                    aceWeenies.Add(converted);
-                }
+                var aceWeenies = weenieDefaults.ConvertToACE();
 
                 // todo do something with aceWeenies
 
@@ -324,14 +303,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceEvents = new List<ACE.Database.Models.World.Event>();
-
-                foreach (var value in gameEventDefDB.GameEventDefs)
-                {
-                    var converted = value.ConvertToACE();
-
-                    aceEvents.Add(converted);
-                }
+                var aceEvents = gameEventDefDB.ConvertToACE();
 
                 // New method
                 EventSQLWriter.WriteEventFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\", false);

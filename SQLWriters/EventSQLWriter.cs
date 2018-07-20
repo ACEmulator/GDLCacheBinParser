@@ -39,7 +39,7 @@ namespace PhatACCacheBinParser.SQLWriters
             }
         }
 
-        public static void WriteEventFiles(ICollection<ACE.Database.Models.World.Event> events, string outputFolder, bool updteIfAlreadyExists)
+        public static void WriteEventFiles(ICollection<ACE.Database.Models.World.Event> events, string outputFolder, bool useSQLUpdateIfExists)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
