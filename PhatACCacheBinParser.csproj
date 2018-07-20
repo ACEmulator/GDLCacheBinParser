@@ -71,11 +71,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACE Helpers\CraftTableExtensions.cs" />
     <Compile Include="ACE Helpers\GameEventDefDBExtensions.cs" />
     <Compile Include="ACE Helpers\HousingPortalsExtensions.cs" />
+    <Compile Include="ACE Helpers\LandBlockExtendedDataExtensions.cs" />
+    <Compile Include="ACE Helpers\MutationFiltersExtensions.cs" />
     <Compile Include="ACE Helpers\QuestDefDBExtensions.cs" />
     <Compile Include="ACE Helpers\RegionDescExtendedDataExtensions.cs" />
     <Compile Include="ACE Helpers\SpellsTableExtendedDataExtensions.cs" />
+    <Compile Include="ACE Helpers\TreasureTableExtensions.cs" />
     <Compile Include="ACE Helpers\WeenieDefaultsExtensiosn.cs" />
     <Compile Include="Common\Encounter.cs" />
     <Compile Include="Enums\Account.cs" />
