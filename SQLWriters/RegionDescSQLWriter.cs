@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 
 using PhatACCacheBinParser.Common;
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 
@@ -12,9 +11,9 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class RegionDescSQLWriter
     {
-        public static void WriteRegionFiles(RegionDescExtendedData regionDescExtendedData, Dictionary<uint, string> weenieNames)
+        public static void WriteRegionFiles(RegionDescExtendedData regionDescExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL Old Method\\";
+            //var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL Old Method\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
@@ -205,7 +204,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 yield return str.Substring(i, chunkSize);
         }
 
-        public static void WriteEnounterLandblockInstances(RegionDescExtendedData regionDescExtendedData, LandBlockData landBlockData, Dictionary<uint, string> weenieNames)
+        public static void WriteEnounterLandblockInstances(RegionDescExtendedData regionDescExtendedData, LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             var encounters = new Dictionary<int, List<Encounter>>();
             
@@ -253,8 +252,6 @@ namespace PhatACCacheBinParser.SQLWriters
                     }
                 }
             }
-
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\";
 
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

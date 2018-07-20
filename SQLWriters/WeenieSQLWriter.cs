@@ -8,7 +8,6 @@ using ACE.Entity.Enum;
 using ACE.Entity.Enum.Properties;
 
 using PhatACCacheBinParser.Enums;
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg3_TreasureTable;
 using PhatACCacheBinParser.Seg9_WeenieDefaults;
 
@@ -16,10 +15,8 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class WeenieSQLWriter
     {
-        public static void WriteWeenieFiles(WeenieDefaults weenieDefaults, TreasureTable treasureTable, Dictionary<uint, string> weenieNames)
+        public static void WriteWeenieFiles(WeenieDefaults weenieDefaults, TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
@@ -1003,5 +1000,32 @@ namespace PhatACCacheBinParser.SQLWriters
             // parserControl.BeginInvoke((Action)(() => parserControl.WriteSQLOutputProgress = (int)(((double)processedCounter / parsedObjects.Count) * 100)));
         }
 
+        public static void WriteFiles(ICollection<ACE.Database.Models.World.Weenie> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        {
+            foreach (var value in input)
+            {
+                // todo adjust the output folder based on the type of weenie
+
+                WriteFile(value, outputFolder, includeDELETEStatementBeforeInsert);
+            }
+        }
+
+        public static void WriteFile(ACE.Database.Models.World.Weenie input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        {
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            var description = input.WeeniePropertiesString.FirstOrDefault(r => r.Type == (int)PropertyString.Name);
+
+            var fileName = input.ClassId.ToString("00000") + " " + Util.IllegalInFileName.Replace(description != null ? description.Value : "", "_");
+
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+                ExportToSQL(input, writer, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void ExportToSQL(ACE.Database.Models.World.Weenie input, StreamWriter writer, bool includeDELETEStatementBeforeInsert = false)
+        {
+            // todo
+        }
     }
 }

@@ -5,17 +5,14 @@ using System.IO;
 using ACE.Entity.Enum.Properties;
 
 using PhatACCacheBinParser.Enums;
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg4_CraftTable;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class CraftingSQLWriter
     {
-        public static void WriteCraftingFiles(CraftingTable craftingTable, Dictionary<uint, string> weenieNames)
+        public static void WriteCraftingFiles(CraftingTable craftingTable, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 

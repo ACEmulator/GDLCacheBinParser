@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
 
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg5_HousingPortals;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class HouseSQLWriter
     {
-        public static void WriteHouseFiles(HousingPortalsTable housingPortalsTable)
+        public static void WriteHouseFiles(HousingPortalsTable housingPortalsTable, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 

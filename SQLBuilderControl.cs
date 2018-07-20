@@ -134,7 +134,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames);
+                RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\");
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -158,7 +158,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames);
+                SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
@@ -182,7 +182,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames);
+                TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
@@ -206,7 +206,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames);
+                CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
@@ -230,7 +230,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                HouseSQLWriter.WriteHouseFiles(housingPortalsTable);
+                HouseSQLWriter.WriteHouseFiles(housingPortalsTable, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
@@ -254,7 +254,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames);
+                LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
@@ -278,7 +278,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                QuestSQLWriter.WriteQuestFiles(questDefDB);
+                QuestSQLWriter.WriteQuestFiles(questDefDB, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;
@@ -302,7 +302,7 @@ namespace PhatACCacheBinParser
                 // todo
 
                 // Old method
-                WeenieSQLWriter.WriteWeenieFiles(weenieDefaults, treasureTable, weenieNames);
+                WeenieSQLWriter.WriteWeenieFiles(weenieDefaults, treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
@@ -323,10 +323,10 @@ namespace PhatACCacheBinParser
                 var aceEvents = gameEventDefDB.ConvertToACE();
 
                 // New method
-                EventSQLWriter.WriteEventFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\", false);
+                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\", false);
 
                 // Old method
-                EventSQLWriter.WriteEventFiles(gameEventDefDB, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL Old Method\\");
+                EventSQLWriter.WriteFiles(gameEventDefDB, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarEvents.Style = ProgressBarStyle.Continuous;

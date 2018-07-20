@@ -6,17 +6,14 @@ using ACE.Entity.Enum;
 using ACE.Entity.Enum.Properties;
 
 using PhatACCacheBinParser.Enums;
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg2_SpellTableExtendedData;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class SpellsSQLWriter
     {
-        public static void WriteSpellFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames)
+        public static void WriteSpellFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 

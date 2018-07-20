@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class LandblockSQLWriter
     {
-        public static void WriteLandblockFiles(LandBlockData landBlockData, Dictionary<uint, string> weenieNames)
+        public static void WriteLandblockFiles(LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 

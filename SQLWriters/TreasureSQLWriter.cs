@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg3_TreasureTable;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class TreasureSQLWriter
     {
-        public static void WriteTreasureFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames)
+        public static void WriteTreasureFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 

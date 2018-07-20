@@ -9,7 +9,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class EventSQLWriter
     {
-        public static void WriteEventFiles(GameEventDefDB gameEventDefDB, string outputFolder)
+        public static void WriteFiles(GameEventDefDB gameEventDefDB, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
@@ -39,15 +39,33 @@ namespace PhatACCacheBinParser.SQLWriters
             }
         }
 
-        public static void WriteEventFiles(ICollection<ACE.Database.Models.World.Event> events, string outputFolder, bool useSQLUpdateIfExists)
+        public static void WriteFiles(ICollection<ACE.Database.Models.World.Event> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        {
+            foreach (var value in input)
+                WriteFile(value, outputFolder, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void WriteFile(ACE.Database.Models.World.Event input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            foreach (var gemEvent in events)
+            string fileName = Util.IllegalInFileName.Replace(input.Name, "_");
+
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+                ExportToSQL(input, writer, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void ExportToSQL(ACE.Database.Models.World.Event input, StreamWriter writer, bool includeDELETEStatementBeforeInsert = false)
+        {
+            if (includeDELETEStatementBeforeInsert)
             {
-                // todo
+                writer.WriteLine($"DELETE FROM `event` WHERE `name` = '{input.Name.Replace("'", "''")}';");
+                writer.WriteLine();
             }
+
+            writer.WriteLine("INSERT INTO `event` (`name`, `start_Time`, `end_Time`, `state`)");
+            writer.WriteLine($"VALUES ('{input.Name.Replace("'", "''")}', {input.StartTime}, {input.EndTime}, {input.State});");
         }
     }
 }

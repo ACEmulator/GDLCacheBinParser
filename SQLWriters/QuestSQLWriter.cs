@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
 
-using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg8_QuestDefDB;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class QuestSQLWriter
     {
-        public static void WriteQuestFiles(QuestDefDB questDefDB)
+        public static void WriteQuestFiles(QuestDefDB questDefDB, string outputFolder)
         {
-            var outputFolder = Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL Old Method\\";
-
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
