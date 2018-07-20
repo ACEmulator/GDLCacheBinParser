@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using PhatACCacheBinParser.Common;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 
@@ -11,7 +10,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class RegionDescSQLWriter
     {
-        public static void WriteRegionFiles(RegionDescExtendedData regionDescExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(RegionDescExtendedData regionDescExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             //var outputFolder = Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL Old Method\\";
 
@@ -204,9 +203,9 @@ namespace PhatACCacheBinParser.SQLWriters
                 yield return str.Substring(i, chunkSize);
         }
 
-        public static void WriteEnounterLandblockInstances(RegionDescExtendedData regionDescExtendedData, LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(RegionDescExtendedData regionDescExtendedData, LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
-            var encounters = new Dictionary<int, List<Encounter>>();
+            var encounters = new Dictionary<int, List<ACE.Database.Models.World.Encounter>>();
             
             for (var landblock = 0; landblock < (255 * 255); landblock++)
             {
@@ -245,9 +244,9 @@ namespace PhatACCacheBinParser.SQLWriters
                             var objCellId = (landblock << 16) | 0;
 
                             if (!encounters.ContainsKey(landblock))
-                                encounters.Add(landblock, new List<Encounter>());
+                                encounters.Add(landblock, new List<ACE.Database.Models.World.Encounter>());
 
-                            encounters[landblock].Add(new Encounter { Landblock = landblock, WeenieClassId = wcid, CellX = cell_x, CellY = cell_y });
+                            encounters[landblock].Add(new ACE.Database.Models.World.Encounter { Landblock = landblock, WeenieClassId = wcid, CellX = cell_x, CellY = cell_y });
                         }
                     }
                 }

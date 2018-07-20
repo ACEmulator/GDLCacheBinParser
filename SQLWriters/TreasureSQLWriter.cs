@@ -8,7 +8,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class TreasureSQLWriter
     {
-        public static void WriteTreasureFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

@@ -15,7 +15,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class WeenieSQLWriter
     {
-        public static void WriteWeenieFiles(WeenieDefaults weenieDefaults, TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(WeenieDefaults weenieDefaults, TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

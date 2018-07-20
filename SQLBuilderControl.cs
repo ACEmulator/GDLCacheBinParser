@@ -128,13 +128,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
-
                 // New method
+                var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
                 // todo
 
                 // Old method
-                RegionDescSQLWriter.WriteEnounterLandblockInstances(regionDescExtendedData, landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\");
+                RegionDescSQLWriter.WriteFiles(regionDescExtendedData, landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\");
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -152,13 +151,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceSpells = spellTableExtendedData.ConvertToACE();
-
                 // New method
+                var aceSpells = spellTableExtendedData.ConvertToACE();
                 // todo
 
                 // Old method
-                SpellsSQLWriter.WriteSpellFiles(spellTableExtendedData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\");
+                SpellsSQLWriter.WriteFiles(spellTableExtendedData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
@@ -176,13 +174,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // todo
-
                 // New method
+                // todo
                 // todo
 
                 // Old method
-                TreasureSQLWriter.WriteTreasureFiles(treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\");
+                TreasureSQLWriter.WriteFiles(treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
@@ -200,13 +197,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceRecipies = craftingTable.ConvertToACE();
-
                 // New method
+                var aceRecipies = craftingTable.ConvertToACE();
                 // todo
 
                 // Old method
-                CraftingSQLWriter.WriteCraftingFiles(craftingTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\");
+                CraftingSQLWriter.WriteFiles(craftingTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
@@ -224,13 +220,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceHouePortals = housingPortalsTable.ConvertToACE();
-
                 // New method
+                var aceHouePortals = housingPortalsTable.ConvertToACE();
                 // todo
 
                 // Old method
-                HouseSQLWriter.WriteHouseFiles(housingPortalsTable, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\");
+                HouseSQLWriter.WriteFiles(housingPortalsTable, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
@@ -248,13 +243,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // todo
-
                 // New method
+                // todo
                 // todo
 
                 // Old method
-                LandblockSQLWriter.WriteLandblockFiles(landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL Old Method\\");
+                LandblockSQLWriter.WriteFiles(landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
@@ -272,13 +266,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceQuests = questDefDB.ConvertToACE();
-
                 // New method
+                var aceQuests = questDefDB.ConvertToACE();
                 // todo
 
                 // Old method
-                QuestSQLWriter.WriteQuestFiles(questDefDB, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL Old Method\\");
+                QuestSQLWriter.WriteFiles(questDefDB, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;
@@ -296,13 +289,12 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceWeenies = weenieDefaults.ConvertToACE();
-
                 // New method
+                var aceWeenies = weenieDefaults.ConvertToACE();
                 // todo
 
                 // Old method
-                WeenieSQLWriter.WriteWeenieFiles(weenieDefaults, treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL Old Method\\");
+                WeenieSQLWriter.WriteFiles(weenieDefaults, treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL Old Method\\");
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
@@ -320,9 +312,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceEvents = gameEventDefDB.ConvertToACE();
-
                 // New method
+                var aceEvents = gameEventDefDB.ConvertToACE();
                 EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\", false);
 
                 // Old method

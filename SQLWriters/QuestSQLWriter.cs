@@ -7,7 +7,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class QuestSQLWriter
     {
-        public static void WriteQuestFiles(QuestDefDB questDefDB, string outputFolder)
+        public static void WriteFiles(QuestDefDB questDefDB, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

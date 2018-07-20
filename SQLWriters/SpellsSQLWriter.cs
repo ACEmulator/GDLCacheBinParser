@@ -12,7 +12,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class SpellsSQLWriter
     {
-        public static void WriteSpellFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

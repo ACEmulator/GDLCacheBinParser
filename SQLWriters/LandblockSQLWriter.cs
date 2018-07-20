@@ -8,7 +8,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class LandblockSQLWriter
     {
-        public static void WriteLandblockFiles(LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

@@ -7,7 +7,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class HouseSQLWriter
     {
-        public static void WriteHouseFiles(HousingPortalsTable housingPortalsTable, string outputFolder)
+        public static void WriteFiles(HousingPortalsTable housingPortalsTable, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
