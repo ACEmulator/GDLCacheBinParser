@@ -314,10 +314,7 @@ namespace PhatACCacheBinParser
             {
                 // New method
                 var aceEvents = gameEventDefDB.ConvertToACE();
-                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\", false);
-
-                // Old method
-                EventSQLWriter.WriteFiles(gameEventDefDB, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL Old Method\\");
+                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\");
             });
 
             progressBarEvents.Style = ProgressBarStyle.Continuous;
