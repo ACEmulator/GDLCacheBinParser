@@ -254,12 +254,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
                 var aceQuests = questDefDB.ConvertToACE();
-                // todo
-
-                // Old method
-                QuestSQLWriter.WriteFiles(questDefDB, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL Old Method\\");
+                QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL\\");
             });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;

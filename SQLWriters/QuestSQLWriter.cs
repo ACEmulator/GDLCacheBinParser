@@ -1,41 +1,51 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
-
-using PhatACCacheBinParser.Seg8_QuestDefDB;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class QuestSQLWriter
     {
-        public static void WriteFiles(QuestDefDB questDefDB, string outputFolder)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Quest> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        {
+            foreach (var value in input)
+                WriteFile(value, outputFolder, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void WriteFile(ACE.Database.Models.World.Quest input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string sqlCommand = "INSERT";
+            string fileName = input.Name;
+            fileName = Util.IllegalInFileName.Replace(fileName, "_");
 
-            foreach (var quest in questDefDB.QuestDefs)
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
             {
-                string FileNameFormatter(QuestDef obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
-
-                string fileNameFormatter = FileNameFormatter(quest);
-
-                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                if (includeDELETEStatementBeforeInsert)
                 {
-                    // `name`, `min_Delta`, `max_Solves`, `message`
-
-                    var questLineHdr = $"{sqlCommand} INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`";
-                    var questLine = $"('{quest.Name.Replace("'", "''")}', {quest.MinDelta}, {quest.MaxSolves}, '{quest.Message.Replace("'", "''")}'";
-
-                    questLineHdr += ")" + Environment.NewLine + "VALUES ";
-                    questLine += ");";
-
-                    if (questLine != "")
-                    {
-                        writer.WriteLine(questLineHdr + questLine);
-                    }
+                    CreateSQLDELETEStatement(input, writer);
+                    writer.WriteLine();
                 }
+
+                CreateSQLINSERTStatement(input, writer);
             }
+        }
+
+        public static void CreateSQLDELETEStatement(ACE.Database.Models.World.Quest input, StreamWriter writer)
+        {
+            writer.WriteLine($"DELETE FROM `quest` WHERE `name` = '{input.Name.Replace("'", "''")}';");
+            writer.WriteLine();
+        }
+
+        public static void CreateSQLINSERTStatement(ACE.Database.Models.World.Quest input, StreamWriter writer)
+        {
+            writer.WriteLine("INSERT INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`)");
+            writer.WriteLine("VALUES (" +
+                             $"'{input.Name.Replace("'", "''")}', " +
+                             $"{input.MinDelta}, " +
+                             $"{input.MaxSolves}, " +
+                             $"'{input.Message.Replace("'", "''")}'" +
+                             ");");
         }
     }
 }
