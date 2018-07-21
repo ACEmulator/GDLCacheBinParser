@@ -12,338 +12,436 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class SpellsSQLWriter
     {
-        public static void WriteFiles(SpellTableExtendedData spellTableExtendedData, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(ICollection<ACE.Database.Models.World.Spell> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        {
+            foreach (var value in input)
+                WriteFile(value, outputFolder, weenieNames, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void WriteFile(ACE.Database.Models.World.Spell input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string sqlCommand = "INSERT";
+            string fileName = input.SpellId.ToString("00000") + " " + Util.IllegalInFileName.Replace(input.Name, "_");
 
-            foreach (var spell in spellTableExtendedData.Spells)
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
             {
-                string FileNameFormatter(Spell obj) => obj.ID.ToString("00000") + " " + Util.IllegalInFileName.Replace(obj.Name, "_");
-
-                string fileNameFormatter = FileNameFormatter(spell);
-
-                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                if (includeDELETEStatementBeforeInsert)
                 {
-                    //`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`
-
-                    var spellLineHdr = $"{sqlCommand} INTO `spell` (`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`";
-                    var spellLine = $"({spell.ID}, '{spell.Name.Replace("'", "''")}', '{spell.Description.Replace("'", "''")}', {(int)spell.School} /* {Enum.GetName(typeof(School), spell.School)} */, {spell.IconID}, {spell.Category}, {spell.Bitfield} /* {((SpellBitfield)spell.Bitfield).ToString()} */, {spell.Mana}, {spell.RangeConstant}, {spell.RangeMod}, {spell.Power}, {spell.EconomyMod}, {spell.FormulaVersion}, {spell.ComponentLoss}, {(int)spell.MetaSpellType} /* {Enum.GetName(typeof(ACE.Entity.Enum.SpellType), spell.MetaSpellType)} */, {spell.MetaSpellId}, {spell.SpellFormula.Comps[0]}, {spell.SpellFormula.Comps[1]}, {spell.SpellFormula.Comps[2]}, {spell.SpellFormula.Comps[3]}, {spell.SpellFormula.Comps[4]}, {spell.SpellFormula.Comps[5]}, {spell.SpellFormula.Comps[6]}, {spell.SpellFormula.Comps[7]}, {spell.CasterEffect}, {spell.TargetEffect}, {spell.FizzleEffect}, {spell.RecoveryInterval}, {spell.RecoveryAmount}, {spell.DisplayOrder}, {spell.NonComponentTargetType}, {spell.ManaMod}";
-
-                    //, `duration`, `degrade_Modifier`, `degrade_Limit`, `stat_Mod_Type`, `stat_Mod_Key`, `stat_Mod_Val`, `e_Type`, `base_Intensity`, `variance`, `wcid`, `num_Projectiles` 
-                    //, `num_Projectiles_Variance`, `spread_Angle`, `vertical_Angle`, `default_Launch_Angle`, `non_Tracking`, `create_Offset_Origin_X`, `create_Offset_Origin_Y`
-                    //, `create_Offset_Origin_Z`, `padding_Origin_X`, `padding_Origin_Y`, `padding_Origin_Z`, `dims_Origin_X`, `dims_Origin_Y`, `dims_Origin_Z`, `peturbation_Origin_X`
-                    //, `peturbation_Origin_Y`, `peturbation_Origin_Z`, `imbued_Effect`, `slayer_Creature_Type`, `slayer_Damage_Bonus`, `crit_Freq`, `crit_Multiplier`, `ignore_Magic_Resist`
-                    //, `elemental_Modifier`, `drain_Percentage`, `damage_Ratio`, `damage_Type`, `boost`, `boost_Variance`, `source`, `destination`, `proportion`, `loss_Percent`, `source_Loss`
-                    //, `transfer_Cap`, `max_Boost_Allowed`, `transfer_Bitfield`, `index`, `portal_Lifetime`, `link`, `position_Obj_Cell_ID`, `position_Origin_X`, `position_Origin_Y`
-                    //, `position_Origin_Z`, `position_Angles_W`, `position_Angles_X`, `position_Angles_Y`, `position_Angles_Z`, `min_Power`, `max_Power`, `power_Variance`, `dispel_School`
-                    //, `align`, `number`, `number_Variance
-
-                    if (spell.Duration.HasValue)
-                    {
-                        spellLineHdr += ", `duration`";
-                        spellLine += $", {spell.Duration}";
-                    }
-
-                    if (spell.DegradeModifier.HasValue)
-                    {
-                        spellLineHdr += ", `degrade_Modifier`";
-                        spellLine += $", {spell.DegradeModifier}";
-                    }
-
-                    if (spell.DegradeLimit.HasValue)
-                    {
-                        spellLineHdr += ", `degrade_Limit`";
-                        spellLine += $", {spell.DegradeLimit}";
-                    }
-
-                    if (spell.SpellStatMod != null)
-                    {
-                        spellLineHdr += ", `stat_Mod_Type`, `stat_Mod_Key`, `stat_Mod_Val`";
-                        spellLine += $", {spell.SpellStatMod.Type} /* {((EnchantmentTypeFlags)spell.SpellStatMod.Type).ToString()} */, {spell.SpellStatMod.Key}, {spell.SpellStatMod.Val}";
-                    }
-
-                    if (spell.EType.HasValue)
-                    {
-                        spellLineHdr += ", `e_Type`";
-                        spellLine += $", {spell.EType}";
-                    }
-
-                    if (spell.BaseIntensity.HasValue)
-                    {
-                        spellLineHdr += ", `base_Intensity`";
-                        spellLine += $", {spell.BaseIntensity}";
-                    }
-
-                    if (spell.Variance.HasValue)
-                    {
-                        spellLineHdr += ", `variance`";
-                        spellLine += $", {spell.Variance}";
-                    }
-
-                    if (spell.WCID.HasValue)
-                    {
-                        spellLineHdr += ", `wcid`";
-                        spellLine += $", {spell.WCID} /* {weenieNames[spell.WCID.Value]} */";
-                    }
-
-                    if (spell.NumProjectiles.HasValue)
-                    {
-                        spellLineHdr += ", `num_Projectiles`";
-                        spellLine += $", {spell.NumProjectiles}";
-                    }
-
-                    if (spell.NumProjectilesVariance.HasValue)
-                    {
-                        spellLineHdr += ", `num_Projectiles_Variance`";
-                        spellLine += $", {spell.NumProjectilesVariance}";
-                    }
-
-                    if (spell.SpreadAngle.HasValue)
-                    {
-                        spellLineHdr += ", `spread_Angle`";
-                        spellLine += $", {spell.SpreadAngle}";
-                    }
-
-                    if (spell.VerticalAngle.HasValue)
-                    {
-                        spellLineHdr += ", `vertical_Angle`";
-                        spellLine += $", {spell.VerticalAngle}";
-                    }
-
-                    if (spell.DefaultLaunchAngle.HasValue)
-                    {
-                        spellLineHdr += ", `default_Launch_Angle`";
-                        spellLine += $", {spell.DefaultLaunchAngle}";
-                    }
-
-                    if (spell.NonTracking.HasValue)
-                    {
-                        spellLineHdr += ", `non_Tracking`";
-                        spellLine += $", {spell.NonTracking}";
-                    }
-
-                    if (spell.CreateOffset != null)
-                    {
-                        spellLineHdr += ", `create_Offset_Origin_X`, `create_Offset_Origin_Y`, `create_Offset_Origin_Z`";
-                        spellLine += $", {spell.CreateOffset.X}, {spell.CreateOffset.Y}, {spell.CreateOffset.Z}";
-                    }
-
-                    if (spell.Padding != null)
-                    {
-                        spellLineHdr += ", `padding_Origin_X`, `padding_Origin_Y`, `padding_Origin_Z`";
-                        spellLine += $", {spell.Padding.X}, {spell.Padding.Y}, {spell.Padding.Z}";
-                    }
-
-                    if (spell.Dims != null)
-                    {
-                        spellLineHdr += ", `dims_Origin_X`, `dims_Origin_Y`, `dims_Origin_Z`";
-                        spellLine += $", {spell.Dims.X}, {spell.Dims.Y}, {spell.Dims.Z}";
-                    }
-
-                    if (spell.Peturbation != null)
-                    {
-                        spellLineHdr += ", `peturbation_Origin_X`, `peturbation_Origin_Y`, `peturbation_Origin_Z`";
-                        spellLine += $", {spell.Peturbation.X}, {spell.Peturbation.Y}, {spell.Peturbation.Z}";
-                    }
-
-                    if (spell.ImbuedEffect.HasValue)
-                    {
-                        spellLineHdr += ", `imbued_Effect`";
-                        spellLine += $", {spell.ImbuedEffect} /* {Enum.GetName(typeof(ImbuedEffectType), spell.ImbuedEffect)} */";
-                    }
-
-                    if (spell.SlayerCreatureType.HasValue)
-                    {
-                        spellLineHdr += ", `slayer_Creature_Type`";
-                        spellLine += $", {spell.SlayerCreatureType} /* {Enum.GetName(typeof(CreatureType), spell.SlayerCreatureType)} */";
-                    }
-
-                    if (spell.SlayerDamageBonus.HasValue)
-                    {
-                        spellLineHdr += ", `slayer_Damage_Bonus`";
-                        spellLine += $", {spell.SlayerDamageBonus}";
-                    }
-
-                    if (spell.CritFreq.HasValue)
-                    {
-                        spellLineHdr += ", `crit_Freq`";
-                        spellLine += $", {spell.CritFreq}";
-                    }
-
-                    if (spell.CritMultiplier.HasValue)
-                    {
-                        spellLineHdr += ", `crit_Multiplier`";
-                        spellLine += $", {spell.CritMultiplier}";
-                    }
-
-                    if (spell.IgnoreMagicResist.HasValue)
-                    {
-                        spellLineHdr += ", `ignore_Magic_Resist`";
-                        spellLine += $", {spell.IgnoreMagicResist}";
-                    }
-
-                    if (spell.ElementalModifier.HasValue)
-                    {
-                        spellLineHdr += ", `elemental_Modifier`";
-                        spellLine += $", {spell.ElementalModifier}";
-                    }
-
-                    if (spell.DrainPercentage.HasValue)
-                    {
-                        spellLineHdr += ", `drain_Percentage`";
-                        spellLine += $", {spell.DrainPercentage}";
-                    }
-
-                    if (spell.DamageRatio.HasValue)
-                    {
-                        spellLineHdr += ", `damage_Ratio`";
-                        spellLine += $", {spell.DamageRatio}";
-                    }
-
-                    if (spell.DamageType.HasValue)
-                    {
-                        spellLineHdr += ", `damage_Type`";
-                        spellLine += $", {(int)spell.DamageType} /* {Enum.GetName(typeof(DamageType), spell.DamageType)} */";
-                    }
-
-                    if (spell.Boost.HasValue)
-                    {
-                        spellLineHdr += ", `boost`";
-                        spellLine += $", {spell.Boost}";
-                    }
-
-                    if (spell.BoostVariance.HasValue)
-                    {
-                        spellLineHdr += ", `boost_Variance`";
-                        spellLine += $", {spell.BoostVariance}";
-                    }
-
-                    if (spell.Source.HasValue)
-                    {
-                        spellLineHdr += ", `source`";
-                        spellLine += $", {(int)spell.Source} /* {Enum.GetName(typeof(PropertyAttribute2nd), spell.Source)} */";
-                    }
-
-                    if (spell.Destination.HasValue)
-                    {
-                        spellLineHdr += ", `destination`";
-                        spellLine += $", {(int)spell.Destination} /* {Enum.GetName(typeof(PropertyAttribute2nd), spell.Destination)} */";
-                    }
-
-                    if (spell.Proportion.HasValue)
-                    {
-                        spellLineHdr += ", `proportion`";
-                        spellLine += $", {spell.Proportion}";
-                    }
-
-                    if (spell.LossPercent.HasValue)
-                    {
-                        spellLineHdr += ", `loss_Percent`";
-                        spellLine += $", {spell.LossPercent}";
-                    }
-
-                    if (spell.SourceLoss.HasValue)
-                    {
-                        spellLineHdr += ", `source_Loss`";
-                        spellLine += $", {spell.SourceLoss}";
-                    }
-
-                    if (spell.TransferCap.HasValue)
-                    {
-                        spellLineHdr += ", `transfer_Cap`";
-                        spellLine += $", {spell.TransferCap}";
-                    }
-
-                    if (spell.MaxBoostAllowed.HasValue)
-                    {
-                        spellLineHdr += ", `max_Boost_Allowed`";
-                        spellLine += $", {spell.MaxBoostAllowed}";
-                    }
-
-                    if (spell.TransferBitfield.HasValue)
-                    {
-                        spellLineHdr += ", `transfer_Bitfield`";
-                        spellLine += $", {spell.TransferBitfield}";
-                    }
-
-                    if (spell.Index.HasValue)
-                    {
-                        spellLineHdr += ", `index`";
-                        spellLine += $", {spell.Index}";
-                    }
-
-                    if (spell.PortalLifetime.HasValue)
-                    {
-                        spellLineHdr += ", `portal_Lifetime`";
-                        spellLine += $", {spell.PortalLifetime}";
-                    }
-
-                    if (spell.Link.HasValue)
-                    {
-                        spellLineHdr += ", `link`";
-                        spellLine += $", {spell.Link}";
-                    }
-
-                    if (spell.Position != null)
-                    {
-                        spellLineHdr += ", `position_Obj_Cell_ID`, `position_Origin_X`, `position_Origin_Y`, `position_Origin_Z`, `position_Angles_W`, `position_Angles_X`, `position_Angles_Y`, `position_Angles_Z`";
-                        spellLine += $", {spell.Position.ObjCellID}, {spell.Position.Origin.X}, {spell.Position.Origin.Y}, {spell.Position.Origin.Z}, {spell.Position.Angles.W}, {spell.Position.Angles.X}, {spell.Position.Angles.Y}, {spell.Position.Angles.Z}";
-                    }
-
-                    if (spell.MinPower.HasValue)
-                    {
-                        spellLineHdr += ", `min_Power`";
-                        spellLine += $", {spell.MinPower}";
-                    }
-
-                    if (spell.MaxPower.HasValue)
-                    {
-                        spellLineHdr += ", `max_Power`";
-                        spellLine += $", {spell.MaxPower}";
-                    }
-
-                    if (spell.PowerVariance.HasValue)
-                    {
-                        spellLineHdr += ", `power_Variance`";
-                        spellLine += $", {spell.PowerVariance}";
-                    }
-
-                    if (spell.DispelSchool.HasValue)
-                    {
-                        spellLineHdr += ", `dispel_School`";
-                        spellLine += $", {(int)spell.DispelSchool} /* {Enum.GetName(typeof(School), spell.DispelSchool)} */";
-                    }
-
-                    if (spell.Align.HasValue)
-                    {
-                        spellLineHdr += ", `align`";
-                        spellLine += $", {spell.Align}";
-                    }
-
-                    if (spell.Number.HasValue)
-                    {
-                        spellLineHdr += ", `number`";
-                        spellLine += $", {spell.Number}";
-                    }
-
-                    if (spell.NumberVariance.HasValue)
-                    {
-                        spellLineHdr += ", `number_Variance`";
-                        spellLine += $", {spell.NumberVariance}";
-                    }
-
-                    spellLineHdr += ")" + Environment.NewLine + "VALUES ";
-                    spellLine += ");";
-
-                    if (spellLine != "")
-                    {
-                        writer.WriteLine(spellLineHdr + spellLine);
-                    }
+                    CreateSQLDELETEStatement(input, writer, weenieNames);
+                    writer.WriteLine();
                 }
+
+                CreateSQLINSERTStatement(input, writer, weenieNames);
             }
+        }
+
+        public static void CreateSQLDELETEStatement(ACE.Database.Models.World.Spell input, StreamWriter writer, Dictionary<uint, string> weenieNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void CreateSQLINSERTStatement(ACE.Database.Models.World.Spell input, StreamWriter writer, Dictionary<uint, string> weenieNames)
+        {
+            //`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`
+
+            var spellLineHdr = "INSERT INTO `spell` (`spell_Id`, `name`, `description`, `school`, `icon_Id`, `category`, `bitfield`, `mana`, `range_Constant`, `range_Mod`, `power`, `economy_Mod`, `formula_Version`, `component_Loss`, `meta_Spell_Type`, `meta_Spell_Id`, `spell_Formula_Comp_1_Component_Id`, `spell_Formula_Comp_2_Component_Id`, `spell_Formula_Comp_3_Component_Id`, `spell_Formula_Comp_4_Component_Id`, `spell_Formula_Comp_5_Component_Id`, `spell_Formula_Comp_6_Component_Id`, `spell_Formula_Comp_7_Component_Id`, `spell_Formula_Comp_8_Component_Id`, `caster_Effect`, `target_Effect`, `fizzle_Effect`, `recovery_Interval`, `recovery_Amount`, `display_Order`, `non_Component_Target_Type`, `mana_Mod`";
+            var spellLine = $"VALUES ({input.SpellId}, '{input.Name.Replace("'", "''")}', '{input.Description.Replace("'", "''")}', {input.School} /* {Enum.GetName(typeof(School), input.School)} */, {input.IconId}, {input.Category}, {input.Bitfield} /* {((SpellBitfield)input.Bitfield).ToString()} */, {input.Mana}, {input.RangeConstant}, {input.RangeMod}, {input.Power}, {input.EconomyMod}, {input.FormulaVersion}, {input.ComponentLoss}, {input.MetaSpellType} /* {Enum.GetName(typeof(ACE.Entity.Enum.SpellType), input.MetaSpellType)} */, {input.MetaSpellId}, {input.SpellFormulaComp1ComponentId}, {input.SpellFormulaComp2ComponentId}, {input.SpellFormulaComp3ComponentId}, {input.SpellFormulaComp4ComponentId}, {input.SpellFormulaComp5ComponentId}, {input.SpellFormulaComp6ComponentId}, {input.SpellFormulaComp7ComponentId}, {input.SpellFormulaComp8ComponentId}, {input.CasterEffect}, {input.TargetEffect}, {input.FizzleEffect}, {input.RecoveryInterval}, {input.RecoveryAmount}, {input.DisplayOrder}, {input.NonComponentTargetType}, {input.ManaMod}";
+
+            //, `duration`, `degrade_Modifier`, `degrade_Limit`, `stat_Mod_Type`, `stat_Mod_Key`, `stat_Mod_Val`, `e_Type`, `base_Intensity`, `variance`, `wcid`, `num_Projectiles` 
+            //, `num_Projectiles_Variance`, `spread_Angle`, `vertical_Angle`, `default_Launch_Angle`, `non_Tracking`, `create_Offset_Origin_X`, `create_Offset_Origin_Y`
+            //, `create_Offset_Origin_Z`, `padding_Origin_X`, `padding_Origin_Y`, `padding_Origin_Z`, `dims_Origin_X`, `dims_Origin_Y`, `dims_Origin_Z`, `peturbation_Origin_X`
+            //, `peturbation_Origin_Y`, `peturbation_Origin_Z`, `imbued_Effect`, `slayer_Creature_Type`, `slayer_Damage_Bonus`, `crit_Freq`, `crit_Multiplier`, `ignore_Magic_Resist`
+            //, `elemental_Modifier`, `drain_Percentage`, `damage_Ratio`, `damage_Type`, `boost`, `boost_Variance`, `source`, `destination`, `proportion`, `loss_Percent`, `source_Loss`
+            //, `transfer_Cap`, `max_Boost_Allowed`, `transfer_Bitfield`, `index`, `portal_Lifetime`, `link`, `position_Obj_Cell_ID`, `position_Origin_X`, `position_Origin_Y`
+            //, `position_Origin_Z`, `position_Angles_W`, `position_Angles_X`, `position_Angles_Y`, `position_Angles_Z`, `min_Power`, `max_Power`, `power_Variance`, `dispel_School`
+            //, `align`, `number`, `number_Variance
+
+            if (input.Duration.HasValue)
+            {
+                spellLineHdr += ", `duration`";
+                spellLine += $", {input.Duration}";
+            }
+
+            if (input.DegradeModifier.HasValue)
+            {
+                spellLineHdr += ", `degrade_Modifier`";
+                spellLine += $", {input.DegradeModifier}";
+            }
+
+            if (input.DegradeLimit.HasValue)
+            {
+                spellLineHdr += ", `degrade_Limit`";
+                spellLine += $", {input.DegradeLimit}";
+            }
+
+            if (input.StatModType.HasValue)
+            {
+                spellLineHdr += ", `stat_Mod_Type`";
+                spellLine += $", {input.StatModType} /* {((EnchantmentTypeFlags)input.StatModType).ToString()} */";
+            }
+            if (input.StatModKey.HasValue)
+            {
+                spellLineHdr += ", `stat_Mod_Key`";
+                spellLine += $", {input.StatModKey}";
+            }
+            if (input.StatModVal.HasValue)
+            {
+                spellLineHdr += ", `stat_Mod_Val`";
+                spellLine += $", {input.StatModVal}";
+            }
+
+            if (input.EType.HasValue)
+            {
+                spellLineHdr += ", `e_Type`";
+                spellLine += $", {input.EType}";
+            }
+
+            if (input.BaseIntensity.HasValue)
+            {
+                spellLineHdr += ", `base_Intensity`";
+                spellLine += $", {input.BaseIntensity}";
+            }
+
+            if (input.Variance.HasValue)
+            {
+                spellLineHdr += ", `variance`";
+                spellLine += $", {input.Variance}";
+            }
+
+            if (input.Wcid.HasValue)
+            {
+                spellLineHdr += ", `wcid`";
+                spellLine += $", {input.Wcid} /* {weenieNames[input.Wcid.Value]} */";
+            }
+
+            if (input.NumProjectiles.HasValue)
+            {
+                spellLineHdr += ", `num_Projectiles`";
+                spellLine += $", {input.NumProjectiles}";
+            }
+
+            if (input.NumProjectilesVariance.HasValue)
+            {
+                spellLineHdr += ", `num_Projectiles_Variance`";
+                spellLine += $", {input.NumProjectilesVariance}";
+            }
+
+            if (input.SpreadAngle.HasValue)
+            {
+                spellLineHdr += ", `spread_Angle`";
+                spellLine += $", {input.SpreadAngle}";
+            }
+
+            if (input.VerticalAngle.HasValue)
+            {
+                spellLineHdr += ", `vertical_Angle`";
+                spellLine += $", {input.VerticalAngle}";
+            }
+
+            if (input.DefaultLaunchAngle.HasValue)
+            {
+                spellLineHdr += ", `default_Launch_Angle`";
+                spellLine += $", {input.DefaultLaunchAngle}";
+            }
+
+            if (input.NonTracking.HasValue)
+            {
+                spellLineHdr += ", `non_Tracking`";
+                spellLine += $", {input.NonTracking}";
+            }
+
+            if (input.CreateOffsetOriginX.HasValue)
+            {
+                spellLineHdr += ", `create_Offset_Origin_X`";
+                spellLine += $", {input.CreateOffsetOriginX}";
+            }
+            if (input.CreateOffsetOriginY.HasValue)
+            {
+                spellLineHdr += ", `create_Offset_Origin_Y`";
+                spellLine += $", {input.CreateOffsetOriginY}";
+            }
+            if (input.CreateOffsetOriginZ.HasValue)
+            {
+                spellLineHdr += ", `create_Offset_Origin_Z`";
+                spellLine += $", {input.CreateOffsetOriginZ}";
+            }
+
+            if (input.PaddingOriginX.HasValue)
+            {
+                spellLineHdr += ", `padding_Origin_X`";
+                spellLine += $", {input.PaddingOriginX}";
+            }
+            if (input.PaddingOriginY.HasValue)
+            {
+                spellLineHdr += ", `padding_Origin_Y`";
+                spellLine += $", {input.PaddingOriginY}";
+            }
+            if (input.PaddingOriginZ.HasValue)
+            {
+                spellLineHdr += ", `padding_Origin_Z`";
+                spellLine += $", {input.PaddingOriginZ}";
+            }
+
+            if (input.DimsOriginX.HasValue)
+            {
+                spellLineHdr += ", `dims_Origin_X`";
+                spellLine += $", {input.DimsOriginX}";
+            }
+            if (input.DimsOriginY.HasValue)
+            {
+                spellLineHdr += ", `dims_Origin_Y`";
+                spellLine += $", {input.DimsOriginY}";
+            }
+            if (input.DimsOriginZ.HasValue)
+            {
+                spellLineHdr += ", `dims_Origin_Z`";
+                spellLine += $", {input.DimsOriginZ}";
+            }
+
+            if (input.PeturbationOriginX.HasValue)
+            {
+                spellLineHdr += ", `peturbation_Origin_X`";
+                spellLine += $", {input.PeturbationOriginX}";
+            }
+            if (input.PeturbationOriginY.HasValue)
+            {
+                spellLineHdr += ", `peturbation_Origin_Y`";
+                spellLine += $", {input.PeturbationOriginY}";
+            }
+            if (input.PeturbationOriginZ.HasValue)
+            {
+                spellLineHdr += ", `peturbation_Origin_Z`";
+                spellLine += $", {input.PeturbationOriginZ}";
+            }
+
+            if (input.ImbuedEffect.HasValue)
+            {
+                spellLineHdr += ", `imbued_Effect`";
+                spellLine += $", {input.ImbuedEffect} /* {Enum.GetName(typeof(ImbuedEffectType), input.ImbuedEffect)} */";
+            }
+
+            if (input.SlayerCreatureType.HasValue)
+            {
+                spellLineHdr += ", `slayer_Creature_Type`";
+                spellLine += $", {input.SlayerCreatureType} /* {Enum.GetName(typeof(CreatureType), input.SlayerCreatureType)} */";
+            }
+
+            if (input.SlayerDamageBonus.HasValue)
+            {
+                spellLineHdr += ", `slayer_Damage_Bonus`";
+                spellLine += $", {input.SlayerDamageBonus}";
+            }
+
+            if (input.CritFreq.HasValue)
+            {
+                spellLineHdr += ", `crit_Freq`";
+                spellLine += $", {input.CritFreq}";
+            }
+
+            if (input.CritMultiplier.HasValue)
+            {
+                spellLineHdr += ", `crit_Multiplier`";
+                spellLine += $", {input.CritMultiplier}";
+            }
+
+            if (input.IgnoreMagicResist.HasValue)
+            {
+                spellLineHdr += ", `ignore_Magic_Resist`";
+                spellLine += $", {input.IgnoreMagicResist}";
+            }
+
+            if (input.ElementalModifier.HasValue)
+            {
+                spellLineHdr += ", `elemental_Modifier`";
+                spellLine += $", {input.ElementalModifier}";
+            }
+
+            if (input.DrainPercentage.HasValue)
+            {
+                spellLineHdr += ", `drain_Percentage`";
+                spellLine += $", {input.DrainPercentage}";
+            }
+
+            if (input.DamageRatio.HasValue)
+            {
+                spellLineHdr += ", `damage_Ratio`";
+                spellLine += $", {input.DamageRatio}";
+            }
+
+            if (input.DamageType.HasValue)
+            {
+                spellLineHdr += ", `damage_Type`";
+                spellLine += $", {(int)input.DamageType} /* {Enum.GetName(typeof(DamageType), input.DamageType)} */";
+            }
+
+            if (input.Boost.HasValue)
+            {
+                spellLineHdr += ", `boost`";
+                spellLine += $", {input.Boost}";
+            }
+
+            if (input.BoostVariance.HasValue)
+            {
+                spellLineHdr += ", `boost_Variance`";
+                spellLine += $", {input.BoostVariance}";
+            }
+
+            if (input.Source.HasValue)
+            {
+                spellLineHdr += ", `source`";
+                spellLine += $", {(int)input.Source} /* {Enum.GetName(typeof(PropertyAttribute2nd), input.Source)} */";
+            }
+
+            if (input.Destination.HasValue)
+            {
+                spellLineHdr += ", `destination`";
+                spellLine += $", {(int)input.Destination} /* {Enum.GetName(typeof(PropertyAttribute2nd), input.Destination)} */";
+            }
+
+            if (input.Proportion.HasValue)
+            {
+                spellLineHdr += ", `proportion`";
+                spellLine += $", {input.Proportion}";
+            }
+
+            if (input.LossPercent.HasValue)
+            {
+                spellLineHdr += ", `loss_Percent`";
+                spellLine += $", {input.LossPercent}";
+            }
+
+            if (input.SourceLoss.HasValue)
+            {
+                spellLineHdr += ", `source_Loss`";
+                spellLine += $", {input.SourceLoss}";
+            }
+
+            if (input.TransferCap.HasValue)
+            {
+                spellLineHdr += ", `transfer_Cap`";
+                spellLine += $", {input.TransferCap}";
+            }
+
+            if (input.MaxBoostAllowed.HasValue)
+            {
+                spellLineHdr += ", `max_Boost_Allowed`";
+                spellLine += $", {input.MaxBoostAllowed}";
+            }
+
+            if (input.TransferBitfield.HasValue)
+            {
+                spellLineHdr += ", `transfer_Bitfield`";
+                spellLine += $", {input.TransferBitfield}";
+            }
+
+            if (input.Index.HasValue)
+            {
+                spellLineHdr += ", `index`";
+                spellLine += $", {input.Index}";
+            }
+
+            if (input.PortalLifetime.HasValue)
+            {
+                spellLineHdr += ", `portal_Lifetime`";
+                spellLine += $", {input.PortalLifetime}";
+            }
+
+            if (input.Link.HasValue)
+            {
+                spellLineHdr += ", `link`";
+                spellLine += $", {input.Link}";
+            }
+
+            if (input.PositionObjCellId.HasValue)
+            {
+                spellLineHdr += ", `position_Obj_Cell_ID`";
+                spellLine += $", {input.PositionObjCellId}";
+            }
+            if (input.PositionOriginX.HasValue)
+            {
+                spellLineHdr += ", `position_Origin_X`";
+                spellLine += $", {input.PositionOriginX}";
+            }
+            if (input.PositionOriginY.HasValue)
+            {
+                spellLineHdr += ", `position_Origin_Y`";
+                spellLine += $", {input.PositionOriginY}";
+            }
+            if (input.PositionOriginZ.HasValue)
+            {
+                spellLineHdr += ", `position_Origin_Z`";
+                spellLine += $", {input.PositionOriginZ}";
+            }
+            if (input.PositionAnglesX.HasValue)
+            {
+                spellLineHdr += ", `position_Angles_X`";
+                spellLine += $", {input.PositionAnglesX}";
+            }
+            if (input.PositionAnglesY.HasValue)
+            {
+                spellLineHdr += ", `position_Angles_Y`";
+                spellLine += $", {input.PositionAnglesY}";
+            }
+            if (input.PositionAnglesZ.HasValue)
+            {
+                spellLineHdr += ", `position_Angles_Z`";
+                spellLine += $", {input.PositionAnglesZ}";
+            }
+            if (input.PositionAnglesW.HasValue)
+            {
+                spellLineHdr += ", `position_Angles_W`";
+                spellLine += $", {input.PositionAnglesW}";
+            }
+
+            if (input.MinPower.HasValue)
+            {
+                spellLineHdr += ", `min_Power`";
+                spellLine += $", {input.MinPower}";
+            }
+
+            if (input.MaxPower.HasValue)
+            {
+                spellLineHdr += ", `max_Power`";
+                spellLine += $", {input.MaxPower}";
+            }
+
+            if (input.PowerVariance.HasValue)
+            {
+                spellLineHdr += ", `power_Variance`";
+                spellLine += $", {input.PowerVariance}";
+            }
+
+            if (input.DispelSchool.HasValue)
+            {
+                spellLineHdr += ", `dispel_School`";
+                spellLine += $", {(int)input.DispelSchool} /* {Enum.GetName(typeof(School), input.DispelSchool)} */";
+            }
+
+            if (input.Align.HasValue)
+            {
+                spellLineHdr += ", `align`";
+                spellLine += $", {input.Align}";
+            }
+
+            if (input.Number.HasValue)
+            {
+                spellLineHdr += ", `number`";
+                spellLine += $", {input.Number}";
+            }
+
+            if (input.NumberVariance.HasValue)
+            {
+                spellLineHdr += ", `number_Variance`";
+                spellLine += $", {input.NumberVariance}";
+            }
+
+            spellLineHdr += ")";
+            spellLine += ");";
+
+            writer.WriteLine(spellLineHdr);
+            writer.WriteLine(spellLine);
         }
     }
 }

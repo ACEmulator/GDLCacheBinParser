@@ -27,17 +27,25 @@ namespace PhatACCacheBinParser.SQLWriters
                 string fileName = Util.IllegalInFileName.Replace(kvp.Key.ToString("X4"), "_");
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
-                    ExportToSQL(kvp.Value, writer, weenieNames, includeDELETEStatementBeforeInsert);
+                {
+                    if (includeDELETEStatementBeforeInsert)
+                    {
+                        CreateSQLDELETEStatement(kvp.Value, writer, weenieNames);
+                        writer.WriteLine();
+                    }
+
+                    CreateSQLINSERTStatement(kvp.Value, writer, weenieNames);
+                }
             }
         }
 
-        public static void ExportToSQL(IList<ACE.Database.Models.World.Encounter> input, StreamWriter writer, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void CreateSQLDELETEStatement(IList<ACE.Database.Models.World.Encounter> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
         {
-            if (includeDELETEStatementBeforeInsert)
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
+        }
 
+        public static void CreateSQLINSERTStatement(IList<ACE.Database.Models.World.Encounter> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
+        {
             writer.WriteLine("INSERT INTO `encounter` (`landblock`, `weenie_Class_Id`, `cell_X`, `cell_Y`)");
 
             for (int i = 0; i < input.Count; i++)

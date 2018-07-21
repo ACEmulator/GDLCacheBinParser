@@ -147,12 +147,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
                 var aceSpells = spellTableExtendedData.ConvertToACE();
-                // todo
-
-                // Old method
-                SpellsSQLWriter.WriteFiles(spellTableExtendedData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL Old Method\\");
+                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL\\", weenieNames);
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
