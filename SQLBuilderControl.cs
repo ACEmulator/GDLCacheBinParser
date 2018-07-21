@@ -128,12 +128,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
                 var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
-                // todo
-
-                // Old method
-                RegionDescSQLWriter.WriteFiles(regionDescExtendedData, landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\");
+                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\", weenieNames);
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -312,7 +308,6 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
                 var aceEvents = gameEventDefDB.ConvertToACE();
                 EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\");
             });
