@@ -1,42 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-
-using PhatACCacheBinParser.Seg5_HousingPortals;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class HouseSQLWriter
     {
-        public static void WriteFiles(HousingPortalsTable housingPortalsTable, string outputFolder)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.HousePortal> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string sqlCommand = "INSERT";
+            // Sort the input by house id
+            var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.HousePortal>>();
 
-            foreach (var house in housingPortalsTable.HousingPortals)
+            foreach (var value in input)
             {
-                string FileNameFormatter(HousingPortal obj) => obj.HouseId.ToString("00000");
+                if (sortedInput.TryGetValue(value.HouseId, out var list))
+                    list.Add(value);
+                else
+                    sortedInput.Add(value.HouseId, new List<ACE.Database.Models.World.HousePortal> { value });
+            }
 
-                string fileNameFormatter = FileNameFormatter(house);
+            foreach (var kvp in sortedInput)
+            {
+                string fileName = kvp.Key.ToString("00000");
+                fileName = Util.IllegalInFileName.Replace(fileName, "_");
 
-                using (StreamWriter writer = new StreamWriter(outputFolder + fileNameFormatter + ".sql"))
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
                 {
-                    string houseLine = "";
-
-                    foreach (var destination in house.Destinations)
+                    if (includeDELETEStatementBeforeInsert)
                     {
-                        houseLine += $"     , ({house.HouseId}, {destination.ObjCellID}, {destination.Origin.X}, {destination.Origin.Y}, {destination.Origin.Z}, {destination.Angles.W}, {destination.Angles.X}, {destination.Angles.Y}, {destination.Angles.Z})" + Environment.NewLine;
+                        CreateSQLDELETEStatement(kvp.Value, writer);
+                        writer.WriteLine();
                     }
 
-                    if (houseLine != "")
-                    {
-                        houseLine = $"{sqlCommand} INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)" + Environment.NewLine
-                            + "VALUES " + houseLine.TrimStart("     ,".ToCharArray());
-                        houseLine = houseLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
-                        writer.WriteLine(houseLine);
-                    }
+                    CreateSQLINSERTStatement(kvp.Value, writer);
                 }
+            }
+        }
+
+        public static void CreateSQLDELETEStatement(IList<ACE.Database.Models.World.HousePortal> input, StreamWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void CreateSQLINSERTStatement(IList<ACE.Database.Models.World.HousePortal> input, StreamWriter writer)
+        {
+            writer.WriteLine("INSERT INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)");
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{input[i].HouseId}, " +
+                          $"{input[i].ObjCellId}, " +
+                          $"{input[i].OriginX}, " +
+                          $"{input[i].OriginY}, " +
+                          $"{input[i].OriginZ}, " +
+                          $"{input[i].AnglesW}, " +
+                          $"{input[i].AnglesX}, " +
+                          $"{input[i].AnglesY}, " +
+                          $"{input[i].AnglesZ})";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
             }
         }
     }

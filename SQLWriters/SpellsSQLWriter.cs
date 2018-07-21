@@ -12,7 +12,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class SpellsSQLWriter
     {
-        public static void WriteFiles(ICollection<ACE.Database.Models.World.Spell> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Spell> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             foreach (var value in input)
                 WriteFile(value, outputFolder, weenieNames, includeDELETEStatementBeforeInsert);
@@ -23,7 +23,8 @@ namespace PhatACCacheBinParser.SQLWriters
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string fileName = input.SpellId.ToString("00000") + " " + Util.IllegalInFileName.Replace(input.Name, "_");
+            string fileName = input.SpellId.ToString("00000") + " " + input.Name;
+            fileName = Util.IllegalInFileName.Replace(fileName, "_");
 
             using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
             {

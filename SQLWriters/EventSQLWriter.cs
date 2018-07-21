@@ -7,7 +7,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class EventSQLWriter
     {
-        public static void WriteFiles(ICollection<ACE.Database.Models.World.Event> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Event> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             foreach (var value in input)
                 WriteFile(value, outputFolder, includeDELETEStatementBeforeInsert);
@@ -18,7 +18,8 @@ namespace PhatACCacheBinParser.SQLWriters
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string fileName = Util.IllegalInFileName.Replace(input.Name, "_");
+            string fileName = input.Name;
+            fileName = Util.IllegalInFileName.Replace(fileName, "_");
 
             using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
             {

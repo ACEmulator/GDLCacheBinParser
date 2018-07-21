@@ -6,7 +6,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class RegionDescSQLWriter
     {
-        public static void WriteFiles(ICollection<ACE.Database.Models.World.Encounter> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Encounter> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
@@ -24,7 +24,8 @@ namespace PhatACCacheBinParser.SQLWriters
 
             foreach (var kvp in sortedInput)
             {
-                string fileName = Util.IllegalInFileName.Replace(kvp.Key.ToString("X4"), "_");
+                string fileName = kvp.Key.ToString("X4");
+                fileName = Util.IllegalInFileName.Replace(fileName, "_");
 
                 using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
                 {
@@ -50,7 +51,7 @@ namespace PhatACCacheBinParser.SQLWriters
 
             for (int i = 0; i < input.Count; i++)
             {
-                var output = "";
+                string output;
 
                 if (i == 0)
                     output = "VALUES (";

@@ -212,12 +212,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
                 var aceHouePortals = housingPortalsTable.ConvertToACE();
-                // todo
-
-                // Old method
-                HouseSQLWriter.WriteFiles(housingPortalsTable, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL Old Method\\");
+                HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL\\");
             });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
