@@ -47,7 +47,7 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(IList<ACE.Database.Models.World.HousePortal> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)");
+            writer.WriteLine("INSERT INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_X`, `angles_Y`, `angles_Z`, `angles_W`)");
 
             for (int i = 0; i < input.Count; i++)
             {
@@ -63,10 +63,10 @@ namespace PhatACCacheBinParser.SQLWriters
                           $"{input[i].OriginX}, " +
                           $"{input[i].OriginY}, " +
                           $"{input[i].OriginZ}, " +
-                          $"{input[i].AnglesW}, " +
                           $"{input[i].AnglesX}, " +
                           $"{input[i].AnglesY}, " +
-                          $"{input[i].AnglesZ})";
+                          $"{input[i].AnglesZ}, " +
+                          $"{input[i].AnglesW})";
 
                 if (i == input.Count - 1)
                     output += ";";
