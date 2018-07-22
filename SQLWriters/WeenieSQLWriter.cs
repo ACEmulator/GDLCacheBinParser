@@ -253,7 +253,7 @@ namespace PhatACCacheBinParser.SQLWriters
                         propertyValueDescription = Enum.GetName(typeof(CombatMode), input[i].Value);
                         break;
                     case PropertyInt.CombatUse:
-                        propertyValueDescription = Enum.GetName(typeof(COMBAT_USE), input[i].Value);
+                        propertyValueDescription = Enum.GetName(typeof(CombatUse), input[i].Value);
                         break;
                     case PropertyInt.CreatureType:
                     case PropertyInt.SlayerCreatureType:
@@ -305,7 +305,7 @@ namespace PhatACCacheBinParser.SQLWriters
                         propertyValueDescription = Enum.GetName(typeof(HouseType), input[i].Value);
                         break;
                     case PropertyInt.ItemUseable:
-                        propertyValueDescription = ((ITEM_USEABLE)input[i].Value).ToString();
+                        propertyValueDescription = ((Usable)input[i].Value).ToString();
                         break;
                     case PropertyInt.ItemXpStyle:
                         propertyValueDescription = Enum.GetName(typeof(ItemXpStyle), input[i].Value);
@@ -354,7 +354,7 @@ namespace PhatACCacheBinParser.SQLWriters
                         propertyValueDescription = Enum.GetName(typeof(ActivationResponseEnum), input[i].Value);
                         break;
                     case PropertyInt.Attuned:
-                        propertyValueDescription = Enum.GetName(typeof(AttunedStatusEnum), input[i].Value);
+                        propertyValueDescription = Enum.GetName(typeof(AttunedStatus), input[i].Value);
                         break;
                     case PropertyInt.AttackHeight:
                         propertyValueDescription = Enum.GetName(typeof(AttackHeight), input[i].Value);
@@ -363,14 +363,14 @@ namespace PhatACCacheBinParser.SQLWriters
                         propertyValueDescription = ((AttackType)input[i].Value).ToString();
                         break;
                     case PropertyInt.Bonded:
-                        propertyValueDescription = Enum.GetName(typeof(BondedStatusEnum), input[i].Value);
+                        propertyValueDescription = Enum.GetName(typeof(BondedStatus), input[i].Value);
                         break;
                     case PropertyInt.ChannelsActive:
                     case PropertyInt.ChannelsAllowed:
                         propertyValueDescription = ((Channel)input[i].Value).ToString();
                         break;
                     case PropertyInt.AccountRequirements:
-                        propertyValueDescription = Enum.GetName(typeof(SubscriptionStatus__guessedname), input[i].Value);
+                        propertyValueDescription = Enum.GetName(typeof(SubscriptionStatus), input[i].Value);
                         break;
                     case PropertyInt.AetheriaBitfield:
                         propertyValueDescription = ((AetheriaBitfield)input[i].Value).ToString();
@@ -589,7 +589,7 @@ namespace PhatACCacheBinParser.SQLWriters
                           $"{input[i].HRB.ToString("0.00").PadLeft(4)}, " +
                           $"{input[i].MRB.ToString("0.00").PadLeft(4)}, " +
                           $"{input[i].LRB.ToString("0.00").PadLeft(4)}) " +
-                          $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */");
+                          $"/* {Enum.GetName(typeof(CombatBodyPart), input[i].Key)} */");
 
             ValuesWriter(input.Count, lineGenerator, writer);
         }

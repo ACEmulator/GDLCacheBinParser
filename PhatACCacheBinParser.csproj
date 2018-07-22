@@ -81,13 +81,8 @@
     <Compile Include="ACE Helpers\SpellsTableExtendedDataExtensions.cs" />
     <Compile Include="ACE Helpers\TreasureTableExtensions.cs" />
     <Compile Include="ACE Helpers\WeenieDefaultsExtensiosn.cs" />
-    <Compile Include="Enums\Account.cs" />
-    <Compile Include="Enums\Character.cs" />
-    <Compile Include="Enums\House.cs" />
     <Compile Include="Enums\PacketOpcode.cs" />
-    <Compile Include="Enums\Combat.cs" />
     <Compile Include="Enums\Item.cs" />
-    <Compile Include="Enums\Physics.cs" />
     <Compile Include="Enums\Spells.cs" />
     <Compile Include="Enums\WeenieClasses.cs" />
     <Compile Include="Enums\WeenieClassesExtensions.cs" />
@@ -152,9 +147,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Seg2_SpellTableExtendedData\School.cs" />
     <Compile Include="Seg2_SpellTableExtendedData\Spell.cs" />
-    <Compile Include="Seg2_SpellTableExtendedData\SpellType.cs" />
     <Compile Include="Seg8_QuestDefDB\QuestDef.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="SQLBuilderControl.cs">

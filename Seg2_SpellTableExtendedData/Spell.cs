@@ -15,7 +15,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 
         public string Description;
 
-        public School School;
+        public MagicSchool School;
         public uint IconID;
         public uint Category; // aka Family
         public uint Bitfield;
@@ -97,7 +97,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public int? MinPower;
         public int? MaxPower;
         public float? PowerVariance;
-        public School? DispelSchool;
+        public MagicSchool? DispelSchool;
         public int? Align;
         public int? Number;
         public float? NumberVariance;
@@ -122,7 +122,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 
             Description = Util.ReadString(reader, true);
 
-            School = (School)reader.ReadUInt32();
+            School = (MagicSchool)reader.ReadUInt32();
             IconID = reader.ReadUInt32();
             Category = reader.ReadUInt32();
             Bitfield = reader.ReadUInt32();
@@ -227,7 +227,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
                 MinPower = reader.ReadInt32();
                 MaxPower = reader.ReadInt32();
                 PowerVariance = reader.ReadSingle();
-                DispelSchool = (School)reader.ReadInt32();
+                DispelSchool = (MagicSchool)reader.ReadInt32();
                 Align = reader.ReadInt32();
                 Number = reader.ReadInt32();
                 NumberVariance = reader.ReadSingle();

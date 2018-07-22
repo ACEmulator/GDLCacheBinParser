@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
+using ACE.Entity.Enum;
 using ACE.Entity.Enum.Properties;
 
 using PhatACCacheBinParser.Enums;
@@ -87,10 +88,10 @@ namespace PhatACCacheBinParser.SQLWriters
                                             requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.Attuned:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatus), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.Bonded:
-                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
+                                            requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatus), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
                                             break;
                                         case PropertyInt.PaletteTemplate:
                                             requirementsIntLine += $"     , ({recipe.ID}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, '{req.Message.Replace("'", "''")}')" + Environment.NewLine;
@@ -179,10 +180,10 @@ namespace PhatACCacheBinParser.SQLWriters
                                                     modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {((AttackType)req.Value).ToString()} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.Attuned:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(AttunedStatus), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.Bonded:
-                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatusEnum), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
+                                                    modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(BondedStatus), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
                                                     break;
                                                 case PropertyInt.PaletteTemplate:
                                                     modsIntLine += $"     , ({recipe.ID}, {modSet}, {req.Stat:000} /* {Enum.GetName(typeof(PropertyInt), req.Stat)} */, {req.Value} /* {Enum.GetName(typeof(PALETTE_TEMPLATE), req.Value)} */, {req.Enum}, {req.Unknown1})" + Environment.NewLine;
