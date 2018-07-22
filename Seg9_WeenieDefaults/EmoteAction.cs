@@ -14,12 +14,14 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public string Message;
 		public string TestString;
+   
 		public int? Min;
 		public int? Max;
 		public long? Min64;
 		public long? Max64;
 		public double? MinDbl;
 		public double? MaxDbl;
+
 		public int? Stat;
 		public int? Display;
 

@@ -182,7 +182,12 @@ namespace PhatACCacheBinParser.SQLWriters
             if (input.WeeniePropertiesEmote != null && input.WeeniePropertiesEmote.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEmote.OrderBy(r => r.Category).ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEmote.OrderBy(r => r.EmoteSetId).ThenBy(r => r.Category).ToList(), writer);
+            }
+            if (input.WeeniePropertiesEmoteAction != null && input.WeeniePropertiesEmoteAction.Count > 0)
+            {
+                writer.WriteLine();
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEmoteAction.OrderBy(r => r.EmoteSetId).ThenBy(r => r.EmoteCategory).ThenBy(r => r.Order).ToList(), writer);
             }
 
             if (input.WeeniePropertiesCreateList != null && input.WeeniePropertiesCreateList.Count > 0)
@@ -674,7 +679,15 @@ namespace PhatACCacheBinParser.SQLWriters
                     output = "     , (";
 
                 // ReSharper disable once PossibleNullReferenceException
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(2)}, {input[i].LevelFromPP}, {input[i].SAC}, {input[i].PP}, {input[i].InitLevel.ToString().PadLeft(3)}, {input[i].ResistanceAtLastCheck}, {input[i].LastUsedTime}) " + $"/* {Enum.GetName(typeof(Skill), input[i].Type).PadRight(19)} {((SkillStatus)input[i].SAC).ToString()} */";
+                output += $"{weenieClassID}, " +
+                          $"{input[i].Type.ToString().PadLeft(2)}, " +
+                          $"{input[i].LevelFromPP}, " +
+                          $"{input[i].SAC}, " +
+                          $"{input[i].PP}, " +
+                          $"{input[i].InitLevel.ToString().PadLeft(3)}, " +
+                          $"{input[i].ResistanceAtLastCheck}, " +
+                          $"{input[i].LastUsedTime}) " +
+                          $"/* {Enum.GetName(typeof(Skill), input[i].Type).PadRight(19)} {((SkillStatus)input[i].SAC).ToString()} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -685,7 +698,8 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesBodyPart> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `weenie_properties_body_part` (`object_Id`, `key`, `d_Type`, `d_Val`, `d_Var`, `base_Armor`, `armor_Vs_Slash`, `armor_Vs_Pierce`, `armor_Vs_Bludgeon`, `armor_Vs_Cold`, `armor_Vs_Fire`, `armor_Vs_Acid`, `armor_Vs_Electric`, `armor_Vs_Nether`, `b_h`, `h_l_f`, `m_l_f`, `l_l_f`, `h_r_f`, `m_r_f`, `l_r_f`, `h_l_b`, `m_l_b`, `l_l_b`, `h_r_b`, `m_r_b`, `l_r_b`)");
+            writer.WriteLine("INSERT INTO `weenie_properties_body_part` (`object_Id`, `key`, `d_Type`, `d_Val`, `d_Var`, `base_Armor`, `armor_Vs_Slash`, `armor_Vs_Pierce`, `armor_Vs_Bludgeon`, `armor_Vs_Cold`, `armor_Vs_Fire`, `armor_Vs_Acid`, `armor_Vs_Electric`, `armor_Vs_Nether`, " +
+                             "`b_h`, `h_l_f`, `m_l_f`, `l_l_f`, `h_r_f`, `m_r_f`, `l_r_f`, `h_l_b`, `m_l_b`, `l_l_b`, `h_r_b`, `m_r_b`, `l_r_b`)");
 
             for (int i = 0; i < input.Count; i++)
             {
@@ -696,7 +710,34 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Key.ToString().PadLeft(2)}, {input[i].DType.ToString().PadLeft(2)}, {input[i].DVal.ToString().PadLeft(2)}, {input[i].DVar.ToString("0.00").PadLeft(4)}, {input[i].BaseArmor.ToString().PadLeft(4)}, {input[i].ArmorVsSlash.ToString().PadLeft(4)}, {input[i].ArmorVsPierce.ToString().PadLeft(4)}, {input[i].ArmorVsBludgeon.ToString().PadLeft(4)}, {input[i].ArmorVsCold.ToString().PadLeft(4)}, {input[i].ArmorVsFire.ToString().PadLeft(4)}, {input[i].ArmorVsAcid.ToString().PadLeft(4)}, {input[i].ArmorVsElectric.ToString().PadLeft(4)}, {input[i].ArmorVsNether.ToString().PadLeft(4)}, {input[i].BH}, {input[i].HLF.ToString("0.00").PadLeft(4)}, {input[i].MLF.ToString("0.00").PadLeft(4)}, {input[i].LLF.ToString("0.00").PadLeft(4)}, {input[i].HRF.ToString("0.00").PadLeft(4)}, {input[i].MRF.ToString("0.00").PadLeft(4)}, {input[i].LRF.ToString("0.00").PadLeft(4)}, {input[i].HLB.ToString("0.00").PadLeft(4)}, {input[i].MLB.ToString("0.00").PadLeft(4)}, {input[i].LLB.ToString("0.00").PadLeft(4)}, {input[i].HRB.ToString("0.00").PadLeft(4)}, {input[i].MRB.ToString("0.00").PadLeft(4)}, {input[i].LRB.ToString("0.00").PadLeft(4)}) " + $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */";
+                output += $"{weenieClassID}, " +
+                          $"{input[i].Key.ToString().PadLeft(2)}, " +
+                          $"{input[i].DType.ToString().PadLeft(2)}, " +
+                          $"{input[i].DVal.ToString().PadLeft(2)}, " +
+                          $"{input[i].DVar.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].BaseArmor.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsSlash.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsPierce.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsBludgeon.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsCold.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsFire.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsAcid.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsElectric.ToString().PadLeft(4)}, " +
+                          $"{input[i].ArmorVsNether.ToString().PadLeft(4)}, " +
+                          $"{input[i].BH}, " +
+                          $"{input[i].HLF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].MLF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].LLF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].HRF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].MRF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].LRF.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].HLB.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].MLB.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].LLB.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].HRB.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].MRB.ToString("0.00").PadLeft(4)}, " +
+                          $"{input[i].LRB.ToString("0.00").PadLeft(4)}) " +
+                          $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -751,16 +792,101 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesEmote> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `weenie_properties_emote` (`object_Id`, `probability`, `category`, `emote_Set_Id`, `weenie_Class_Id`, `style`, `substyle`, `quest`, `vendor_Type`, `min_Health`, `max_Health`)");
+            writer.WriteLine("INSERT INTO `weenie_properties_emote` (`object_Id`, `emote_Set_Id`, `category`, `probability`, `weenie_Class_Id`, `style`, `substyle`, `quest`, `vendor_Type`, `min_Health`, `max_Health`)");
 
-            // todo call WeeniePropertiesEmoteAction
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, " +
+                          $"{input[i].EmoteSetId}, " +
+                          $"{input[i].Category}, " +
+                          $"{input[i].Probability.ToString("0.0000").PadLeft(6)}, " +
+                          $"{input[i].WeenieClassId}, " +
+                          $"{input[i].Style}, " +
+                          $"{input[i].Substyle}, " +
+                          $"'{(input[i].Quest ?? "").Replace("'", "''")}', " +
+                          $"{input[i].VendorType}, " +
+                          $"{input[i].MinHealth}, {input[i].MaxHealth})";
+
+                output = FixNullFields(output);
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesEmoteAction> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `weenie_properties_emote` (`object_Id`, `probability`, `category`, `emote_Set_Id`, `weenie_Class_Id`, `style`, `substyle`, `quest`, `vendor_Type`, `min_Health`, `max_Health`)");
+            writer.WriteLine("INSERT INTO `weenie_properties_emote_action` (`object_Id`, `emote_Set_Id`, `emote_Category`, `order`, `type`, `delay`, `extent`, `motion`, `message`, `test_String`, `min`, `max`, `min_64`, `max_64`, `min_Dbl`, `max_Dbl`, " +
+                             "`stat`, `display`, `amount`, `amount_64`, `hero_X_P_64`, `percent`, `spell_Id`, `wealth_Rating`, `treasure_Class`, `treasure_Type`, `p_Script`, `sound`, `destination_Type`, `weenie_Class_Id`, `stack_Size`, `palette`, `shade`, `try_To_Bond`, " +
+                             "`obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_X`, `angles_Y`, `angles_Z`, `angles_W`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, " +
+                          $"{input[i].EmoteSetId}, " +
+                          $"{input[i].EmoteCategory}, " +
+                          $"{input[i].Order}, " +
+                          $"{input[i].Type.ToString().PadLeft(2)}, " +
+                          $"{input[i].Delay}, " +
+                          $"{input[i].Extent}, " +
+                          $"{input[i].Motion}, " +
+                          $"'{(input[i].Message ?? "").Replace("'", "''")}', " +
+                          $"'{(input[i].TestString ?? "").Replace("'", "''")}', " +
+                          $"{input[i].Min}, " +
+                          $"{input[i].Max}, " +
+                          $"{input[i].Min64}, " +
+                          $"{input[i].Max64}, " +
+                          $"{input[i].MinDbl}, " +
+                          $"{input[i].MaxDbl}, " +
+                          $"{input[i].StackSize}, " +
+                          $"{input[i].Display}, " +
+                          $"{input[i].Amount}, " +
+                          $"{input[i].Amount64}, " +
+                          $"{input[i].Percent}, " +
+                          $"{input[i].SpellId}, " +
+                          $"{input[i].WealthRating}, " +
+                          $"{input[i].TreasureClass}, " +
+                          $"{input[i].TreasureType}, " +
+                          $"{input[i].PScript}, " +
+                          $"{input[i].Sound}, " +
+                          $"{input[i].DestinationType}, " +
+                          $"{input[i].WeenieClassId}, " +
+                          $"{input[i].StackSize}, " +
+                          $"{input[i].Palette}, " +
+                          $"{input[i].Shade}, " +
+                          $"{input[i].TryToBond}, " +
+                          $"{input[i].ObjCellId}, " +
+                          $"{input[i].OriginX}, " +
+                          $"{input[i].OriginY}, " +
+                          $"{input[i].OriginZ}, " +
+                          $"{input[i].AnglesX}, " +
+                          $"{input[i].AnglesY}, " +
+                          $"{input[i].AnglesZ}, " +
+                          $"{input[i].AnglesW})";
+
+                output = FixNullFields(output);
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesCreateList> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
@@ -778,7 +904,7 @@ namespace PhatACCacheBinParser.SQLWriters
 
                 weenieNames.TryGetValue(input[i].WeenieClassId, out var weenieName);
 
-                output += $"{weenieClassID}, {input[i].DestinationType}, {input[i].WeenieClassId.ToString().PadLeft(5)}, {input[i].StackSize}, {input[i].Palette}, {input[i].Shade}, {input[i].TryToBond}) /* Create {weenieName ?? "Unknown"} for {Enum.GetName(typeof(DestinationType), input[i].DestinationType)} */";
+                output += $"{weenieClassID}, {input[i].DestinationType}, {input[i].WeenieClassId.ToString().PadLeft(5)}, {input[i].StackSize.ToString().PadLeft(2)}, {input[i].Palette}, {input[i].Shade}, {input[i].TryToBond}) /* Create {weenieName ?? "Unknown"} for {Enum.GetName(typeof(DestinationType), input[i].DestinationType)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -809,6 +935,8 @@ namespace PhatACCacheBinParser.SQLWriters
 
                 output += $"{weenieClassID}, {input[i].PageId}, {input[i].AuthorId}, '{input[i].AuthorName.Replace("'", "''")}', '{input[i].AuthorAccount.Replace("'", "''")}', {input[i].IgnoreAuthor}, '{input[i].PageText.Replace("'", "''")}')";
 
+                output = FixNullFields(output);
+
                 if (i == input.Count - 1)
                     output += ";";
 
@@ -829,7 +957,27 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Probability}, {input[i].WeenieClassId}, {input[i].Delay}, {input[i].InitCreate}, {input[i].MaxCreate}, {input[i].WhenCreate}, {input[i].WhereCreate}, {input[i].StackSize}, {input[i].PaletteId}, {input[i].Shade}, {input[i].ObjCellId}, {input[i].OriginX}, {input[i].OriginY}, {input[i].OriginZ}, {input[i].AnglesX}, {input[i].AnglesY}, {input[i].AnglesZ}, {input[i].AnglesW})";
+                output += $"{weenieClassID}, " +
+                          $"{input[i].Probability}, " +
+                          $"{input[i].WeenieClassId}," +
+                          $" {input[i].Delay}, " +
+                          $"{input[i].InitCreate}, " +
+                          $"{input[i].MaxCreate}, " +
+                          $"{input[i].WhenCreate}, " +
+                          $"{input[i].WhereCreate}, " +
+                          $"{input[i].StackSize}, " +
+                          $"{input[i].PaletteId}, " +
+                          $"{input[i].Shade}, " +
+                          $"{input[i].ObjCellId}, " +
+                          $"{input[i].OriginX}, " +
+                          $"{input[i].OriginY}, " +
+                          $"{input[i].OriginZ}, " +
+                          $"{input[i].AnglesX}, " +
+                          $"{input[i].AnglesY}, " +
+                          $"{input[i].AnglesZ}, " +
+                          $"{input[i].AnglesW})";
+
+                output = FixNullFields(output);
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -902,6 +1050,44 @@ namespace PhatACCacheBinParser.SQLWriters
 
                 writer.WriteLine(output);
             }
+        }
+
+        private static void ValuesWriter(int count, Func<int, string> lineGenerator, StreamWriter writer)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += lineGenerator(i);
+
+                if (i == count - 1)
+                    output += ";";
+
+                FixNullFields(input);
+
+                writer.WriteLine(output);
+            }
+        }
+
+        private static string FixNullFields(string input)
+        {
+            // We must do this twice for each to account for adjacent matches since we search inclusive of a start and end comma
+            input = input.Replace(", '',", ", NULL,");
+            input = input.Replace(", '',", ", NULL,");
+
+            input = input.Replace(", ,", ", NULL,");
+            input = input.Replace(", ,", ", NULL,");
+
+            // Fix cases where the last field might be null
+            input = input.Replace(", )", ", NULL)");
+            input = input.Replace(", '')", ", NULL)");
+
+            return input;
         }
     }
 }

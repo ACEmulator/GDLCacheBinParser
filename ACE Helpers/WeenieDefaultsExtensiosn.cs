@@ -172,11 +172,16 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     // kvp.key not used
 
+                    uint setId = 0;
+
                     foreach (var value in kvp.Value)
                     {
                         var efEmote = new WeeniePropertiesEmote
                         {
+                            EmoteSetId = setId, // This is an ACE specific value to maintain links between Emote and EmoteActions
+
                             Category = value.Category,
+
                             Probability = value.Probability,
 
                             WeenieClassId = value.ClassID,
@@ -192,10 +197,18 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             MaxHealth = value.MaxHealth
                         };
 
+                        setId++;
+
+                        uint order = 0;
+
                         foreach (var action in value.EmoteActions)
                         {
                             var efAction = new WeeniePropertiesEmoteAction
                             {
+                                EmoteSetId = efEmote.EmoteSetId, // This is an ACE specific value to maintain links between Emote and EmoteActions
+                                EmoteCategory = efEmote.Category,
+                                Order = order, // This is an ACE specific value to maintain the correct order of EmoteActions
+
                                 Type = action.Type,
                                 Delay = action.Delay,
                                 Extent = action.Extent,
@@ -204,12 +217,14 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                                 Message = action.Message,
                                 TestString = action.TestString,
+
                                 Min = action.Min,
                                 Max = action.Max,
                                 Min64 = action.Min64,
                                 Max64 = action.Max64,
                                 MinDbl = action.MinDbl,
                                 MaxDbl = action.MaxDbl,
+
                                 Stat = action.Stat,
                                 Display = action.Display,
 
@@ -229,6 +244,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                                 Sound = action.Sound
                             };
+
+                            order++;
 
                             if (action.Item != null)
                             {
@@ -266,7 +283,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 efAction.AnglesW = action.Position.Angles.W;
                             }
 
-                            efEmote.WeeniePropertiesEmoteAction.Add(efAction);
+                            result.WeeniePropertiesEmoteAction.Add(efAction);
                         }
 
                         result.WeeniePropertiesEmote.Add(efEmote);
