@@ -8,20 +8,20 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		// What is Sac short for?
 
 		public ushort LevelFromPP;
-		public int Sac;
-		public int PP;
-		public int InitLevel;
-		public int ResistanceAtLastCheck;
+		public uint Sac;
+		public uint PP;
+		public uint InitLevel;
+		public uint ResistanceAtLastCheck;
 		public double LastUsedTime;
 
 		public bool Unpack(BinaryReader binaryReader)
 		{
 			LevelFromPP = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // discard.. this contains a flag (0x10000) that doesn't seem used
-			Sac = binaryReader.ReadInt32();
-			PP = binaryReader.ReadInt32();
-			InitLevel = binaryReader.ReadInt32();
-			ResistanceAtLastCheck = binaryReader.ReadInt32();
+			Sac = binaryReader.ReadUInt32();
+			PP = binaryReader.ReadUInt32();
+			InitLevel = binaryReader.ReadUInt32();
+			ResistanceAtLastCheck = binaryReader.ReadUInt32();
 			LastUsedTime = binaryReader.ReadDouble();
 
 			return true;

@@ -93,22 +93,22 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             if (input.Value.Attributes != null)
             {
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Strength, InitLevel = (uint)input.Value.Attributes.Strength.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Strength.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Strength.CPSpent });
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Endurance, InitLevel = (uint)input.Value.Attributes.Endurance.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Endurance.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Endurance.CPSpent });
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Quickness, InitLevel = (uint)input.Value.Attributes.Quickness.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Quickness.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Quickness.CPSpent });
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Coordination, InitLevel = (uint)input.Value.Attributes.Coordination.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Coordination.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Coordination.CPSpent });
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Focus, InitLevel = (uint)input.Value.Attributes.Focus.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Focus.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Focus.CPSpent });
-                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Self, InitLevel = (uint)input.Value.Attributes.Self.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Self.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Self.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Strength, InitLevel = input.Value.Attributes.Strength.InitLevel, LevelFromCP = input.Value.Attributes.Strength.LevelFromCP, CPSpent = input.Value.Attributes.Strength.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Endurance, InitLevel = input.Value.Attributes.Endurance.InitLevel, LevelFromCP = input.Value.Attributes.Endurance.LevelFromCP, CPSpent = input.Value.Attributes.Endurance.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Quickness, InitLevel = input.Value.Attributes.Quickness.InitLevel, LevelFromCP = input.Value.Attributes.Quickness.LevelFromCP, CPSpent = input.Value.Attributes.Quickness.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Coordination, InitLevel = input.Value.Attributes.Coordination.InitLevel, LevelFromCP = input.Value.Attributes.Coordination.LevelFromCP, CPSpent = input.Value.Attributes.Coordination.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Focus, InitLevel = input.Value.Attributes.Focus.InitLevel, LevelFromCP = input.Value.Attributes.Focus.LevelFromCP, CPSpent = input.Value.Attributes.Focus.CPSpent });
+                result.WeeniePropertiesAttribute.Add(new WeeniePropertiesAttribute { Type = (ushort)PropertyAttribute.Self, InitLevel = input.Value.Attributes.Self.InitLevel, LevelFromCP = input.Value.Attributes.Self.LevelFromCP, CPSpent = input.Value.Attributes.Self.CPSpent });
 
-                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxHealth, InitLevel = (uint)input.Value.Attributes.Health.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Health.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Health.CPSpent });
-                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxStamina, InitLevel = (uint)input.Value.Attributes.Stamina.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Stamina.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Stamina.CPSpent });
-                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxMana, InitLevel = (uint)input.Value.Attributes.Mana.InitLevel, LevelFromCP = (uint)input.Value.Attributes.Mana.LevelFromCP, CPSpent = (uint)input.Value.Attributes.Mana.CPSpent });
+                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxHealth, InitLevel = input.Value.Attributes.Health.InitLevel, LevelFromCP = input.Value.Attributes.Health.LevelFromCP, CPSpent = input.Value.Attributes.Health.CPSpent });
+                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxStamina, InitLevel = input.Value.Attributes.Stamina.InitLevel, LevelFromCP = input.Value.Attributes.Stamina.LevelFromCP, CPSpent = input.Value.Attributes.Stamina.CPSpent });
+                result.WeeniePropertiesAttribute2nd.Add(new WeeniePropertiesAttribute2nd { Type = (ushort)PropertyAttribute2nd.MaxMana, InitLevel = input.Value.Attributes.Mana.InitLevel, LevelFromCP = input.Value.Attributes.Mana.LevelFromCP, CPSpent = input.Value.Attributes.Mana.CPSpent });
             }
 
             if (input.Value.Skills != null)
             {
                 foreach (var value in input.Value.Skills)
-                    result.WeeniePropertiesSkill.Add(new WeeniePropertiesSkill { Type = (ushort)value.Key, LevelFromPP = value.Value.LevelFromPP, SAC = (uint)value.Value.Sac, PP = (uint)value.Value.PP, InitLevel = (uint)value.Value.InitLevel, ResistanceAtLastCheck = (uint)value.Value.ResistanceAtLastCheck, LastUsedTime = value.Value.LastUsedTime });
+                    result.WeeniePropertiesSkill.Add(new WeeniePropertiesSkill { Type = (ushort)value.Key, LevelFromPP = value.Value.LevelFromPP, SAC = value.Value.Sac, PP = value.Value.PP, InitLevel = value.Value.InitLevel, ResistanceAtLastCheck = value.Value.ResistanceAtLastCheck, LastUsedTime = value.Value.LastUsedTime });
             }
 
             if (input.Value.BodyParts != null)
@@ -176,7 +176,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         var efEmote = new WeeniePropertiesEmote
                         {
-                            Category = (uint)value.Category,
+                            Category = value.Category,
                             Probability = value.Probability,
 
                             WeenieClassId = value.ClassID,
@@ -196,7 +196,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         {
                             var efAction = new WeeniePropertiesEmoteAction
                             {
-                                Type = (uint)action.Type,
+                                Type = action.Type,
                                 Delay = action.Delay,
                                 Extent = action.Extent,
 
@@ -235,7 +235,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 efAction.WeenieClassId = action.Item.WCID;
                                 efAction.Palette = action.Item.Palette;
                                 efAction.Shade = action.Item.Shade;
-                                efAction.DestinationType = (sbyte)action.Item.Destination;
+                                efAction.DestinationType = action.Item.Destination;
                                 efAction.StackSize = action.Item.StackSize;
                                 efAction.TryToBond = action.Item.TryToBond;
                             }
@@ -277,7 +277,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             if (input.Value.CreateList != null)
             {
                 foreach (var value in input.Value.CreateList)
-                    result.WeeniePropertiesCreateList.Add(new WeeniePropertiesCreateList { WeenieClassId = (uint)value.WCID, Palette = (sbyte)value.Palette, Shade = value.Shade, DestinationType = (sbyte)value.Destination, StackSize = value.StackSize, TryToBond = value.TryToBond });
+                    result.WeeniePropertiesCreateList.Add(new WeeniePropertiesCreateList { WeenieClassId = (uint)value.WCID, Palette = value.Palette, Shade = value.Shade, DestinationType = value.Destination, StackSize = value.StackSize, TryToBond = value.TryToBond });
             }
 
             if (input.Value.PagesData != null)
@@ -298,18 +298,18 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     result.WeeniePropertiesGenerator.Add(new WeeniePropertiesGenerator
                     {
                         Probability = value.Probability,
-                        WeenieClassId = (uint)value.Type,
-                        Delay = (uint)value.Delay, // Can be null. Is there a default null value in the cache.bin?
+                        WeenieClassId = value.Type,
+                        Delay = (float?)value.Delay, // Can be null. Is there a default null value in the cache.bin?
 
-                        InitCreate = (uint)value.InitCreate,
-                        MaxCreate = (uint)value.MaxNum,
+                        InitCreate = value.InitCreate,
+                        MaxCreate = value.MaxNum,
 
-                        WhenCreate = (uint)value.WhenCreate,
-                        WhereCreate = (uint)value.WhereCreate,
+                        WhenCreate = value.WhenCreate,
+                        WhereCreate = value.WhereCreate,
 
                         StackSize = value.StackSize, // Can be null. Is there a default null value in the cache.bin?
 
-                        PaletteId = (uint)value.PalleteTypeID, // Can be null. Is there a default null value in the cache.bin?
+                        PaletteId = value.PalleteTypeID, // Can be null. Is there a default null value in the cache.bin?
                         Shade = value.Shade, // Can be null. Is there a default null value in the cache.bin?
 
                         // Can be null. Is there a default null value in the cache.bin?

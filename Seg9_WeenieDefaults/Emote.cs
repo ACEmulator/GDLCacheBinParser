@@ -5,7 +5,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class Emote
 	{
-		public int Category;
+		public uint Category;
 		public float Probability;
 
 		public int? ClassID;
@@ -24,7 +24,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public bool Unpack(BinaryReader binaryReader)
 		{
-			Category = binaryReader.ReadInt32();
+			Category = binaryReader.ReadUInt32();
 			Probability = binaryReader.ReadSingle();
 
 			if (Category == 1 || Category == 6)

@@ -6,7 +6,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class EmoteAction
 	{
-		public int Type;
+		public uint Type;
 		public float Delay;
 		public float Extent;
 
@@ -45,7 +45,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public bool Unpack(BinaryReader binaryReader)
 		{
-			Type = binaryReader.ReadInt32();
+			Type = binaryReader.ReadUInt32();
 			Delay = binaryReader.ReadSingle();
 			Extent = binaryReader.ReadSingle();
 

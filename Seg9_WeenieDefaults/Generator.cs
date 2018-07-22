@@ -7,19 +7,19 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 	class Generator
 	{
 		public float Probability;
-		public int Type;
+		public uint Type;
 		public double Delay;
 
-		public int InitCreate;
+		public uint InitCreate;
 
-		public int MaxNum;
+		public uint MaxNum;
 
-		public int WhenCreate;
-		public int WhereCreate;
+		public uint WhenCreate;
+		public uint WhereCreate;
 
 		public int StackSize;
 
-		public int PalleteTypeID;
+		public uint PalleteTypeID;
 		public float Shade;
 
 		public readonly Position Position = new Position();
@@ -29,15 +29,15 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public bool Unpack(BinaryReader binaryReader)
 		{
 			Probability = binaryReader.ReadSingle();
-			Type = binaryReader.ReadInt32();
+			Type = binaryReader.ReadUInt32();
 			Delay = binaryReader.ReadDouble();
-			InitCreate = binaryReader.ReadInt32();
-			MaxNum = binaryReader.ReadInt32();
-			WhenCreate = binaryReader.ReadInt32();
-			WhereCreate = binaryReader.ReadInt32();
+			InitCreate = binaryReader.ReadUInt32();
+			MaxNum = binaryReader.ReadUInt32();
+			WhenCreate = binaryReader.ReadUInt32();
+			WhereCreate = binaryReader.ReadUInt32();
 			StackSize = binaryReader.ReadInt32();
 
-			PalleteTypeID = binaryReader.ReadInt32();
+			PalleteTypeID = binaryReader.ReadUInt32();
 			Shade = binaryReader.ReadSingle();
 
 			Position.Unpack(binaryReader);
