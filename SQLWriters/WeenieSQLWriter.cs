@@ -399,8 +399,12 @@ namespace PhatACCacheBinParser.SQLWriters
                         break;
                 }
 
+                var comment = Enum.GetName(typeof(PropertyInt), input[i].Type);
+                if (propertyValueDescription != null)
+                    comment = (comment != null ? comment.PadRight(40) : "") + " " + propertyValueDescription;
+
                 // ReSharper disable once PossibleNullReferenceException
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt), input[i].Type).PadRight(40)} {propertyValueDescription} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {comment} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -554,8 +558,12 @@ namespace PhatACCacheBinParser.SQLWriters
                         break;
                 }
 
+                var comment = Enum.GetName(typeof(PropertyDataId), input[i].Type);
+                if (propertyValueDescription != null)
+                    comment = (comment != null ? comment.PadRight(25) : "") + " " + propertyValueDescription;
+
                 // ReSharper disable once PossibleNullReferenceException
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyDataId), input[i].Type).PadRight(25)} {propertyValueDescription} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {comment} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -621,7 +629,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].InitLevel}, {input[i].LevelFromCP}, {input[i].CPSpent}) /* {Enum.GetName(typeof(PropertyAttribute), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].InitLevel.ToString().PadLeft(3)}, {input[i].LevelFromCP}, {input[i].CPSpent}) /* {Enum.GetName(typeof(PropertyAttribute), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -688,7 +696,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Key}, {input[i].DType}, {input[i].DVal}, {input[i].DVar}, {input[i].BaseArmor}, {input[i].ArmorVsSlash}, {input[i].ArmorVsPierce}, {input[i].ArmorVsBludgeon}, {input[i].ArmorVsCold}, {input[i].ArmorVsFire}, {input[i].ArmorVsAcid}, {input[i].ArmorVsElectric}, {input[i].ArmorVsNether}, {input[i].BH}, {input[i].HLF}, {input[i].MLF}, {input[i].LLF}, {input[i].HRF}, {input[i].MRF}, {input[i].LRF}, {input[i].HLB}, {input[i].MLB}, {input[i].LLB}, {input[i].HRB}, {input[i].MRB}, {input[i].LRB}) " + $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */";
+                output += $"{weenieClassID}, {input[i].Key.ToString().PadLeft(2)}, {input[i].DType.ToString().PadLeft(2)}, {input[i].DVal.ToString().PadLeft(2)}, {input[i].DVar.ToString("0.00").PadLeft(4)}, {input[i].BaseArmor.ToString().PadLeft(4)}, {input[i].ArmorVsSlash.ToString().PadLeft(4)}, {input[i].ArmorVsPierce.ToString().PadLeft(4)}, {input[i].ArmorVsBludgeon.ToString().PadLeft(4)}, {input[i].ArmorVsCold.ToString().PadLeft(4)}, {input[i].ArmorVsFire.ToString().PadLeft(4)}, {input[i].ArmorVsAcid.ToString().PadLeft(4)}, {input[i].ArmorVsElectric.ToString().PadLeft(4)}, {input[i].ArmorVsNether.ToString().PadLeft(4)}, {input[i].BH}, {input[i].HLF.ToString("0.00").PadLeft(4)}, {input[i].MLF.ToString("0.00").PadLeft(4)}, {input[i].LLF.ToString("0.00").PadLeft(4)}, {input[i].HRF.ToString("0.00").PadLeft(4)}, {input[i].MRF.ToString("0.00").PadLeft(4)}, {input[i].LRF.ToString("0.00").PadLeft(4)}, {input[i].HLB.ToString("0.00").PadLeft(4)}, {input[i].MLB.ToString("0.00").PadLeft(4)}, {input[i].LLB.ToString("0.00").PadLeft(4)}, {input[i].HRB.ToString("0.00").PadLeft(4)}, {input[i].MRB.ToString("0.00").PadLeft(4)}, {input[i].LRB.ToString("0.00").PadLeft(4)}) " + $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
