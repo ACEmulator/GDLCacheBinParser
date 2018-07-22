@@ -46,7 +46,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.Unknown1 = input.unknown_1;
             result.Skill = input.Skill;
             result.Difficulty = input.Difficulty;
-            // Unknown4 // This is missing from the ACE models // todo look into this
+            result.SalvageType = input.SalvageType;
 
             result.SuccessWCID = input.SuccessWCID;
             result.SuccessAmount = input.SuccessAmount;
