@@ -4,6 +4,9 @@ namespace PhatACCacheBinParser.Enums
 {
     static class WeenieClassesExtensions
     {
+        /// <summary>
+        /// This will return the class name without the preceeding W_, without the trailing _CLASS, all lower case, and _'s replaced with -'s.
+        /// </summary>
         public static string GetNameFormattedForDatabase(this WeenieClasses weenieClass)
         {
             if (!Enum.IsDefined(typeof(WeenieClasses), weenieClass))

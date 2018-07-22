@@ -60,10 +60,7 @@ namespace PhatACCacheBinParser.SQLWriters
 
                 weenieNames.TryGetValue(input[i].WeenieClassId, out string label);
 
-                output += $"{input[i].Landblock}, " +
-                          $"{input[i].WeenieClassId}, " +
-                          $"{input[i].CellX}, " +
-                          $"{input[i].CellY})" + $" /* {label} */";
+                output += $"{input[i].Landblock}, {input[i].WeenieClassId}, {input[i].CellX}, {input[i].CellY}) /* {label} */";
 
                 if (i == input.Count - 1)
                     output += ";";

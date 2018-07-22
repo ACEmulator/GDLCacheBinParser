@@ -40,12 +40,7 @@ namespace PhatACCacheBinParser.SQLWriters
         public static void CreateSQLINSERTStatement(ACE.Database.Models.World.Quest input, StreamWriter writer)
         {
             writer.WriteLine("INSERT INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`)");
-            writer.WriteLine("VALUES (" +
-                             $"'{input.Name.Replace("'", "''")}', " +
-                             $"{input.MinDelta}, " +
-                             $"{input.MaxSolves}, " +
-                             $"'{input.Message.Replace("'", "''")}'" +
-                             ");");
+            writer.WriteLine($"VALUES ('{input.Name.Replace("'", "''")}', {input.MinDelta}, {input.MaxSolves}, '{input.Message.Replace("'", "''")}');");
         }
     }
 }

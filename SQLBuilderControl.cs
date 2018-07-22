@@ -273,12 +273,9 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
+                // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
                 var aceWeenies = weenieDefaults.ConvertToACE();
-                // todo
-
-                // Old method
-                WeenieSQLWriter.WriteFiles(weenieDefaults, treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL Old Method\\");
+                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL\\", weenieNames);
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;

@@ -58,15 +58,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{input[i].HouseId}, " +
-                          $"{input[i].ObjCellId}, " +
-                          $"{input[i].OriginX}, " +
-                          $"{input[i].OriginY}, " +
-                          $"{input[i].OriginZ}, " +
-                          $"{input[i].AnglesX}, " +
-                          $"{input[i].AnglesY}, " +
-                          $"{input[i].AnglesZ}, " +
-                          $"{input[i].AnglesW})";
+                output += $"{input[i].HouseId}, {input[i].ObjCellId}, {input[i].OriginX}, {input[i].OriginY}, {input[i].OriginZ}, {input[i].AnglesX}, {input[i].AnglesY}, {input[i].AnglesZ}, {input[i].AnglesW})";
 
                 if (i == input.Count - 1)
                     output += ";";
