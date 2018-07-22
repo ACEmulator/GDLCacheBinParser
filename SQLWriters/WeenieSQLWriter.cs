@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -103,91 +104,91 @@ namespace PhatACCacheBinParser.SQLWriters
             if (input.WeeniePropertiesInt != null && input.WeeniePropertiesInt.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesInt.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesInt.OrderBy(r => r.Type).ToList(), writer, weenieNames);
             }
             if (input.WeeniePropertiesInt64 != null && input.WeeniePropertiesInt64.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesInt64.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesInt64.OrderBy(r => r.Type).ToList(), writer);
             }
             if (input.WeeniePropertiesBool != null && input.WeeniePropertiesBool.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBool.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBool.OrderBy(r => r.Type).ToList(), writer);
             }
             if (input.WeeniePropertiesFloat != null && input.WeeniePropertiesFloat.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesFloat.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesFloat.OrderBy(r => r.Type).ToList(), writer);
             }
             if (input.WeeniePropertiesString != null && input.WeeniePropertiesString.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesString.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesString.OrderBy(r => r.Type).ToList(), writer);
             }
             if (input.WeeniePropertiesDID != null && input.WeeniePropertiesDID.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesDID.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesDID.OrderBy(r => r.Type).ToList(), writer, weenieNames);
             }
 
             if (input.WeeniePropertiesPosition != null && input.WeeniePropertiesPosition.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesPosition.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesPosition.OrderBy(r => r.PositionType).ToList(), writer);
             }
 
             if (input.WeeniePropertiesIID != null && input.WeeniePropertiesIID.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesIID.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesIID.OrderBy(r => r.Type).ToList(), writer);
             }
 
             if (input.WeeniePropertiesAttribute != null && input.WeeniePropertiesAttribute.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAttribute.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAttribute.OrderBy(r => r.Type).ToList(), writer);
             }
             if (input.WeeniePropertiesAttribute2nd != null && input.WeeniePropertiesAttribute2nd.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAttribute2nd.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAttribute2nd.OrderBy(r => r.Type).ToList(), writer);
             }
 
             if (input.WeeniePropertiesSkill != null && input.WeeniePropertiesSkill.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesSkill.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesSkill.OrderBy(r => r.Type).ToList(), writer);
             }
 
             if (input.WeeniePropertiesBodyPart != null && input.WeeniePropertiesBodyPart.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBodyPart.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBodyPart.OrderBy(r => r.Key).ToList(), writer);
             }
 
             if (input.WeeniePropertiesSpellBook != null && input.WeeniePropertiesSpellBook.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesSpellBook.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesSpellBook.OrderBy(r => r.Spell).ToList(), writer);
             }
 
             if (input.WeeniePropertiesEventFilter != null && input.WeeniePropertiesEventFilter.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEventFilter.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEventFilter.OrderBy(r => r.Event).ToList(), writer);
             }
 
             if (input.WeeniePropertiesEmote != null && input.WeeniePropertiesEmote.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEmote.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesEmote.OrderBy(r => r.Category).ToList(), writer);
             }
 
             if (input.WeeniePropertiesCreateList != null && input.WeeniePropertiesCreateList.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesCreateList.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesCreateList.OrderBy(r => r.WeenieClassId).ToList(), writer, weenieNames);
             }
 
             if (input.WeeniePropertiesBook != null)
@@ -198,33 +199,33 @@ namespace PhatACCacheBinParser.SQLWriters
             if (input.WeeniePropertiesBookPageData != null && input.WeeniePropertiesBookPageData.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBookPageData.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesBookPageData.OrderBy(r => r.PageId).ToList(), writer);
             }
 
             if (input.WeeniePropertiesGenerator != null && input.WeeniePropertiesGenerator.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesGenerator.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesGenerator.OrderBy(r => r.Probability).ToList(), writer);
             }
 
             if (input.WeeniePropertiesPalette != null && input.WeeniePropertiesPalette.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesPalette.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesPalette.OrderBy(r => r.SubPaletteId).ToList(), writer);
             }
             if (input.WeeniePropertiesTextureMap != null && input.WeeniePropertiesTextureMap.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesTextureMap.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesTextureMap.OrderBy(r => r.Index).ToList(), writer);
             }
             if (input.WeeniePropertiesAnimPart != null && input.WeeniePropertiesAnimPart.Count > 0)
             {
                 writer.WriteLine();
-                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAnimPart.ToList(), writer);
+                CreateSQLINSERTStatement(input.ClassId, input.WeeniePropertiesAnimPart.OrderBy(r => r.Index).ToList(), writer);
             }
         }
 
-        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesInt> input, StreamWriter writer)
+        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesInt> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_int` (`object_Id`, `type`, `value`)");
 
@@ -237,7 +238,169 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt), input[i].Type)} */";
+                string propertyValueDescription = null;
+
+                switch ((PropertyInt)input[i].Type)
+                {
+                    case PropertyInt.AmmoType:
+                        propertyValueDescription = Enum.GetName(typeof(AmmoType), input[i].Value);
+                        break;
+                    case PropertyInt.BoosterEnum:
+                        propertyValueDescription = Enum.GetName(typeof(PropertyAttribute2nd), input[i].Value);
+                        break;
+                    case PropertyInt.ClothingPriority:
+                        propertyValueDescription = ((CoverageMask)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.CombatMode:
+                        propertyValueDescription = Enum.GetName(typeof(CombatMode), input[i].Value);
+                        break;
+                    case PropertyInt.CombatUse:
+                        propertyValueDescription = Enum.GetName(typeof(COMBAT_USE), input[i].Value);
+                        break;
+                    case PropertyInt.CreatureType:
+                    case PropertyInt.SlayerCreatureType:
+                    case PropertyInt.FoeType:
+                    case PropertyInt.FriendType:
+                        propertyValueDescription = Enum.GetName(typeof(CreatureType), input[i].Value);
+                        break;
+                    case PropertyInt.CurrentWieldedLocation:
+                    case PropertyInt.ValidLocations:
+                        propertyValueDescription = ((EquipMask)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.DamageType:
+                        propertyValueDescription = ((DamageType)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.DefaultCombatStyle:
+                    case PropertyInt.AiAllowedCombatStyle:
+                        propertyValueDescription = Enum.GetName(typeof(CombatStyle), input[i].Value);
+                        break;
+                    case PropertyInt.Gender:
+                        propertyValueDescription = Enum.GetName(typeof(Gender), input[i].Value);
+                        break;
+                    case PropertyInt.GeneratorDestructionType:
+                    case PropertyInt.GeneratorEndDestructionType:
+                        propertyValueDescription = Enum.GetName(typeof(GeneratorDestruct), input[i].Value);
+                        break;
+                    case PropertyInt.GeneratorTimeType:
+                        propertyValueDescription = Enum.GetName(typeof(GeneratorTimeType), input[i].Value);
+                        break;
+                    case PropertyInt.GeneratorType:
+                        propertyValueDescription = Enum.GetName(typeof(GeneratorType), input[i].Value);
+                        break;
+                    case PropertyInt.HeritageGroup:
+                        propertyValueDescription = Enum.GetName(typeof(HeritageGroup), input[i].Value);
+                        break;
+                    case PropertyInt.HookItemType:
+                    case PropertyInt.ItemType:
+                    case PropertyInt.MerchandiseItemTypes:
+                    case PropertyInt.TargetType:
+                        propertyValueDescription = Enum.GetName(typeof(ItemType), input[i].Value);
+                        break;
+                    case PropertyInt.HookPlacement:
+                    case PropertyInt.Placement:
+                        propertyValueDescription = Enum.GetName(typeof(Placement), input[i].Value);
+                        break;
+                    case PropertyInt.HookType:
+                        propertyValueDescription = ((HookTypeEnum)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.HouseType:
+                        propertyValueDescription = Enum.GetName(typeof(HouseType), input[i].Value);
+                        break;
+                    case PropertyInt.ItemUseable:
+                        propertyValueDescription = ((ITEM_USEABLE)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.ItemXpStyle:
+                        propertyValueDescription = Enum.GetName(typeof(ItemXpStyle), input[i].Value);
+                        break;
+                    case PropertyInt.MaterialType:
+                        propertyValueDescription = Enum.GetName(typeof(Material), input[i].Value);
+                        break;
+                    case PropertyInt.PaletteTemplate:
+                        propertyValueDescription = Enum.GetName(typeof(PALETTE_TEMPLATE), input[i].Value);
+                        break;
+                    case PropertyInt.PhysicsState:
+                        propertyValueDescription = ((PhysicsState)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.PlayerKillerStatus:
+                        propertyValueDescription = Enum.GetName(typeof(PlayerKillerStatus), input[i].Value);
+                        break;
+                    case PropertyInt.PortalBitmask:
+                        propertyValueDescription = Enum.GetName(typeof(PortalBitmask), input[i].Value);
+                        break;
+                    case PropertyInt.RadarBlipColor:
+                        propertyValueDescription = Enum.GetName(typeof(RadarColor), input[i].Value);
+                        break;
+                    case PropertyInt.ShowableOnRadar:
+                        propertyValueDescription = Enum.GetName(typeof(RadarBehavior), input[i].Value);
+                        break;
+                    case PropertyInt.SummoningMastery:
+                        propertyValueDescription = Enum.GetName(typeof(SummoningMastery), input[i].Value);
+                        break;
+                    case PropertyInt.UiEffects:
+                        propertyValueDescription = Enum.GetName(typeof(UiEffects), input[i].Value);
+                        break;
+                    case PropertyInt.WeaponSkill:
+                    case PropertyInt.WieldSkilltype2:
+                    case PropertyInt.WieldSkilltype3:
+                    case PropertyInt.WieldSkilltype4:
+                    case PropertyInt.WieldSkilltype:
+                        propertyValueDescription = Enum.GetName(typeof(Skill), input[i].Value);
+                        break;
+                    case PropertyInt.WeaponType:
+                        propertyValueDescription = Enum.GetName(typeof(WeaponType), input[i].Value);
+                        break;
+                    case PropertyInt.ActivationCreateClass:
+                        propertyValueDescription = weenieNames[(uint)input[i].Value];
+                        break;
+                    case PropertyInt.ActivationResponse:
+                        propertyValueDescription = Enum.GetName(typeof(ActivationResponseEnum), input[i].Value);
+                        break;
+                    case PropertyInt.Attuned:
+                        propertyValueDescription = Enum.GetName(typeof(AttunedStatusEnum), input[i].Value);
+                        break;
+                    case PropertyInt.AttackHeight:
+                        propertyValueDescription = Enum.GetName(typeof(AttackHeight), input[i].Value);
+                        break;
+                    case PropertyInt.AttackType:
+                        propertyValueDescription = ((AttackType)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.Bonded:
+                        propertyValueDescription = Enum.GetName(typeof(BondedStatusEnum), input[i].Value);
+                        break;
+                    case PropertyInt.ChannelsActive:
+                    case PropertyInt.ChannelsAllowed:
+                        propertyValueDescription = ((Channel)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.AccountRequirements:
+                        propertyValueDescription = Enum.GetName(typeof(SubscriptionStatus__guessedname), input[i].Value);
+                        break;
+                    case PropertyInt.AetheriaBitfield:
+                        propertyValueDescription = ((AetheriaBitfield)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.EquipmentSetId:
+                        propertyValueDescription = Enum.GetName(typeof(EquipmentSet), input[i].Value);
+                        break;
+                    case PropertyInt.WieldRequirements2:
+                    case PropertyInt.WieldRequirements3:
+                    case PropertyInt.WieldRequirements4:
+                    case PropertyInt.WieldRequirements:
+                        propertyValueDescription = ((WieldRequirement)input[i].Value).ToString();
+                        break;
+                    case PropertyInt.GeneratorStartTime:
+                    case PropertyInt.GeneratorEndTime:
+                        propertyValueDescription = DateTimeOffset.FromUnixTimeSeconds(input[i].Value).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture);
+                        break;
+                    case PropertyInt.ImbuedEffect2:
+                    case PropertyInt.ImbuedEffect3:
+                    case PropertyInt.ImbuedEffect4:
+                    case PropertyInt.ImbuedEffect5:
+                    case PropertyInt.ImbuedEffect:
+                        propertyValueDescription = ((ImbuedEffectType)input[i].Value).ToString();
+                        break;
+                }
+
+                // ReSharper disable once PossibleNullReferenceException
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt), input[i].Type).PadRight(40)} {propertyValueDescription} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -303,7 +466,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString("0.00").PadLeft(5)}) /* {Enum.GetName(typeof(PropertyFloat), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString("0.00").PadLeft(7)}) /* {Enum.GetName(typeof(PropertyFloat), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -334,7 +497,7 @@ namespace PhatACCacheBinParser.SQLWriters
             }
         }
 
-        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesDID> input, StreamWriter writer)
+        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesDID> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_d_i_d` (`object_Id`, `type`, `value`)");
 
@@ -347,7 +510,52 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyDataId), input[i].Type)} */";
+                string propertyValueDescription = null;
+
+                switch ((PropertyDataId)input[i].Type)
+                {
+                    case PropertyDataId.ActivationAnimation:
+                    case PropertyDataId.InitMotion:
+                    case PropertyDataId.UseTargetAnimation:
+                    case PropertyDataId.UseTargetFailureAnimation:
+                    case PropertyDataId.UseTargetSuccessAnimation:
+                    case PropertyDataId.UseUserAnimation:
+                        propertyValueDescription = ((MotionCommand)input[i].Value).ToString();
+                        break;
+                    case PropertyDataId.ActivationSound:
+                    case PropertyDataId.UseSound:
+                        propertyValueDescription = ((Sound)input[i].Value).ToString();
+                        break;
+                    case PropertyDataId.AlternateCurrency:
+                    case PropertyDataId.AugmentationCreateItem:
+                    case PropertyDataId.LastPortal:
+                    case PropertyDataId.LinkedPortalOne:
+                    case PropertyDataId.LinkedPortalTwo:
+                    case PropertyDataId.OriginalPortal:
+                    case PropertyDataId.UseCreateItem:
+                    case PropertyDataId.VendorsClassId:
+                        weenieNames.TryGetValue(input[i].Value, out propertyValueDescription);
+                        break;
+                    case PropertyDataId.BlueSurgeSpell:
+                    case PropertyDataId.DeathSpell:
+                    case PropertyDataId.ProcSpell:
+                    case PropertyDataId.RedSurgeSpell:
+                    case PropertyDataId.Spell:
+                    case PropertyDataId.YellowSurgeSpell:
+                        propertyValueDescription = ((SpellID)input[i].Value).ToString();
+                        break;
+                    case PropertyDataId.PhysicsScript:
+                    case PropertyDataId.RestrictionEffect:
+                        propertyValueDescription = ((PlayScript)input[i].Value).ToString();
+                        break;
+                    case PropertyDataId.WieldedTreasureType:
+                    case PropertyDataId.DeathTreasureType:
+                        // todo
+                        break;
+                }
+
+                // ReSharper disable once PossibleNullReferenceException
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyDataId), input[i].Type).PadRight(25)} {propertyValueDescription} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -547,11 +755,28 @@ namespace PhatACCacheBinParser.SQLWriters
             // todo
         }
 
-        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesCreateList> input, StreamWriter writer)
+        public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesCreateList> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_create_list` (`object_Id`, `destination_Type`, `weenie_Class_Id`, `stack_Size`, `palette`, `shade`, `try_To_Bond`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                weenieNames.TryGetValue(input[i].WeenieClassId, out var weenieName);
+
+                output += $"{weenieClassID}, {input[i].DestinationType}, {input[i].WeenieClassId.ToString().PadLeft(5)}, {input[i].StackSize}, {input[i].Palette}, {input[i].Shade}, {input[i].TryToBond}) /* Create {weenieName ?? "Unknown"} for {Enum.GetName(typeof(DestinationType), input[i].DestinationType)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, ACE.Database.Models.World.WeeniePropertiesBook input, StreamWriter writer)
@@ -585,9 +810,24 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesGenerator> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `weenie_properties_generator` (`object_Id`, `probability`, `weenie_Class_Id`, `delay`, `init_Create`, `max_Create`, `when_Create`, `where_Create`, `stack_Size`, `palette_Id`, `shade`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)");
+            writer.WriteLine("INSERT INTO `weenie_properties_generator` (`object_Id`, `probability`, `weenie_Class_Id`, `delay`, `init_Create`, `max_Create`, `when_Create`, `where_Create`, `stack_Size`, `palette_Id`, `shade`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_X`, `angles_Y`, `angles_Z`, `angles_W`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Probability}, {input[i].WeenieClassId}, {input[i].Delay}, {input[i].InitCreate}, {input[i].MaxCreate}, {input[i].WhenCreate}, {input[i].WhereCreate}, {input[i].StackSize}, {input[i].PaletteId}, {input[i].Shade}, {input[i].ObjCellId}, {input[i].OriginX}, {input[i].OriginY}, {input[i].OriginZ}, {input[i].AnglesX}, {input[i].AnglesY}, {input[i].AnglesZ}, {input[i].AnglesW})";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesPalette> input, StreamWriter writer)
