@@ -299,7 +299,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         Probability = value.Probability,
                         WeenieClassId = value.Type,
-                        Delay = (float?)value.Delay, // Can be null. Is there a default null value in the cache.bin?
+                        Delay = (float?)value.Delay, // todo Can be null. Is there a default null value in the cache.bin? (might be 0)
 
                         InitCreate = value.InitCreate,
                         MaxCreate = value.MaxNum,
@@ -307,12 +307,12 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         WhenCreate = value.WhenCreate,
                         WhereCreate = value.WhereCreate,
 
-                        StackSize = value.StackSize, // Can be null. Is there a default null value in the cache.bin?
+                        StackSize = value.StackSize, // todo Can be null. Is there a default null value in the cache.bin? (might be -1)
 
-                        PaletteId = value.PalleteTypeID, // Can be null. Is there a default null value in the cache.bin?
-                        Shade = value.Shade, // Can be null. Is there a default null value in the cache.bin?
+                        PaletteId = value.PalleteTypeID, // todo Can be null. Is there a default null value in the cache.bin? (might be 0)
+                        Shade = value.Shade, // todo Can be null. Is there a default null value in the cache.bin? (might be 0)
 
-                        // Can be null. Is there a default null value in the cache.bin?
+                        // todo Can be null. Is there a default null value in the cache.bin?
                         ObjCellId = value.Position.ObjCellID,
                         OriginX = value.Position.Origin.X,
                         OriginY = value.Position.Origin.Y,
