@@ -12,7 +12,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		public uint unknown_1;
 		public uint Skill;
 		public uint Difficulty;
-		public uint unknown_4;
+		public uint SalvageType;
 
 		public uint SuccessWCID;
 		public uint SuccessAmount;
@@ -39,7 +39,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 			unknown_1 = reader.ReadUInt32();
 			Skill = reader.ReadUInt32();
 			Difficulty = reader.ReadUInt32();
-			unknown_4 = reader.ReadUInt32();
+			SalvageType = reader.ReadUInt32();
 
 			SuccessWCID = reader.ReadUInt32();
 			SuccessAmount = reader.ReadUInt32();
