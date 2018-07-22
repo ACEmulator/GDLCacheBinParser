@@ -237,7 +237,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -259,7 +259,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt64), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInt64), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -281,7 +281,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString().PadRight(5)}) /* {Enum.GetName(typeof(PropertyBool), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadRight(5)}) /* {Enum.GetName(typeof(PropertyBool), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -303,7 +303,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString("0.00").PadLeft(5)}) /* {Enum.GetName(typeof(PropertyFloat), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString("0.00").PadLeft(5)}) /* {Enum.GetName(typeof(PropertyFloat), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -325,7 +325,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, '{input[i].Value.Replace("'", "''")}') /* {Enum.GetName(typeof(PropertyString), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, '{input[i].Value.Replace("'", "''")}') /* {Enum.GetName(typeof(PropertyString), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -347,7 +347,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyDataId), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyDataId), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -358,7 +358,24 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesPosition> input, StreamWriter writer)
         {
-            writer.WriteLine("INSERT INTO `weenie_properties_position` (`object_Id`, `position_Type`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_W`, `angles_X`, `angles_Y`, `angles_Z`)");
+            writer.WriteLine("INSERT INTO `weenie_properties_position` (`object_Id`, `position_Type`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_X`, `angles_Y`, `angles_Z`, `angles_W`)");
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {(uint)input[i].PositionType}, {input[i].ObjCellId}, {input[i].OriginX}, {input[i].OriginY}, {input[i].OriginZ}, {input[i].AnglesX}, {input[i].AnglesY}, {input[i].AnglesZ}, {input[i].AnglesW}) /* {Enum.GetName(typeof(PositionType), input[i].PositionType)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesIID> input, StreamWriter writer)
@@ -374,7 +391,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                output += $"{weenieClassID}, {((uint)input[i].Type):000}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInstanceId), input[i].Type)} */";
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].Value.ToString().PadLeft(10)}) /* {Enum.GetName(typeof(PropertyInstanceId), input[i].Type)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -387,28 +404,89 @@ namespace PhatACCacheBinParser.SQLWriters
         {
             writer.WriteLine("INSERT INTO `weenie_properties_attribute` (`object_Id`, `type`, `init_Level`, `level_From_C_P`, `c_P_Spent`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].InitLevel}, {input[i].LevelFromCP}, {input[i].CPSpent}) /* {Enum.GetName(typeof(PropertyAttribute), input[i].Type)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesAttribute2nd> input, StreamWriter writer)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_attribute_2nd` (`object_Id`, `type`, `init_Level`, `level_From_C_P`, `c_P_Spent`, `current_Level`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(3)}, {input[i].InitLevel.ToString().PadLeft(5)}, {input[i].LevelFromCP}, {input[i].CPSpent}, {input[i].CurrentLevel}) /* {Enum.GetName(typeof(PropertyAttribute2nd), input[i].Type)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesSkill> input, StreamWriter writer)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_skill` (`object_Id`, `type`, `level_From_P_P`, `s_a_c`, `p_p`, `init_Level`, `resistance_At_Last_Check`, `last_Used_Time`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                // ReSharper disable once PossibleNullReferenceException
+                output += $"{weenieClassID}, {input[i].Type.ToString().PadLeft(2)}, {input[i].LevelFromPP}, {input[i].SAC}, {input[i].PP}, {input[i].InitLevel.ToString().PadLeft(3)}, {input[i].ResistanceAtLastCheck}, {input[i].LastUsedTime}) " + $"/* {Enum.GetName(typeof(Skill), input[i].Type).PadRight(19)} {((SkillStatus)input[i].SAC).ToString()} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesBodyPart> input, StreamWriter writer)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_body_part` (`object_Id`, `key`, `d_Type`, `d_Val`, `d_Var`, `base_Armor`, `armor_Vs_Slash`, `armor_Vs_Pierce`, `armor_Vs_Bludgeon`, `armor_Vs_Cold`, `armor_Vs_Fire`, `armor_Vs_Acid`, `armor_Vs_Electric`, `armor_Vs_Nether`, `b_h`, `h_l_f`, `m_l_f`, `l_l_f`, `h_r_f`, `m_r_f`, `l_r_f`, `h_l_b`, `m_l_b`, `l_l_b`, `h_r_b`, `m_r_b`, `l_r_b`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Key}, {input[i].DType}, {input[i].DVal}, {input[i].DVar}, {input[i].BaseArmor}, {input[i].ArmorVsSlash}, {input[i].ArmorVsPierce}, {input[i].ArmorVsBludgeon}, {input[i].ArmorVsCold}, {input[i].ArmorVsFire}, {input[i].ArmorVsAcid}, {input[i].ArmorVsElectric}, {input[i].ArmorVsNether}, {input[i].BH}, {input[i].HLF}, {input[i].MLF}, {input[i].LLF}, {input[i].HRF}, {input[i].MRF}, {input[i].LRF}, {input[i].HLB}, {input[i].MLB}, {input[i].LLB}, {input[i].HRB}, {input[i].MRB}, {input[i].LRB}) " + $"/* {Enum.GetName(typeof(BodyPart), input[i].Key)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesSpellBook> input, StreamWriter writer)
@@ -424,8 +502,7 @@ namespace PhatACCacheBinParser.SQLWriters
                 else
                     output = "     , (";
 
-                // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
-                output += $"{weenieClassID}, {input[i].Spell}, {input[i].Probability})  /* {Enum.GetName(typeof(SpellID), input[i].Spell)} */";
+                output += $"{weenieClassID}, {input[i].Spell.ToString().PadLeft(5)}, {input[i].Probability.ToString("0.000").PadLeft(6)})  /* {Enum.GetName(typeof(SpellID), input[i].Spell)} */";
 
                 if (i == input.Count - 1)
                     output += ";";
@@ -438,7 +515,22 @@ namespace PhatACCacheBinParser.SQLWriters
         {
             writer.WriteLine("INSERT INTO `weenie_properties_event_filter` (`object_Id`, `event`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Event.ToString().PadLeft(3)}) " + $"/* {Enum.GetName(typeof(PacketOpcode), input[i].Event)} */";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesEmote> input, StreamWriter writer)
@@ -466,14 +558,29 @@ namespace PhatACCacheBinParser.SQLWriters
         {
             writer.WriteLine("INSERT INTO `weenie_properties_book` (`object_Id`, `max_Num_Pages`, `max_Num_Chars_Per_Page`)");
 
-            // todo
+           writer.WriteLine($"VALUES ({weenieClassID}, {input.MaxNumPages}, {input.MaxNumCharsPerPage});");
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesBookPageData> input, StreamWriter writer)
         {
             writer.WriteLine("INSERT INTO `weenie_properties_book_page_data` (`object_Id`, `page_Id`, `author_Id`, `author_Name`, `author_Account`, `ignore_Author`, `page_Text`)");
 
-            // todo
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].PageId}, {input[i].AuthorId}, '{input[i].AuthorName.Replace("'", "''")}', '{input[i].AuthorAccount.Replace("'", "''")}', {input[i].IgnoreAuthor}, '{input[i].PageText.Replace("'", "''")}')";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesGenerator> input, StreamWriter writer)
@@ -485,17 +592,68 @@ namespace PhatACCacheBinParser.SQLWriters
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesPalette> input, StreamWriter writer)
         {
-            // todo
+            writer.WriteLine("INSERT INTO `weenie_properties_palette` (`object_Id`, `sub_Palette_Id`, `offset`, `length`)");
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].SubPaletteId}, {input[i].Offset}, {input[i].Length})";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesTextureMap> input, StreamWriter writer)
         {
-            // todo
+            writer.WriteLine("INSERT INTO `weenie_properties_texture_map` (`object_Id`, `index`, `old_Id`, `new_Id`)");
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Index}, {input[i].OldId}, {input[i].NewId})";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
 
         public static void CreateSQLINSERTStatement(uint weenieClassID, IList<ACE.Database.Models.World.WeeniePropertiesAnimPart> input, StreamWriter writer)
         {
-            // todo
+            writer.WriteLine("INSERT INTO `weenie_properties_anim_part` (`object_Id`, `index`, `animation_Id`)");
+
+            for (int i = 0; i < input.Count; i++)
+            {
+                string output;
+
+                if (i == 0)
+                    output = "VALUES (";
+                else
+                    output = "     , (";
+
+                output += $"{weenieClassID}, {input[i].Index}, {input[i].AnimationId})";
+
+                if (i == input.Count - 1)
+                    output += ";";
+
+                writer.WriteLine(output);
+            }
         }
     }
 }
