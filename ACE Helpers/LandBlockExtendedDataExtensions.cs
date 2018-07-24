@@ -17,30 +17,69 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             foreach (var value in input)
             {
-                foreach (var weenie in value.Weenies)
+                if (value.Weenies != null)
                 {
-                    var result = new LandblockInstances
+                    foreach (var weenie in value.Weenies)
                     {
-                        WeenieClassId = weenie.WCID,
+                        var result = new LandblockInstances
+                        {
+                            WeenieClassId = weenie.WCID,
 
-                        Guid = weenie.ID,
+                            Guid = weenie.ID,
 
-                        ObjCellId = weenie.Position.ObjCellID,
+                            ObjCellId = weenie.Position.ObjCellID,
 
-                        OriginX = weenie.Position.Origin.X,
-                        OriginY = weenie.Position.Origin.Y,
-                        OriginZ = weenie.Position.Origin.Z,
+                            OriginX = weenie.Position.Origin.X,
+                            OriginY = weenie.Position.Origin.Y,
+                            OriginZ = weenie.Position.Origin.Z,
 
-                        AnglesX = weenie.Position.Angles.X,
-                        AnglesY = weenie.Position.Angles.Y,
-                        AnglesZ = weenie.Position.Angles.Z,
-                        AnglesW = weenie.Position.Angles.W
-                    };
+                            AnglesX = weenie.Position.Angles.X,
+                            AnglesY = weenie.Position.Angles.Y,
+                            AnglesZ = weenie.Position.Angles.Z,
+                            AnglesW = weenie.Position.Angles.W
+                        };
 
-                    results.Add(result);
+                        // Somebody goofed and a guid was used in two places... I'm not sure that it ultimately was a problem on retail worlds but this fixes it for ACE
+                        if (result.Guid == 1975799995)
+                        {
+                            if (result.WeenieClassId == 22775)
+                                result.Guid = 1975799994; // Unused guid.
+                        }
+
+                        results.Add(result);
+                    }
                 }
 
-                // todo links
+                if (value.Links != null)
+                {
+                   var targets = new Dictionary<uint, HashSet<uint>>();
+
+                    foreach (var link in value.Links)
+                    {
+                        if (!targets.ContainsKey(link.Target))
+                            targets.Add(link.Target, new HashSet<uint>());
+
+                        targets[link.Target].Add(link.Source);
+                    }
+
+                    int slotId = 1;
+                    foreach (var kvp in targets)
+                    {
+                        foreach (var landblockInstance in results)
+                        {
+                            if (landblockInstance.Guid == kvp.Key)
+                            {
+                                landblockInstance.LinkSlot = slotId;
+                                landblockInstance.LinkController = true;
+                            }
+
+                            if (kvp.Value.Contains(landblockInstance.Guid))
+                                landblockInstance.LinkSlot = slotId;
+                        }
+
+                        slotId++;
+                    }
+                }
             }
 
             return results;
