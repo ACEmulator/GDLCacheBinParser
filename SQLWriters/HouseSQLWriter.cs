@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.SQLWriters
@@ -22,48 +21,22 @@ namespace PhatACCacheBinParser.SQLWriters
                     sortedInput.Add(value.HouseId, new List<ACE.Database.Models.World.HousePortal> { value });
             }
 
+            var sqlWriter = new ACE.Database.SQLFormatters.World.HousePortalSQLWriter();
+
             foreach (var kvp in sortedInput)
             {
-                string fileName = kvp.Key.ToString("00000");
-                fileName = Util.IllegalInFileName.Replace(fileName, "_");
+                string fileName = sqlWriter.GetDefaultFileName(kvp.Value[0]);
 
-                using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
                 {
                     if (includeDELETEStatementBeforeInsert)
                     {
-                        CreateSQLDELETEStatement(kvp.Value, writer);
+                        sqlWriter.CreateSQLDELETEStatement(kvp.Value, writer);
                         writer.WriteLine();
                     }
 
-                    CreateSQLINSERTStatement(kvp.Value, writer);
+                    sqlWriter.CreateSQLINSERTStatement(kvp.Value, writer);
                 }
-            }
-        }
-
-        public static void CreateSQLDELETEStatement(IList<ACE.Database.Models.World.HousePortal> input, StreamWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void CreateSQLINSERTStatement(IList<ACE.Database.Models.World.HousePortal> input, StreamWriter writer)
-        {
-            writer.WriteLine("INSERT INTO `house_portal` (`house_Id`, `obj_Cell_Id`, `origin_X`, `origin_Y`, `origin_Z`, `angles_X`, `angles_Y`, `angles_Z`, `angles_W`)");
-
-            for (int i = 0; i < input.Count; i++)
-            {
-                string output;
-
-                if (i == 0)
-                    output = "VALUES (";
-                else
-                    output = "     , (";
-
-                output += $"{input[i].HouseId}, {input[i].ObjCellId}, {input[i].OriginX}, {input[i].OriginY}, {input[i].OriginZ}, {input[i].AnglesX}, {input[i].AnglesY}, {input[i].AnglesZ}, {input[i].AnglesW})";
-
-                if (i == input.Count - 1)
-                    output += ";";
-
-                writer.WriteLine(output);
             }
         }
     }

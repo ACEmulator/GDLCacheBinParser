@@ -4,7 +4,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class Item
 	{
-		public int WCID;
+		public uint WCID;
 		public sbyte Palette;
 		public float Shade;
 		public sbyte Destination;
@@ -13,7 +13,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public bool Unpack(BinaryReader binaryReader)
 		{
-			WCID = binaryReader.ReadInt32();
+			WCID = binaryReader.ReadUInt32();
 
 			var tempPalette = binaryReader.ReadInt32();
 		    if (tempPalette < sbyte.MinValue || tempPalette > sbyte.MaxValue)

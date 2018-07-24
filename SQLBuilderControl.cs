@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using PhatACCacheBinParser.ACE_Helpers;
-using PhatACCacheBinParser.Enums;
+using PhatACCacheBinParser.Common;
 using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
 using PhatACCacheBinParser.Seg2_SpellTableExtendedData;
@@ -113,7 +113,7 @@ namespace PhatACCacheBinParser
                 var name = weenie.Value.Description;
 
                 if (String.IsNullOrEmpty(name))
-                    name = ((WeenieClasses)weenie.Value.WCID).GetNameFormattedForDatabase();
+                    name = WeenieClassNames.Values[weenie.Value.WCID];
 
                 weenieNames.Add(weenie.Value.WCID, name);
             }
@@ -231,12 +231,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
-                // todo
-                // todo
-
-                // Old method
-                LandblockSQLWriter.WriteFiles(landBlockData, weenieNames, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL Old Method\\");
+                var landblockInstances = landBlockData.ConvertToACE();
+                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL\\", weenieNames);
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;

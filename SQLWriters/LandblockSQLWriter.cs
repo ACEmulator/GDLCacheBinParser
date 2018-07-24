@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
 
@@ -8,6 +9,46 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class LandblockSQLWriter
     {
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.LandblockInstances> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        {
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            // Sort the input by landblock
+            var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.LandblockInstances>>();
+
+            foreach (var value in input)
+            {
+                var landblock = (value.ObjCellId >> 16);
+
+                if (sortedInput.TryGetValue(landblock, out var list))
+                    list.Add(value);
+                else
+                    sortedInput.Add(landblock, new List<ACE.Database.Models.World.LandblockInstances> { value });
+            }
+
+            var sqlWriter = new ACE.Database.SQLFormatters.World.LandblockInstancesWriter();
+
+            sqlWriter.WeenieNames = weenieNames;
+
+            Parallel.ForEach(sortedInput, kvp =>
+            //foreach (var kvp in sortedInput)
+            {
+                string fileName = sqlWriter.GetDefaultFileName(kvp.Value[0]);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
+                {
+                    if (includeDELETEStatementBeforeInsert)
+                    {
+                        sqlWriter.CreateSQLDELETEStatement(kvp.Value, writer);
+                        writer.WriteLine();
+                    }
+
+                    sqlWriter.CreateSQLINSERTStatement(kvp.Value, writer);
+                }
+            });
+        }
+
         public static void WriteFiles(LandBlockData landBlockData, Dictionary<uint, string> weenieNames, string outputFolder)
         {
             if (!Directory.Exists(outputFolder))
@@ -48,14 +89,6 @@ namespace PhatACCacheBinParser.SQLWriters
                                 if (instance.WCID == 22775)
                                     instance.ID = 1975799994; // Unused guid.
                             }
-
-                            //// ACE has a problem currently dealing with objects placed at xxxx0000 of a landblock, this moves any object to xxxx0001 for now
-                            //string landblockHex = instance.Position.ObjCellID.ToString("X8");
-                            //if (landblockHex.EndsWith("0000"))
-                            //{
-                            //    landblockHex = landblockHex.Substring(0, 4) + "0001";
-                            //    instance.Position.ObjCellID = Convert.ToUInt32(landblockHex, 16);
-                            //}
 
                             instanceLine += $"     , ({instance.WCID}, {instance.ID}, " +
                                 $"{instance.Position.ObjCellID}, " +
@@ -114,47 +147,6 @@ namespace PhatACCacheBinParser.SQLWriters
                 }
                 //});               
             }
-
-            //string fileName = "TerrainData";
-
-            //using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
-            //{
-            //    foreach (var terrainLandblock in LandBlockData.TerrainLandblocks)
-            //    {
-            //        var parsed = terrainLandblock;
-
-            //        string encounterLine = "";
-
-            //        //        //foreach (var generator in encounter.Values)
-            //        //        //{
-            //        //        //    weenieNames.TryGetValue(generator, out string label);
-            //        //        //    encounterLine += $"     , ({encounter.Index}, {generator})" + $" /* {label} */" + Environment.NewLine;
-            //        //        //}
-
-            //        //encounterLine += $"     , ({LandBlockData.TerrainLandblocks.IndexOf(terrain)}, {map.Index})" + $" /* {LandBlockData.TerrainLandblocks.IndexOf(terrain).ToString("X4")} */" + Environment.NewLine;
-            //        foreach (var terrain in terrainLandblock.Terrain)
-            //        {
-            //            encounterLine += $"     , ({LandBlockData.TerrainLandblocks.IndexOf(terrainLandblock)}, {terrain})" + $" /* {LandBlockData.TerrainLandblocks.IndexOf(terrainLandblock).ToString("X4")} */" + Environment.NewLine;
-            //        }
-
-            //        if (encounterLine != "")
-            //        {
-            //            encounterLine = $"{sqlCommand} INTO `terrain` (`landblock`, `index`)" + Environment.NewLine
-            //                + "VALUES " + encounterLine.TrimStart("     ,".ToCharArray());
-            //            encounterLine = encounterLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
-            //            writer.WriteLine(encounterLine);
-            //        }
-
-            //        //        var counter = Interlocked.Increment(ref processedCounter);
-
-            //        //        if ((counter % 1000) == 0)
-            //        //            BeginInvoke((Action)(() => progressBar5.Value = (int)(((double)counter / RegionDescExtendedData.EncounterMaps.Count) * 100)));
-            //    }
-
-            //}
-
-            //parserControl.BeginInvoke((Action)(() => parserControl.WriteSQLOutputProgress = (int)(((double)processedCounter / parsedObjects.Count) * 100)));
-            //System.Diagnostics.Debug.WriteLine($"Highest Weenie Exported in WorldSpawn was: {highestWeenieFound}");
         }
     }
 }

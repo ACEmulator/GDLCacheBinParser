@@ -15,7 +15,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 
         public string Description;
 
-        public MagicSchool School;
+        public int School;
         public uint IconID;
         public uint Category; // aka Family
         public uint Bitfield;
@@ -27,7 +27,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public uint FormulaVersion;
         public float ComponentLoss;
 
-        public SpellType MetaSpellType;
+        public int MetaSpellType;
         public uint MetaSpellId; // Just the spell id again
 
         // EnchantmentSpell/FellowshipEnchantmentSpells
@@ -66,13 +66,13 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public float? DamageRatio;
 
         // Boost, FellowBoost
-        public DamageType? DamageType;
+        public int? DamageType;
         public int? Boost;
         public int? BoostVariance;
 
         // Transfer
-        public Vital? Source;
-        public Vital? Destination;
+        public int? Source;
+        public int? Destination;
         public float? Proportion;
         public float? LossPercent;
         public int? SourceLoss;
@@ -97,7 +97,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
         public int? MinPower;
         public int? MaxPower;
         public float? PowerVariance;
-        public MagicSchool? DispelSchool;
+        public int? DispelSchool;
         public int? Align;
         public int? Number;
         public float? NumberVariance;
@@ -122,7 +122,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
 
             Description = Util.ReadString(reader, true);
 
-            School = (MagicSchool)reader.ReadUInt32();
+            School = reader.ReadInt32();
             IconID = reader.ReadUInt32();
             Category = reader.ReadUInt32();
             Bitfield = reader.ReadUInt32();
@@ -134,10 +134,10 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
             FormulaVersion = reader.ReadUInt32();
             ComponentLoss = reader.ReadSingle();
 
-            MetaSpellType = (SpellType)reader.ReadUInt32();
+            MetaSpellType = reader.ReadInt32();
             MetaSpellId = reader.ReadUInt32();
 
-            if (MetaSpellType == SpellType.Enchantment || MetaSpellType == SpellType.FellowEnchantment)
+            if (MetaSpellType == (uint)SpellType.Enchantment || MetaSpellType == (uint)SpellType.FellowEnchantment)
             {
                 Duration = reader.ReadDouble();
                 DegradeModifier = reader.ReadSingle();
@@ -150,7 +150,7 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
                 SpellStatMod = new SpellStatMod();
                 SpellStatMod.Unpack(reader);
             }
-            else if (MetaSpellType == SpellType.Projectile || MetaSpellType == SpellType.LifeProjectile)
+            else if (MetaSpellType == (uint)SpellType.Projectile || MetaSpellType == (uint)SpellType.LifeProjectile)
             {
                 EType = reader.ReadUInt32();
                 BaseIntensity = reader.ReadInt32();
@@ -181,22 +181,22 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
                 IgnoreMagicResist = reader.ReadInt32();
                 ElementalModifier = reader.ReadDouble();
 
-                if (MetaSpellType == SpellType.LifeProjectile)
+                if (MetaSpellType == (uint)SpellType.LifeProjectile)
                 {
                     DrainPercentage = reader.ReadSingle();
                     DamageRatio = reader.ReadSingle();
                 }
             }
-            else if (MetaSpellType == SpellType.Boost || MetaSpellType == SpellType.FellowBoost)
+            else if (MetaSpellType == (uint)SpellType.Boost || MetaSpellType == (uint)SpellType.FellowBoost)
             {
-                DamageType = (DamageType)reader.ReadInt32();
+                DamageType = reader.ReadInt32();
                 Boost = reader.ReadInt32();
                 BoostVariance = reader.ReadInt32();
             }
-            else if (MetaSpellType == SpellType.Transfer)
+            else if (MetaSpellType == (uint)SpellType.Transfer)
             {
-                Source = (Vital)reader.ReadInt32();
-                Destination = (Vital)reader.ReadInt32();
+                Source = reader.ReadInt32();
+                Destination = reader.ReadInt32();
                 Proportion = reader.ReadSingle();
                 LossPercent = reader.ReadSingle();
                 SourceLoss = reader.ReadInt32();
@@ -204,30 +204,30 @@ namespace PhatACCacheBinParser.Seg2_SpellTableExtendedData
                 MaxBoostAllowed = reader.ReadInt32();
                 TransferBitfield = reader.ReadUInt32();
             }
-            else if (MetaSpellType == SpellType.PortalLink)
+            else if (MetaSpellType == (uint)SpellType.PortalLink)
             {
                 Index = reader.ReadInt32();
             }
-            else if (MetaSpellType == SpellType.PortalRecall)
+            else if (MetaSpellType == (uint)SpellType.PortalRecall)
             {
                 Index = reader.ReadInt32();
             }
-            else if (MetaSpellType == SpellType.PortalSummon)
+            else if (MetaSpellType == (uint)SpellType.PortalSummon)
             {
                 PortalLifetime = reader.ReadDouble();
                 Link = reader.ReadInt32();
             }
-            else if (MetaSpellType == SpellType.PortalSending || MetaSpellType == SpellType.FellowPortalSending)
+            else if (MetaSpellType == (uint)SpellType.PortalSending || MetaSpellType == (uint)SpellType.FellowPortalSending)
             {
                 Position = new Position();
                 Position.Unpack(reader);
             }
-            else if (MetaSpellType == SpellType.Dispel || MetaSpellType == SpellType.FellowDispel)
+            else if (MetaSpellType == (uint)SpellType.Dispel || MetaSpellType == (uint)SpellType.FellowDispel)
             {
                 MinPower = reader.ReadInt32();
                 MaxPower = reader.ReadInt32();
                 PowerVariance = reader.ReadSingle();
-                DispelSchool = (MagicSchool)reader.ReadInt32();
+                DispelSchool = reader.ReadInt32();
                 Align = reader.ReadInt32();
                 Number = reader.ReadInt32();
                 NumberVariance = reader.ReadSingle();

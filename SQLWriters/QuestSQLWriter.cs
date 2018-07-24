@@ -16,31 +16,20 @@ namespace PhatACCacheBinParser.SQLWriters
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string fileName = input.Name;
-            fileName = Util.IllegalInFileName.Replace(fileName, "_");
+            var sqlWriter = new ACE.Database.SQLFormatters.World.QuestSQLWriter();
 
-            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+            string fileName = sqlWriter.GetDefaultFileName(input);
+
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
             {
                 if (includeDELETEStatementBeforeInsert)
                 {
-                    CreateSQLDELETEStatement(input, writer);
+                    sqlWriter.CreateSQLDELETEStatement(input, writer);
                     writer.WriteLine();
                 }
 
-                CreateSQLINSERTStatement(input, writer);
+                sqlWriter.CreateSQLINSERTStatement(input, writer);
             }
-        }
-
-        public static void CreateSQLDELETEStatement(ACE.Database.Models.World.Quest input, StreamWriter writer)
-        {
-            writer.WriteLine($"DELETE FROM `quest` WHERE `name` = '{input.Name.Replace("'", "''")}';");
-            writer.WriteLine();
-        }
-
-        public static void CreateSQLINSERTStatement(ACE.Database.Models.World.Quest input, StreamWriter writer)
-        {
-            writer.WriteLine("INSERT INTO `quest` (`name`, `min_Delta`, `max_Solves`, `message`)");
-            writer.WriteLine($"VALUES ('{input.Name.Replace("'", "''")}', {input.MinDelta}, {input.MaxSolves}, '{input.Message.Replace("'", "''")}');");
         }
     }
 }

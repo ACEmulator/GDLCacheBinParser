@@ -9,7 +9,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 
 		public float Probability;
 
-		public int? ClassID;
+		public uint? ClassID;
 
 		public uint? Style;
 		public uint? Substyle;
@@ -30,7 +30,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			Probability = binaryReader.ReadSingle();
 
 			if (Category == 1 || Category == 6)
-				ClassID = binaryReader.ReadInt32();
+				ClassID = binaryReader.ReadUInt32();
 
 			if (Category == 5)
 			{

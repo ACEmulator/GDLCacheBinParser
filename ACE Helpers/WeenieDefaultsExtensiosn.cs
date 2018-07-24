@@ -3,7 +3,7 @@
 using ACE.Database.Models.World;
 using ACE.Entity.Enum.Properties;
 
-using PhatACCacheBinParser.Enums;
+using PhatACCacheBinParser.Common;
 
 namespace PhatACCacheBinParser.ACE_Helpers
 {
@@ -15,6 +15,14 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             foreach (var value in input.Weenies)
             {
+                // Highest Weenie Exported in WorldSpawns was: 30937
+                // Highest Weenie found in WeenieClasses was: 31034
+
+                uint highestWeenieAllowed = 31034;
+
+                if (value.Key > highestWeenieAllowed && highestWeenieAllowed > 0)
+                    continue;
+
                 var converted = value.ConvertToACE();
 
                 results.Add(converted);
@@ -28,7 +36,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
             var result = new Weenie();
 
             result.ClassId = input.Key;
-            result.ClassName = ((WeenieClasses)input.Value.WCID).GetNameFormattedForDatabase();
+            WeenieClassNames.Values.TryGetValue(input.Value.WCID, out var className);
+            result.ClassName = className;
             result.Type = input.Value.WeenieType;
 
             if (input.Value.IntValues != null)
@@ -294,7 +303,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             if (input.Value.CreateList != null)
             {
                 foreach (var value in input.Value.CreateList)
-                    result.WeeniePropertiesCreateList.Add(new WeeniePropertiesCreateList { WeenieClassId = (uint)value.WCID, Palette = value.Palette, Shade = value.Shade, DestinationType = value.Destination, StackSize = value.StackSize, TryToBond = value.TryToBond });
+                    result.WeeniePropertiesCreateList.Add(new WeeniePropertiesCreateList { WeenieClassId = value.WCID, Palette = value.Palette, Shade = value.Shade, DestinationType = value.Destination, StackSize = value.StackSize, TryToBond = value.TryToBond });
             }
 
             if (input.Value.PagesData != null)

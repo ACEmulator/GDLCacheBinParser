@@ -71,7 +71,7 @@ namespace PhatACCacheBinParser
             parserControlB.DoParse += ParserControlB_DoParse;
         }
 
-		protected override void OnClosing(CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
 		{
 			Settings.Default.Save();
 

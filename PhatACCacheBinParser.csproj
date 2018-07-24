@@ -81,11 +81,9 @@
     <Compile Include="ACE Helpers\SpellsTableExtendedDataExtensions.cs" />
     <Compile Include="ACE Helpers\TreasureTableExtensions.cs" />
     <Compile Include="ACE Helpers\WeenieDefaultsExtensiosn.cs" />
-    <Compile Include="Enums\PacketOpcode.cs" />
-    <Compile Include="Enums\Item.cs" />
-    <Compile Include="Enums\Spells.cs" />
-    <Compile Include="Enums\WeenieClasses.cs" />
-    <Compile Include="Enums\WeenieClassesExtensions.cs" />
+    <Compile Include="Common\PacketOpCodeNames.cs" />
+    <Compile Include="Common\SpellNames.cs" />
+    <Compile Include="Common\WeenieClassNames.cs" />
     <Compile Include="SQLWriters\EventSQLWriter.cs" />
     <Compile Include="SQLWriters\HouseSQLWriter.cs" />
     <Compile Include="SQLWriters\LandblockSQLWriter.cs" />

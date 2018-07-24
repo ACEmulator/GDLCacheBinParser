@@ -30,7 +30,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.Description = input.Description;
 
-            result.School = (int)input.School;
+            result.School = input.School;
             result.IconId = input.IconID;
             result.Category = input.Category; // aka Family
             result.Bitfield = input.Bitfield;
@@ -42,7 +42,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.FormulaVersion = input.FormulaVersion;
             result.ComponentLoss = input.ComponentLoss;
 
-            result.MetaSpellType = (int)input.MetaSpellType;
+            result.MetaSpellType = input.MetaSpellType;
             result.MetaSpellId = input.MetaSpellId; // Just the spell id again
 
             // EnchantmentSpell/FellowshipEnchantmentSpells
@@ -106,13 +106,13 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.DamageRatio = input.DamageRatio;
 
             // Boost, FellowBoost
-            result.DamageType = (int?)input.DamageType;
+            result.DamageType = input.DamageType;
             result.Boost = input.Boost;
             result.BoostVariance = input.BoostVariance;
 
             // Transfer
-            result.Source = (int?)input.Source;
-            result.Destination = (int?)input.Destination;
+            result.Source = input.Source;
+            result.Destination = input.Destination;
             result.Proportion = input.Proportion;
             result.LossPercent = input.LossPercent;
             result.SourceLoss = input.SourceLoss;
@@ -149,7 +149,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.MinPower = input.MinPower;
             result.MaxPower = input.MaxPower;
             result.PowerVariance = input.PowerVariance;
-            result.DispelSchool = (int?)input.DispelSchool;
+            result.DispelSchool = input.DispelSchool;
             result.Align = input.Align;
             result.Number = input.Number;
             result.NumberVariance = input.NumberVariance;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.SQLWriters
@@ -18,36 +16,20 @@ namespace PhatACCacheBinParser.SQLWriters
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string fileName = input.Name;
-            fileName = Util.IllegalInFileName.Replace(fileName, "_");
+            var sqlWriter = new ACE.Database.SQLFormatters.World.EventSQLWriter();
 
-            using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+            string fileName = sqlWriter.GetDefaultFileName(input);
+
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
             {
                 if (includeDELETEStatementBeforeInsert)
                 {
-                    CreateSQLDELETEStatement(input, writer);
+                    sqlWriter.CreateSQLDELETEStatement(input, writer);
                     writer.WriteLine();
                 }
 
-                CreateSQLINSERTStatement(input, writer);
+                sqlWriter.CreateSQLINSERTStatement(input, writer);
             }
-        }
-
-        public static void CreateSQLDELETEStatement(ACE.Database.Models.World.Event input, StreamWriter writer)
-        {
-            writer.WriteLine($"DELETE FROM `event` WHERE `name` = '{input.Name.Replace("'", "''")}';");
-            writer.WriteLine();
-        }
-
-        public static void CreateSQLINSERTStatement(ACE.Database.Models.World.Event input, StreamWriter writer)
-        {
-            writer.WriteLine("INSERT INTO `event` (`name`, `start_Time`, `end_Time`, `state`)");
-            writer.WriteLine("VALUES (" +
-                             $"'{input.Name.Replace("'", "''")}', " +
-                             $"{(input.StartTime == -1 ? $"{input.StartTime}" : $"{input.StartTime} /* {DateTimeOffset.FromUnixTimeSeconds(input.StartTime).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture)} */")}, " +
-                             $"{(input.EndTime == -1 ? $"{input.EndTime}" : $"{input.EndTime} /* {DateTimeOffset.FromUnixTimeSeconds(input.EndTime).DateTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture)} */")}, " +
-                             $"{input.State}" +
-                             ");");
         }
     }
 }

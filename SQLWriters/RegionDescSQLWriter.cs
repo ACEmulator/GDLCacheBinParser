@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
@@ -22,51 +22,26 @@ namespace PhatACCacheBinParser.SQLWriters
                     sortedInput.Add(value.Landblock, new List<ACE.Database.Models.World.Encounter> { value });
             }
 
-            foreach (var kvp in sortedInput)
-            {
-                string fileName = kvp.Key.ToString("X4");
-                fileName = Util.IllegalInFileName.Replace(fileName, "_");
+            var sqlWriter = new ACE.Database.SQLFormatters.World.EncounterSQLWriter();
 
-                using (StreamWriter writer = new StreamWriter(outputFolder + fileName + ".sql"))
+            sqlWriter.WeenieNames = weenieNames;
+
+            Parallel.ForEach(sortedInput, kvp =>
+            //foreach (var kvp in sortedInput)
+            {
+                string fileName = sqlWriter.GetDefaultFileName(kvp.Value[0]);
+
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
                 {
                     if (includeDELETEStatementBeforeInsert)
                     {
-                        CreateSQLDELETEStatement(kvp.Value, writer, weenieNames);
+                        sqlWriter.CreateSQLDELETEStatement(kvp.Value, writer);
                         writer.WriteLine();
                     }
 
-                    CreateSQLINSERTStatement(kvp.Value, writer, weenieNames);
+                    sqlWriter.CreateSQLINSERTStatement(kvp.Value, writer);
                 }
-            }
-        }
-
-        public static void CreateSQLDELETEStatement(IList<ACE.Database.Models.World.Encounter> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void CreateSQLINSERTStatement(IList<ACE.Database.Models.World.Encounter> input, StreamWriter writer, Dictionary<uint, string> weenieNames)
-        {
-            writer.WriteLine("INSERT INTO `encounter` (`landblock`, `weenie_Class_Id`, `cell_X`, `cell_Y`)");
-
-            for (int i = 0; i < input.Count; i++)
-            {
-                string output;
-
-                if (i == 0)
-                    output = "VALUES (";
-                else
-                    output = "     , (";
-
-                weenieNames.TryGetValue(input[i].WeenieClassId, out string label);
-
-                output += $"{input[i].Landblock}, {input[i].WeenieClassId}, {input[i].CellX}, {input[i].CellY}) /* {label} */";
-
-                if (i == input.Count - 1)
-                    output += ";";
-
-                writer.WriteLine(output);
-            }
+            });
         }
     }
 }
