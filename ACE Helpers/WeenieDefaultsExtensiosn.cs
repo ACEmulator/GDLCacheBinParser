@@ -312,8 +312,23 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                 if (input.Value.PagesData.Pages != null)
                 {
+                    uint pageId = 0;
+
                     foreach (var value in input.Value.PagesData.Pages)
-                        result.WeeniePropertiesBookPageData.Add(new WeeniePropertiesBookPageData { AuthorId = value.AuthorID, AuthorName = value.AuthorName, AuthorAccount = value.AuthorAccount, IgnoreAuthor = value.IgnoreAuthor, PageText = value.Text });
+                    {
+                        result.WeeniePropertiesBookPageData.Add(new WeeniePropertiesBookPageData
+                        {
+                            PageId = pageId,
+
+                            AuthorId = value.AuthorID,
+                            AuthorName = value.AuthorName ?? "", // todo: Fix these strings in the db context so they can be null
+                            AuthorAccount = value.AuthorAccount,
+                            IgnoreAuthor = value.IgnoreAuthor,
+                            PageText = value.Text
+                        });
+
+                        pageId++;
+                    }
                 }
             }
 

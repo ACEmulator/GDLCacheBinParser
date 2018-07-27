@@ -9,7 +9,10 @@ namespace PhatACCacheBinParser
 		public static readonly Regex IllegalInFileName = new Regex($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()))}]", RegexOptions.Compiled);
 
 
-		public static string ReadString(BinaryReader binaryReader, bool alignTo4Bytes)
+	    /// <summary>
+	    /// If the length of the string is 0, null will be returned.
+	    /// </summary>
+        public static string ReadString(BinaryReader binaryReader, bool alignTo4Bytes)
 		{
 			var len = binaryReader.ReadUInt16();
 
@@ -22,17 +25,21 @@ namespace PhatACCacheBinParser
 					binaryReader.BaseStream.Position += 4 - (binaryReader.BaseStream.Position % 4);
 			}
 
-			return Encoding.ASCII.GetString(bytes);
+		    if (len == 0)
+		        return null;
+
+            return Encoding.ASCII.GetString(bytes);
 		}
 
 		/// <summary>
-		/// Each byte of the string has it's upper and lower nibble swapped.
+		/// Each byte of the string has it's upper and lower nibble swapped.<para />
+        /// If the length of the string is 0, null will be returned.
 		/// </summary>
 		public static string ReadEncryptedString1(BinaryReader binaryReader, bool alignTo4Bytes)
 		{
 			var len = binaryReader.ReadUInt16();
 
-			var bytes = binaryReader.ReadBytes(len);
+            var bytes = binaryReader.ReadBytes(len);
 
 			for (int i = 0; i < bytes.Length; i++)
 			{
@@ -47,7 +54,10 @@ namespace PhatACCacheBinParser
 					binaryReader.BaseStream.Position += 4 - (binaryReader.BaseStream.Position % 4);
 			}
 
-			return Encoding.ASCII.GetString(bytes);
+		    if (len == 0)
+		        return null;
+
+            return Encoding.ASCII.GetString(bytes);
 		}
 
 	    public static int ReadPackedKnownType(BinaryReader binaryReader, int knownType)

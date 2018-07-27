@@ -189,12 +189,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
-                var aceRecipies = craftingTable.ConvertToACE();
-                // todo
-
-                // Old method
-                CraftingSQLWriter.WriteFiles(craftingTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL Old Method\\");
+                var aceCraftingTables = craftingTable.ConvertToACE();
+                CraftingSQLWriter.WriteFiles(aceCraftingTables, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL\\");
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;

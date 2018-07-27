@@ -50,11 +50,11 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.SuccessWCID = input.SuccessWCID;
             result.SuccessAmount = input.SuccessAmount;
-            result.SuccessMessage = result.SuccessMessage;
+            result.SuccessMessage = result.SuccessMessage ?? ""; // todo: Fix these strings in the db context so they can be null
 
             result.FailWCID = input.FailWCID;
             result.FailAmount = input.FailAmount;
-            result.FailMessage = input.FailMessage;
+            result.FailMessage = input.FailMessage ?? ""; // todo: Fix these strings in the db context so they can be null
 
             foreach (var value in input.Components)
             {
@@ -62,7 +62,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     DestroyChance = value.DestroyChance,
                     DestroyAmount = value.DestroyAmount,
-                    DestroyMessage = value.DestroyMessage,
+                    DestroyMessage = value.DestroyMessage ?? "", // todo: Fix these strings in the db context so they can be null
                 });
             }
 
@@ -131,7 +131,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         result.RecipeRequirementsString.Add(new RecipeRequirementsString
                         {
                             Stat = requirement.Stat,
-                            Value = requirement.Value,
+                            Value = requirement.Value ?? "", // todo: Fix these strings in the db context so they can be null
                             Enum = requirement.Enum,
                             Message = requirement.Message
                         });
@@ -153,6 +153,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 }
             }
 
+            int modSet = 1;
             foreach (var value in input.Mods)
             {
                 var recipeMod = new RecipeMod();
@@ -161,7 +162,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.IntMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsInt.Add(new RecipeModsInt
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value,
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
 
@@ -169,7 +180,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.DIDMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsDID.Add(new RecipeModsDID
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value,
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
 
@@ -177,7 +198,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.IIDMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsIID.Add(new RecipeModsIID
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value,
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
 
@@ -185,7 +216,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.FloatMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsFloat.Add(new RecipeModsFloat
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value,
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
 
@@ -193,7 +234,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.StringMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsString.Add(new RecipeModsString
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value ?? "", // todo: Fix these strings in the db context so they can be null
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
 
@@ -201,9 +252,23 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.BoolMods)
                     {
-                        // todo, this needs to be added to recipeMod, but RecipeMod doesn't have the collections for these
+                        result.RecipeModsBool.Add(new RecipeModsBool
+                        {
+                            RecipeId = result.RecipeId,
+
+                            ModSetId = modSet,
+
+                            Stat = mod.Stat,
+                            Value = mod.Value,
+                            Enum = mod.Enum,
+                            Unknown1 = mod.Unknown1
+                        });
                     }
                 }
+
+                recipeMod.RecipeId = result.RecipeId;
+
+                recipeMod.ModSetId = modSet;
 
                 recipeMod.Health = value.Health;
                 recipeMod.Unknown2 = value.Unknown2;
@@ -219,6 +284,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 recipeMod.InstanceId = value.InstanceID;
 
                 result.RecipeMod.Add(recipeMod);
+
+                modSet++;
             }
 
             result.DataId = input.DataID;

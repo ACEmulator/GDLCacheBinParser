@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
@@ -7,8 +8,11 @@ namespace PhatACCacheBinParser.SQLWriters
     {
         public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Spell> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
-            foreach (var value in input)
+            Parallel.ForEach(input, value =>
+            //foreach (var value in input)
+            {
                 WriteFile(value, outputFolder, weenieNames, includeDELETEStatementBeforeInsert);
+            });
         }
 
         public static void WriteFile(ACE.Database.Models.World.Spell input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
