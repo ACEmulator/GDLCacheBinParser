@@ -72,25 +72,25 @@ namespace PhatACCacheBinParser.ACE_Helpers
             {
                 result.CreateOffsetOriginX = input.CreateOffset.X;
                 result.CreateOffsetOriginY = input.CreateOffset.Y;
-                result.CreateOffsetOriginZ = input.CreateOffset.X;
+                result.CreateOffsetOriginZ = input.CreateOffset.Z;
             }
             if (input.Padding != null)
             {
                 result.PaddingOriginX = input.Padding.X;
                 result.PaddingOriginY = input.Padding.Y;
-                result.PaddingOriginZ = input.Padding.X;
+                result.PaddingOriginZ = input.Padding.Z;
             }
             if (input.Dims != null)
             {
                 result.DimsOriginX = input.Dims.X;
                 result.DimsOriginY = input.Dims.Y;
-                result.DimsOriginZ = input.Dims.X;
+                result.DimsOriginZ = input.Dims.Z;
             }
             if (input.Peturbation != null)
             {
                 result.PeturbationOriginX = input.Peturbation.X;
                 result.PeturbationOriginY = input.Peturbation.Y;
-                result.PeturbationOriginZ = input.Peturbation.X;
+                result.PeturbationOriginZ = input.Peturbation.Z;
             }
 
             result.ImbuedEffect = input.ImbuedEffect;

@@ -50,7 +50,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.SuccessWCID = input.SuccessWCID;
             result.SuccessAmount = input.SuccessAmount;
-            result.SuccessMessage = result.SuccessMessage ?? ""; // todo: Fix these strings in the db context so they can be null
+            result.SuccessMessage = input.SuccessMessage ?? ""; // todo: Fix these strings in the db context so they can be null
 
             result.FailWCID = input.FailWCID;
             result.FailAmount = input.FailAmount;
