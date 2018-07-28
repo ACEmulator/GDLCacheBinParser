@@ -4,13 +4,13 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 {
 	class Attribute2 : Attribute
 	{
-		public int Current;
+		public uint Current;
 
 		public override bool Unpack(BinaryReader binaryReader)
 		{
 			base.Unpack(binaryReader);
 
-			Current = binaryReader.ReadInt32();
+			Current = binaryReader.ReadUInt32();
 
 			return true;
 		}
