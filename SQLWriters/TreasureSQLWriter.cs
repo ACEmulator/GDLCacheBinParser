@@ -1,83 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-
-using PhatACCacheBinParser.Seg3_TreasureTable;
 
 namespace PhatACCacheBinParser.SQLWriters
 {
     static class TreasureSQLWriter
     {
-        public static void WriteFiles(TreasureTable treasureTable, Dictionary<uint, string> weenieNames, string outputFolder)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.TreasureDeath> input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        {
+            foreach (var value in input)
+                WriteFile(value, outputFolder, includeDELETEStatementBeforeInsert);
+        }
+
+        public static void WriteFile(ACE.Database.Models.World.TreasureDeath input, string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
-            string sqlCommand = "INSERT";
+            var sqlWriter = new ACE.Database.SQLFormatters.World.TreasureDeathSQLWriter();
 
-            var subFolder = "\\Wielded\\";
-            if (!Directory.Exists(outputFolder + subFolder))
-                Directory.CreateDirectory(outputFolder + subFolder);
+            string fileName = sqlWriter.GetDefaultFileName(input);
 
-            foreach (var entry in treasureTable.WieldedTreasure)
+            using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
             {
-                //string FileNameFormatter(TreasureEntry obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
-
-                //string fileNameFormatter = FileNameFormatter(entry.Value);
-
-                string fileNameFormatter = entry.Key.ToString("00000");
-
-                using (StreamWriter writer = new StreamWriter(outputFolder + subFolder + fileNameFormatter + ".sql"))
+                if (includeDELETEStatementBeforeInsert)
                 {
-                    string entryLine = "";
-
-                    foreach (var treasure in entry.Value)
-                    {
-                        //(`treasure_Type`, `weenie_Class_Id`, `palette_Id`, `unknown_1`, `shade`, `stack_Size`, `unknown_2`, `probability`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`)
-                        entryLine += $"     , ({entry.Key}, {treasure.WCID} /* {weenieNames[treasure.WCID]} */, {treasure.PTID}, {treasure.m_08_AlwaysZero}, {treasure.Shade}, {treasure.Amount}, {treasure.m_f14}, {treasure.Chance}, {treasure.m_1C_AlwaysZero}, {treasure.m_20_AlwaysZero}, {treasure.m_24_AlwaysZero}, {treasure.m_b28}, {treasure.m_b2C}, {treasure.m_b30}, {treasure.m_34_AlwaysZero}, {treasure.m_38_AlwaysZero}, {treasure.m_3C_AlwaysZero}, {treasure.m_40_AlwaysZero})" + Environment.NewLine;
-                    }
-
-                    if (entryLine != "")
-                    {
-                        //(`treasure_Type`, `weenie_Class_Id`, `palette_Id`, `unknown_1`, `shade`, `stack_Size`, `unknown_2`, `probability`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`)
-                        entryLine = $"{sqlCommand} INTO `treasure_wielded` (`treasure_Type`, `weenie_Class_Id`, `palette_Id`, `unknown_1`, `shade`, `stack_Size`, `unknown_2`, `probability`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`)" + Environment.NewLine
-                            + "VALUES " + entryLine.TrimStart("     ,".ToCharArray());
-                        entryLine = entryLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
-                        writer.WriteLine(entryLine);
-                    }
+                    sqlWriter.CreateSQLDELETEStatement(input, writer);
+                    writer.WriteLine();
                 }
+
+                sqlWriter.CreateSQLINSERTStatement(input, writer);
+            }
+        }
+
+
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.TreasureWielded> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        {
+            // Sort the input by TreasureType
+            var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>>();
+
+            foreach (var value in input)
+            {
+                if (!sortedInput.ContainsKey(value.TreasureType))
+                    sortedInput.Add(value.TreasureType, new List<ACE.Database.Models.World.TreasureWielded>());
+
+                sortedInput[value.TreasureType].Add(value);
             }
 
-            subFolder = "\\Death\\";
-            if (!Directory.Exists(outputFolder + subFolder))
-                Directory.CreateDirectory(outputFolder + subFolder);
 
-            foreach (var entry in treasureTable.DeathTreasure)
+            if (!Directory.Exists(outputFolder))
+                Directory.CreateDirectory(outputFolder);
+
+            var sqlWriter = new ACE.Database.SQLFormatters.World.TreasureWieldedSQLWriter();
+
+            sqlWriter.WeenieNames = weenieNames;
+
+            foreach (var value in sortedInput)
             {
-                //string FileNameFormatter(TreasureEntry obj) => Util.IllegalInFileName.Replace(obj.Name, "_");
+                string fileName = sqlWriter.GetDefaultFileName(value.Value[0]);
 
-                //string fileNameFormatter = FileNameFormatter(entry.Value);
-
-                string fileNameFormatter = entry.Key.ToString("00000");
-
-                using (StreamWriter writer = new StreamWriter(outputFolder + subFolder + fileNameFormatter + ".sql"))
+                using (StreamWriter writer = new StreamWriter(outputFolder + fileName))
                 {
-                    string entryLine = "";
-
-                    //foreach (var treasure in entry.Value)
-                    //{
-                    //(`treasure_Type`, `tier`, `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`, `unknown_13`)
-                    entryLine += $"     , ({entry.Key}, {entry.Value.Tier}, {entry.Value.m_f04}, {entry.Value.m_08}, {entry.Value.m_0C}, {entry.Value.m_10}, {entry.Value.m_14}, {entry.Value.m_18}, {entry.Value.m_1C}, {entry.Value.m_20}, {entry.Value.m_24}, {entry.Value.m_28}, {entry.Value.m_2C}, {entry.Value.m_30}, {entry.Value.m_34}, {entry.Value.m_38})" + Environment.NewLine;
-                    //}
-
-                    if (entryLine != "")
+                    if (includeDELETEStatementBeforeInsert)
                     {
-                        //(`treasure_Type`, `tier`, `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`, `unknown_13`)
-                        entryLine = $"{sqlCommand} INTO `treasure_death` (`treasure_Type`, `tier`, `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, `unknown_5`, `unknown_6`, `unknown_7`, `unknown_8`, `unknown_9`, `unknown_10`, `unknown_11`, `unknown_12`, `unknown_13`, `unknown_14`)" + Environment.NewLine
-                            + "VALUES " + entryLine.TrimStart("     ,".ToCharArray());
-                        entryLine = entryLine.TrimEnd(Environment.NewLine.ToCharArray()) + ";" + Environment.NewLine;
-                        writer.WriteLine(entryLine);
+                        sqlWriter.CreateSQLDELETEStatement(value.Value, writer);
+                        writer.WriteLine();
                     }
+
+                    sqlWriter.CreateSQLINSERTStatement(value.Value, writer);
                 }
             }
         }

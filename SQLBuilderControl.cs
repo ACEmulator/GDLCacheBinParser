@@ -132,7 +132,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
-                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\" + "1 RegionDescExtendedData" + "\\" + "\\SQL\\", weenieNames);
+                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", weenieNames);
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -151,7 +151,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceSpells = spellTableExtendedData.ConvertToACE();
-                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\" + "2 SpellTableExtendedData" + "\\" + "\\SQL\\", weenieNames);
+                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", weenieNames);
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
@@ -169,12 +169,11 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                // New method
-                // todo
-                // todo
+                var treasureDeath = treasureTable.DeathTreasure.ConvertToACE();
+                var treasureWielded = treasureTable.WieldedTreasure.ConvertToACE();
 
-                // Old method
-                TreasureSQLWriter.WriteFiles(treasureTable, weenieNames, Settings.Default["OutputFolder"] + "\\" + "3 TreasureTable" + "\\" + "\\SQL Old Method\\");
+                TreasureSQLWriter.WriteFiles(treasureDeath, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Death\\");
+                TreasureSQLWriter.WriteFiles(treasureWielded, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", weenieNames);
             });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
@@ -193,7 +192,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceCraftingTables = craftingTable.ConvertToACE();
-                CraftingSQLWriter.WriteFiles(aceCraftingTables, weenieNames, Settings.Default["OutputFolder"] + "\\" + "4 CraftTable" + "\\" + "\\SQL\\");
+                CraftingSQLWriter.WriteFiles(aceCraftingTables, weenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
@@ -212,7 +211,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceHouePortals = housingPortalsTable.ConvertToACE();
-                HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\" + "5 HousingPortals" + "\\" + "\\SQL\\");
+                HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\5 HousingPortals\\SQL\\");
             });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
@@ -231,7 +230,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var landblockInstances = landBlockData.ConvertToACE();
-                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\" + "6 LandBlockExtendedData" + "\\" + "\\SQL\\", weenieNames);
+                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", weenieNames);
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
@@ -250,7 +249,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceQuests = questDefDB.ConvertToACE();
-                QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\" + "8 QuestDefDB" + "\\" + "\\SQL\\");
+                QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\8 QuestDefDB\\SQL\\");
             });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;
@@ -270,7 +269,7 @@ namespace PhatACCacheBinParser
             {
                 // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
                 var aceWeenies = weenieDefaults.ConvertToACE();
-                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\" + "9 WeenieDefaults" + "\\" + "\\SQL\\", weenieNames);
+                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", weenieNames);
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
@@ -289,7 +288,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceEvents = gameEventDefDB.ConvertToACE();
-                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\" + "B GameEventDefDB" + "\\" + "\\SQL\\");
+                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\B GameEventDefDB\\SQL\\");
             });
 
             progressBarEvents.Style = ProgressBarStyle.Continuous;
