@@ -61,6 +61,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                         targets[link.Target].Add(link.Source);
                     }
+                    
+                    // This is done twice so it matches the previous method used by Ripley.
+                    // It's also VERY slow, but, who cares. It works.
+                    // TODO This code needs to be reworked when teh parent link is added.
 
                     int slotId = 1;
                     foreach (var kvp in targets)
@@ -72,7 +76,16 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 landblockInstance.LinkSlot = slotId;
                                 landblockInstance.LinkController = true;
                             }
+                        }
 
+                        slotId++;
+                    }
+
+                    slotId = 1;
+                    foreach (var kvp in targets)
+                    {
+                        foreach (var landblockInstance in results)
+                        {
                             if (kvp.Value.Contains(landblockInstance.Guid))
                                 landblockInstance.LinkSlot = slotId;
                         }

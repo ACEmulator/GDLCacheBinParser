@@ -113,7 +113,10 @@ namespace PhatACCacheBinParser
                 var name = weenie.Value.Description;
 
                 if (String.IsNullOrEmpty(name))
-                    name = WeenieClassNames.Values[weenie.Value.WCID];
+                {
+                    if (!WeenieClassNames.Values.TryGetValue(weenie.Value.WCID, out name))
+                        name = "ace" + weenie.Value.WCID;
+                }
 
                 weenieNames.Add(weenie.Value.WCID, name);
             }

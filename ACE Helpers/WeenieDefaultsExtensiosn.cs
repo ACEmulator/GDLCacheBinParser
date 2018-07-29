@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 using ACE.Entity.Enum.Properties;
@@ -67,7 +68,21 @@ namespace PhatACCacheBinParser.ACE_Helpers
             if (input.Value.StringValues != null)
             {
                 foreach (var value in input.Value.StringValues)
-                    result.WeeniePropertiesString.Add(new WeeniePropertiesString { Type = (ushort)value.Key, Value = value.Value });
+                {
+                    if (value.Key == (int)PropertyString.Name)
+                    {
+                        var propertyValue = value.Value;
+
+                        // For some reason, in the cache.bin, the names of some weenies have been nulled out.
+                        // When we find this to be the case, we generate a name from a known list
+                        if (String.IsNullOrEmpty(propertyValue))
+                            propertyValue = result.ClassName;
+
+                        result.WeeniePropertiesString.Add(new WeeniePropertiesString { Type = (ushort)value.Key, Value = propertyValue });
+                    }
+                    else
+                        result.WeeniePropertiesString.Add(new WeeniePropertiesString { Type = (ushort)value.Key, Value = value.Value });
+                }
             }
 
             if (input.Value.DIDValues != null)
@@ -82,6 +97,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     result.WeeniePropertiesPosition.Add(new WeeniePropertiesPosition()
                     {
+                        PositionType = (ushort)value.Key,
+
                         ObjCellId = value.Value.ObjCellID,
                         OriginX = value.Value.Origin.X,
                         OriginY = value.Value.Origin.Y,

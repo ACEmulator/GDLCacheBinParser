@@ -69,7 +69,7 @@ namespace PhatACCacheBinParser
             parserControlB.ProperyName = "_B";
             parserControlB.Label = "B GameEventDefDB";
             parserControlB.DoParse += ParserControlB_DoParse;
-        }
+		}
 
         protected override void OnClosing(CancelEventArgs e)
 		{
