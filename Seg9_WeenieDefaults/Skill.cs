@@ -18,7 +18,7 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		{
 			LevelFromPP = binaryReader.ReadUInt16();
 			binaryReader.ReadUInt16(); // discard.. this contains a flag (0x10000) that doesn't seem used
-			Sac = binaryReader.ReadUInt32();
+		    Sac = binaryReader.ReadUInt32();
 			PP = binaryReader.ReadUInt32();
 			InitLevel = binaryReader.ReadUInt32();
 			ResistanceAtLastCheck = binaryReader.ReadUInt32();

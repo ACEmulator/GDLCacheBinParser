@@ -21,11 +21,17 @@ namespace PhatACCacheBinParser.SQLWriters
                 sortedCookBooks[value.RecipeId].Add(value);
             }
 
+            // Sort the sorted cookbooks by source
+            foreach (var kvp in sortedCookBooks)
+            {
+                kvp.Value.Sort((x, y) => x.SourceWCID == y.SourceWCID ? x.TargetWCID.CompareTo(y.TargetWCID) : x.SourceWCID.CompareTo(y.SourceWCID));
+            }
+
             Parallel.ForEach(input.Recipies, value =>
             //foreach (var value in input)
             {
                 List<ACE.Database.Models.World.CookBook> cookBooks;
-                sortedCookBooks.TryGetValue(value.RecipeId, out cookBooks);
+                sortedCookBooks.TryGetValue(value.Id, out cookBooks);
 
                 WriteFile(value, cookBooks, outputFolder, weenieNames, includeDELETEStatementBeforeInsert);
             });

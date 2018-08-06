@@ -6,13 +6,13 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class LandblockSQLWriter
     {
-        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.LandblockInstances> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.LandblockInstance> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
             // Sort the input by landblock
-            var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.LandblockInstances>>();
+            var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.LandblockInstance>>();
 
             foreach (var value in input)
             {
@@ -21,12 +21,20 @@ namespace PhatACCacheBinParser.SQLWriters
                 if (sortedInput.TryGetValue(landblock, out var list))
                     list.Add(value);
                 else
-                    sortedInput.Add(landblock, new List<ACE.Database.Models.World.LandblockInstances> { value });
+                    sortedInput.Add(landblock, new List<ACE.Database.Models.World.LandblockInstance> { value });
             }
 
-            var sqlWriter = new ACE.Database.SQLFormatters.World.LandblockInstancesWriter();
+            var sqlWriter = new ACE.Database.SQLFormatters.World.LandblockInstanceWriter();
 
             sqlWriter.WeenieNames = weenieNames;
+
+            sqlWriter.InstanceNames = new Dictionary<uint, string>();
+
+            foreach (var value in input)
+            {
+                if (weenieNames.TryGetValue(value.WeenieClassId, out var name))
+                    sqlWriter.InstanceNames[value.Guid] = name;
+            }
 
             Parallel.ForEach(sortedInput, kvp =>
             //foreach (var kvp in sortedInput)

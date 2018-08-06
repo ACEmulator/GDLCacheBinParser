@@ -29,10 +29,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         OriginY = destination.Origin.Y,
                         OriginZ = destination.Origin.Z,
 
+                        AnglesW = destination.Angles.W,
                         AnglesX = destination.Angles.X,
                         AnglesY = destination.Angles.Y,
                         AnglesZ = destination.Angles.Z,
-                        AnglesW = destination.Angles.W
                     };
 
                     results.Add(result);

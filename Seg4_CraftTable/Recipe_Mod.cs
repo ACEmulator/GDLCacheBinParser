@@ -13,11 +13,11 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 	    public List<Mod<bool>> BoolMods;
 
         public int Health;
-	    public int Unknown2; // Probably Stamina?
+	    public int Stamina; // Probably Stamina?
 	    public int Mana;
-	    public int Unknown4;
-	    public int Unknown5;
-	    public int Unknown6;
+	    public bool DoHealthMod;
+	    public bool DoStaminaMod;
+	    public bool DoManaMod;
 
 	    public bool Unknown7;
 	    public int DataID;
@@ -108,11 +108,11 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             }
 
             Health = binaryReader.ReadInt32();
-            Unknown2 = binaryReader.ReadInt32();
+            Stamina = binaryReader.ReadInt32();
             Mana = binaryReader.ReadInt32();
-            Unknown4 = binaryReader.ReadInt32();
-            Unknown5 = binaryReader.ReadInt32();
-            Unknown6 = binaryReader.ReadInt32();
+            DoHealthMod = (binaryReader.ReadInt32() == 1);
+            DoStaminaMod = (binaryReader.ReadInt32() == 1);
+            DoManaMod = (binaryReader.ReadInt32() == 1);
 
             Unknown7 = (binaryReader.ReadInt32() == 1);
             DataID = binaryReader.ReadInt32();

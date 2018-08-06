@@ -6,14 +6,14 @@ namespace PhatACCacheBinParser.ACE_Helpers
 {
     static class LandBlockExtendedDataExtensions
     {
-        public static List<LandblockInstances> ConvertToACE(this Seg6_LandBlockExtendedData.LandBlockData input)
+        public static List<LandblockInstance> ConvertToACE(this Seg6_LandBlockExtendedData.LandBlockData input)
         {
             return input.Landblocks.ConvertToACE();
         }
 
-        public static List<LandblockInstances> ConvertToACE(this List<Seg6_LandBlockExtendedData.Landblock> input)
+        public static List<LandblockInstance> ConvertToACE(this List<Seg6_LandBlockExtendedData.Landblock> input)
         {
-            var results = new List<LandblockInstances>();
+            var results = new List<LandblockInstance>();
 
             foreach (var value in input)
             {
@@ -21,11 +21,11 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var weenie in value.Weenies)
                     {
-                        var result = new LandblockInstances
+                        var result = new LandblockInstance
                         {
-                            WeenieClassId = weenie.WCID,
-
                             Guid = weenie.ID,
+
+                            WeenieClassId = weenie.WCID,
 
                             ObjCellId = weenie.Position.ObjCellID,
 
@@ -33,10 +33,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             OriginY = weenie.Position.Origin.Y,
                             OriginZ = weenie.Position.Origin.Z,
 
+                            AnglesW = weenie.Position.Angles.W,
                             AnglesX = weenie.Position.Angles.X,
                             AnglesY = weenie.Position.Angles.Y,
                             AnglesZ = weenie.Position.Angles.Z,
-                            AnglesW = weenie.Position.Angles.W
                         };
 
                         // Somebody goofed and a guid was used in two places... I'm not sure that it ultimately was a problem on retail worlds but this fixes it for ACE
@@ -46,51 +46,40 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 result.Guid = 1975799994; // Unused guid.
                         }
 
-                        results.Add(result);
-                    }
-                }
-
-                if (value.Links != null)
-                {
-                   var targets = new Dictionary<uint, HashSet<uint>>();
-
-                    foreach (var link in value.Links)
-                    {
-                        if (!targets.ContainsKey(link.Target))
-                            targets.Add(link.Target, new HashSet<uint>());
-
-                        targets[link.Target].Add(link.Source);
-                    }
-                    
-                    // This is done twice so it matches the previous method used by Ripley.
-                    // It's also VERY slow, but, who cares. It works.
-                    // TODO This code needs to be reworked when teh parent link is added.
-
-                    int slotId = 1;
-                    foreach (var kvp in targets)
-                    {
-                        foreach (var landblockInstance in results)
+                        if (value.Links != null)
                         {
-                            if (landblockInstance.Guid == kvp.Key)
+                            foreach (var link in value.Links)
                             {
-                                landblockInstance.LinkSlot = slotId;
-                                landblockInstance.LinkController = true;
+                                if (result.Guid == link.Source)
+                                    result.IsLinkChild = true;
+
+                                if (result.Guid == link.Target)
+                                {
+                                    // This code prevents duplicates. There are a few duplicate entries in the cache.bin
+                                    bool found = false;
+
+                                    foreach (var record in result.LandblockInstanceLink)
+                                    {
+                                        if (record.ChildGuid == link.Source)
+                                        {
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!found)
+                                    {
+                                        result.LandblockInstanceLink.Add(new LandblockInstanceLink
+                                        {
+                                            ParentGuid = result.Guid,
+                                            ChildGuid = link.Source
+                                        });
+                                    }
+                                }
                             }
                         }
 
-                        slotId++;
-                    }
-
-                    slotId = 1;
-                    foreach (var kvp in targets)
-                    {
-                        foreach (var landblockInstance in results)
-                        {
-                            if (kvp.Value.Contains(landblockInstance.Guid))
-                                landblockInstance.LinkSlot = slotId;
-                        }
-
-                        slotId++;
+                        results.Add(result);
                     }
                 }
             }

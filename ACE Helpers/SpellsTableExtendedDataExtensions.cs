@@ -24,7 +24,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
         {
             var result = new Spell();
 
-            result.SpellId = input.ID;
+            result.Id = input.ID;
 
             result.Name = input.Name;
 
@@ -139,10 +139,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 result.PositionOriginY = input.Position.Origin.Y;
                 result.PositionOriginZ = input.Position.Origin.Z;
 
+                result.PositionAnglesW = input.Position.Angles.W;
                 result.PositionAnglesX = input.Position.Angles.X;
                 result.PositionAnglesY = input.Position.Angles.Y;
                 result.PositionAnglesZ = input.Position.Angles.Z;
-                result.PositionAnglesW = input.Position.Angles.W;
             }
 
             // Dispel, FellowDispel

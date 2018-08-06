@@ -41,7 +41,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
         {
             var result = new Recipe();
 
-            result.RecipeId = input.ID;
+            result.Id = input.ID;
 
             result.Unknown1 = input.unknown_1;
             result.Skill = input.Skill;
@@ -50,21 +50,27 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.SuccessWCID = input.SuccessWCID;
             result.SuccessAmount = input.SuccessAmount;
-            result.SuccessMessage = input.SuccessMessage ?? ""; // todo: Fix these strings in the db context so they can be null
+            result.SuccessMessage = input.SuccessMessage;
 
             result.FailWCID = input.FailWCID;
             result.FailAmount = input.FailAmount;
-            result.FailMessage = input.FailMessage ?? ""; // todo: Fix these strings in the db context so they can be null
+            result.FailMessage = input.FailMessage;
 
-            foreach (var value in input.Components)
-            {
-                result.RecipeComponent.Add(new RecipeComponent
-                {
-                    DestroyChance = value.DestroyChance,
-                    DestroyAmount = value.DestroyAmount,
-                    DestroyMessage = value.DestroyMessage ?? "", // todo: Fix these strings in the db context so they can be null
-                });
-            }
+            result.SuccessDestroyTargetChance = input.Components[0].DestroyChance;
+            result.SuccessDestroyTargetAmount = input.Components[0].DestroyAmount;
+            result.SuccessDestroyTargetMessage = input.Components[0].DestroyMessage;
+
+            result.SuccessDestroySourceChance = input.Components[1].DestroyChance;
+            result.SuccessDestroySourceAmount = input.Components[1].DestroyAmount;
+            result.SuccessDestroySourceMessage = input.Components[1].DestroyMessage;
+
+            result.FailDestroyTargetChance = input.Components[2].DestroyChance;
+            result.FailDestroyTargetAmount = input.Components[2].DestroyAmount;
+            result.FailDestroyTargetMessage = input.Components[2].DestroyMessage;
+
+            result.FailDestroySourceChance = input.Components[3].DestroyChance;
+            result.FailDestroySourceAmount = input.Components[3].DestroyAmount;
+            result.FailDestroySourceMessage = input.Components[3].DestroyMessage;
 
             foreach (var value in input.Requirements)
             {
@@ -131,7 +137,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         result.RecipeRequirementsString.Add(new RecipeRequirementsString
                         {
                             Stat = requirement.Stat,
-                            Value = requirement.Value ?? "", // todo: Fix these strings in the db context so they can be null
+                            Value = requirement.Value, 
                             Enum = requirement.Enum,
                             Message = requirement.Message
                         });
@@ -153,21 +159,18 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 }
             }
 
-            int modSet = 1;
-            foreach (var value in input.Mods)
+            for (int i = 0 ; i < 8 ; i++) // Must be 8
             {
                 var recipeMod = new RecipeMod();
+
+                var value = input.Mods[i];
 
                 if (value.IntMods != null)
                 {
                     foreach (var mod in value.IntMods)
                     {
-                        result.RecipeModsInt.Add(new RecipeModsInt
+                        recipeMod.RecipeModsInt.Add(new RecipeModsInt
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -180,12 +183,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.DIDMods)
                     {
-                        result.RecipeModsDID.Add(new RecipeModsDID
+                        recipeMod.RecipeModsDID.Add(new RecipeModsDID
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -198,12 +197,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.IIDMods)
                     {
-                        result.RecipeModsIID.Add(new RecipeModsIID
+                        recipeMod.RecipeModsIID.Add(new RecipeModsIID
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -216,12 +211,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.FloatMods)
                     {
-                        result.RecipeModsFloat.Add(new RecipeModsFloat
+                        recipeMod.RecipeModsFloat.Add(new RecipeModsFloat
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -234,14 +225,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.StringMods)
                     {
-                        result.RecipeModsString.Add(new RecipeModsString
+                        recipeMod.RecipeModsString.Add(new RecipeModsString
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
-                            Value = mod.Value ?? "", // todo: Fix these strings in the db context so they can be null
+                            Value = mod.Value,
                             Enum = mod.Enum,
                             Unknown1 = mod.Unknown1
                         });
@@ -252,12 +239,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     foreach (var mod in value.BoolMods)
                     {
-                        result.RecipeModsBool.Add(new RecipeModsBool
+                        recipeMod.RecipeModsBool.Add(new RecipeModsBool
                         {
-                            RecipeId = result.RecipeId,
-
-                            ModSetId = modSet,
-
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -266,16 +249,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     }
                 }
 
-                recipeMod.RecipeId = result.RecipeId;
+                recipeMod.RecipeId = result.Id;
 
-                recipeMod.ModSetId = modSet;
+                recipeMod.ExecutesOnSuccess = (i <= 3); // The first 4 are "act on success", the second 4 are "act on failure"
 
                 recipeMod.Health = value.Health;
-                recipeMod.Unknown2 = value.Unknown2;
+                recipeMod.Stamina = value.Stamina;
                 recipeMod.Mana = value.Mana;
-                recipeMod.Unknown4 = value.Unknown4;
-                recipeMod.Unknown5 = value.Unknown5;
-                recipeMod.Unknown6 = value.Unknown6;
+                // In the cache.bin, the below flags are always set if their associated vital is != 0
+                //recipeMod.Unknown4 = value.DoHealthMod;
+                //recipeMod.Unknown5 = value.DoStaminaMod;
+                //recipeMod.Unknown6 = value.DoManaMod;
 
                 recipeMod.Unknown7 = value.Unknown7;
                 recipeMod.DataId = value.DataID;
@@ -283,9 +267,12 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 recipeMod.Unknown9 = value.Unknown9;
                 recipeMod.InstanceId = value.InstanceID;
 
-                result.RecipeMod.Add(recipeMod);
+                bool add = (recipeMod.Health > 0 || recipeMod.Stamina > 0 || recipeMod.Mana > 0);
+                add = (add || recipeMod.Unknown7 || recipeMod.DataId > 0 || recipeMod.Unknown9 > 0 || recipeMod.InstanceId > 0);
+                add = (add || recipeMod.RecipeModsBool.Count > 0 || recipeMod.RecipeModsDID.Count > 0 || recipeMod.RecipeModsFloat.Count > 0 || recipeMod.RecipeModsIID.Count > 0 || recipeMod.RecipeModsInt.Count > 0 || recipeMod.RecipeModsString.Count > 0);
 
-                modSet++;
+                if (add)
+                    result.RecipeMod.Add(recipeMod);
             }
 
             result.DataId = input.DataID;

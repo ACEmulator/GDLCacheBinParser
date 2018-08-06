@@ -8,7 +8,7 @@ using PhatACCacheBinParser.Common;
 
 namespace PhatACCacheBinParser.ACE_Helpers
 {
-    static class WeenieDefaultsExtensiosn
+    static class WeenieDefaultsExtensions
     {
         public static List<Weenie> ConvertToACE(this Seg9_WeenieDefaults.WeenieDefaults input)
         {
@@ -103,10 +103,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         OriginX = value.Value.Origin.X,
                         OriginY = value.Value.Origin.Y,
                         OriginZ = value.Value.Origin.Z,
+                        AnglesW = value.Value.Angles.W,
                         AnglesX = value.Value.Angles.X,
                         AnglesY = value.Value.Angles.Y,
                         AnglesZ = value.Value.Angles.Z,
-                        AnglesW = value.Value.Angles.W,
                     });
                 }
             }
@@ -198,14 +198,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 {
                     // kvp.key not used
 
-                    uint setId = 0;
-
                     foreach (var value in kvp.Value)
                     {
                         var efEmote = new WeeniePropertiesEmote
                         {
-                            EmoteSetId = setId, // This is an ACE specific value to maintain links between Emote and EmoteActions
-
                             Category = value.Category,
 
                             Probability = value.Probability,
@@ -223,16 +219,12 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             MaxHealth = value.MaxHealth
                         };
 
-                        setId++;
-
                         uint order = 0;
 
                         foreach (var action in value.EmoteActions)
                         {
                             var efAction = new WeeniePropertiesEmoteAction
                             {
-                                EmoteSetId = efEmote.EmoteSetId, // This is an ACE specific value to maintain links between Emote and EmoteActions
-                                EmoteCategory = efEmote.Category,
                                 Order = order, // This is an ACE specific value to maintain the correct order of EmoteActions
 
                                 Type = action.Type,
@@ -289,10 +281,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 efAction.OriginY = action.Frame.Origin.Y;
                                 efAction.OriginZ = action.Frame.Origin.Z;
 
+                                efAction.AnglesW = action.Frame.Angles.W;
                                 efAction.AnglesX = action.Frame.Angles.X;
                                 efAction.AnglesY = action.Frame.Angles.Y;
                                 efAction.AnglesZ = action.Frame.Angles.Z;
-                                efAction.AnglesW = action.Frame.Angles.W;
                             }
 
                             if (action.Position != null)
@@ -303,13 +295,13 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 efAction.OriginY = action.Position.Origin.Y;
                                 efAction.OriginZ = action.Position.Origin.Z;
 
+                                efAction.AnglesW = action.Position.Angles.W;
                                 efAction.AnglesX = action.Position.Angles.X;
                                 efAction.AnglesY = action.Position.Angles.Y;
                                 efAction.AnglesZ = action.Position.Angles.Z;
-                                efAction.AnglesW = action.Position.Angles.W;
                             }
 
-                            result.WeeniePropertiesEmoteAction.Add(efAction);
+                            efEmote.WeeniePropertiesEmoteAction.Add(efAction);
                         }
 
                         result.WeeniePropertiesEmote.Add(efEmote);
@@ -375,10 +367,10 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         OriginX = value.Position.Origin.X,
                         OriginY = value.Position.Origin.Y,
                         OriginZ = value.Position.Origin.Z,
+                        AnglesW = value.Position.Angles.W,
                         AnglesX = value.Position.Angles.X,
                         AnglesY = value.Position.Angles.Y,
                         AnglesZ = value.Position.Angles.Z,
-                        AnglesW = value.Position.Angles.W
 
                         // Slot
                     });

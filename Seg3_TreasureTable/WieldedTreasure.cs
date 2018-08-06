@@ -10,14 +10,14 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 		public uint Unknown1; // always zero
 		public float Shade;
 		public int StackSize;
-		public float Unknown2;
+		public float StackSizeVariance;
 		public float Probability;
 		public uint Unknown3; // always zero
 		public uint Unknown4; // always zero
 		public uint Unknown5; // always zero
-		public bool Unknown6;
-		public bool Unknown7;
-		public bool Unknown8;
+		public bool SetStart;
+		public bool HasSubSet;
+		public bool ContinuesPreviousSet;
 		public uint Unknown9; // always zero
 		public uint Unknown10; // always zero
 		public uint Unknown11; // always zero
@@ -31,14 +31,14 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 			Unknown1 = reader.ReadUInt32();
 			Shade = reader.ReadSingle();
 			StackSize = reader.ReadInt32();
-			Unknown2 = reader.ReadSingle();
+			StackSizeVariance = reader.ReadSingle();
 			Probability = reader.ReadSingle();
 			Unknown3 = reader.ReadUInt32();
 			Unknown4 = reader.ReadUInt32();
 			Unknown5 = reader.ReadUInt32();
-			Unknown6 = (reader.ReadUInt32() == 1);
-			Unknown7 = (reader.ReadUInt32() == 1);
-			Unknown8 = (reader.ReadUInt32() == 1);
+			SetStart = (reader.ReadUInt32() == 1);
+			HasSubSet = (reader.ReadUInt32() == 1);
+			ContinuesPreviousSet = (reader.ReadUInt32() == 1);
 			Unknown9 = reader.ReadUInt32();
 			Unknown10 = reader.ReadUInt32();
 			Unknown11 = reader.ReadUInt32();

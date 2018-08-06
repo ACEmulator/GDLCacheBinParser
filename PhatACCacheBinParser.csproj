@@ -62,8 +62,8 @@
     <Reference Include="ACE.Entity">
       <HintPath>lib\ACE.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -80,7 +80,7 @@
     <Compile Include="ACE Helpers\RegionDescExtendedDataExtensions.cs" />
     <Compile Include="ACE Helpers\SpellsTableExtendedDataExtensions.cs" />
     <Compile Include="ACE Helpers\TreasureTableExtensions.cs" />
-    <Compile Include="ACE Helpers\WeenieDefaultsExtensiosn.cs" />
+    <Compile Include="ACE Helpers\WeenieDefaultsExtensions.cs" />
     <Compile Include="Common\PacketOpCodeNames.cs" />
     <Compile Include="Common\SpellNames.cs" />
     <Compile Include="Common\WeenieClassNames.cs" />
