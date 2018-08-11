@@ -268,8 +268,30 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
-                var aceWeenies = weenieDefaults.ConvertToACE();
-                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", weenieNames);
+                var aceWeenies = weenieDefaults.ConvertToACE();                
+                var aceTreasureWielded = treasureTable.WieldedTreasure.ConvertToACE();
+                var aceTreasureDeath = treasureTable.DeathTreasure.ConvertToACE();
+                var weenies = new Dictionary<uint, ACE.Database.Models.World.Weenie>();
+                foreach (var item in aceWeenies)
+                {
+                    if (!weenies.ContainsKey(item.ClassId))
+                        weenies.Add(item.ClassId, item);
+                }
+                var treasureWielded = new Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>>();
+                foreach (var item in aceTreasureWielded)
+                {
+                    if (!treasureWielded.ContainsKey(item.TreasureType))
+                        treasureWielded.Add(item.TreasureType, new List<ACE.Database.Models.World.TreasureWielded>());
+
+                    treasureWielded[item.TreasureType].Add(item);
+                }
+                var treasureDeath = new Dictionary<uint, ACE.Database.Models.World.TreasureDeath>();
+                foreach (var item in aceTreasureDeath)
+                {
+                    if (!treasureDeath.ContainsKey(item.TreasureType))
+                        treasureDeath.Add(item.TreasureType, item);
+                }
+                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", weenieNames, treasureWielded, treasureDeath, weenies);
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
