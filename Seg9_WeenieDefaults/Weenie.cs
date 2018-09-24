@@ -151,18 +151,6 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 					DIDValues.Add(reader.ReadInt32(), reader.ReadUInt32());
 			}
 
-            // Fix PhysicsScript ENUM shift post 16PY data
-            if (DIDValues.ContainsKey((int)ACE.Entity.Enum.Properties.PropertyDataId.PhysicsScript))
-            {
-                var value = DIDValues[(int)ACE.Entity.Enum.Properties.PropertyDataId.PhysicsScript];
-
-                // These are the only ones in 16PY database, not entirely certain where the shift started but the change below is correct for end of retail enum
-                if (value >= 83 && value <= 89)
-                    value++;
-
-                DIDValues[(int)ACE.Entity.Enum.Properties.PropertyDataId.PhysicsScript] = value;
-            }
-
             if ((basicFlags & 0x20) == 0x20)
 			{
 				PositionValues = new Dictionary<int, Position>();
