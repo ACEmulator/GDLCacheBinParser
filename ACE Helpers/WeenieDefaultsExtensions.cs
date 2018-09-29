@@ -88,7 +88,19 @@ namespace PhatACCacheBinParser.ACE_Helpers
             if (input.Value.DIDValues != null)
             {
                 foreach (var value in input.Value.DIDValues)
-                    result.WeeniePropertiesDID.Add(new WeeniePropertiesDID { Type = (ushort)value.Key, Value = value.Value });
+                {
+                    var valCorrected = value.Value;
+
+                    // Fix PhysicsScript ENUM shift post 16PY data
+                    if (value.Key == (int)PropertyDataId.PhysicsScript)
+                    {
+                        // These are the only ones in 16PY database, not entirely certain where the shift started but the change below is correct for end of retail enum
+                        if (valCorrected >= 83 && valCorrected <= 89)
+                            valCorrected++;
+                    }
+
+                    result.WeeniePropertiesDID.Add(new WeeniePropertiesDID { Type = (ushort)value.Key, Value = valCorrected });
+                }
             }
 
             if (input.Value.PositionValues != null)
