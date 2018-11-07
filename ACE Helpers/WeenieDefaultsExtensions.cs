@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using ACE.Database.Models.World;
 using ACE.Entity.Enum.Properties;
 
@@ -231,6 +231,28 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             MaxHealth = value.MaxHealth
                         };
 
+                        // Fix MotionCommand ENUM shift post 16PY data
+                        if (efEmote.Style.HasValue)
+                        {
+                            var oldStyle = (ACE.Entity.Enum.MotionCommand)efEmote.Style;
+                            var index = efEmote.Style.Value & 0xFFFF;
+                            if (index >= 0x115)
+                            {
+                                var newStyle = (ACE.Entity.Enum.MotionCommand)efEmote.Style + 3;
+                                efEmote.Style += 3;
+                            }
+                        }
+                        if (efEmote.Substyle.HasValue)
+                        {
+                            var oldSubstyle = (ACE.Entity.Enum.MotionCommand)efEmote.Substyle;
+                            var index = efEmote.Substyle.Value & 0xFFFF;
+                            if (index >= 0x115)
+                            {
+                                var newSubstyle = (ACE.Entity.Enum.MotionCommand)efEmote.Substyle + 3;
+                                efEmote.Substyle += 3;
+                            }
+                        }
+
                         uint order = 0;
 
                         foreach (var action in value.EmoteActions)
@@ -274,6 +296,18 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                                 Sound = action.Sound
                             };
+
+                            // Fix MotionCommand ENUM shift post 16PY data
+                            if (efAction.Motion.HasValue)
+                            {
+                                var oldMotion = (ACE.Entity.Enum.MotionCommand)efAction.Motion;
+                                var index = efAction.Motion.Value & 0xFFFF;
+                                if (index >= 0x115)
+                                {
+                                    var newMotion = (ACE.Entity.Enum.MotionCommand)efAction.Motion + 3;
+                                    efAction.Motion += 3;
+                                }
+                            }
 
                             order++;
 
