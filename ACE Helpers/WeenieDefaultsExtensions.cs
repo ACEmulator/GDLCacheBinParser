@@ -99,6 +99,13 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             valCorrected++;
                     }
 
+                    // Fix PhysicsScript ENUM shift post 16PY data
+                    if (value.Key == (int)PropertyDataId.RestrictionEffect)
+                    {
+                        if (valCorrected >= 83)
+                            valCorrected++;
+                    }
+
                     result.WeeniePropertiesDID.Add(new WeeniePropertiesDID { Type = (ushort)value.Key, Value = valCorrected });
                 }
             }
