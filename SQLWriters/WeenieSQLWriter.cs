@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -29,7 +29,6 @@ namespace PhatACCacheBinParser.SQLWriters
 
             var sqlWriter = new ACE.Database.SQLFormatters.World.WeenieSQLWriter();
 
-            sqlWriter.WeenieClassNames = WeenieClassNames.Values;
             sqlWriter.WeenieNames = weenieNames;
             sqlWriter.SpellNames = SpellNames.Values;
             sqlWriter.PacketOpCodes = PacketOpCodeNames.Values;
