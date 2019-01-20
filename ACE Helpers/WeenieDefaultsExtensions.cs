@@ -285,7 +285,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 MaxDbl = action.MaxDbl,
 
                                 Stat = action.Stat,
-                                Display = action.Display,
+                                Display = action.Display.HasValue ? (action.Display == 1 ? true : false) : (bool?)null,
 
                                 Amount = action.Amount,
                                 Amount64 = action.Amount64,
