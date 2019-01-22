@@ -268,7 +268,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
-                var aceWeenies = weenieDefaults.ConvertToACE();                
+                var aceWeenies = weenieDefaults.ConvertToACE();
                 var aceTreasureWielded = treasureTable.WieldedTreasure.ConvertToACE();
                 var aceTreasureDeath = treasureTable.DeathTreasure.ConvertToACE();
                 var weenies = new Dictionary<uint, ACE.Database.Models.World.Weenie>();
