@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.Seg4_CraftTable
@@ -35,7 +35,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<int>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = binaryReader.ReadInt32();
@@ -48,7 +48,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<uint>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = binaryReader.ReadUInt32();
@@ -61,7 +61,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<uint>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = binaryReader.ReadUInt32();
@@ -74,7 +74,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<double>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = binaryReader.ReadDouble();
@@ -87,7 +87,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<string>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = Util.ReadString(binaryReader, true);
@@ -100,7 +100,7 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
             for (int i = 0; i < count; i++)
             {
                 var item = new Mod<bool>();
-                item.Unknown1 = binaryReader.ReadInt32();
+                item.Source = binaryReader.ReadInt32();
                 item.Enum = binaryReader.ReadInt32();
                 item.Stat = binaryReader.ReadInt32();
                 item.Value = (binaryReader.ReadInt32() == 1);

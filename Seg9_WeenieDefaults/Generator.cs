@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 
 using PhatACCacheBinParser.Common;
 
@@ -10,9 +10,9 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 		public uint Type;
 		public double Delay;
 
-		public uint InitCreate;
+		public int InitCreate;
 
-		public uint MaxNum;
+		public int MaxNum;
 
 		public uint WhenCreate;
 		public uint WhereCreate;
@@ -31,8 +31,8 @@ namespace PhatACCacheBinParser.Seg9_WeenieDefaults
 			Probability = binaryReader.ReadSingle();
 			Type = binaryReader.ReadUInt32();
 			Delay = binaryReader.ReadDouble();
-			InitCreate = binaryReader.ReadUInt32();
-			MaxNum = binaryReader.ReadUInt32();
+			InitCreate = binaryReader.ReadInt32();
+			MaxNum = binaryReader.ReadInt32();
 			WhenCreate = binaryReader.ReadUInt32();
 			WhereCreate = binaryReader.ReadUInt32();
 			StackSize = binaryReader.ReadInt32();

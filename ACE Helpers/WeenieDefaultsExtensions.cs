@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using ACE.Database.Models.World;
 using ACE.Entity.Enum.Properties;
 
@@ -88,7 +88,26 @@ namespace PhatACCacheBinParser.ACE_Helpers
             if (input.Value.DIDValues != null)
             {
                 foreach (var value in input.Value.DIDValues)
-                    result.WeeniePropertiesDID.Add(new WeeniePropertiesDID { Type = (ushort)value.Key, Value = value.Value });
+                {
+                    var valCorrected = value.Value;
+
+                    // Fix PhysicsScript ENUM shift post 16PY data
+                    if (value.Key == (int)PropertyDataId.PhysicsScript)
+                    {
+                        // These are the only ones in 16PY database, not entirely certain where the shift started but the change below is correct for end of retail enum
+                        if (valCorrected >= 83 && valCorrected <= 89)
+                            valCorrected++;
+                    }
+
+                    // Fix PhysicsScript ENUM shift post 16PY data
+                    if (value.Key == (int)PropertyDataId.RestrictionEffect)
+                    {
+                        if (valCorrected >= 83)
+                            valCorrected++;
+                    }
+
+                    result.WeeniePropertiesDID.Add(new WeeniePropertiesDID { Type = (ushort)value.Key, Value = valCorrected });
+                }
             }
 
             if (input.Value.PositionValues != null)
@@ -219,6 +238,28 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             MaxHealth = value.MaxHealth
                         };
 
+                        // Fix MotionCommand ENUM shift post 16PY data
+                        if (efEmote.Style.HasValue)
+                        {
+                            var oldStyle = (ACE.Entity.Enum.MotionCommand)efEmote.Style;
+                            var index = efEmote.Style.Value & 0xFFFF;
+                            if (index >= 0x115)
+                            {
+                                var newStyle = (ACE.Entity.Enum.MotionCommand)efEmote.Style + 3;
+                                efEmote.Style += 3;
+                            }
+                        }
+                        if (efEmote.Substyle.HasValue)
+                        {
+                            var oldSubstyle = (ACE.Entity.Enum.MotionCommand)efEmote.Substyle;
+                            var index = efEmote.Substyle.Value & 0xFFFF;
+                            if (index >= 0x115)
+                            {
+                                var newSubstyle = (ACE.Entity.Enum.MotionCommand)efEmote.Substyle + 3;
+                                efEmote.Substyle += 3;
+                            }
+                        }
+
                         uint order = 0;
 
                         foreach (var action in value.EmoteActions)
@@ -244,7 +285,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 MaxDbl = action.MaxDbl,
 
                                 Stat = action.Stat,
-                                Display = action.Display,
+                                Display = action.Display.HasValue ? (action.Display == 1 ? true : false) : (bool?)null,
 
                                 Amount = action.Amount,
                                 Amount64 = action.Amount64,
@@ -262,6 +303,18 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
                                 Sound = action.Sound
                             };
+
+                            // Fix MotionCommand ENUM shift post 16PY data
+                            if (efAction.Motion.HasValue)
+                            {
+                                var oldMotion = (ACE.Entity.Enum.MotionCommand)efAction.Motion;
+                                var index = efAction.Motion.Value & 0xFFFF;
+                                if (index >= 0x115)
+                                {
+                                    var newMotion = (ACE.Entity.Enum.MotionCommand)efAction.Motion + 3;
+                                    efAction.Motion += 3;
+                                }
+                            }
 
                             order++;
 
