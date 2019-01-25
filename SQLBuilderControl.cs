@@ -1,22 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using PhatACCacheBinParser.ACE_Helpers;
-using PhatACCacheBinParser.Common;
 using PhatACCacheBinParser.Properties;
-using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
-using PhatACCacheBinParser.Seg2_SpellTableExtendedData;
-using PhatACCacheBinParser.Seg3_TreasureTable;
-using PhatACCacheBinParser.Seg4_CraftTable;
-using PhatACCacheBinParser.Seg5_HousingPortals;
-using PhatACCacheBinParser.Seg6_LandBlockExtendedData;
-using PhatACCacheBinParser.Seg8_QuestDefDB;
-using PhatACCacheBinParser.Seg9_WeenieDefaults;
-using PhatACCacheBinParser.SegA_MutationFilters;
-using PhatACCacheBinParser.SegB_GameEventDefDB;
 using PhatACCacheBinParser.SQLWriters;
 
 namespace PhatACCacheBinParser
@@ -29,20 +18,6 @@ namespace PhatACCacheBinParser
         }
 
 
-        private readonly RegionDescExtendedData regionDescExtendedData = new RegionDescExtendedData();
-        private readonly SpellTableExtendedData spellTableExtendedData = new SpellTableExtendedData();
-        private readonly TreasureTable treasureTable = new TreasureTable();
-        private readonly CraftingTable craftingTable = new CraftingTable();
-        private readonly HousingPortalsTable housingPortalsTable = new HousingPortalsTable();
-        private readonly LandBlockData landBlockData = new LandBlockData();
-        // Segment 7
-        private readonly QuestDefDB questDefDB = new QuestDefDB();
-        private readonly WeenieDefaults weenieDefaults = new WeenieDefaults();
-        private readonly MutationFilters mutationFilters = new MutationFilters();
-        private readonly GameEventDefDB gameEventDefDB = new GameEventDefDB();
-
-        private readonly Dictionary<uint, string> weenieNames = new Dictionary<uint, string>();
-
         private async void cmdParseAll_Click(object sender, EventArgs e)
         {
             cmdParseAll.Enabled = false;
@@ -53,19 +28,21 @@ namespace PhatACCacheBinParser
             await Task.Run(delegate
             {
                 // Read all the inputs here
-                TryParseSegment((string)Settings.Default["_1SourceBin"], regionDescExtendedData);
-                TryParseSegment((string)Settings.Default["_2SourceBin"], spellTableExtendedData);
-                TryParseSegment((string)Settings.Default["_3SourceBin"], treasureTable);
-                TryParseSegment((string)Settings.Default["_4SourceBin"], craftingTable);
-                TryParseSegment((string)Settings.Default["_5SourceBin"], housingPortalsTable);
-                TryParseSegment((string)Settings.Default["_6SourceBin"], landBlockData);
+                TryParseSegment((string)Settings.Default["_1SourceBin"], Globals.CacheBin.RegionDescExtendedData);
+                TryParseSegment((string)Settings.Default["_2SourceBin"], Globals.CacheBin.SpellTableExtendedData);
+                TryParseSegment((string)Settings.Default["_3SourceBin"], Globals.CacheBin.TreasureTable);
+                TryParseSegment((string)Settings.Default["_4SourceBin"], Globals.CacheBin.CraftingTable);
+                TryParseSegment((string)Settings.Default["_5SourceBin"], Globals.CacheBin.HousingPortalsTable);
+                TryParseSegment((string)Settings.Default["_6SourceBin"], Globals.CacheBin.LandBlockData);
                 // Segment 7
-                TryParseSegment((string)Settings.Default["_8SourceBin"], questDefDB);
-                TryParseSegment((string)Settings.Default["_9SourceBin"], weenieDefaults);
-                TryParseSegment((string)Settings.Default["_ASourceBin"], mutationFilters);
-                TryParseSegment((string)Settings.Default["_BSourceBin"], gameEventDefDB);
+                TryParseSegment((string)Settings.Default["_8SourceBin"], Globals.CacheBin.QuestDefDB);
+                TryParseSegment((string)Settings.Default["_9SourceBin"], Globals.CacheBin.WeenieDefaults);
+                TryParseSegment((string)Settings.Default["_ASourceBin"], Globals.CacheBin.MutationFilters);
+                TryParseSegment((string)Settings.Default["_BSourceBin"], Globals.CacheBin.GameEventDefDB);
 
-                CollectWeenieNames();
+                Globals.CacheBin.IsLoaded = true;
+
+                Globals.CacheBin.AddToWeenieNames();
             });
 
             progressParseSources.Style = ProgressBarStyle.Continuous;
@@ -104,24 +81,6 @@ namespace PhatACCacheBinParser
             return false;
         }
 
-        private void CollectWeenieNames()
-        {
-            weenieNames.Clear();
-
-            foreach (var weenie in weenieDefaults.Weenies)
-            {
-                var name = weenie.Value.Description;
-
-                if (String.IsNullOrEmpty(name))
-                {
-                    if (!WeenieClassNames.Values.TryGetValue(weenie.Value.WCID, out name))
-                        name = "ace" + weenie.Value.WCID;
-                }
-
-                weenieNames.Add(weenie.Value.WCID, name);
-            }
-        }
-
         private async void cmd1RegionsParse_Click(object sender, EventArgs e)
         {
             cmd1RegionsParse.Enabled = false;
@@ -131,8 +90,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceEncounters = regionDescExtendedData.ConvertToACE(landBlockData);
-                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", weenieNames);
+                var aceEncounters = Globals.CacheBin.RegionDescExtendedData.ConvertToACE(Globals.CacheBin.LandBlockData);
+                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", Globals.WeenieNames);
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -150,8 +109,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceSpells = spellTableExtendedData.ConvertToACE();
-                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", weenieNames);
+                var aceSpells = Globals.CacheBin.SpellTableExtendedData.ConvertToACE();
+                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
@@ -169,11 +128,11 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var treasureDeath = treasureTable.DeathTreasure.ConvertToACE();
-                var treasureWielded = treasureTable.WieldedTreasure.ConvertToACE();
+                var treasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
+                var treasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
 
                 TreasureSQLWriter.WriteFiles(treasureDeath, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Death\\");
-                TreasureSQLWriter.WriteFiles(treasureWielded, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", weenieNames);
+                TreasureSQLWriter.WriteFiles(treasureWielded, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", Globals.WeenieNames);
             });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
@@ -191,8 +150,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceCraftingTables = craftingTable.ConvertToACE();
-                CraftingSQLWriter.WriteFiles(aceCraftingTables, weenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
+                var aceCraftingTables = Globals.CacheBin.CraftingTable.ConvertToACE();
+                CraftingSQLWriter.WriteFiles(aceCraftingTables, Globals.WeenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
@@ -210,7 +169,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceHouePortals = housingPortalsTable.ConvertToACE();
+                var aceHouePortals = Globals.CacheBin.HousingPortalsTable.ConvertToACE();
                 HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\5 HousingPortals\\SQL\\");
             });
 
@@ -229,8 +188,8 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var landblockInstances = landBlockData.ConvertToACE();
-                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", weenieNames);
+                var landblockInstances = Globals.CacheBin.LandBlockData.ConvertToACE();
+                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames);
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
@@ -248,7 +207,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceQuests = questDefDB.ConvertToACE();
+                var aceQuests = Globals.CacheBin.QuestDefDB.ConvertToACE();
                 QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\8 QuestDefDB\\SQL\\");
             });
 
@@ -268,9 +227,9 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 // ClassId 30732 has -1 for an IID.. i think this was to make it so noone could wield
-                var aceWeenies = weenieDefaults.ConvertToACE();
-                var aceTreasureWielded = treasureTable.WieldedTreasure.ConvertToACE();
-                var aceTreasureDeath = treasureTable.DeathTreasure.ConvertToACE();
+                var aceWeenies = Globals.CacheBin.WeenieDefaults.ConvertToACE();
+                var aceTreasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
+                var aceTreasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
                 var weenies = new Dictionary<uint, ACE.Database.Models.World.Weenie>();
                 foreach (var item in aceWeenies)
                 {
@@ -291,7 +250,7 @@ namespace PhatACCacheBinParser
                     if (!treasureDeath.ContainsKey(item.TreasureType))
                         treasureDeath.Add(item.TreasureType, item);
                 }
-                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", weenieNames, treasureWielded, treasureDeath, weenies);
+                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, weenies);
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
@@ -309,7 +268,7 @@ namespace PhatACCacheBinParser
 
             await Task.Run(() =>
             {
-                var aceEvents = gameEventDefDB.ConvertToACE();
+                var aceEvents = Globals.CacheBin.GameEventDefDB.ConvertToACE();
                 EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\B GameEventDefDB\\SQL\\");
             });
 

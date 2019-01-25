@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 using Microsoft.EntityFrameworkCore;
 
-using PhatACCacheBinParser.Common;
 using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
 using PhatACCacheBinParser.Seg2_SpellTableExtendedData;
@@ -21,10 +20,6 @@ using PhatACCacheBinParser.Seg9_WeenieDefaults;
 using PhatACCacheBinParser.SegA_MutationFilters;
 using PhatACCacheBinParser.SegB_GameEventDefDB;
 using PhatACCacheBinParser.SQLWriters;
-
-using ACE.Database;
-using ACE.Database.Models.World;
-using ACE.Entity.Enum.Properties;
 
 namespace PhatACCacheBinParser
 {
@@ -264,104 +259,72 @@ namespace PhatACCacheBinParser
             }
         }
 
-        private void cmdConvertGDLEJSONToACESQL_Click(object sender, EventArgs e)
+        private void cmdParseGDLEJSONs_Click(object sender, EventArgs e)
         {
-            cmdConvertGDLEJSONToACESQL.Enabled = false;
+            cmdParseGDLEJSONs.Enabled = false;
 
-            txtGDLEParser.Text = null;
+            txtGDLEJSONParser.Text = null;
 
             try
             { 
                 // Read in the GDLE jsons
 
-                txtGDLEParser.Text += "Loading events.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadEventsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "events.json"), out var events))
-                    txtGDLEParser.Text += $" completed. {events.Count} entries found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading events.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadEventsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "events.json"), out Globals.GDLE.Events))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Events.Count} entries found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
-                txtGDLEParser.Text += "Loading quests.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadQuestsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "quests.json"), out var quests))
-                    txtGDLEParser.Text += $" completed. {quests.Count} entries found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading quests.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadQuestsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "quests.json"), out Globals.GDLE.Quests))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Quests.Count} entries found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 // recipeprecursors.json
 
-                txtGDLEParser.Text += "Loading recipes.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipesConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes.json"), out var recipes))
-                    txtGDLEParser.Text += $" completed. {recipes.Count} entries found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading recipes.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipesConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes.json"), out Globals.GDLE.Recipes))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Recipes.Count} entries found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 // restrictedlandblocks.json
 
-                txtGDLEParser.Text += "Loading spells.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadSpellsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "spells.json"), out var spells))
-                    txtGDLEParser.Text += $" completed. {spells.Count} entries found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading spells.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadSpellsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "spells.json"), out Globals.GDLE.Spells))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Spells.Count} entries found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 // treasureProfile.json
 
-                txtGDLEParser.Text += "Loading worldspawns.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out var instances, out var links))
-                    txtGDLEParser.Text += $" completed. {instances.Count} instances and {links.Count} links found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading worldspawns.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out Globals.GDLE.Instances, out Globals.GDLE.Links))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Instances.Count} instances and {Globals.GDLE.Links.Count} links found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
-                txtGDLEParser.Text += "Loading \\weenies\\*.json";
-                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out var weenies))
-                    txtGDLEParser.Text += $" completed. {weenies.Count} entries found." + Environment.NewLine;
+                txtGDLEJSONParser.Text += "Loading \\weenies\\*.json";
+                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Weenies.Count} entries found." + Environment.NewLine;
                 else
-                    txtGDLEParser.Text += " failed." + Environment.NewLine;
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
+                Globals.GDLE.IsLoaded = true;
 
 
                 // Collect some meta data that we'll use to pretty up the SQL files
 
-                var weenieNames = new Dictionary<uint, string>();
-
-                foreach (var weenie in weenies)
-                {
-                    string name = null;
-
-                    foreach (var property in weenie.WeeniePropertiesString)
-                    {
-                        if (property.Type == (ushort)PropertyString.Name)
-                        {
-                            name = property.Value;
-                            break;
-                        }
-                    }
-
-                    if (String.IsNullOrEmpty(name))
-                    {
-                        if (!WeenieClassNames.Values.TryGetValue(weenie.ClassId, out name))
-                            name = "ace" + weenie.ClassId;
-                    }
-
-                    weenieNames.Add(weenie.ClassId, name);
-                }
-
-
-                // Write out the SQL files
-
-                //SpellsSQLWriter.WriteFiles(spells, lblGDLESQLOutputFolder.Text + "\\Database\\Spells\\", weenieNames);
-
-                WeenieSQLWriter.WriteFiles(weenies, lblGDLESQLOutputFolder.Text + "\\Database\\Weenies\\", weenieNames);
-
-                // What about links??
-                LandblockSQLWriter.WriteFiles(instances, lblGDLESQLOutputFolder.Text + "\\Database\\Landblock Instances\\", weenieNames);
-
-                // TODO
+                Globals.GDLE.AddToWeenieNames();
             }
             catch (Exception ex)
             {
-                txtGDLEParser.Text += Environment.NewLine + ex;
+                txtGDLEJSONParser.Text += Environment.NewLine + ex;
             }
 
 
-            cmdConvertGDLEJSONToACESQL.Enabled = true;
+            cmdParseGDLEJSONs.Enabled = true;
         }
 
 
@@ -402,32 +365,77 @@ namespace PhatACCacheBinParser
             Settings.Default.Save();
         }
 
-        private void cmdTestDatabaseConnection_Click(object sender, EventArgs e)
+        private void cmdTestInitDatabaseConnection_Click(object sender, EventArgs e)
         {
+            if (Globals.ACEDatabase.TryInitWorldDatabaseContext())
+                txtACEDatabaseConnector.Text += "Connection succeeded!" + Environment.NewLine;
+            else
+                txtACEDatabaseConnector.Text += "Connection failed." + Environment.NewLine;
+        }
+
+	    private void cmdACEDatabaseCacheAllWeenies_Click(object sender, EventArgs e)
+	    {
+	        if (Globals.ACEDatabase.WorldDbContext == null)
+	        {
+	            txtACEDatabaseConnector.Text += "You must Test/Init Database Connection first." + Environment.NewLine;
+                return;
+	        }
+
+	        cmdACEDatabaseCacheAllWeenies.Enabled = false;
+
+            txtACEDatabaseConnector.Text += "Caching all weenies in parallel. This may take several minutes and consume lots of CPU...";
+	        txtACEDatabaseConnector.Refresh();
+            Globals.ACEDatabase.ReCacheAllWeeniesInParallel();
+	        txtACEDatabaseConnector.Text += $" completed. {Globals.ACEDatabase.WorldDatabase.GetWeenieCacheCount():N0} weenies cached." + Environment.NewLine;
+
+            cmdACEDatabaseCacheAllWeenies.Enabled = true;
+        }
+
+
+        // ====================================================================================
+        // =================================== Output Tools ===================================
+        // ====================================================================================
+
+        private void cmdOutputTool1_Click(object sender, EventArgs e)
+        {
+            cmdOutputTool1.Enabled = false;
+
+            txtOutputTool1.Text = null;
+
             try
             {
-                var optionsBuilder = new DbContextOptionsBuilder<WorldDbContext>();
-                optionsBuilder.UseMySql($"server={Settings.Default.ACEWorldServer};port={Settings.Default.ACEWorldPort};user={Settings.Default.ACEWorldUser};password={Settings.Default.ACEWorldPassword};database={Settings.Default.ACEWorldDatabase}");
+                // Get all landblock guids currently in use in the database
+                var landblockGuidsUsed = new List<uint>();
 
-                using (var context = new WorldDbContext(optionsBuilder.Options))
+                if (Globals.ACEDatabase.WorldDbContext != null)
                 {
-                    var worldDatabase = new WorldDatabase();
+                    var results = Globals.ACEDatabase.WorldDbContext.LandblockInstance
+                        .AsNoTracking()
+                        .ToList();
 
-                    var result = worldDatabase.GetWeenie(context, 1);
-
-                    if (result != null)
-                    {
-                        MessageBox.Show("Connection succeeded!");
-                        return;
-                    }
-
-                    MessageBox.Show("Connection failed.");
+                    foreach (var result in results)
+                        landblockGuidsUsed.Add(result.Guid);
                 }
+
+
+                // Write out the SQL files
+
+                //SpellsSQLWriter.WriteFiles(spells, lblGDLESQLOutputFolder.Text + "\\Database\\Spells\\", weenieNames);
+
+                WeenieSQLWriter.WriteFiles(Globals.GDLE.Weenies, lblGDLESQLOutputFolder.Text + "\\Database\\Weenies\\", Globals.WeenieNames);
+
+                // What about links??
+                LandblockSQLWriter.WriteFiles(Globals.GDLE.Instances, lblGDLESQLOutputFolder.Text + "\\Database\\Landblock Instances\\", Globals.WeenieNames);
+
+                // TODO
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Connection failed with exception: " + Environment.NewLine + Environment.NewLine + ex);
+                txtOutputTool1.Text += Environment.NewLine + ex;
             }
+
+
+            cmdOutputTool1.Enabled = true;
         }
     }
 }
