@@ -94,5 +94,65 @@ namespace PhatACCacheBinParser.Properties {
                 this["GDLESQLOutputFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ACEWorldServer {
+            get {
+                return ((string)(this["ACEWorldServer"]));
+            }
+            set {
+                this["ACEWorldServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3306")]
+        public ushort ACEWorldPort {
+            get {
+                return ((ushort)(this["ACEWorldPort"]));
+            }
+            set {
+                this["ACEWorldPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ACEWorldUser {
+            get {
+                return ((string)(this["ACEWorldUser"]));
+            }
+            set {
+                this["ACEWorldUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ACEWorldPassword {
+            get {
+                return ((string)(this["ACEWorldPassword"]));
+            }
+            set {
+                this["ACEWorldPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ace_world")]
+        public string ACEWorldDatabase {
+            get {
+                return ((string)(this["ACEWorldDatabase"]));
+            }
+            set {
+                this["ACEWorldDatabase"] = value;
+            }
+        }
     }
 }

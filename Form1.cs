@@ -1,10 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using ACE.Entity.Enum.Properties;
+
+using Microsoft.EntityFrameworkCore;
+
 using PhatACCacheBinParser.Common;
 using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
@@ -18,6 +21,10 @@ using PhatACCacheBinParser.Seg9_WeenieDefaults;
 using PhatACCacheBinParser.SegA_MutationFilters;
 using PhatACCacheBinParser.SegB_GameEventDefDB;
 using PhatACCacheBinParser.SQLWriters;
+
+using ACE.Database;
+using ACE.Database.Models.World;
+using ACE.Entity.Enum.Properties;
 
 namespace PhatACCacheBinParser
 {
@@ -82,6 +89,14 @@ namespace PhatACCacheBinParser
 		    lblGDLEJSONRootFolder.Text = Settings.Default.GDLEJSONRootFolder;
 		    lblGDLESQLOutputFolder.Text = Settings.Default.GDLESQLOutputFolder;
 
+
+            // ACE
+
+		    txtACEWorldServer.Text = Settings.Default.ACEWorldServer;
+		    txtACEWorldPort.Text = Settings.Default.ACEWorldPort.ToString();
+            txtACEWorldUser.Text = Settings.Default.ACEWorldUser;
+		    txtACEWorldPassword.Text = Settings.Default.ACEWorldPassword;
+		    txtACEWorldDatabase.Text = Settings.Default.ACEWorldDatabase;
 		}
 
         protected override void OnClosing(CancelEventArgs e)
@@ -347,6 +362,72 @@ namespace PhatACCacheBinParser
 
 
             cmdConvertGDLEJSONToACESQL.Enabled = true;
+        }
+
+
+        // ====================================================================================
+        // =================================== ACE Database ===================================
+        // ====================================================================================
+
+        private void txtACEWorldServer_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ACEWorldServer = txtACEWorldServer.Text;
+            Settings.Default.Save();
+        }
+
+        private void txtACEWorldPort_TextChanged(object sender, EventArgs e)
+        {
+            if (ushort.TryParse(txtACEWorldPort.Text, out var port))
+            {
+                Settings.Default.ACEWorldPort = port;
+                Settings.Default.Save();
+            }
+        }
+
+        private void txtACEWorldUser_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ACEWorldUser = txtACEWorldUser.Text;
+            Settings.Default.Save();
+        }
+
+        private void txtACEWorldPassword_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ACEWorldPassword = txtACEWorldPassword.Text;
+            Settings.Default.Save();
+        }
+
+        private void txtACEWorldDatabase_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ACEWorldDatabase = txtACEWorldDatabase.Text;
+            Settings.Default.Save();
+        }
+
+        private void cmdTestDatabaseConnection_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<WorldDbContext>();
+                optionsBuilder.UseMySql($"server={Settings.Default.ACEWorldServer};port={Settings.Default.ACEWorldPort};user={Settings.Default.ACEWorldUser};password={Settings.Default.ACEWorldPassword};database={Settings.Default.ACEWorldDatabase}");
+
+                using (var context = new WorldDbContext(optionsBuilder.Options))
+                {
+                    var worldDatabase = new WorldDatabase();
+
+                    var result = worldDatabase.GetWeenie(context, 1);
+
+                    if (result != null)
+                    {
+                        MessageBox.Show("Connection succeeded!");
+                        return;
+                    }
+
+                    MessageBox.Show("Connection failed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection failed with exception: " + Environment.NewLine + Environment.NewLine + ex);
+            }
         }
     }
 }

@@ -33,6 +33,25 @@ namespace PhatACCacheBinParser
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.cmdConvertGDLEJSONToACESQL = new System.Windows.Forms.Button();
+			this.txtGDLEParser = new System.Windows.Forms.RichTextBox();
+			this.lblGDLESQLOutputFolder = new System.Windows.Forms.Label();
+			this.cmdChooseSQLOutputFolder = new System.Windows.Forms.Button();
+			this.cmdChooseJSONRootFolder = new System.Windows.Forms.Button();
+			this.lblGDLEJSONRootFolder = new System.Windows.Forms.Label();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.txtACEWorldServer = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.cmdTestDatabaseConnection = new System.Windows.Forms.Button();
+			this.txtACEWorldPort = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.txtACEWorldUser = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.txtACEWorldPassword = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.txtACEWorldDatabase = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
 			this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
 			this.parserControlB = new PhatACCacheBinParser.ParserControl();
 			this.parserControl8 = new PhatACCacheBinParser.ParserControl();
@@ -45,17 +64,10 @@ namespace PhatACCacheBinParser
 			this.parserControlA = new PhatACCacheBinParser.ParserControl();
 			this.parserControl3 = new PhatACCacheBinParser.ParserControl();
 			this.parserControl1 = new PhatACCacheBinParser.ParserControl();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.lblGDLESQLOutputFolder = new System.Windows.Forms.Label();
-			this.cmdChooseSQLOutputFolder = new System.Windows.Forms.Button();
-			this.cmdChooseJSONRootFolder = new System.Windows.Forms.Button();
-			this.lblGDLEJSONRootFolder = new System.Windows.Forms.Label();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.txtGDLEParser = new System.Windows.Forms.RichTextBox();
-			this.cmdConvertGDLEJSONToACESQL = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmdOutputFolder
@@ -123,6 +135,197 @@ namespace PhatACCacheBinParser
 			this.label1.Size = new System.Drawing.Size(187, 13);
 			this.label1.TabIndex = 27;
 			this.label1.Text = "Export ACE formatted .SQL files";
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.cmdConvertGDLEJSONToACESQL);
+			this.tabPage3.Controls.Add(this.txtGDLEParser);
+			this.tabPage3.Controls.Add(this.lblGDLESQLOutputFolder);
+			this.tabPage3.Controls.Add(this.cmdChooseSQLOutputFolder);
+			this.tabPage3.Controls.Add(this.cmdChooseJSONRootFolder);
+			this.tabPage3.Controls.Add(this.lblGDLEJSONRootFolder);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(1060, 1057);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "GDLE .json -> ACE .sql";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// cmdConvertGDLEJSONToACESQL
+			// 
+			this.cmdConvertGDLEJSONToACESQL.Location = new System.Drawing.Point(20, 120);
+			this.cmdConvertGDLEJSONToACESQL.Name = "cmdConvertGDLEJSONToACESQL";
+			this.cmdConvertGDLEJSONToACESQL.Size = new System.Drawing.Size(235, 23);
+			this.cmdConvertGDLEJSONToACESQL.TabIndex = 29;
+			this.cmdConvertGDLEJSONToACESQL.Text = "Convert GDLE JSON to ACE .SQL";
+			this.cmdConvertGDLEJSONToACESQL.UseVisualStyleBackColor = true;
+			this.cmdConvertGDLEJSONToACESQL.Click += new System.EventHandler(this.cmdConvertGDLEJSONToACESQL_Click);
+			// 
+			// txtGDLEParser
+			// 
+			this.txtGDLEParser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtGDLEParser.Location = new System.Drawing.Point(8, 149);
+			this.txtGDLEParser.Name = "txtGDLEParser";
+			this.txtGDLEParser.Size = new System.Drawing.Size(1044, 900);
+			this.txtGDLEParser.TabIndex = 28;
+			this.txtGDLEParser.Text = "";
+			// 
+			// lblGDLESQLOutputFolder
+			// 
+			this.lblGDLESQLOutputFolder.AutoSize = true;
+			this.lblGDLESQLOutputFolder.Location = new System.Drawing.Point(186, 54);
+			this.lblGDLESQLOutputFolder.Name = "lblGDLESQLOutputFolder";
+			this.lblGDLESQLOutputFolder.Size = new System.Drawing.Size(35, 13);
+			this.lblGDLESQLOutputFolder.TabIndex = 27;
+			this.lblGDLESQLOutputFolder.Text = "label1";
+			// 
+			// cmdChooseSQLOutputFolder
+			// 
+			this.cmdChooseSQLOutputFolder.Location = new System.Drawing.Point(20, 49);
+			this.cmdChooseSQLOutputFolder.Name = "cmdChooseSQLOutputFolder";
+			this.cmdChooseSQLOutputFolder.Size = new System.Drawing.Size(160, 23);
+			this.cmdChooseSQLOutputFolder.TabIndex = 26;
+			this.cmdChooseSQLOutputFolder.Text = "Choose SQL Output Folder";
+			this.cmdChooseSQLOutputFolder.UseVisualStyleBackColor = true;
+			this.cmdChooseSQLOutputFolder.Click += new System.EventHandler(this.cmdChooseSQLOutputFolder_Click);
+			// 
+			// cmdChooseJSONRootFolder
+			// 
+			this.cmdChooseJSONRootFolder.Location = new System.Drawing.Point(20, 20);
+			this.cmdChooseJSONRootFolder.Name = "cmdChooseJSONRootFolder";
+			this.cmdChooseJSONRootFolder.Size = new System.Drawing.Size(160, 23);
+			this.cmdChooseJSONRootFolder.TabIndex = 24;
+			this.cmdChooseJSONRootFolder.Text = "Choose JSON Root Folder";
+			this.cmdChooseJSONRootFolder.UseVisualStyleBackColor = true;
+			this.cmdChooseJSONRootFolder.Click += new System.EventHandler(this.cmdChooseJSONRootFolder_Click);
+			// 
+			// lblGDLEJSONRootFolder
+			// 
+			this.lblGDLEJSONRootFolder.AutoSize = true;
+			this.lblGDLEJSONRootFolder.Location = new System.Drawing.Point(186, 25);
+			this.lblGDLEJSONRootFolder.Name = "lblGDLEJSONRootFolder";
+			this.lblGDLEJSONRootFolder.Size = new System.Drawing.Size(35, 13);
+			this.lblGDLEJSONRootFolder.TabIndex = 25;
+			this.lblGDLEJSONRootFolder.Text = "label1";
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.txtACEWorldDatabase);
+			this.tabPage4.Controls.Add(this.label6);
+			this.tabPage4.Controls.Add(this.txtACEWorldPassword);
+			this.tabPage4.Controls.Add(this.label5);
+			this.tabPage4.Controls.Add(this.txtACEWorldUser);
+			this.tabPage4.Controls.Add(this.label4);
+			this.tabPage4.Controls.Add(this.txtACEWorldPort);
+			this.tabPage4.Controls.Add(this.label3);
+			this.tabPage4.Controls.Add(this.txtACEWorldServer);
+			this.tabPage4.Controls.Add(this.label2);
+			this.tabPage4.Controls.Add(this.cmdTestDatabaseConnection);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(1060, 1057);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "ACE Database -> ACE .sql";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// txtACEWorldServer
+			// 
+			this.txtACEWorldServer.Location = new System.Drawing.Point(79, 20);
+			this.txtACEWorldServer.Name = "txtACEWorldServer";
+			this.txtACEWorldServer.Size = new System.Drawing.Size(200, 20);
+			this.txtACEWorldServer.TabIndex = 2;
+			this.txtACEWorldServer.TextChanged += new System.EventHandler(this.txtACEWorldServer_TextChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(20, 23);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(38, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Server";
+			// 
+			// cmdTestDatabaseConnection
+			// 
+			this.cmdTestDatabaseConnection.Location = new System.Drawing.Point(79, 150);
+			this.cmdTestDatabaseConnection.Name = "cmdTestDatabaseConnection";
+			this.cmdTestDatabaseConnection.Size = new System.Drawing.Size(200, 23);
+			this.cmdTestDatabaseConnection.TabIndex = 0;
+			this.cmdTestDatabaseConnection.Text = "Test Database Connection";
+			this.cmdTestDatabaseConnection.UseVisualStyleBackColor = true;
+			this.cmdTestDatabaseConnection.Click += new System.EventHandler(this.cmdTestDatabaseConnection_Click);
+			// 
+			// txtACEWorldPort
+			// 
+			this.txtACEWorldPort.Location = new System.Drawing.Point(79, 46);
+			this.txtACEWorldPort.Name = "txtACEWorldPort";
+			this.txtACEWorldPort.Size = new System.Drawing.Size(200, 20);
+			this.txtACEWorldPort.TabIndex = 4;
+			this.txtACEWorldPort.TextChanged += new System.EventHandler(this.txtACEWorldPort_TextChanged);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(20, 49);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(26, 13);
+			this.label3.TabIndex = 3;
+			this.label3.Text = "Port";
+			// 
+			// txtACEWorldUser
+			// 
+			this.txtACEWorldUser.Location = new System.Drawing.Point(79, 72);
+			this.txtACEWorldUser.Name = "txtACEWorldUser";
+			this.txtACEWorldUser.Size = new System.Drawing.Size(200, 20);
+			this.txtACEWorldUser.TabIndex = 6;
+			this.txtACEWorldUser.TextChanged += new System.EventHandler(this.txtACEWorldUser_TextChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(20, 75);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(29, 13);
+			this.label4.TabIndex = 5;
+			this.label4.Text = "User";
+			// 
+			// txtACEWorldPassword
+			// 
+			this.txtACEWorldPassword.Location = new System.Drawing.Point(79, 98);
+			this.txtACEWorldPassword.Name = "txtACEWorldPassword";
+			this.txtACEWorldPassword.Size = new System.Drawing.Size(200, 20);
+			this.txtACEWorldPassword.TabIndex = 8;
+			this.txtACEWorldPassword.TextChanged += new System.EventHandler(this.txtACEWorldPassword_TextChanged);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(20, 101);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(53, 13);
+			this.label5.TabIndex = 7;
+			this.label5.Text = "Password";
+			// 
+			// txtACEWorldDatabase
+			// 
+			this.txtACEWorldDatabase.Location = new System.Drawing.Point(79, 124);
+			this.txtACEWorldDatabase.Name = "txtACEWorldDatabase";
+			this.txtACEWorldDatabase.Size = new System.Drawing.Size(200, 20);
+			this.txtACEWorldDatabase.TabIndex = 10;
+			this.txtACEWorldDatabase.TextChanged += new System.EventHandler(this.txtACEWorldDatabase_TextChanged);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(20, 127);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(53, 13);
+			this.label6.TabIndex = 9;
+			this.label6.Text = "Database";
 			// 
 			// sqlBuilderControl1
 			// 
@@ -252,91 +455,6 @@ namespace PhatACCacheBinParser
 			this.parserControl1.SourceBin = "label1";
 			this.parserControl1.TabIndex = 18;
 			// 
-			// tabPage3
-			// 
-			this.tabPage3.Controls.Add(this.cmdConvertGDLEJSONToACESQL);
-			this.tabPage3.Controls.Add(this.txtGDLEParser);
-			this.tabPage3.Controls.Add(this.lblGDLESQLOutputFolder);
-			this.tabPage3.Controls.Add(this.cmdChooseSQLOutputFolder);
-			this.tabPage3.Controls.Add(this.cmdChooseJSONRootFolder);
-			this.tabPage3.Controls.Add(this.lblGDLEJSONRootFolder);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(1060, 1057);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "GDLE .json -> ACE .sql";
-			this.tabPage3.UseVisualStyleBackColor = true;
-			// 
-			// lblGDLESQLOutputFolder
-			// 
-			this.lblGDLESQLOutputFolder.AutoSize = true;
-			this.lblGDLESQLOutputFolder.Location = new System.Drawing.Point(186, 54);
-			this.lblGDLESQLOutputFolder.Name = "lblGDLESQLOutputFolder";
-			this.lblGDLESQLOutputFolder.Size = new System.Drawing.Size(35, 13);
-			this.lblGDLESQLOutputFolder.TabIndex = 27;
-			this.lblGDLESQLOutputFolder.Text = "label1";
-			// 
-			// cmdChooseSQLOutputFolder
-			// 
-			this.cmdChooseSQLOutputFolder.Location = new System.Drawing.Point(20, 49);
-			this.cmdChooseSQLOutputFolder.Name = "cmdChooseSQLOutputFolder";
-			this.cmdChooseSQLOutputFolder.Size = new System.Drawing.Size(160, 23);
-			this.cmdChooseSQLOutputFolder.TabIndex = 26;
-			this.cmdChooseSQLOutputFolder.Text = "Choose SQL Output Folder";
-			this.cmdChooseSQLOutputFolder.UseVisualStyleBackColor = true;
-			this.cmdChooseSQLOutputFolder.Click += new System.EventHandler(this.cmdChooseSQLOutputFolder_Click);
-			// 
-			// cmdChooseJSONRootFolder
-			// 
-			this.cmdChooseJSONRootFolder.Location = new System.Drawing.Point(20, 20);
-			this.cmdChooseJSONRootFolder.Name = "cmdChooseJSONRootFolder";
-			this.cmdChooseJSONRootFolder.Size = new System.Drawing.Size(160, 23);
-			this.cmdChooseJSONRootFolder.TabIndex = 24;
-			this.cmdChooseJSONRootFolder.Text = "Choose JSON Root Folder";
-			this.cmdChooseJSONRootFolder.UseVisualStyleBackColor = true;
-			this.cmdChooseJSONRootFolder.Click += new System.EventHandler(this.cmdChooseJSONRootFolder_Click);
-			// 
-			// lblGDLEJSONRootFolder
-			// 
-			this.lblGDLEJSONRootFolder.AutoSize = true;
-			this.lblGDLEJSONRootFolder.Location = new System.Drawing.Point(186, 25);
-			this.lblGDLEJSONRootFolder.Name = "lblGDLEJSONRootFolder";
-			this.lblGDLEJSONRootFolder.Size = new System.Drawing.Size(35, 13);
-			this.lblGDLEJSONRootFolder.TabIndex = 25;
-			this.lblGDLEJSONRootFolder.Text = "label1";
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(1060, 1057);
-			this.tabPage4.TabIndex = 3;
-			this.tabPage4.Text = "ACE Database -> ACE .sql";
-			this.tabPage4.UseVisualStyleBackColor = true;
-			// 
-			// txtGDLEParser
-			// 
-			this.txtGDLEParser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtGDLEParser.Location = new System.Drawing.Point(8, 149);
-			this.txtGDLEParser.Name = "txtGDLEParser";
-			this.txtGDLEParser.Size = new System.Drawing.Size(1044, 900);
-			this.txtGDLEParser.TabIndex = 28;
-			this.txtGDLEParser.Text = "";
-			// 
-			// cmdConvertGDLEJSONToACESQL
-			// 
-			this.cmdConvertGDLEJSONToACESQL.Location = new System.Drawing.Point(20, 120);
-			this.cmdConvertGDLEJSONToACESQL.Name = "cmdConvertGDLEJSONToACESQL";
-			this.cmdConvertGDLEJSONToACESQL.Size = new System.Drawing.Size(235, 23);
-			this.cmdConvertGDLEJSONToACESQL.TabIndex = 29;
-			this.cmdConvertGDLEJSONToACESQL.Text = "Convert GDLE JSON to ACE .SQL";
-			this.cmdConvertGDLEJSONToACESQL.UseVisualStyleBackColor = true;
-			this.cmdConvertGDLEJSONToACESQL.Click += new System.EventHandler(this.cmdConvertGDLEJSONToACESQL_Click);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,6 +469,8 @@ namespace PhatACCacheBinParser
 			this.tabPage1.PerformLayout();
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
+			this.tabPage4.ResumeLayout(false);
+			this.tabPage4.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -381,6 +501,17 @@ namespace PhatACCacheBinParser
         private System.Windows.Forms.Label lblGDLEJSONRootFolder;
         private System.Windows.Forms.Button cmdConvertGDLEJSONToACESQL;
         private System.Windows.Forms.RichTextBox txtGDLEParser;
+        private System.Windows.Forms.Button cmdTestDatabaseConnection;
+        private System.Windows.Forms.TextBox txtACEWorldServer;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtACEWorldDatabase;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtACEWorldPassword;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtACEWorldUser;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtACEWorldPort;
+        private System.Windows.Forms.Label label3;
     }
 }
 

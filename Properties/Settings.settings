@@ -20,5 +20,20 @@
     <Setting Name="GDLESQLOutputFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ACEWorldServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ACEWorldPort" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">3306</Value>
+    </Setting>
+    <Setting Name="ACEWorldUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ACEWorldPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ACEWorldDatabase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ace_world</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
