@@ -410,6 +410,7 @@ namespace PhatACCacheBinParser
                 if (Globals.ACEDatabase.WorldDbContext != null)
                 {
                     var results = Globals.ACEDatabase.WorldDbContext.LandblockInstance
+                        //.Include(r => r.LandblockInstanceLink) // UNCOMMENT THIS IF YOU WANT TO INCLUDE LINKS
                         .AsNoTracking()
                         .ToList();
 
