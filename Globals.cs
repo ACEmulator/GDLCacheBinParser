@@ -51,7 +51,8 @@ namespace PhatACCacheBinParser
             {
                 foreach (var weenie in WeenieDefaults.Weenies)
                 {
-                    var className = weenie.Value.Description;
+                    //var className = weenie.Value.Description;
+                    var className = "";
 
                     if (String.IsNullOrEmpty(className))
                     {
@@ -68,6 +69,8 @@ namespace PhatACCacheBinParser
                             if (!String.IsNullOrEmpty(name))
                                 className = "ace" + weenie.Value.WCID.ToString() + "-" + name.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
                         }
+
+                        className = className.Replace("_", "-");
                     }
 
                     WeenieClsNames[weenie.Value.WCID] = className;
