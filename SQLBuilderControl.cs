@@ -42,6 +42,7 @@ namespace PhatACCacheBinParser
 
                 Globals.CacheBin.IsLoaded = true;
 
+                Globals.CacheBin.AddToWeenieClsNames();
                 Globals.CacheBin.AddToWeenieNames();
             });
 

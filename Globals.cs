@@ -28,6 +28,7 @@ namespace PhatACCacheBinParser
 {
     static class Globals
     {
+        public static readonly ConcurrentDictionary<uint, string> WeenieClsNames = new ConcurrentDictionary<uint, string>();
         public static readonly ConcurrentDictionary<uint, string> WeenieNames = new ConcurrentDictionary<uint, string>();
 
         public static class CacheBin
@@ -46,19 +47,42 @@ namespace PhatACCacheBinParser
             public static readonly MutationFilters MutationFilters = new MutationFilters();
             public static readonly GameEventDefDB GameEventDefDB = new GameEventDefDB();
 
+            public static void AddToWeenieClsNames()
+            {
+                foreach (var weenie in WeenieDefaults.Weenies)
+                {
+                    var className = weenie.Value.Description;
+
+                    if (String.IsNullOrEmpty(className))
+                    {
+                        if (Enum.IsDefined(typeof(WCLASSID), (int)weenie.Value.WCID))
+                            className = Enum.GetName(typeof(WCLASSID), weenie.Value.WCID).ToLower();
+                        else if (Enum.IsDefined(typeof(WeenieClasses), (ushort)weenie.Value.WCID))
+                        {
+                            var clsName = Enum.GetName(typeof(WeenieClasses), weenie.Value.WCID).ToLower().Substring(2);
+                            className = clsName.Substring(0, clsName.Length - 6);
+                        }
+                        else
+                        {
+                            var name = weenie.Value.StringValues.Where(x => x.Key == (int)PropertyString.Name).FirstOrDefault().Value;
+                            if (!String.IsNullOrEmpty(name))
+                                className = "ace" + weenie.Value.WCID.ToString() + "-" + name.Replace("'", "").Replace(" ", "").Replace(".", "").Replace("(", "").Replace(")", "").Replace("+", "").Replace(":", "").Replace("_", "").Replace("-", "").Replace(",", "").ToLower();
+                        }
+                    }
+
+                    WeenieClsNames[weenie.Value.WCID] = className;
+                }
+            }
+
             public static void AddToWeenieNames()
             {
                 foreach (var weenie in WeenieDefaults.Weenies)
                 {
-                    var name = weenie.Value.Description;
-
-                    if (String.IsNullOrEmpty(name))
-                    {
-                        if (!WeenieClassNames.Values.TryGetValue(weenie.Value.WCID, out name))
-                            name = "ace" + weenie.Value.WCID;
-                    }
-
-                    WeenieNames[weenie.Value.WCID] = name;
+                    var name = weenie.Value.StringValues.Where(x => x.Key == (int)PropertyString.Name).FirstOrDefault().Value;
+                    if (!String.IsNullOrEmpty(name))
+                        WeenieNames[weenie.Value.WCID] = name;
+                    else
+                        WeenieNames[weenie.Value.WCID] = "ace" + weenie.Value.WCID.ToString();
                 }
             }
         }
@@ -125,7 +149,7 @@ namespace PhatACCacheBinParser
 
                     if (String.IsNullOrEmpty(name))
                     {
-                        if (!WeenieClassNames.Values.TryGetValue(weenie.ClassId, out name))
+                        //if (!WeenieClassNames.Values.TryGetValue(weenie.ClassId, out name))
                             name = "ace" + weenie.ClassId;
                     }
 

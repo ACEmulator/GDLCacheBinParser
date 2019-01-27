@@ -37,7 +37,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             var result = new Weenie();
 
             result.ClassId = input.Key;
-            WeenieClassNames.Values.TryGetValue(input.Value.WCID, out var className);
+            Globals.WeenieClsNames.TryGetValue(input.Value.WCID, out var className);
             result.ClassName = className;
             result.Type = input.Value.WeenieType;
 
