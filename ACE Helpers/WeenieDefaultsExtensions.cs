@@ -19,9 +19,13 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 // Highest Weenie Exported in WorldSpawns was: 30937
                 // Highest Weenie found in WeenieClasses was: 31034
 
-                uint highestWeenieAllowed = 31034;
+                uint lowestWeenieAllowed = 1;
+                uint highestWeenieAllowed = 31220; // previously 31034
 
-                if (value.Key > highestWeenieAllowed && highestWeenieAllowed > 0)
+                if (value.Key < lowestWeenieAllowed)
+                    continue;
+
+                if (value.Key > highestWeenieAllowed)
                     continue;
 
                 var converted = value.ConvertToACE();
