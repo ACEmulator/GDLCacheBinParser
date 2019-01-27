@@ -7,7 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using Microsoft.EntityFrameworkCore;
-
+using PhatACCacheBinParser.ACE_Helpers;
 using PhatACCacheBinParser.Properties;
 using PhatACCacheBinParser.Seg1_RegionDescExtendedData;
 using PhatACCacheBinParser.Seg2_SpellTableExtendedData;
@@ -92,6 +92,7 @@ namespace PhatACCacheBinParser
             txtACEWorldUser.Text = Settings.Default.ACEWorldUser;
 		    txtACEWorldPassword.Text = Settings.Default.ACEWorldPassword;
 		    txtACEWorldDatabase.Text = Settings.Default.ACEWorldDatabase;
+            chkHidePassword.Checked = Settings.Default.HideACEWorldPassword;
 		}
 
         protected override void OnClosing(CancelEventArgs e)
@@ -317,6 +318,15 @@ namespace PhatACCacheBinParser
                 // Collect some meta data that we'll use to pretty up the SQL files
 
                 Globals.GDLE.AddToWeenieNames();
+
+                if (Globals.GDLE.Spells.Count > 0)
+                    cmdGDLE2SpellsParse.Enabled = true;
+                if (Globals.GDLE.Quests.Count > 0)
+                    cmdGDLE8QuestsParse.Enabled = true;
+                if (Globals.GDLE.Weenies.Count > 0)
+                    cmdGDLE9WeeniesParse.Enabled = true;
+                if (Globals.GDLE.Events.Count > 0)
+                    cmdGDLEBEventsParse.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -325,6 +335,96 @@ namespace PhatACCacheBinParser
 
 
             cmdParseGDLEJSONs.Enabled = true;
+        }
+
+        private void cmdGDLE1RegionsParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdGDLE2SpellsParse_Click(object sender, EventArgs e)
+        {
+            cmdGDLE2SpellsParse.Enabled = false;
+
+            SpellsSQLWriter.WriteFiles(Globals.GDLE.Spells, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+
+            cmdGDLE2SpellsParse.Enabled = true;
+        }
+
+        private void cmdGDLE3TreasureParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdGDLE4CraftingParse_Click(object sender, EventArgs e)
+        {
+            cmdGDLE4CraftingParse.Enabled = false;
+
+            //var aceCraftingTables = Globals.CacheBin.CraftingTable.ConvertToACE();
+            //var aceCraftingTables = Globals.GDLE.Recipes;
+            //CraftingSQLWriter.WriteFiles(aceCraftingTables, Globals.WeenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
+
+            cmdGDLE4CraftingParse.Enabled = true;
+        }
+
+        private void cmdGDLE5HousingParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdGDLE6LandblocksParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdGDLE8QuestsParse_Click(object sender, EventArgs e)
+        {
+            cmdGDLE8QuestsParse.Enabled = false;
+
+            QuestSQLWriter.WriteFiles(Globals.GDLE.Quests, Settings.Default["GDLESQLOutputFolder"] + "\\8 QuestDefDB\\SQL\\");
+
+            cmdGDLE8QuestsParse.Enabled = true;
+        }
+
+        private void cmdGDLE9WeeniesParse_Click(object sender, EventArgs e)
+        {
+            cmdGDLE9WeeniesParse.Enabled = false;
+
+            var aceTreasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
+            var aceTreasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
+
+            var treasureWielded = new Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>>();
+            foreach (var item in aceTreasureWielded)
+            {
+                if (!treasureWielded.ContainsKey(item.TreasureType))
+                    treasureWielded.Add(item.TreasureType, new List<ACE.Database.Models.World.TreasureWielded>());
+
+                treasureWielded[item.TreasureType].Add(item);
+            }
+            var treasureDeath = new Dictionary<uint, ACE.Database.Models.World.TreasureDeath>();
+            foreach (var item in aceTreasureDeath)
+            {
+                if (!treasureDeath.ContainsKey(item.TreasureType))
+                    treasureDeath.Add(item.TreasureType, item);
+            }
+
+            WeenieSQLWriter.WriteFiles(Globals.GDLE.Weenies, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, Globals.GDLE.Weenies.ToDictionary(x => x.ClassId, x => x));
+
+            cmdGDLE9WeeniesParse.Enabled = true;
+        }
+
+        private void cmdGDLEAMutationParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdGDLEBEventsParse_Click(object sender, EventArgs e)
+        {
+            cmdGDLEBEventsParse.Enabled = false;
+
+            EventSQLWriter.WriteFiles(Globals.GDLE.Events, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\");
+
+            cmdGDLEBEventsParse.Enabled = true;
         }
 
 
@@ -437,6 +537,13 @@ namespace PhatACCacheBinParser
 
 
             cmdOutputTool1.Enabled = true;
+        }
+
+        private void chkHidePassword_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.HideACEWorldPassword = chkHidePassword.Checked;
+            Settings.Default.Save();
+            txtACEWorldPassword.UseSystemPasswordChar = chkHidePassword.Checked;
         }
     }
 }
