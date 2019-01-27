@@ -491,6 +491,13 @@ namespace PhatACCacheBinParser
             cmdACEDatabaseCacheAllWeenies.Enabled = true;
         }
 
+        private void chkHidePassword_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.HideACEWorldPassword = chkHidePassword.Checked;
+            Settings.Default.Save();
+            txtACEWorldPassword.UseSystemPasswordChar = chkHidePassword.Checked;
+        }
+
 
         // ====================================================================================
         // =================================== Output Tools ===================================
@@ -537,13 +544,6 @@ namespace PhatACCacheBinParser
 
 
             cmdOutputTool1.Enabled = true;
-        }
-
-        private void chkHidePassword_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.HideACEWorldPassword = chkHidePassword.Checked;
-            Settings.Default.Save();
-            txtACEWorldPassword.UseSystemPasswordChar = chkHidePassword.Checked;
         }
     }
 }
