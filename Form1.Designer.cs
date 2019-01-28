@@ -51,16 +51,17 @@ namespace PhatACCacheBinParser
             this.cmdChooseJSONRootFolder = new System.Windows.Forms.Button();
             this.lblGDLEJSONRootFolder = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
+            this.chkHidePassword = new System.Windows.Forms.CheckBox();
+            this.cmdACEBEventsParse = new System.Windows.Forms.Button();
+            this.cmdACEAMutationParse = new System.Windows.Forms.Button();
+            this.cmdACE5HousingParse = new System.Windows.Forms.Button();
+            this.cmdACE4CraftingParse = new System.Windows.Forms.Button();
+            this.cmdACE1RegionsParse = new System.Windows.Forms.Button();
+            this.cmdACE3TreasureParse = new System.Windows.Forms.Button();
+            this.cmdACE8QuestsParse = new System.Windows.Forms.Button();
+            this.cmdACE9WeeniesParse = new System.Windows.Forms.Button();
+            this.cmdACE6LandblocksParse = new System.Windows.Forms.Button();
+            this.cmdACE2SpellsParse = new System.Windows.Forms.Button();
             this.cmdACEDatabaseCacheAllWeenies = new System.Windows.Forms.Button();
             this.txtACEDatabaseConnector = new System.Windows.Forms.RichTextBox();
             this.txtACEWorldDatabase = new System.Windows.Forms.TextBox();
@@ -89,7 +90,6 @@ namespace PhatACCacheBinParser
             this.parserControlA = new PhatACCacheBinParser.ParserControl();
             this.parserControl3 = new PhatACCacheBinParser.ParserControl();
             this.parserControl1 = new PhatACCacheBinParser.ParserControl();
-            this.chkHidePassword = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -362,16 +362,16 @@ namespace PhatACCacheBinParser
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.chkHidePassword);
-            this.tabPage4.Controls.Add(this.button1);
-            this.tabPage4.Controls.Add(this.button2);
-            this.tabPage4.Controls.Add(this.button3);
-            this.tabPage4.Controls.Add(this.button4);
-            this.tabPage4.Controls.Add(this.button5);
-            this.tabPage4.Controls.Add(this.button6);
-            this.tabPage4.Controls.Add(this.button7);
-            this.tabPage4.Controls.Add(this.button8);
-            this.tabPage4.Controls.Add(this.button9);
-            this.tabPage4.Controls.Add(this.button10);
+            this.tabPage4.Controls.Add(this.cmdACEBEventsParse);
+            this.tabPage4.Controls.Add(this.cmdACEAMutationParse);
+            this.tabPage4.Controls.Add(this.cmdACE5HousingParse);
+            this.tabPage4.Controls.Add(this.cmdACE4CraftingParse);
+            this.tabPage4.Controls.Add(this.cmdACE1RegionsParse);
+            this.tabPage4.Controls.Add(this.cmdACE3TreasureParse);
+            this.tabPage4.Controls.Add(this.cmdACE8QuestsParse);
+            this.tabPage4.Controls.Add(this.cmdACE9WeeniesParse);
+            this.tabPage4.Controls.Add(this.cmdACE6LandblocksParse);
+            this.tabPage4.Controls.Add(this.cmdACE2SpellsParse);
             this.tabPage4.Controls.Add(this.cmdACEDatabaseCacheAllWeenies);
             this.tabPage4.Controls.Add(this.txtACEDatabaseConnector);
             this.tabPage4.Controls.Add(this.txtACEWorldDatabase);
@@ -393,105 +393,128 @@ namespace PhatACCacheBinParser
             this.tabPage4.Text = "ACE Database Connector";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // chkHidePassword
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(840, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(119, 23);
-            this.button1.TabIndex = 58;
-            this.button1.Text = "B Events";
-            this.button1.UseVisualStyleBackColor = true;
+            this.chkHidePassword.AutoSize = true;
+            this.chkHidePassword.Checked = true;
+            this.chkHidePassword.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkHidePassword.Location = new System.Drawing.Point(286, 100);
+            this.chkHidePassword.Name = "chkHidePassword";
+            this.chkHidePassword.Size = new System.Drawing.Size(48, 17);
+            this.chkHidePassword.TabIndex = 59;
+            this.chkHidePassword.Text = "Hide";
+            this.chkHidePassword.UseVisualStyleBackColor = true;
+            this.chkHidePassword.CheckedChanged += new System.EventHandler(this.chkHidePassword_CheckedChanged);
             // 
-            // button2
+            // cmdACEBEventsParse
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(840, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 23);
-            this.button2.TabIndex = 57;
-            this.button2.Text = "A Mutation";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cmdACEBEventsParse.Enabled = false;
+            this.cmdACEBEventsParse.Location = new System.Drawing.Point(840, 41);
+            this.cmdACEBEventsParse.Name = "cmdACEBEventsParse";
+            this.cmdACEBEventsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACEBEventsParse.TabIndex = 58;
+            this.cmdACEBEventsParse.Text = "B Events";
+            this.cmdACEBEventsParse.UseVisualStyleBackColor = true;
+            this.cmdACEBEventsParse.Click += new System.EventHandler(this.cmdACEBEventsParse_Click);
             // 
-            // button3
+            // cmdACEAMutationParse
             // 
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(715, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(119, 23);
-            this.button3.TabIndex = 56;
-            this.button3.Text = "5 Housing";
-            this.button3.UseVisualStyleBackColor = true;
+            this.cmdACEAMutationParse.Enabled = false;
+            this.cmdACEAMutationParse.Location = new System.Drawing.Point(840, 6);
+            this.cmdACEAMutationParse.Name = "cmdACEAMutationParse";
+            this.cmdACEAMutationParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACEAMutationParse.TabIndex = 57;
+            this.cmdACEAMutationParse.Text = "A Mutation";
+            this.cmdACEAMutationParse.UseVisualStyleBackColor = true;
+            this.cmdACEAMutationParse.Click += new System.EventHandler(this.cmdACEAMutationParse_Click);
             // 
-            // button4
+            // cmdACE5HousingParse
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(590, 115);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(119, 23);
-            this.button4.TabIndex = 55;
-            this.button4.Text = "4 Crafting";
-            this.button4.UseVisualStyleBackColor = true;
+            this.cmdACE5HousingParse.Enabled = false;
+            this.cmdACE5HousingParse.Location = new System.Drawing.Point(715, 6);
+            this.cmdACE5HousingParse.Name = "cmdACE5HousingParse";
+            this.cmdACE5HousingParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE5HousingParse.TabIndex = 56;
+            this.cmdACE5HousingParse.Text = "5 Housing";
+            this.cmdACE5HousingParse.UseVisualStyleBackColor = true;
+            this.cmdACE5HousingParse.Click += new System.EventHandler(this.cmdACE5HousingParse_Click);
             // 
-            // button5
+            // cmdACE4CraftingParse
             // 
-            this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(590, 6);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(119, 23);
-            this.button5.TabIndex = 54;
-            this.button5.Text = "1 Regions";
-            this.button5.UseVisualStyleBackColor = true;
+            this.cmdACE4CraftingParse.Enabled = false;
+            this.cmdACE4CraftingParse.Location = new System.Drawing.Point(590, 115);
+            this.cmdACE4CraftingParse.Name = "cmdACE4CraftingParse";
+            this.cmdACE4CraftingParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE4CraftingParse.TabIndex = 55;
+            this.cmdACE4CraftingParse.Text = "4 Crafting";
+            this.cmdACE4CraftingParse.UseVisualStyleBackColor = true;
+            this.cmdACE4CraftingParse.Click += new System.EventHandler(this.cmdACE4CraftingParse_Click);
             // 
-            // button6
+            // cmdACE1RegionsParse
             // 
-            this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(590, 78);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(119, 23);
-            this.button6.TabIndex = 53;
-            this.button6.Text = "3 Treasure";
-            this.button6.UseVisualStyleBackColor = true;
+            this.cmdACE1RegionsParse.Enabled = false;
+            this.cmdACE1RegionsParse.Location = new System.Drawing.Point(590, 6);
+            this.cmdACE1RegionsParse.Name = "cmdACE1RegionsParse";
+            this.cmdACE1RegionsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE1RegionsParse.TabIndex = 54;
+            this.cmdACE1RegionsParse.Text = "1 Regions";
+            this.cmdACE1RegionsParse.UseVisualStyleBackColor = true;
+            this.cmdACE1RegionsParse.Click += new System.EventHandler(this.cmdACE1RegionsParse_Click);
             // 
-            // button7
+            // cmdACE3TreasureParse
             // 
-            this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(715, 78);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(119, 23);
-            this.button7.TabIndex = 52;
-            this.button7.Text = "8 Quests";
-            this.button7.UseVisualStyleBackColor = true;
+            this.cmdACE3TreasureParse.Enabled = false;
+            this.cmdACE3TreasureParse.Location = new System.Drawing.Point(590, 78);
+            this.cmdACE3TreasureParse.Name = "cmdACE3TreasureParse";
+            this.cmdACE3TreasureParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE3TreasureParse.TabIndex = 53;
+            this.cmdACE3TreasureParse.Text = "3 Treasure";
+            this.cmdACE3TreasureParse.UseVisualStyleBackColor = true;
+            this.cmdACE3TreasureParse.Click += new System.EventHandler(this.cmdACE3TreasureParse_Click);
             // 
-            // button8
+            // cmdACE8QuestsParse
             // 
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(715, 115);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(119, 23);
-            this.button8.TabIndex = 51;
-            this.button8.Text = "9 Weenies";
-            this.button8.UseVisualStyleBackColor = true;
+            this.cmdACE8QuestsParse.Enabled = false;
+            this.cmdACE8QuestsParse.Location = new System.Drawing.Point(715, 78);
+            this.cmdACE8QuestsParse.Name = "cmdACE8QuestsParse";
+            this.cmdACE8QuestsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE8QuestsParse.TabIndex = 52;
+            this.cmdACE8QuestsParse.Text = "8 Quests";
+            this.cmdACE8QuestsParse.UseVisualStyleBackColor = true;
+            this.cmdACE8QuestsParse.Click += new System.EventHandler(this.cmdACE8QuestsParse_Click);
             // 
-            // button9
+            // cmdACE9WeeniesParse
             // 
-            this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(715, 41);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(119, 23);
-            this.button9.TabIndex = 50;
-            this.button9.Text = "6 Landblocks";
-            this.button9.UseVisualStyleBackColor = true;
+            this.cmdACE9WeeniesParse.Enabled = false;
+            this.cmdACE9WeeniesParse.Location = new System.Drawing.Point(715, 115);
+            this.cmdACE9WeeniesParse.Name = "cmdACE9WeeniesParse";
+            this.cmdACE9WeeniesParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE9WeeniesParse.TabIndex = 51;
+            this.cmdACE9WeeniesParse.Text = "9 Weenies";
+            this.cmdACE9WeeniesParse.UseVisualStyleBackColor = true;
+            this.cmdACE9WeeniesParse.Click += new System.EventHandler(this.cmdACE9WeeniesParse_Click);
             // 
-            // button10
+            // cmdACE6LandblocksParse
             // 
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(590, 41);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(119, 23);
-            this.button10.TabIndex = 49;
-            this.button10.Text = "2 Spells";
-            this.button10.UseVisualStyleBackColor = true;
+            this.cmdACE6LandblocksParse.Enabled = false;
+            this.cmdACE6LandblocksParse.Location = new System.Drawing.Point(715, 41);
+            this.cmdACE6LandblocksParse.Name = "cmdACE6LandblocksParse";
+            this.cmdACE6LandblocksParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE6LandblocksParse.TabIndex = 50;
+            this.cmdACE6LandblocksParse.Text = "6 Landblocks";
+            this.cmdACE6LandblocksParse.UseVisualStyleBackColor = true;
+            this.cmdACE6LandblocksParse.Click += new System.EventHandler(this.cmdACE6LandblocksParse_Click);
+            // 
+            // cmdACE2SpellsParse
+            // 
+            this.cmdACE2SpellsParse.Enabled = false;
+            this.cmdACE2SpellsParse.Location = new System.Drawing.Point(590, 41);
+            this.cmdACE2SpellsParse.Name = "cmdACE2SpellsParse";
+            this.cmdACE2SpellsParse.Size = new System.Drawing.Size(119, 23);
+            this.cmdACE2SpellsParse.TabIndex = 49;
+            this.cmdACE2SpellsParse.Text = "2 Spells";
+            this.cmdACE2SpellsParse.UseVisualStyleBackColor = true;
+            this.cmdACE2SpellsParse.Click += new System.EventHandler(this.cmdACE2SpellsParse_Click);
             // 
             // cmdACEDatabaseCacheAllWeenies
             // 
@@ -768,19 +791,6 @@ namespace PhatACCacheBinParser
             this.parserControl1.SourceBin = "label1";
             this.parserControl1.TabIndex = 18;
             // 
-            // chkHidePassword
-            // 
-            this.chkHidePassword.AutoSize = true;
-            this.chkHidePassword.Checked = true;
-            this.chkHidePassword.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHidePassword.Location = new System.Drawing.Point(286, 100);
-            this.chkHidePassword.Name = "chkHidePassword";
-            this.chkHidePassword.Size = new System.Drawing.Size(48, 17);
-            this.chkHidePassword.TabIndex = 59;
-            this.chkHidePassword.Text = "Hide";
-            this.chkHidePassword.UseVisualStyleBackColor = true;
-            this.chkHidePassword.CheckedChanged += new System.EventHandler(this.chkHidePassword_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -852,19 +862,19 @@ namespace PhatACCacheBinParser
         private System.Windows.Forms.Button cmdGDLE3TreasureParse;
         private System.Windows.Forms.Button cmdGDLE8QuestsParse;
         private System.Windows.Forms.Button cmdGDLE9WeeniesParse;
-        private System.Windows.Forms.Button cmdGDLE6LandblocksParse;
         private System.Windows.Forms.Button cmdGDLE2SpellsParse;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button cmdACEBEventsParse;
+        private System.Windows.Forms.Button cmdACEAMutationParse;
+        private System.Windows.Forms.Button cmdACE5HousingParse;
+        private System.Windows.Forms.Button cmdACE4CraftingParse;
+        private System.Windows.Forms.Button cmdACE1RegionsParse;
+        private System.Windows.Forms.Button cmdACE3TreasureParse;
+        private System.Windows.Forms.Button cmdACE8QuestsParse;
+        private System.Windows.Forms.Button cmdACE9WeeniesParse;
+        private System.Windows.Forms.Button cmdACE6LandblocksParse;
+        private System.Windows.Forms.Button cmdACE2SpellsParse;
         private System.Windows.Forms.CheckBox chkHidePassword;
+        private System.Windows.Forms.Button cmdGDLE6LandblocksParse;
     }
 }
 

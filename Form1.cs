@@ -468,7 +468,20 @@ namespace PhatACCacheBinParser
         private void cmdTestInitDatabaseConnection_Click(object sender, EventArgs e)
         {
             if (Globals.ACEDatabase.TryInitWorldDatabaseContext())
+            {
                 txtACEDatabaseConnector.Text += "Connection succeeded!" + Environment.NewLine;
+
+                cmdACE1RegionsParse.Enabled = true;
+                cmdACE2SpellsParse.Enabled = true;
+                cmdACE3TreasureParse.Enabled = true;
+                cmdACE4CraftingParse.Enabled = true;
+                cmdACE5HousingParse.Enabled = true;
+                cmdACE6LandblocksParse.Enabled = true;
+                cmdACE8QuestsParse.Enabled = true;
+                cmdACE9WeeniesParse.Enabled = true;
+                cmdACEAMutationParse.Enabled = true;
+                cmdACEBEventsParse.Enabled = true;
+            }
             else
                 txtACEDatabaseConnector.Text += "Connection failed." + Environment.NewLine;
         }
@@ -496,6 +509,64 @@ namespace PhatACCacheBinParser
             Settings.Default.HideACEWorldPassword = chkHidePassword.Checked;
             Settings.Default.Save();
             txtACEWorldPassword.UseSystemPasswordChar = chkHidePassword.Checked;
+        }
+
+        private void cmdACE1RegionsParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE2SpellsParse_Click(object sender, EventArgs e)
+        {
+            cmdACE2SpellsParse.Enabled = false;
+
+            var results = Globals.ACEDatabase.WorldDbContext.Spell
+                    .AsNoTracking()
+                    .ToList();
+
+            SpellsSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+
+            cmdACE2SpellsParse.Enabled = true;
+        }
+
+        private void cmdACE3TreasureParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE4CraftingParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE5HousingParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE6LandblocksParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE8QuestsParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACE9WeeniesParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACEAMutationParse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdACEBEventsParse_Click(object sender, EventArgs e)
+        {
+
         }
 
 
@@ -544,6 +615,6 @@ namespace PhatACCacheBinParser
 
 
             cmdOutputTool1.Enabled = true;
-        }
+        }        
     }
 }
