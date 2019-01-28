@@ -97,7 +97,7 @@ namespace PhatACCacheBinParser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
         public string ACEWorldServer {
             get {
                 return ((string)(this["ACEWorldServer"]));
@@ -121,7 +121,7 @@ namespace PhatACCacheBinParser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("root")]
         public string ACEWorldUser {
             get {
                 return ((string)(this["ACEWorldUser"]));
@@ -152,6 +152,18 @@ namespace PhatACCacheBinParser.Properties {
             }
             set {
                 this["ACEWorldDatabase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HideACEWorldPassword {
+            get {
+                return ((bool)(this["HideACEWorldPassword"]));
+            }
+            set {
+                this["HideACEWorldPassword"] = value;
             }
         }
     }

@@ -170,8 +170,8 @@
     <Compile Include="ACE Helpers\TreasureTableExtensions.cs" />
     <Compile Include="ACE Helpers\WeenieDefaultsExtensions.cs" />
     <Compile Include="Common\PacketOpCodeNames.cs" />
-    <Compile Include="Common\SpellNames.cs" />
     <Compile Include="Common\WeenieClassNames.cs" />
+    <Compile Include="Common\SpellNames.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="SQLWriters\EventSQLWriter.cs" />
     <Compile Include="SQLWriters\HouseSQLWriter.cs" />

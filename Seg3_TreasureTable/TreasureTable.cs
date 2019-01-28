@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,7 +6,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
 	class TreasureTable : Segment
 	{
-		public readonly Dictionary<uint, List<WieldedTreasure>> WieldedTreasure =new Dictionary<uint, List<WieldedTreasure>>(); // hashA
+		public readonly Dictionary<uint, List<WieldedTreasure>> WieldedTreasure = new Dictionary<uint, List<WieldedTreasure>>(); // hashA
 		public readonly Dictionary<uint, DeathTreasure> DeathTreasure = new Dictionary<uint, DeathTreasure>(); // hashB
 
 		public readonly List<Dictionary<uint, List<TreasureEntry5>>> _treasure3 = new List<Dictionary<uint, List<TreasureEntry5>>>();
