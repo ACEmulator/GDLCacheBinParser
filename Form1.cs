@@ -524,7 +524,7 @@ namespace PhatACCacheBinParser
                     .AsNoTracking()
                     .ToList();
 
-            SpellsSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+            SpellsSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames, true);
 
             cmdACE2SpellsParse.Enabled = true;
         }
