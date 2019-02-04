@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 using ACE.Database.Models.World;
@@ -68,7 +68,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         Landblock = value.Landblock,
                         WeenieClassId = value.WeenieClassId,
                         CellX = value.CellX,
-                        CellY = value.CellY
+                        CellY = value.CellY,
+                        LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
                     });
                 }
             }

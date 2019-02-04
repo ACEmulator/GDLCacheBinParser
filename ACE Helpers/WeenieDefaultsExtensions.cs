@@ -453,6 +453,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     result.WeeniePropertiesAnimPart.Add(new WeeniePropertiesAnimPart { Index = value.Index, Id = (uint)value.ID });
             }
 
+            result.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
+
             return result;
         }
     }

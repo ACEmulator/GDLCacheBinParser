@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -33,6 +33,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                         AnglesX = destination.Angles.X,
                         AnglesY = destination.Angles.Y,
                         AnglesZ = destination.Angles.Z,
+                        LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
                     };
 
                     results.Add(result);

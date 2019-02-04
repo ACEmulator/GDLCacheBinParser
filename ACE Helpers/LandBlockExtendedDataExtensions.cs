@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -37,6 +37,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             AnglesX = weenie.Position.Angles.X,
                             AnglesY = weenie.Position.Angles.Y,
                             AnglesZ = weenie.Position.Angles.Z,
+                            LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
                         };
 
                         // Somebody goofed and a guid was used in two places... I'm not sure that it ultimately was a problem on retail worlds but this fixes it for ACE
@@ -72,7 +73,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                         result.LandblockInstanceLink.Add(new LandblockInstanceLink
                                         {
                                             ParentGuid = result.Guid,
-                                            ChildGuid = link.Source
+                                            ChildGuid = link.Source,
+                                            LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
                                         });
                                     }
                                 }
