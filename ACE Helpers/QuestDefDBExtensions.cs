@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -29,7 +29,9 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 MinDelta = input.MinDelta,
                 MaxSolves = input.MaxSolves,
 
-                Message = input.Message
+                Message = input.Message,
+
+                LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
             };
 
             return result;

@@ -132,6 +132,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.Number = input.Number;
             result.NumberVariance = input.NumberVariance;
 
+            result.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
+
             return result;
         }
     }
