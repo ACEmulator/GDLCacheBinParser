@@ -556,7 +556,15 @@ namespace PhatACCacheBinParser
 
         private void cmdACE9WeeniesParse_Click(object sender, EventArgs e)
         {
+            cmdACE9WeeniesParse.Enabled = false;
 
+            var results = Globals.ACEDatabase.WorldDbContext.Weenie
+                    .AsNoTracking()
+                    .ToList();
+
+            WeenieSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, null, null, results.ToDictionary(x => x.ClassId, x => x), true);
+
+            cmdACE9WeeniesParse.Enabled = true;
         }
 
         private void cmdACEAMutationParse_Click(object sender, EventArgs e)
