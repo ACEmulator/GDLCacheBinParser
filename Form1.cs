@@ -558,11 +558,9 @@ namespace PhatACCacheBinParser
         {
             cmdACE9WeeniesParse.Enabled = false;
 
-            var results = Globals.ACEDatabase.WorldDbContext.Weenie
-                    .AsNoTracking()
-                    .ToList();
+            Globals.ACEDatabase.ReCacheAllWeeniesInParallel();
 
-            WeenieSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, null, null, results.ToDictionary(x => x.ClassId, x => x), true);
+            WeenieSQLWriter.WriteFiles(Globals.ACEDatabase.Weenies, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, null, null, Globals.ACEDatabase.Weenies.ToDictionary(x => x.ClassId, x => x), true);
 
             cmdACE9WeeniesParse.Enabled = true;
         }
