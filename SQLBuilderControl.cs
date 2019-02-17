@@ -92,7 +92,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceEncounters = Globals.CacheBin.RegionDescExtendedData.ConvertToACE(Globals.CacheBin.LandBlockData);
-                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", Globals.WeenieNames);
+                RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", Globals.WeenieNames, true);
             });
 
             progressBarRegions.Style = ProgressBarStyle.Continuous;
@@ -111,7 +111,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceSpells = Globals.CacheBin.SpellTableExtendedData.ConvertToACE();
-                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+                SpellsSQLWriter.WriteFiles(aceSpells, Settings.Default["OutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames, true);
             });
 
             progressBarSpells.Style = ProgressBarStyle.Continuous;
@@ -132,8 +132,8 @@ namespace PhatACCacheBinParser
                 var treasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
                 var treasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
 
-                TreasureSQLWriter.WriteFiles(treasureDeath, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Death\\");
-                TreasureSQLWriter.WriteFiles(treasureWielded, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", Globals.WeenieNames);
+                TreasureSQLWriter.WriteFiles(treasureDeath, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Death\\", true);
+                TreasureSQLWriter.WriteFiles(treasureWielded, Settings.Default["OutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", Globals.WeenieNames, true);
             });
 
             progressBarTreasure.Style = ProgressBarStyle.Continuous;
@@ -152,7 +152,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceCraftingTables = Globals.CacheBin.CraftingTable.ConvertToACE();
-                CraftingSQLWriter.WriteFiles(aceCraftingTables, Globals.WeenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
+                CraftingSQLWriter.WriteFiles(aceCraftingTables, Globals.WeenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\", true);
             });
 
             progressBarCrafting.Style = ProgressBarStyle.Continuous;
@@ -171,7 +171,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceHouePortals = Globals.CacheBin.HousingPortalsTable.ConvertToACE();
-                HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\5 HousingPortals\\SQL\\");
+                HouseSQLWriter.WriteFiles(aceHouePortals, Settings.Default["OutputFolder"] + "\\5 HousingPortals\\SQL\\", true);
             });
 
             progressBarHousing.Style = ProgressBarStyle.Continuous;
@@ -190,7 +190,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var landblockInstances = Globals.CacheBin.LandBlockData.ConvertToACE();
-                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames);
+                LandblockSQLWriter.WriteFiles(landblockInstances, Settings.Default["OutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames, true);
             });
 
             progressBarLandblocks.Style = ProgressBarStyle.Continuous;
@@ -209,7 +209,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceQuests = Globals.CacheBin.QuestDefDB.ConvertToACE();
-                QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\8 QuestDefDB\\SQL\\");
+                QuestSQLWriter.WriteFiles(aceQuests, Settings.Default["OutputFolder"] + "\\8 QuestDefDB\\SQL\\", true);
             });
 
             progressBarQuests.Style = ProgressBarStyle.Continuous;
@@ -251,7 +251,7 @@ namespace PhatACCacheBinParser
                     if (!treasureDeath.ContainsKey(item.TreasureType))
                         treasureDeath.Add(item.TreasureType, item);
                 }
-                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, weenies);
+                WeenieSQLWriter.WriteFiles(aceWeenies, Settings.Default["OutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, weenies, true);
             });
 
             progressBarWeenies.Style = ProgressBarStyle.Continuous;
@@ -270,7 +270,7 @@ namespace PhatACCacheBinParser
             await Task.Run(() =>
             {
                 var aceEvents = Globals.CacheBin.GameEventDefDB.ConvertToACE();
-                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\B GameEventDefDB\\SQL\\");
+                EventSQLWriter.WriteFiles(aceEvents, Settings.Default["OutputFolder"] + "\\B GameEventDefDB\\SQL\\", true);
             });
 
             progressBarEvents.Style = ProgressBarStyle.Continuous;

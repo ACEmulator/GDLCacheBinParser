@@ -171,6 +171,8 @@ namespace PhatACCacheBinParser
 
             public static WorldDatabase WorldDatabase = new WorldDatabase();
 
+            public static List<ACE.Database.Models.World.Weenie> Weenies;
+
             public static bool TryInitWorldDatabaseContext()
             {
                 try
@@ -202,6 +204,8 @@ namespace PhatACCacheBinParser
             {
                 WorldDatabase.ClearWeenieCache();
 
+                var weenies = new List<ACE.Database.Models.World.Weenie>();
+
                 var results = WorldDbContext.Weenie
                     .AsNoTracking()
                     .ToList();
@@ -215,6 +219,8 @@ namespace PhatACCacheBinParser
 
                     var weenie = WorldDatabase.GetWeenie(worldDbContext, result.ClassId);
 
+                    weenies.Add(weenie);
+
                     if (updateWeenieNames && weenie != null)
                     {
                         var name = weenie.GetProperty(PropertyString.Name);
@@ -223,6 +229,8 @@ namespace PhatACCacheBinParser
                             WeenieNames[weenie.ClassId] = name;
                     }
                 });
+
+                Weenies = weenies;
             }
         }
     }
