@@ -319,13 +319,13 @@ namespace PhatACCacheBinParser
 
                 Globals.GDLE.AddToWeenieNames();
 
-                if (Globals.GDLE.Spells.Count > 0)
+                if (Globals.GDLE.Spells != null && Globals.GDLE.Spells.Count > 0)
                     cmdGDLE2SpellsParse.Enabled = true;
-                if (Globals.GDLE.Quests.Count > 0)
+                if (Globals.GDLE.Quests != null && Globals.GDLE.Quests.Count > 0)
                     cmdGDLE8QuestsParse.Enabled = true;
-                if (Globals.GDLE.Weenies.Count > 0)
+                if (Globals.GDLE.Weenies != null && Globals.GDLE.Weenies.Count > 0)
                     cmdGDLE9WeeniesParse.Enabled = true;
-                if (Globals.GDLE.Events.Count > 0)
+                if (Globals.GDLE.Events != null && Globals.GDLE.Events.Count > 0)
                     cmdGDLEBEventsParse.Enabled = true;
             }
             catch (Exception ex)
