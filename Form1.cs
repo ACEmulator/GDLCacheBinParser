@@ -327,6 +327,8 @@ namespace PhatACCacheBinParser
                     cmdGDLE9WeeniesParse.Enabled = true;
                 if (Globals.GDLE.Events != null && Globals.GDLE.Events.Count > 0)
                     cmdGDLEBEventsParse.Enabled = true;
+                if (Globals.GDLE.Instances != null && Globals.GDLE.Instances.Count > 0)
+                    cmdGDLE6LandblocksParse.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -345,6 +347,9 @@ namespace PhatACCacheBinParser
         private void cmdGDLE2SpellsParse_Click(object sender, EventArgs e)
         {
             cmdGDLE2SpellsParse.Enabled = false;
+
+            foreach (var x in Globals.GDLE.Spells)
+                x.LastModified = DateTime.UtcNow;
 
             SpellsSQLWriter.WriteFiles(Globals.GDLE.Spells, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
 
@@ -374,14 +379,24 @@ namespace PhatACCacheBinParser
 
         private void cmdGDLE6LandblocksParse_Click(object sender, EventArgs e)
         {
+            cmdGDLE6LandblocksParse.Enabled = false;
 
+            foreach (var x in Globals.GDLE.Instances)
+                x.LastModified = DateTime.UtcNow;
+
+            LandblockSQLWriter.WriteFiles(Globals.GDLE.Instances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
+
+            cmdGDLE6LandblocksParse.Enabled = true;
         }
 
         private void cmdGDLE8QuestsParse_Click(object sender, EventArgs e)
         {
             cmdGDLE8QuestsParse.Enabled = false;
 
-            QuestSQLWriter.WriteFiles(Globals.GDLE.Quests, Settings.Default["GDLESQLOutputFolder"] + "\\8 QuestDefDB\\SQL\\");
+            foreach (var x in Globals.GDLE.Quests)
+                x.LastModified = DateTime.UtcNow;
+
+            QuestSQLWriter.WriteFiles(Globals.GDLE.Quests, Settings.Default["GDLESQLOutputFolder"] + "\\8 QuestDefDB\\SQL\\", true);
 
             cmdGDLE8QuestsParse.Enabled = true;
         }
@@ -389,6 +404,9 @@ namespace PhatACCacheBinParser
         private void cmdGDLE9WeeniesParse_Click(object sender, EventArgs e)
         {
             cmdGDLE9WeeniesParse.Enabled = false;
+
+            foreach (var x in Globals.GDLE.Weenies)
+                x.LastModified = DateTime.UtcNow;
 
             var aceTreasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
             var aceTreasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
@@ -408,7 +426,7 @@ namespace PhatACCacheBinParser
                     treasureDeath.Add(item.TreasureType, item);
             }
 
-            WeenieSQLWriter.WriteFiles(Globals.GDLE.Weenies, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, Globals.GDLE.Weenies.ToDictionary(x => x.ClassId, x => x));
+            WeenieSQLWriter.WriteFiles(Globals.GDLE.Weenies, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, Globals.GDLE.Weenies.ToDictionary(x => x.ClassId, x => x), true);
 
             cmdGDLE9WeeniesParse.Enabled = true;
         }
@@ -421,6 +439,9 @@ namespace PhatACCacheBinParser
         private void cmdGDLEBEventsParse_Click(object sender, EventArgs e)
         {
             cmdGDLEBEventsParse.Enabled = false;
+
+            foreach (var x in Globals.GDLE.Events)
+                x.LastModified = DateTime.UtcNow;
 
             EventSQLWriter.WriteFiles(Globals.GDLE.Events, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\");
 
