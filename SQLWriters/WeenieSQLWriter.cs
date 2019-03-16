@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class WeenieSQLWriter
     {
-        public static void WriteFiles(ICollection<ACE.Database.Models.World.Weenie> input, string outputFolder, Dictionary<uint, string> weenieNames, Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>> wieldedTreasure = null, Dictionary<uint, ACE.Database.Models.World.TreasureDeath> deathTreasure = null, Dictionary<uint, ACE.Database.Models.World.Weenie> weenies = null, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(ICollection<ACE.Database.Models.World.Weenie> input, string outputFolder, IDictionary<uint, string> weenieNames, IDictionary<uint, List<ACE.Database.Models.World.TreasureWielded>> wieldedTreasure = null, IDictionary<uint, ACE.Database.Models.World.TreasureDeath> deathTreasure = null, IDictionary<uint, ACE.Database.Models.World.Weenie> weenies = null, bool includeDELETEStatementBeforeInsert = false)
         {
             var sqlWriter = new ACE.Database.SQLFormatters.World.WeenieSQLWriter();
 
@@ -22,14 +22,13 @@ namespace PhatACCacheBinParser.SQLWriters
             });
         }
 
-        public static void WriteFile(ACE.Database.Models.World.Weenie input, string outputFolder, Dictionary<uint, string> weenieNames, Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>> wieldedTreasure = null, Dictionary<uint, ACE.Database.Models.World.TreasureDeath> deathTreasure = null, Dictionary<uint, ACE.Database.Models.World.Weenie> weenies = null, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFile(ACE.Database.Models.World.Weenie input, string outputFolder, IDictionary<uint, string> weenieNames, IDictionary<uint, List<ACE.Database.Models.World.TreasureWielded>> wieldedTreasure = null, IDictionary<uint, ACE.Database.Models.World.TreasureDeath> deathTreasure = null, IDictionary<uint, ACE.Database.Models.World.Weenie> weenies = null, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);
 
             var sqlWriter = new ACE.Database.SQLFormatters.World.WeenieSQLWriter();
 
-            sqlWriter.WeenieClassNames = WeenieClassNames.Values;
             sqlWriter.WeenieNames = weenieNames;
             sqlWriter.SpellNames = SpellNames.Values;
             sqlWriter.PacketOpCodes = PacketOpCodeNames.Values;

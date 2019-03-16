@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class CraftingSQLWriter
     {
-        public static void WriteFiles(CraftTableExtensions.CraftTableExtensionsConversionResult input, Dictionary<uint, string> weenieNames,  string outputFolder, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(CraftTableExtensions.CraftTableExtensionsConversionResult input, IDictionary<uint, string> weenieNames,  string outputFolder, bool includeDELETEStatementBeforeInsert = false)
         {
             // Sort the cookBooks by recipe
             var sortedCookBooks = new Dictionary<uint, List<ACE.Database.Models.World.CookBook>>();
@@ -37,7 +37,7 @@ namespace PhatACCacheBinParser.SQLWriters
             });
         }
 
-        public static void WriteFile(ACE.Database.Models.World.Recipe input, IList<ACE.Database.Models.World.CookBook> cookBooks, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFile(ACE.Database.Models.World.Recipe input, IList<ACE.Database.Models.World.CookBook> cookBooks, string outputFolder, IDictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

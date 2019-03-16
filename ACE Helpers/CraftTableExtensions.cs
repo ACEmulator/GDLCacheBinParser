@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -174,7 +174,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -188,7 +188,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -202,7 +202,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -216,7 +216,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -230,7 +230,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -244,7 +244,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
-                            Unknown1 = mod.Unknown1
+                            Source = mod.Source
                         });
                     }
                 }
@@ -277,6 +277,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.DataId = input.DataID;
 
+            result.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
+
             return result;
         }
 
@@ -287,6 +289,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.RecipeId = input.RecipeID;
             result.TargetWCID = input.Target;
             result.SourceWCID = input.Source;
+
+            result.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
 
             return result;
         }

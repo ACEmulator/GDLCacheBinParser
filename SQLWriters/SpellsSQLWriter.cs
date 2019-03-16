@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -6,7 +6,7 @@ namespace PhatACCacheBinParser.SQLWriters
 {
     static class SpellsSQLWriter
     {
-        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Spell> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.Spell> input, string outputFolder, IDictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             Parallel.ForEach(input, value =>
             //foreach (var value in input)
@@ -15,7 +15,7 @@ namespace PhatACCacheBinParser.SQLWriters
             });
         }
 
-        public static void WriteFile(ACE.Database.Models.World.Spell input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFile(ACE.Database.Models.World.Spell input, string outputFolder, IDictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             if (!Directory.Exists(outputFolder))
                 Directory.CreateDirectory(outputFolder);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -39,7 +39,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 MundaneItemChance = input.MundaneItemChance,
                 MundaneItemMinAmount = input.MundaneItemMinAmount,
                 MundaneItemMaxAmount = input.MundaneItemMaxAmount,
-                MundaneItemTypeSelectionChances = input.MundaneItemTypeSelectionChances
+                MundaneItemTypeSelectionChances = input.MundaneItemTypeSelectionChances,
+                LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
             };
 
             return result;
@@ -84,7 +85,8 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 Unknown9 = input.Unknown9,
                 Unknown10 = input.Unknown10,
                 Unknown11 = input.Unknown11,
-                Unknown12 = input.Unknown12
+                Unknown12 = input.Unknown12,
+                LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
             };
 
             return result;

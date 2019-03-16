@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -28,27 +28,6 @@ namespace PhatACCacheBinParser.ACE_Helpers
 
             result.Name = input.Name;
 
-            result.Description = input.Description;
-
-            result.School = input.School;
-            result.IconId = input.IconID;
-            result.Category = input.Category; // aka Family
-            result.Bitfield = input.Bitfield;
-            result.Mana = input.Mana;
-            result.RangeConstant = input.RangeConstant;
-            result.RangeMod = input.RangeMod;
-            result.Power = input.Power; // aka Difficulty
-            result.EconomyMod = input.EconomyMod;
-            result.FormulaVersion = input.FormulaVersion;
-            result.ComponentLoss = input.ComponentLoss;
-
-            result.MetaSpellType = input.MetaSpellType;
-            result.MetaSpellId = input.MetaSpellId; // Just the spell id again
-
-            // EnchantmentSpell/FellowshipEnchantmentSpells
-            result.Duration = input.Duration;
-            result.DegradeModifier = input.DegradeModifier;
-            result.DegradeLimit = input.DegradeLimit;
             if (input.SpellStatMod != null)
             {
                 result.StatModType = input.SpellStatMod.Type;
@@ -127,7 +106,6 @@ namespace PhatACCacheBinParser.ACE_Helpers
             //public int? Index; Reusd PortalLink index var
 
             // PortalSummon
-            result.PortalLifetime = input.PortalLifetime;
             result.Link = input.Link;
 
             // PortalSending, FellowPortalSending
@@ -154,23 +132,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.Number = input.Number;
             result.NumberVariance = input.NumberVariance;
 
-            if (input.SpellFormula.Comps.Count >= 1) result.SpellFormulaComp1ComponentId = input.SpellFormula.Comps[0];
-            if (input.SpellFormula.Comps.Count >= 2) result.SpellFormulaComp2ComponentId = input.SpellFormula.Comps[1];
-            if (input.SpellFormula.Comps.Count >= 3) result.SpellFormulaComp3ComponentId = input.SpellFormula.Comps[2];
-            if (input.SpellFormula.Comps.Count >= 4) result.SpellFormulaComp4ComponentId = input.SpellFormula.Comps[3];
-            if (input.SpellFormula.Comps.Count >= 5) result.SpellFormulaComp5ComponentId = input.SpellFormula.Comps[4];
-            if (input.SpellFormula.Comps.Count >= 6) result.SpellFormulaComp6ComponentId = input.SpellFormula.Comps[5];
-            if (input.SpellFormula.Comps.Count >= 7) result.SpellFormulaComp7ComponentId = input.SpellFormula.Comps[6];
-            if (input.SpellFormula.Comps.Count >= 8) result.SpellFormulaComp8ComponentId = input.SpellFormula.Comps[7];
-
-            result.CasterEffect = input.CasterEffect;
-            result.TargetEffect = input.TargetEffect;
-            result.FizzleEffect = input.FizzleEffect;
-            result.RecoveryInterval = input.RecoveryInterval;
-            result.RecoveryAmount = input.RecoveryAmount;
-            result.DisplayOrder = input.DisplayOrder;
-            result.NonComponentTargetType = input.NonComponentTargetType; // aka Target Mask
-            result.ManaMod = input.ManaMod;
+            result.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
 
             return result;
         }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using ACE.Database.Models.World;
 
@@ -29,7 +29,9 @@ namespace PhatACCacheBinParser.ACE_Helpers
                 StartTime = input.StartTime,
                 EndTime = input.EndTime,
 
-                State = (int)input.GameEventState
+                State = (int)input.GameEventState,
+
+                LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
             };
 
             return result;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.SQLWriters
@@ -33,7 +33,7 @@ namespace PhatACCacheBinParser.SQLWriters
         }
 
 
-        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.TreasureWielded> input, string outputFolder, Dictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
+        public static void WriteFiles(IEnumerable<ACE.Database.Models.World.TreasureWielded> input, string outputFolder, IDictionary<uint, string> weenieNames, bool includeDELETEStatementBeforeInsert = false)
         {
             // Sort the input by TreasureType
             var sortedInput = new Dictionary<uint, List<ACE.Database.Models.World.TreasureWielded>>();
