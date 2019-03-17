@@ -191,9 +191,9 @@
     <Compile Include="Seg3_TreasureTable\DeathTreasure.cs" />
     <Compile Include="Seg3_TreasureTable\TreasureEntry3.cs" />
     <Compile Include="Seg3_TreasureTable\TreasureEntry4.cs" />
-    <Compile Include="Seg3_TreasureTable\TreasureEntry5.cs" />
-    <Compile Include="Seg3_TreasureTable\TreasureEntry6.cs" />
-    <Compile Include="Seg3_TreasureTable\TreasureEntry7.cs" />
+    <Compile Include="Seg3_TreasureTable\ValueAndChance.cs" />
+    <Compile Include="Seg3_TreasureTable\ChanceByTier.cs" />
+    <Compile Include="Seg3_TreasureTable\ValuesAndChancesByTier.cs" />
     <Compile Include="Seg3_TreasureTable\TreasureTable.cs" />
     <Compile Include="Seg4_CraftTable\CraftingTable.cs" />
     <Compile Include="Seg4_CraftTable\Mod.cs" />

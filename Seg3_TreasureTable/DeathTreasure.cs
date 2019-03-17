@@ -1,10 +1,9 @@
-﻿using System.IO;
+using System.IO;
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
 	class DeathTreasure : IUnpackable
 	{
-		// Unknown3_2_2
 		public int Tier;
 		public float LootQualityMod;
 		public int UnknownChances;
