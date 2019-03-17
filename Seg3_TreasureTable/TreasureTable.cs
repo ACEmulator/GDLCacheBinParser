@@ -25,7 +25,8 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
         public readonly List<ValuesAndChancesByTier> _treasure7_b = new List<ValuesAndChancesByTier>();
 
         // Each tier has values 1-6
-	    public readonly ValuesAndChancesByTier _treasure7_c = new ValuesAndChancesByTier();
+	    // This could a percent of chance for something to happen in quantity, ie: something that can happen in quantities of 1-6
+        public readonly ValuesAndChancesByTier _treasure7_c = new ValuesAndChancesByTier();
 
         // Keys 1-6 (Could this be tiers?)
         // Key 1 values: 10 14 28 30 40 42 44 46
@@ -75,7 +76,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
         // Tier 4 chances: 0.25 0.5  0.25 0.0  0.0
         // Tier 5 chances: 0.0  0.25 0.5  0.25 0.0
         // Tier 6 chances: 0.0  0.25 0.35 0.3  0.1
-	    // This is likely a percent of chance for something to happen in quantity, ie: something that can happen in quantities of 1-5
+	    // This could a percent of chance for something to happen in quantity, ie: something that can happen in quantities of 1-5
         public readonly ValuesAndChancesByTier _treasure18_2 = new ValuesAndChancesByTier();
 
 	    // Keys 11,1,2,3,4,5,6,7,8,9,10
