@@ -7,6 +7,15 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
 	class TreasureTable : Segment
 	{
+        // THINGS TO FIND:
+        // Weapon wield requirements per drop
+        // Table that maps out damage to weapon wield requirements
+        // Table that maps out weapon variances
+        // Table that maps out other weapon modifiers, speed, attack, defense, magic, missile
+
+        // Map of allowed spells to a given EquipSlot
+
+
 		public readonly Dictionary<uint, List<WieldedTreasure>> WieldedTreasure = new Dictionary<uint, List<WieldedTreasure>>();
 		public readonly Dictionary<uint, DeathTreasure> DeathTreasure = new Dictionary<uint, DeathTreasure>();
 
