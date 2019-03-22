@@ -7,6 +7,13 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
 	class TreasureTable : Segment
 	{
+        // Notes
+
+        // MaterialType
+        // https://github.com/ACEmulator/ACE/blob/master/Source/ACE.Entity/Enum/MaterialType.cs
+        // max 77, at end of retail, but there are some gaps in the enum
+
+
         // THINGS TO FIND:
         // Weapon wield requirements per drop
         // Table that maps out damage to weapon wield requirements
@@ -16,7 +23,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
         // Map of allowed spells to a given EquipSlot
 
 
-		public readonly Dictionary<uint, List<WieldedTreasure>> WieldedTreasure = new Dictionary<uint, List<WieldedTreasure>>();
+        public readonly Dictionary<uint, List<WieldedTreasure>> WieldedTreasure = new Dictionary<uint, List<WieldedTreasure>>();
 		public readonly Dictionary<uint, DeathTreasure> DeathTreasure = new Dictionary<uint, DeathTreasure>();
 
         // 4 list entries with the following keys:
@@ -31,6 +38,7 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 
         // List list is 46 entries log, each entry has its own Tier:Value:Chance matrix
         // Each list item contains values that represent a set of weenies
+        // Lists are organized into weenies by material type
         public readonly List<ValuesAndChancesByTier> _treasure7_b = new List<ValuesAndChancesByTier>();
 
         // Each tier has values 1-6
@@ -106,6 +114,8 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 	    // List 3, values 1-18
         public readonly List<List<ValueAndChance>> _treasure24 = new List<List<ValueAndChance>>();
 
+        // Keys are 16, 1-15
+        // List values 1, 3, 9, 51, 52, 56, 65, 72
 		public readonly Dictionary<uint, Dictionary<uint, List<ValueAndChance>>> MaterialColorKeyMap = new Dictionary<uint, Dictionary<uint, List<ValueAndChance>>>();
 
 		public readonly List<ValuesAndChancesByTier> CantripChances = new List<ValuesAndChancesByTier>();
