@@ -1,10 +1,9 @@
-﻿using System.IO;
+using System.IO;
 
 namespace PhatACCacheBinParser.Seg3_TreasureTable
 {
 	class WieldedTreasure : IUnpackable
 	{
-		// Unknown3_1_4
 		public uint WeenieClassId;
 		public uint PaletteId;
 		public uint Unknown1; // always zero
@@ -25,7 +24,6 @@ namespace PhatACCacheBinParser.Seg3_TreasureTable
 
 		public bool Unpack(BinaryReader reader)
 		{
-			// Unknown3_1_4
 			WeenieClassId = reader.ReadUInt32();
 			PaletteId = reader.ReadUInt32();
 			Unknown1 = reader.ReadUInt32();
