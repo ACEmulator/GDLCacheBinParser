@@ -90,6 +90,7 @@ namespace PhatACCacheBinParser
             this.parserControlA = new PhatACCacheBinParser.ParserControl();
             this.parserControl3 = new PhatACCacheBinParser.ParserControl();
             this.parserControl1 = new PhatACCacheBinParser.ParserControl();
+            this.chkGDLEApplyEnumShift = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -166,6 +167,7 @@ namespace PhatACCacheBinParser
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.chkGDLEApplyEnumShift);
             this.tabPage3.Controls.Add(this.cmdGDLEBEventsParse);
             this.tabPage3.Controls.Add(this.cmdGDLEAMutationParse);
             this.tabPage3.Controls.Add(this.cmdGDLE5HousingParse);
@@ -791,6 +793,16 @@ namespace PhatACCacheBinParser
             this.parserControl1.SourceBin = "label1";
             this.parserControl1.TabIndex = 18;
             // 
+            // chkGDLEApplyEnumShift
+            // 
+            this.chkGDLEApplyEnumShift.AutoSize = true;
+            this.chkGDLEApplyEnumShift.Location = new System.Drawing.Point(186, 124);
+            this.chkGDLEApplyEnumShift.Name = "chkGDLEApplyEnumShift";
+            this.chkGDLEApplyEnumShift.Size = new System.Drawing.Size(109, 17);
+            this.chkGDLEApplyEnumShift.TabIndex = 49;
+            this.chkGDLEApplyEnumShift.Text = "Apply ENUM shift";
+            this.chkGDLEApplyEnumShift.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -875,6 +887,7 @@ namespace PhatACCacheBinParser
         private System.Windows.Forms.Button cmdACE2SpellsParse;
         private System.Windows.Forms.CheckBox chkHidePassword;
         private System.Windows.Forms.Button cmdGDLE6LandblocksParse;
+        private System.Windows.Forms.CheckBox chkGDLEApplyEnumShift;
     }
 }
 

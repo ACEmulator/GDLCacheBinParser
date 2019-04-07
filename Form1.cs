@@ -307,7 +307,7 @@ namespace PhatACCacheBinParser
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 txtGDLEJSONParser.Text += "Loading \\weenies\\*.json";
-                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies))
+                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies, chkGDLEApplyEnumShift.Checked))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Weenies.Count} entries found." + Environment.NewLine;
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
