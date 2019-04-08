@@ -348,10 +348,14 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE2SpellsParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting spells... please wait. ";
+
             foreach (var x in Globals.GDLE.Spells)
                 x.LastModified = DateTime.UtcNow;
 
             SpellsSQLWriter.WriteFiles(Globals.GDLE.Spells, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {Globals.GDLE.Spells.Count} spells." + Environment.NewLine;
 
             cmdGDLE2SpellsParse.Enabled = true;
         }
@@ -381,9 +385,9 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE6LandblocksParse.Enabled = false;
 
-            var trimmedInstances = new List<ACE.Database.Models.World.LandblockInstance>();
+            txtGDLEJSONParser.Text += "Exporting landblock instances and links... please wait. ";
 
-            trimmedInstances = Globals.GDLE.Instances.ToList();
+            var trimmedInstances = new List<ACE.Database.Models.World.LandblockInstance>();
 
             var margin = 4f;
 
@@ -400,13 +404,6 @@ namespace PhatACCacheBinParser
 
                 if (cachedLandblock != null)
                 {
-                    if (x.WeenieClassId == 27547 && lbid == 52885)
-                        Console.WriteLine("found bindstone");
-
-                    var test = cachedLandblock.Weenies
-                        .Where(z => z.WCID == 27547)
-                        .FirstOrDefault();
-
                     var foundInCache = cachedLandblock.Weenies
                         .Where(z => z.WCID == x.WeenieClassId
                                 && Math.Abs(z.Position.Origin.X - x.OriginX) < margin
@@ -415,12 +412,19 @@ namespace PhatACCacheBinParser
                               )
                         .FirstOrDefault();
 
-                    if (foundInCache != null)
-                        trimmedInstances.Remove(x);
+                    if (foundInCache == null)
+                        trimmedInstances.Add(x);
+
+                    if (foundInCache != null & Globals.WeenieNames[x.WeenieClassId].ToLower().Contains("generator"))
+                        trimmedInstances.Add(x);
                 }
+                else
+                    trimmedInstances.Add(x);
             }
 
             LandblockSQLWriter.WriteFiles(trimmedInstances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {trimmedInstances.Count} landblock instances and links. Unchanged entries from cache.bin were skipped." + Environment.NewLine;
 
             cmdGDLE6LandblocksParse.Enabled = true;
         }
@@ -429,10 +433,23 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE8QuestsParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting quests... please wait. ";
+
+            var trimmedQuests = new List<ACE.Database.Models.World.Quest>();
+
             foreach (var x in Globals.GDLE.Quests)
+            {
                 x.LastModified = DateTime.UtcNow;
 
-            QuestSQLWriter.WriteFiles(Globals.GDLE.Quests, Settings.Default["GDLESQLOutputFolder"] + "\\8 QuestDefDB\\SQL\\", true);
+                var foundInCache = Globals.CacheBin.QuestDefDB.QuestDefs.Where(y => y.Name == x.Name && y.MaxSolves == x.MaxSolves && y.Message == x.Message && y.MinDelta == x.MinDelta);
+
+                if (foundInCache == null)
+                    trimmedQuests.Add(x);
+            }
+
+            QuestSQLWriter.WriteFiles(trimmedQuests, Settings.Default["GDLESQLOutputFolder"] + "\\8 QuestDefDB\\SQL\\", true);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {trimmedQuests.Count} quests. Unchanged entries from cache.bin were skipped." + Environment.NewLine;
 
             cmdGDLE8QuestsParse.Enabled = true;
         }
@@ -441,8 +458,12 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE9WeeniesParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting weenies... please wait. ";
+
             foreach (var x in Globals.GDLE.Weenies)
+            {
                 x.LastModified = DateTime.UtcNow;
+            }
 
             var aceTreasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
             var aceTreasureDeath = Globals.CacheBin.TreasureTable.DeathTreasure.ConvertToACE();
@@ -464,6 +485,8 @@ namespace PhatACCacheBinParser
 
             WeenieSQLWriter.WriteFiles(Globals.GDLE.Weenies, Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\SQL\\", Globals.WeenieNames, treasureWielded, treasureDeath, Globals.GDLE.Weenies.ToDictionary(x => x.ClassId, x => x), true);
 
+            txtGDLEJSONParser.Text += $"Successfully exported {Globals.GDLE.Weenies.Count} weenies." + Environment.NewLine;
+
             cmdGDLE9WeeniesParse.Enabled = true;
         }
 
@@ -476,10 +499,23 @@ namespace PhatACCacheBinParser
         {
             cmdGDLEBEventsParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting events... please wait. ";
+
+            var trimmedEvents = new List<ACE.Database.Models.World.Event>();
+
             foreach (var x in Globals.GDLE.Events)
+            {
                 x.LastModified = DateTime.UtcNow;
 
-            EventSQLWriter.WriteFiles(Globals.GDLE.Events, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\");
+                var foundInCache = Globals.CacheBin.GameEventDefDB.GameEventDefs.Where(y => y.Name == x.Name && (int)y.GameEventState == x.State && y.StartTime == x.StartTime && y.EndTime == x.StartTime);
+
+                if (foundInCache == null)
+                    trimmedEvents.Add(x);
+            }
+
+            EventSQLWriter.WriteFiles(trimmedEvents, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\");
+
+            txtGDLEJSONParser.Text += $"Successfully exported {trimmedEvents.Count} events. Unchanged entries from cache.bin were skipped." + Environment.NewLine;
 
             cmdGDLEBEventsParse.Enabled = true;
         }
