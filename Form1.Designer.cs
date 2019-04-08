@@ -78,6 +78,7 @@ namespace PhatACCacheBinParser
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOutputTool1 = new System.Windows.Forms.RichTextBox();
             this.cmdOutputTool1 = new System.Windows.Forms.Button();
+            this.chkGDLEApplyEnumShift = new System.Windows.Forms.CheckBox();
             this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
             this.parserControlB = new PhatACCacheBinParser.ParserControl();
             this.parserControl8 = new PhatACCacheBinParser.ParserControl();
@@ -166,6 +167,7 @@ namespace PhatACCacheBinParser
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.chkGDLEApplyEnumShift);
             this.tabPage3.Controls.Add(this.cmdGDLEBEventsParse);
             this.tabPage3.Controls.Add(this.cmdGDLEAMutationParse);
             this.tabPage3.Controls.Add(this.cmdGDLE5HousingParse);
@@ -663,6 +665,16 @@ namespace PhatACCacheBinParser
             this.cmdOutputTool1.UseVisualStyleBackColor = true;
             this.cmdOutputTool1.Click += new System.EventHandler(this.cmdOutputTool1_Click);
             // 
+            // chkGDLEApplyEnumShift
+            // 
+            this.chkGDLEApplyEnumShift.AutoSize = true;
+            this.chkGDLEApplyEnumShift.Location = new System.Drawing.Point(186, 124);
+            this.chkGDLEApplyEnumShift.Name = "chkGDLEApplyEnumShift";
+            this.chkGDLEApplyEnumShift.Size = new System.Drawing.Size(109, 17);
+            this.chkGDLEApplyEnumShift.TabIndex = 49;
+            this.chkGDLEApplyEnumShift.Text = "Apply ENUM shift";
+            this.chkGDLEApplyEnumShift.UseVisualStyleBackColor = true;
+            // 
             // sqlBuilderControl1
             // 
             this.sqlBuilderControl1.Location = new System.Drawing.Point(676, 49);
@@ -875,6 +887,7 @@ namespace PhatACCacheBinParser
         private System.Windows.Forms.Button cmdACE2SpellsParse;
         private System.Windows.Forms.CheckBox chkHidePassword;
         private System.Windows.Forms.Button cmdGDLE6LandblocksParse;
+        private System.Windows.Forms.CheckBox chkGDLEApplyEnumShift;
     }
 }
 

@@ -320,6 +320,13 @@ namespace PhatACCacheBinParser.ACE_Helpers
                                 }
                             }
 
+                            // Fix PhysicsScript ENUM shift post 16PY data
+                            if (efAction.PScript.HasValue)
+                            {
+                                if (efAction.PScript.Value >= 83)
+                                    efAction.PScript++;
+                            }
+
                             order++;
 
                             if (action.Item != null)

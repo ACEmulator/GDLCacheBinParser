@@ -301,13 +301,13 @@ namespace PhatACCacheBinParser
                 // treasureProfile.json
 
                 txtGDLEJSONParser.Text += "Loading worldspawns.json...";
-                if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out Globals.GDLE.Instances, out Globals.GDLE.Links))
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out Globals.GDLE.Instances, out Globals.GDLE.Links, 1000))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Instances.Count} instances and {Globals.GDLE.Links.Count} links found." + Environment.NewLine;
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 txtGDLEJSONParser.Text += "Loading \\weenies\\*.json";
-                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies))
+                if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies, chkGDLEApplyEnumShift.Checked))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Weenies.Count} entries found." + Environment.NewLine;
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
@@ -381,10 +381,46 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE6LandblocksParse.Enabled = false;
 
+            var trimmedInstances = new List<ACE.Database.Models.World.LandblockInstance>();
+
+            trimmedInstances = Globals.GDLE.Instances.ToList();
+
+            var margin = 4f;
+
             foreach (var x in Globals.GDLE.Instances)
+            {
                 x.LastModified = DateTime.UtcNow;
 
-            LandblockSQLWriter.WriteFiles(Globals.GDLE.Instances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
+                foreach (var y in x.LandblockInstanceLink)
+                    y.LastModified = DateTime.UtcNow;
+
+                var lbid = (x.ObjCellId & 0xFFFF0000) >> 16;
+
+                var cachedLandblock = Globals.CacheBin.LandBlockData.Landblocks.Where(y => y.Key == lbid).FirstOrDefault();
+
+                if (cachedLandblock != null)
+                {
+                    if (x.WeenieClassId == 27547 && lbid == 52885)
+                        Console.WriteLine("found bindstone");
+
+                    var test = cachedLandblock.Weenies
+                        .Where(z => z.WCID == 27547)
+                        .FirstOrDefault();
+
+                    var foundInCache = cachedLandblock.Weenies
+                        .Where(z => z.WCID == x.WeenieClassId
+                                && Math.Abs(z.Position.Origin.X - x.OriginX) < margin
+                                && Math.Abs(z.Position.Origin.Y - x.OriginY) < margin
+                                && Math.Abs(z.Position.Origin.Z - x.OriginZ) < margin
+                              )
+                        .FirstOrDefault();
+
+                    if (foundInCache != null)
+                        trimmedInstances.Remove(x);
+                }
+            }
+
+            LandblockSQLWriter.WriteFiles(trimmedInstances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
 
             cmdGDLE6LandblocksParse.Enabled = true;
         }
@@ -642,6 +678,6 @@ namespace PhatACCacheBinParser
 
 
             cmdOutputTool1.Enabled = true;
-        }        
+        }
     }
 }
