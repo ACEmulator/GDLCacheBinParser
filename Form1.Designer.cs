@@ -78,6 +78,7 @@ namespace PhatACCacheBinParser
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOutputTool1 = new System.Windows.Forms.RichTextBox();
             this.cmdOutputTool1 = new System.Windows.Forms.Button();
+            this.chkGDLEApplyEnumShift = new System.Windows.Forms.CheckBox();
             this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
             this.parserControlB = new PhatACCacheBinParser.ParserControl();
             this.parserControl8 = new PhatACCacheBinParser.ParserControl();
@@ -90,7 +91,6 @@ namespace PhatACCacheBinParser
             this.parserControlA = new PhatACCacheBinParser.ParserControl();
             this.parserControl3 = new PhatACCacheBinParser.ParserControl();
             this.parserControl1 = new PhatACCacheBinParser.ParserControl();
-            this.chkGDLEApplyEnumShift = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -665,6 +665,16 @@ namespace PhatACCacheBinParser
             this.cmdOutputTool1.UseVisualStyleBackColor = true;
             this.cmdOutputTool1.Click += new System.EventHandler(this.cmdOutputTool1_Click);
             // 
+            // chkGDLEApplyEnumShift
+            // 
+            this.chkGDLEApplyEnumShift.AutoSize = true;
+            this.chkGDLEApplyEnumShift.Location = new System.Drawing.Point(186, 124);
+            this.chkGDLEApplyEnumShift.Name = "chkGDLEApplyEnumShift";
+            this.chkGDLEApplyEnumShift.Size = new System.Drawing.Size(109, 17);
+            this.chkGDLEApplyEnumShift.TabIndex = 49;
+            this.chkGDLEApplyEnumShift.Text = "Apply ENUM shift";
+            this.chkGDLEApplyEnumShift.UseVisualStyleBackColor = true;
+            // 
             // sqlBuilderControl1
             // 
             this.sqlBuilderControl1.Location = new System.Drawing.Point(676, 49);
@@ -792,16 +802,6 @@ namespace PhatACCacheBinParser
             this.parserControl1.Size = new System.Drawing.Size(650, 84);
             this.parserControl1.SourceBin = "label1";
             this.parserControl1.TabIndex = 18;
-            // 
-            // chkGDLEApplyEnumShift
-            // 
-            this.chkGDLEApplyEnumShift.AutoSize = true;
-            this.chkGDLEApplyEnumShift.Location = new System.Drawing.Point(186, 124);
-            this.chkGDLEApplyEnumShift.Name = "chkGDLEApplyEnumShift";
-            this.chkGDLEApplyEnumShift.Size = new System.Drawing.Size(109, 17);
-            this.chkGDLEApplyEnumShift.TabIndex = 49;
-            this.chkGDLEApplyEnumShift.Text = "Apply ENUM shift";
-            this.chkGDLEApplyEnumShift.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
