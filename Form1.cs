@@ -402,7 +402,7 @@ namespace PhatACCacheBinParser
 
                 var cachedLandblock = Globals.CacheBin.LandBlockData.Landblocks.Where(y => y.Key == lbid).FirstOrDefault();
 
-                if (cachedLandblock != null && chkCacheDedupe.Enabled)
+                if (cachedLandblock != null && chkCacheDedupe.Checked)
                 {
                     var foundInCache = cachedLandblock.Weenies
                         .Where(z => z.WCID == x.WeenieClassId
@@ -424,7 +424,7 @@ namespace PhatACCacheBinParser
 
             LandblockSQLWriter.WriteFiles(trimmedInstances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
 
-            txtGDLEJSONParser.Text += $"Successfully exported {trimmedInstances.Count} landblock instances and links. {(chkCacheDedupe.Enabled ? "Unchanged entries from cache.bin were skipped." : "")}" + Environment.NewLine;
+            txtGDLEJSONParser.Text += $"Successfully exported {trimmedInstances.Count} landblock instances and links. {(chkCacheDedupe.Checked ? "Unchanged entries from cache.bin were skipped." : "")}" + Environment.NewLine;
 
             cmdGDLE6LandblocksParse.Enabled = true;
         }
