@@ -415,8 +415,8 @@ namespace PhatACCacheBinParser
                     if (foundInCache == null)
                         trimmedInstances.Add(x);
 
-                    if (foundInCache != null & Globals.WeenieNames[x.WeenieClassId].ToLower().Contains("generator"))
-                        trimmedInstances.Add(x);
+                    //if (foundInCache != null & Globals.WeenieNames[x.WeenieClassId].ToLower().Contains("generator"))
+                    //    trimmedInstances.Add(x);
                 }
                 else
                     trimmedInstances.Add(x);
