@@ -441,7 +441,7 @@ namespace PhatACCacheBinParser
             {
                 x.LastModified = DateTime.UtcNow;
 
-                var foundInCache = Globals.CacheBin.QuestDefDB.QuestDefs.Where(y => y.Name == x.Name && y.MaxSolves == x.MaxSolves && y.Message == x.Message && y.MinDelta == x.MinDelta);
+                var foundInCache = Globals.CacheBin.QuestDefDB.QuestDefs.Where(y => y.Name.ToLower() == x.Name.ToLower() && y.MaxSolves == x.MaxSolves && y.Message.ToLower() == x.Message.ToLower() && y.MinDelta == x.MinDelta).FirstOrDefault();
 
                 if (foundInCache == null)
                     trimmedQuests.Add(x);
@@ -507,7 +507,7 @@ namespace PhatACCacheBinParser
             {
                 x.LastModified = DateTime.UtcNow;
 
-                var foundInCache = Globals.CacheBin.GameEventDefDB.GameEventDefs.Where(y => y.Name == x.Name && (int)y.GameEventState == x.State && y.StartTime == x.StartTime && y.EndTime == x.StartTime);
+                var foundInCache = Globals.CacheBin.GameEventDefDB.GameEventDefs.Where(y => y.Name.ToLower() == x.Name.ToLower() && (int)y.GameEventState == x.State && y.StartTime == x.StartTime && y.EndTime == x.EndTime).FirstOrDefault();
 
                 if (foundInCache == null)
                     trimmedEvents.Add(x);
