@@ -282,7 +282,11 @@ namespace PhatACCacheBinParser
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
-                // recipeprecursors.json
+                txtGDLEJSONParser.Text += "Loading recipesprecursors.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipePrecursorsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipeprecursors.json"), out Globals.GDLE.RecipePrecursors))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.RecipePrecursors.Count} entries found." + Environment.NewLine;
+                else
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
                 txtGDLEJSONParser.Text += "Loading recipes.json...";
                 if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipesConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes.json"), out Globals.GDLE.Recipes))
@@ -321,6 +325,9 @@ namespace PhatACCacheBinParser
 
                 if (Globals.GDLE.Spells != null && Globals.GDLE.Spells.Count > 0)
                     cmdGDLE2SpellsParse.Enabled = true;
+                if (Globals.GDLE.Recipes != null && Globals.GDLE.Recipes.Count > 0
+                    && Globals.GDLE.RecipePrecursors != null && Globals.GDLE.RecipePrecursors.Count > 0)
+                    cmdGDLE4CraftingParse.Enabled = true;
                 if (Globals.GDLE.Quests != null && Globals.GDLE.Quests.Count > 0)
                     cmdGDLE8QuestsParse.Enabled = true;
                 if (Globals.GDLE.Weenies != null && Globals.GDLE.Weenies.Count > 0)
@@ -369,9 +376,20 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE4CraftingParse.Enabled = false;
 
-            //var aceCraftingTables = Globals.CacheBin.CraftingTable.ConvertToACE();
-            //var aceCraftingTables = Globals.GDLE.Recipes;
-            //CraftingSQLWriter.WriteFiles(aceCraftingTables, Globals.WeenieNames, Settings.Default["OutputFolder"] + "\\4 CraftTable\\SQL\\");
+            txtGDLEJSONParser.Text += "Exporting recipes... please wait. ";
+
+            foreach (var x in Globals.GDLE.RecipePrecursors)
+                x.LastModified = DateTime.UtcNow;
+
+            foreach (var x in Globals.GDLE.Recipes)
+                x.LastModified = DateTime.UtcNow;
+
+            if (Globals.GDLE.Recipes.Count != Globals.GDLE.RecipePrecursors.Count)
+                txtGDLEJSONParser.Text += $"Recipe({Globals.GDLE.Recipes.Count}) and Cookbook({Globals.GDLE.RecipePrecursors.Count}) counts do not match! This could be bad. ";
+
+            CraftingSQLWriter.WriteFiles(Globals.GDLE.Recipes, Globals.GDLE.RecipePrecursors, Globals.WeenieNames, Settings.Default["GDLESQLOutputFolder"] + "\\4 CraftTable\\SQL\\", true);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {Globals.GDLE.Recipes.Count} recipes & {Globals.GDLE.RecipePrecursors.Count} cookbooks." + Environment.NewLine;
 
             cmdGDLE4CraftingParse.Enabled = true;
         }
