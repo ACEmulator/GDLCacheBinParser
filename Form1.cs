@@ -360,7 +360,7 @@ namespace PhatACCacheBinParser
             foreach (var x in Globals.GDLE.Spells)
                 x.LastModified = DateTime.UtcNow;
 
-            SpellsSQLWriter.WriteFiles(Globals.GDLE.Spells, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames);
+            SpellsSQLWriter.WriteFiles(Globals.GDLE.Spells, Settings.Default["GDLESQLOutputFolder"] + "\\2 SpellTableExtendedData\\SQL\\", Globals.WeenieNames, true);
 
             txtGDLEJSONParser.Text += $"Successfully exported {Globals.GDLE.Spells.Count} spells." + Environment.NewLine;
 
@@ -531,7 +531,7 @@ namespace PhatACCacheBinParser
                     trimmedEvents.Add(x);
             }
 
-            EventSQLWriter.WriteFiles(trimmedEvents, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\");
+            EventSQLWriter.WriteFiles(trimmedEvents, Settings.Default["GDLESQLOutputFolder"] + "\\B GameEventDefDB\\SQL\\", true);
 
             txtGDLEJSONParser.Text += $"Successfully exported {trimmedEvents.Count} events. Unchanged entries from cache.bin were skipped." + Environment.NewLine;
 
