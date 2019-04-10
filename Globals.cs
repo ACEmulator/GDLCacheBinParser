@@ -104,7 +104,10 @@ namespace PhatACCacheBinParser
             /// </summary>
             public static List<ACE.Database.Models.World.Quest> Quests;
 
-            // recipeprecursors.json
+            /// <summary>
+            /// recipeprecursors.json
+            /// </summary>
+            public static List<ACE.Database.Models.World.CookBook> RecipePrecursors;
 
             /// <summary>
             /// recipes.json
