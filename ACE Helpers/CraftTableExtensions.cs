@@ -72,14 +72,17 @@ namespace PhatACCacheBinParser.ACE_Helpers
             result.FailDestroySourceAmount = input.Components[3].DestroyAmount;
             result.FailDestroySourceMessage = input.Components[3].DestroyMessage;
 
+            sbyte index = -1;
             foreach (var value in input.Requirements)
             {
+                index++;
                 if (value.IntRequirements != null)
                 {
                     foreach (var requirement in value.IntRequirements)
                     {
                         result.RecipeRequirementsInt.Add(new RecipeRequirementsInt
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value,
                             Enum = requirement.Enum,
@@ -94,6 +97,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         result.RecipeRequirementsDID.Add(new RecipeRequirementsDID
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value,
                             Enum = requirement.Enum,
@@ -108,6 +112,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         result.RecipeRequirementsIID.Add(new RecipeRequirementsIID
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value,
                             Enum = requirement.Enum,
@@ -122,6 +127,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         result.RecipeRequirementsFloat.Add(new RecipeRequirementsFloat
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value,
                             Enum = requirement.Enum,
@@ -136,6 +142,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         result.RecipeRequirementsString.Add(new RecipeRequirementsString
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value, 
                             Enum = requirement.Enum,
@@ -150,6 +157,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         result.RecipeRequirementsBool.Add(new RecipeRequirementsBool
                         {
+                            Index = index,
                             Stat = requirement.Stat,
                             Value = requirement.Value,
                             Enum = requirement.Enum,
@@ -171,6 +179,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsInt.Add(new RecipeModsInt
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -185,6 +194,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsDID.Add(new RecipeModsDID
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -199,6 +209,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsIID.Add(new RecipeModsIID
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -213,6 +224,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsFloat.Add(new RecipeModsFloat
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -227,6 +239,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsString.Add(new RecipeModsString
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
@@ -241,6 +254,7 @@ namespace PhatACCacheBinParser.ACE_Helpers
                     {
                         recipeMod.RecipeModsBool.Add(new RecipeModsBool
                         {
+                            Index = (sbyte)i,
                             Stat = mod.Stat,
                             Value = mod.Value,
                             Enum = mod.Enum,
