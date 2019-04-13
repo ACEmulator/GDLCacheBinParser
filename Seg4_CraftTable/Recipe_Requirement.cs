@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PhatACCacheBinParser.Seg4_CraftTable
@@ -75,9 +75,15 @@ namespace PhatACCacheBinParser.Seg4_CraftTable
 		    {
 		        var item = new Requirement<string>();
 		        item.Stat = binaryReader.ReadInt32();
-		        item.Value = Util.ReadString(binaryReader, true);
+                item.Value = Util.ReadString(binaryReader, true);
                 item.Enum = binaryReader.ReadInt32();
 		        item.Message = Util.ReadString(binaryReader, true);
+                if (item.Stat == 19 && item.Value == "The" && item.Enum == 7)
+                {
+                    // there seems to be a data error here from the cache. very odd and very specific
+                    item.Message = item.Value + " " + item.Message;
+                    item.Value = "";
+                }
                 StringRequirements.Add(item);
 		    }
 
