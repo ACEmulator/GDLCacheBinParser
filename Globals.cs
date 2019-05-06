@@ -235,6 +235,49 @@ namespace PhatACCacheBinParser
 
                 Weenies = weenies;
             }
+
+            public static ACE.Database.Models.World.Weenie GetWeenie(uint weenieClassId, bool updateWeenieNames = true)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<WorldDbContext>();
+                optionsBuilder.UseMySql($"server={Settings.Default.ACEWorldServer};port={Settings.Default.ACEWorldPort};user={Settings.Default.ACEWorldUser};password={Settings.Default.ACEWorldPassword};database={Settings.Default.ACEWorldDatabase}");
+
+                var worldDbContext = new WorldDbContext(optionsBuilder.Options);
+
+                var weenie = WorldDatabase.GetWeenie(worldDbContext, weenieClassId);
+
+                if (updateWeenieNames && weenie != null)
+                {
+                    var name = weenie.GetProperty(PropertyString.Name);
+
+                    if (!String.IsNullOrEmpty(name))
+                        WeenieNames[weenie.ClassId] = name;
+                }
+
+                return weenie;
+            }
+
+            public static List<ACE.Database.Models.World.Weenie> GetAllWeenies(bool updateWeenieNames = true)
+            {
+                var weenies = new List<ACE.Database.Models.World.Weenie>();
+
+                var results = WorldDbContext.Weenie
+                    .AsNoTracking()
+                    .ToList();
+
+                return results;
+            }
+
+            public static List<ACE.Database.Models.World.Weenie> GetAllWeeniesBetween(uint startWeenieClassId, uint endWeenieClassId, bool updateWeenieNames = true)
+            {
+                var weenies = new List<ACE.Database.Models.World.Weenie>();
+
+                var results = WorldDbContext.Weenie
+                    .AsNoTracking()
+                    .Where(w => w.ClassId >= startWeenieClassId && w.ClassId <= endWeenieClassId)
+                    .ToList();
+
+                return results;
+            }
         }
     }
 }

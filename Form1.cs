@@ -592,6 +592,8 @@ namespace PhatACCacheBinParser
                 cmdACE9WeeniesParse.Enabled = true;
                 cmdACEAMutationParse.Enabled = true;
                 cmdACEBEventsParse.Enabled = true;
+
+                cmdACEExportWeenieAsJson.Enabled = true;
             }
             else
                 txtACEDatabaseConnector.Text += "Connection failed." + Environment.NewLine;
@@ -732,6 +734,69 @@ namespace PhatACCacheBinParser
 
 
             cmdOutputTool1.Enabled = true;
+        }
+
+        private void cmdACEExportWeenieAsJson_Click(object sender, EventArgs e)
+        {
+            cmdACEExportWeenieAsJson.Enabled = false;
+
+            var outputFolder = Settings.Default["GDLESQLOutputFolder"] + "\\9 WeenieDefaults\\JSON\\";
+
+            var hasValidStart = uint.TryParse(txtACEExportwcidStart.Text, out uint wcidStart);
+            var hasValidEnd = uint.TryParse(txtACEExportwcidEnd.Text, out uint wcidEnd);
+
+            if (hasValidStart && wcidStart > 0)
+            {
+                if (hasValidEnd && wcidEnd > 0 && wcidStart < wcidEnd)
+                {
+                    var weenies = Globals.ACEDatabase.GetAllWeeniesBetween(wcidStart, wcidEnd);
+
+                    foreach (var weenie in weenies)
+                    {
+                        var fullWeenie = Globals.ACEDatabase.GetWeenie(weenie.ClassId);
+                        WriteWeenieAsJSON(fullWeenie, outputFolder);
+                    }
+                }
+                else
+                {
+                    var weenie = Globals.ACEDatabase.GetWeenie(wcidStart);
+
+                    WriteWeenieAsJSON(weenie, outputFolder);
+                }
+            }
+            else if (wcidStart == wcidEnd)
+            {
+                if (wcidStart == wcidEnd && wcidStart == 0)
+                {
+                    var weenies = Globals.ACEDatabase.GetAllWeenies();
+
+                    foreach (var weenie in weenies)
+                    {
+                        var fullWeenie = Globals.ACEDatabase.GetWeenie(weenie.ClassId);
+                        WriteWeenieAsJSON(fullWeenie, outputFolder);
+                    }
+                }
+                //else
+                //{
+
+                //}
+            }
+
+            cmdACEExportWeenieAsJson.Enabled = true;
+        }
+
+        private void WriteWeenieAsJSON(ACE.Database.Models.World.Weenie weenie, string outputFolder)
+        {
+            if (ACE.Adapter.Lifestoned.LifestonedConverter.TryConvertACEWeenieToLSDJSON(weenie, out var jsonString))
+            {
+                var sqlWriter = new ACE.Database.SQLFormatters.World.WeenieSQLWriter();
+                var filename = sqlWriter.GetDefaultFileName(weenie).Replace(".sql", ".json");
+
+                if (!Directory.Exists(outputFolder))
+                    Directory.CreateDirectory(outputFolder);
+
+                File.WriteAllText(outputFolder + filename, jsonString);
+            }
         }
     }
 }
