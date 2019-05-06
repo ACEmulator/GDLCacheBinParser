@@ -83,6 +83,9 @@ namespace PhatACCacheBinParser
             this.cmdOutputTool1 = new System.Windows.Forms.Button();
             this.txtACEExportwcidStart = new System.Windows.Forms.TextBox();
             this.txtACEExportwcidEnd = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
             this.parserControlB = new PhatACCacheBinParser.ParserControl();
             this.parserControl8 = new PhatACCacheBinParser.ParserControl();
@@ -95,9 +98,6 @@ namespace PhatACCacheBinParser
             this.parserControlA = new PhatACCacheBinParser.ParserControl();
             this.parserControl3 = new PhatACCacheBinParser.ParserControl();
             this.parserControl1 = new PhatACCacheBinParser.ParserControl();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -728,6 +728,33 @@ namespace PhatACCacheBinParser
             this.txtACEExportwcidEnd.Text = "0";
             this.txtACEExportwcidEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(587, 160);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(213, 13);
+            this.label7.TabIndex = 63;
+            this.label7.Text = "Export From ACE World Database to JSON:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(713, 213);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 13);
+            this.label8.TabIndex = 64;
+            this.label8.Text = "Start WCID";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(864, 213);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 13);
+            this.label9.TabIndex = 65;
+            this.label9.Text = "End WCID";
+            // 
             // sqlBuilderControl1
             // 
             this.sqlBuilderControl1.Location = new System.Drawing.Point(676, 49);
@@ -855,33 +882,6 @@ namespace PhatACCacheBinParser
             this.parserControl1.Size = new System.Drawing.Size(650, 84);
             this.parserControl1.SourceBin = "label1";
             this.parserControl1.TabIndex = 18;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(587, 160);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(170, 13);
-            this.label7.TabIndex = 63;
-            this.label7.Text = "Export From ACE World Database:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(713, 213);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(61, 13);
-            this.label8.TabIndex = 64;
-            this.label8.Text = "Start WCID";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(864, 213);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 13);
-            this.label9.TabIndex = 65;
-            this.label9.Text = "End WCID";
             // 
             // Form1
             // 
