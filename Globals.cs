@@ -256,7 +256,7 @@ namespace PhatACCacheBinParser
                 return weenie;
             }
 
-            public static List<ACE.Database.Models.World.Weenie> GetAllWeenies(bool updateWeenieNames = true)
+            public static List<ACE.Database.Models.World.Weenie> GetAllWeenies()
             {
                 var weenies = new List<ACE.Database.Models.World.Weenie>();
 
@@ -267,7 +267,7 @@ namespace PhatACCacheBinParser
                 return results;
             }
 
-            public static List<ACE.Database.Models.World.Weenie> GetAllWeeniesBetween(uint startWeenieClassId, uint endWeenieClassId, bool updateWeenieNames = true)
+            public static List<ACE.Database.Models.World.Weenie> GetAllWeeniesBetween(uint startWeenieClassId, uint endWeenieClassId)
             {
                 var weenies = new List<ACE.Database.Models.World.Weenie>();
 
