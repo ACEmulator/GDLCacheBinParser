@@ -33,19 +33,8 @@ namespace PhatACCacheBinParser
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
-            this.parserControlB = new PhatACCacheBinParser.ParserControl();
-            this.parserControl8 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl6 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl9 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl4 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl7 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl2 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl5 = new PhatACCacheBinParser.ParserControl();
-            this.parserControlA = new PhatACCacheBinParser.ParserControl();
-            this.parserControl3 = new PhatACCacheBinParser.ParserControl();
-            this.parserControl1 = new PhatACCacheBinParser.ParserControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.chkCacheDedupe = new System.Windows.Forms.CheckBox();
             this.chkGDLEApplyEnumShift = new System.Windows.Forms.CheckBox();
             this.cmdGDLEBEventsParse = new System.Windows.Forms.Button();
             this.cmdGDLEAMutationParse = new System.Windows.Forms.Button();
@@ -64,6 +53,7 @@ namespace PhatACCacheBinParser
             this.cmdChooseJSONRootFolder = new System.Windows.Forms.Button();
             this.lblGDLEJSONRootFolder = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cmdACEExportWeenieAsJson = new System.Windows.Forms.Button();
             this.chkHidePassword = new System.Windows.Forms.CheckBox();
             this.cmdACEBEventsParse = new System.Windows.Forms.Button();
             this.cmdACEAMutationParse = new System.Windows.Forms.Button();
@@ -91,7 +81,23 @@ namespace PhatACCacheBinParser
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOutputTool1 = new System.Windows.Forms.RichTextBox();
             this.cmdOutputTool1 = new System.Windows.Forms.Button();
-            this.chkCacheDedupe = new System.Windows.Forms.CheckBox();
+            this.txtACEExportwcidStart = new System.Windows.Forms.TextBox();
+            this.txtACEExportwcidEnd = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.sqlBuilderControl1 = new PhatACCacheBinParser.SQLBuilderControl();
+            this.parserControlB = new PhatACCacheBinParser.ParserControl();
+            this.parserControl8 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl6 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl9 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl4 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl7 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl2 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl5 = new PhatACCacheBinParser.ParserControl();
+            this.parserControlA = new PhatACCacheBinParser.ParserControl();
+            this.parserControl3 = new PhatACCacheBinParser.ParserControl();
+            this.parserControl1 = new PhatACCacheBinParser.ParserControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -166,134 +172,6 @@ namespace PhatACCacheBinParser
             this.label1.TabIndex = 27;
             this.label1.Text = "Export ACE formatted .SQL files";
             // 
-            // sqlBuilderControl1
-            // 
-            this.sqlBuilderControl1.Location = new System.Drawing.Point(676, 49);
-            this.sqlBuilderControl1.Name = "sqlBuilderControl1";
-            this.sqlBuilderControl1.Size = new System.Drawing.Size(353, 430);
-            this.sqlBuilderControl1.TabIndex = 26;
-            // 
-            // parserControlB
-            // 
-            this.parserControlB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControlB.ExportJSONProgress = 0;
-            this.parserControlB.Label = "label1";
-            this.parserControlB.Location = new System.Drawing.Point(20, 949);
-            this.parserControlB.Name = "parserControlB";
-            this.parserControlB.Size = new System.Drawing.Size(650, 84);
-            this.parserControlB.SourceBin = "label1";
-            this.parserControlB.TabIndex = 25;
-            // 
-            // parserControl8
-            // 
-            this.parserControl8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl8.ExportJSONProgress = 0;
-            this.parserControl8.Label = "label1";
-            this.parserControl8.Location = new System.Drawing.Point(20, 679);
-            this.parserControl8.Name = "parserControl8";
-            this.parserControl8.Size = new System.Drawing.Size(650, 84);
-            this.parserControl8.SourceBin = "label1";
-            this.parserControl8.TabIndex = 12;
-            // 
-            // parserControl6
-            // 
-            this.parserControl6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl6.ExportJSONProgress = 0;
-            this.parserControl6.Label = "label1";
-            this.parserControl6.Location = new System.Drawing.Point(20, 499);
-            this.parserControl6.Name = "parserControl6";
-            this.parserControl6.Size = new System.Drawing.Size(650, 84);
-            this.parserControl6.SourceBin = "label1";
-            this.parserControl6.TabIndex = 13;
-            // 
-            // parserControl9
-            // 
-            this.parserControl9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl9.ExportJSONProgress = 0;
-            this.parserControl9.Label = "label1";
-            this.parserControl9.Location = new System.Drawing.Point(20, 769);
-            this.parserControl9.Name = "parserControl9";
-            this.parserControl9.Size = new System.Drawing.Size(650, 84);
-            this.parserControl9.SourceBin = "label1";
-            this.parserControl9.TabIndex = 14;
-            // 
-            // parserControl4
-            // 
-            this.parserControl4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl4.ExportJSONProgress = 0;
-            this.parserControl4.Label = "label1";
-            this.parserControl4.Location = new System.Drawing.Point(20, 319);
-            this.parserControl4.Name = "parserControl4";
-            this.parserControl4.Size = new System.Drawing.Size(650, 84);
-            this.parserControl4.SourceBin = "label1";
-            this.parserControl4.TabIndex = 15;
-            // 
-            // parserControl7
-            // 
-            this.parserControl7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl7.ExportJSONProgress = 0;
-            this.parserControl7.Label = "label1";
-            this.parserControl7.Location = new System.Drawing.Point(20, 589);
-            this.parserControl7.Name = "parserControl7";
-            this.parserControl7.Size = new System.Drawing.Size(650, 84);
-            this.parserControl7.SourceBin = "label1";
-            this.parserControl7.TabIndex = 21;
-            // 
-            // parserControl2
-            // 
-            this.parserControl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl2.ExportJSONProgress = 0;
-            this.parserControl2.Label = "label1";
-            this.parserControl2.Location = new System.Drawing.Point(20, 139);
-            this.parserControl2.Name = "parserControl2";
-            this.parserControl2.Size = new System.Drawing.Size(650, 84);
-            this.parserControl2.SourceBin = "label1";
-            this.parserControl2.TabIndex = 16;
-            // 
-            // parserControl5
-            // 
-            this.parserControl5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl5.ExportJSONProgress = 0;
-            this.parserControl5.Label = "label1";
-            this.parserControl5.Location = new System.Drawing.Point(20, 409);
-            this.parserControl5.Name = "parserControl5";
-            this.parserControl5.Size = new System.Drawing.Size(650, 84);
-            this.parserControl5.SourceBin = "label1";
-            this.parserControl5.TabIndex = 20;
-            // 
-            // parserControlA
-            // 
-            this.parserControlA.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControlA.ExportJSONProgress = 0;
-            this.parserControlA.Label = "label1";
-            this.parserControlA.Location = new System.Drawing.Point(20, 859);
-            this.parserControlA.Name = "parserControlA";
-            this.parserControlA.Size = new System.Drawing.Size(650, 84);
-            this.parserControlA.SourceBin = "label1";
-            this.parserControlA.TabIndex = 17;
-            // 
-            // parserControl3
-            // 
-            this.parserControl3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl3.ExportJSONProgress = 0;
-            this.parserControl3.Label = "label1";
-            this.parserControl3.Location = new System.Drawing.Point(20, 229);
-            this.parserControl3.Name = "parserControl3";
-            this.parserControl3.Size = new System.Drawing.Size(650, 84);
-            this.parserControl3.SourceBin = "label1";
-            this.parserControl3.TabIndex = 19;
-            // 
-            // parserControl1
-            // 
-            this.parserControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.parserControl1.ExportJSONProgress = 0;
-            this.parserControl1.Label = "label1";
-            this.parserControl1.Location = new System.Drawing.Point(20, 49);
-            this.parserControl1.Name = "parserControl1";
-            this.parserControl1.Size = new System.Drawing.Size(650, 84);
-            this.parserControl1.SourceBin = "label1";
-            this.parserControl1.TabIndex = 18;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.chkCacheDedupe);
@@ -321,6 +199,16 @@ namespace PhatACCacheBinParser
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "GDLE .json Parser";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // chkCacheDedupe
+            // 
+            this.chkCacheDedupe.AutoSize = true;
+            this.chkCacheDedupe.Location = new System.Drawing.Point(840, 82);
+            this.chkCacheDedupe.Name = "chkCacheDedupe";
+            this.chkCacheDedupe.Size = new System.Drawing.Size(121, 17);
+            this.chkCacheDedupe.TabIndex = 50;
+            this.chkCacheDedupe.Text = "Dedupe from Cache";
+            this.chkCacheDedupe.UseVisualStyleBackColor = true;
             // 
             // chkGDLEApplyEnumShift
             // 
@@ -503,6 +391,12 @@ namespace PhatACCacheBinParser
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.label8);
+            this.tabPage4.Controls.Add(this.label7);
+            this.tabPage4.Controls.Add(this.txtACEExportwcidEnd);
+            this.tabPage4.Controls.Add(this.txtACEExportwcidStart);
+            this.tabPage4.Controls.Add(this.cmdACEExportWeenieAsJson);
             this.tabPage4.Controls.Add(this.chkHidePassword);
             this.tabPage4.Controls.Add(this.cmdACEBEventsParse);
             this.tabPage4.Controls.Add(this.cmdACEAMutationParse);
@@ -534,6 +428,17 @@ namespace PhatACCacheBinParser
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "ACE Database Connector";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cmdACEExportWeenieAsJson
+            // 
+            this.cmdACEExportWeenieAsJson.Enabled = false;
+            this.cmdACEExportWeenieAsJson.Location = new System.Drawing.Point(590, 188);
+            this.cmdACEExportWeenieAsJson.Name = "cmdACEExportWeenieAsJson";
+            this.cmdACEExportWeenieAsJson.Size = new System.Drawing.Size(119, 23);
+            this.cmdACEExportWeenieAsJson.TabIndex = 60;
+            this.cmdACEExportWeenieAsJson.Text = "9 Weenies";
+            this.cmdACEExportWeenieAsJson.UseVisualStyleBackColor = true;
+            this.cmdACEExportWeenieAsJson.Click += new System.EventHandler(this.cmdACEExportWeenieAsJson_Click);
             // 
             // chkHidePassword
             // 
@@ -805,15 +710,178 @@ namespace PhatACCacheBinParser
             this.cmdOutputTool1.UseVisualStyleBackColor = true;
             this.cmdOutputTool1.Click += new System.EventHandler(this.cmdOutputTool1_Click);
             // 
-            // chkCacheDedupe
+            // txtACEExportwcidStart
             // 
-            this.chkCacheDedupe.AutoSize = true;
-            this.chkCacheDedupe.Location = new System.Drawing.Point(840, 82);
-            this.chkCacheDedupe.Name = "chkCacheDedupe";
-            this.chkCacheDedupe.Size = new System.Drawing.Size(121, 17);
-            this.chkCacheDedupe.TabIndex = 50;
-            this.chkCacheDedupe.Text = "Dedupe from Cache";
-            this.chkCacheDedupe.UseVisualStyleBackColor = true;
+            this.txtACEExportwcidStart.Location = new System.Drawing.Point(716, 190);
+            this.txtACEExportwcidStart.Name = "txtACEExportwcidStart";
+            this.txtACEExportwcidStart.Size = new System.Drawing.Size(100, 20);
+            this.txtACEExportwcidStart.TabIndex = 61;
+            this.txtACEExportwcidStart.Text = "0";
+            this.txtACEExportwcidStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtACEExportwcidEnd
+            // 
+            this.txtACEExportwcidEnd.Location = new System.Drawing.Point(822, 190);
+            this.txtACEExportwcidEnd.Name = "txtACEExportwcidEnd";
+            this.txtACEExportwcidEnd.Size = new System.Drawing.Size(100, 20);
+            this.txtACEExportwcidEnd.TabIndex = 62;
+            this.txtACEExportwcidEnd.Text = "0";
+            this.txtACEExportwcidEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(587, 160);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(213, 13);
+            this.label7.TabIndex = 63;
+            this.label7.Text = "Export From ACE World Database to JSON:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(713, 213);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 13);
+            this.label8.TabIndex = 64;
+            this.label8.Text = "Start WCID";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(864, 213);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 13);
+            this.label9.TabIndex = 65;
+            this.label9.Text = "End WCID";
+            // 
+            // sqlBuilderControl1
+            // 
+            this.sqlBuilderControl1.Location = new System.Drawing.Point(676, 49);
+            this.sqlBuilderControl1.Name = "sqlBuilderControl1";
+            this.sqlBuilderControl1.Size = new System.Drawing.Size(353, 430);
+            this.sqlBuilderControl1.TabIndex = 26;
+            // 
+            // parserControlB
+            // 
+            this.parserControlB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControlB.ExportJSONProgress = 0;
+            this.parserControlB.Label = "label1";
+            this.parserControlB.Location = new System.Drawing.Point(20, 949);
+            this.parserControlB.Name = "parserControlB";
+            this.parserControlB.Size = new System.Drawing.Size(650, 84);
+            this.parserControlB.SourceBin = "label1";
+            this.parserControlB.TabIndex = 25;
+            // 
+            // parserControl8
+            // 
+            this.parserControl8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl8.ExportJSONProgress = 0;
+            this.parserControl8.Label = "label1";
+            this.parserControl8.Location = new System.Drawing.Point(20, 679);
+            this.parserControl8.Name = "parserControl8";
+            this.parserControl8.Size = new System.Drawing.Size(650, 84);
+            this.parserControl8.SourceBin = "label1";
+            this.parserControl8.TabIndex = 12;
+            // 
+            // parserControl6
+            // 
+            this.parserControl6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl6.ExportJSONProgress = 0;
+            this.parserControl6.Label = "label1";
+            this.parserControl6.Location = new System.Drawing.Point(20, 499);
+            this.parserControl6.Name = "parserControl6";
+            this.parserControl6.Size = new System.Drawing.Size(650, 84);
+            this.parserControl6.SourceBin = "label1";
+            this.parserControl6.TabIndex = 13;
+            // 
+            // parserControl9
+            // 
+            this.parserControl9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl9.ExportJSONProgress = 0;
+            this.parserControl9.Label = "label1";
+            this.parserControl9.Location = new System.Drawing.Point(20, 769);
+            this.parserControl9.Name = "parserControl9";
+            this.parserControl9.Size = new System.Drawing.Size(650, 84);
+            this.parserControl9.SourceBin = "label1";
+            this.parserControl9.TabIndex = 14;
+            // 
+            // parserControl4
+            // 
+            this.parserControl4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl4.ExportJSONProgress = 0;
+            this.parserControl4.Label = "label1";
+            this.parserControl4.Location = new System.Drawing.Point(20, 319);
+            this.parserControl4.Name = "parserControl4";
+            this.parserControl4.Size = new System.Drawing.Size(650, 84);
+            this.parserControl4.SourceBin = "label1";
+            this.parserControl4.TabIndex = 15;
+            // 
+            // parserControl7
+            // 
+            this.parserControl7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl7.ExportJSONProgress = 0;
+            this.parserControl7.Label = "label1";
+            this.parserControl7.Location = new System.Drawing.Point(20, 589);
+            this.parserControl7.Name = "parserControl7";
+            this.parserControl7.Size = new System.Drawing.Size(650, 84);
+            this.parserControl7.SourceBin = "label1";
+            this.parserControl7.TabIndex = 21;
+            // 
+            // parserControl2
+            // 
+            this.parserControl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl2.ExportJSONProgress = 0;
+            this.parserControl2.Label = "label1";
+            this.parserControl2.Location = new System.Drawing.Point(20, 139);
+            this.parserControl2.Name = "parserControl2";
+            this.parserControl2.Size = new System.Drawing.Size(650, 84);
+            this.parserControl2.SourceBin = "label1";
+            this.parserControl2.TabIndex = 16;
+            // 
+            // parserControl5
+            // 
+            this.parserControl5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl5.ExportJSONProgress = 0;
+            this.parserControl5.Label = "label1";
+            this.parserControl5.Location = new System.Drawing.Point(20, 409);
+            this.parserControl5.Name = "parserControl5";
+            this.parserControl5.Size = new System.Drawing.Size(650, 84);
+            this.parserControl5.SourceBin = "label1";
+            this.parserControl5.TabIndex = 20;
+            // 
+            // parserControlA
+            // 
+            this.parserControlA.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControlA.ExportJSONProgress = 0;
+            this.parserControlA.Label = "label1";
+            this.parserControlA.Location = new System.Drawing.Point(20, 859);
+            this.parserControlA.Name = "parserControlA";
+            this.parserControlA.Size = new System.Drawing.Size(650, 84);
+            this.parserControlA.SourceBin = "label1";
+            this.parserControlA.TabIndex = 17;
+            // 
+            // parserControl3
+            // 
+            this.parserControl3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl3.ExportJSONProgress = 0;
+            this.parserControl3.Label = "label1";
+            this.parserControl3.Location = new System.Drawing.Point(20, 229);
+            this.parserControl3.Name = "parserControl3";
+            this.parserControl3.Size = new System.Drawing.Size(650, 84);
+            this.parserControl3.SourceBin = "label1";
+            this.parserControl3.TabIndex = 19;
+            // 
+            // parserControl1
+            // 
+            this.parserControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.parserControl1.ExportJSONProgress = 0;
+            this.parserControl1.Label = "label1";
+            this.parserControl1.Location = new System.Drawing.Point(20, 49);
+            this.parserControl1.Name = "parserControl1";
+            this.parserControl1.Size = new System.Drawing.Size(650, 84);
+            this.parserControl1.SourceBin = "label1";
+            this.parserControl1.TabIndex = 18;
             // 
             // Form1
             // 
@@ -901,6 +969,12 @@ namespace PhatACCacheBinParser
         private System.Windows.Forms.Button cmdGDLE6LandblocksParse;
         private System.Windows.Forms.CheckBox chkGDLEApplyEnumShift;
         private System.Windows.Forms.CheckBox chkCacheDedupe;
+        private System.Windows.Forms.Button cmdACEExportWeenieAsJson;
+        private System.Windows.Forms.TextBox txtACEExportwcidEnd;
+        private System.Windows.Forms.TextBox txtACEExportwcidStart;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 
