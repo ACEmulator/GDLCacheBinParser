@@ -659,7 +659,17 @@ namespace PhatACCacheBinParser
 
         private void cmdACE6LandblocksParse_Click(object sender, EventArgs e)
         {
+            cmdACE6LandblocksParse.Enabled = false;
 
+            var landblocks = Globals.ACEDatabase.GetAllLandblockInstances();
+
+            //uint landblockToCloneFrom = 0x003D;
+            //uint landblockToCloneTo = 0x003A;
+            //var landblocks = Globals.ACEDatabase.CloneLandblockToAnother(landblockToCloneFrom, landblockToCloneTo);
+
+            LandblockSQLWriter.WriteFiles(landblocks, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames, true);
+
+            cmdACE6LandblocksParse.Enabled = true;
         }
 
         private void cmdACE8QuestsParse_Click(object sender, EventArgs e)
