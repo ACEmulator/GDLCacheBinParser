@@ -176,6 +176,8 @@ namespace PhatACCacheBinParser
 
             public static List<ACE.Database.Models.World.Weenie> Weenies;
 
+            public static List<ACE.Database.Models.World.LandblockInstance> LandblockInstances;
+
             public static bool TryInitWorldDatabaseContext()
             {
                 try
@@ -275,6 +277,74 @@ namespace PhatACCacheBinParser
                     .AsNoTracking()
                     .Where(w => w.ClassId >= startWeenieClassId && w.ClassId <= endWeenieClassId)
                     .ToList();
+
+                return results;
+            }
+
+            public static List<ACE.Database.Models.World.LandblockInstance> GetAllLandblockInstances()
+            {
+                var landblocks = new List<ACE.Database.Models.World.LandblockInstance>();
+
+                var results = WorldDbContext.LandblockInstance
+                    .Include(r => r.LandblockInstanceLink)
+                    .AsNoTracking()
+                    .ToList();
+
+                return results;
+            }
+
+            public static List<ACE.Database.Models.World.LandblockInstance> GetLandblockInstancesForLandblock(ushort landblock)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<WorldDbContext>();
+                optionsBuilder.UseMySql($"server={Settings.Default.ACEWorldServer};port={Settings.Default.ACEWorldPort};user={Settings.Default.ACEWorldUser};password={Settings.Default.ACEWorldPassword};database={Settings.Default.ACEWorldDatabase}");
+
+                var worldDbContext = new WorldDbContext(optionsBuilder.Options);
+
+                var instance = WorldDatabase.GetCachedInstancesByLandblock(worldDbContext, landblock);
+
+                return instance;
+            }
+
+            public static List<ACE.Database.Models.World.LandblockInstance> CloneLandblockToAnother(uint landblockToCloneFrom, uint landblockToCloneTo)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<WorldDbContext>();
+                optionsBuilder.UseMySql($"server={Settings.Default.ACEWorldServer};port={Settings.Default.ACEWorldPort};user={Settings.Default.ACEWorldUser};password={Settings.Default.ACEWorldPassword};database={Settings.Default.ACEWorldDatabase}");
+
+                var worldDbContext = new WorldDbContext(optionsBuilder.Options);
+
+                var instances = WorldDatabase.GetCachedInstancesByLandblock(worldDbContext, (ushort)landblockToCloneFrom);
+
+                var results = new List<ACE.Database.Models.World.LandblockInstance>();
+
+                foreach (var instance in instances.Where(x => (x.ObjCellId >> 16) == landblockToCloneFrom).OrderBy(y => y.Guid))
+                {
+                    var newGuid = (instance.Guid & 0xF0000FFF) | (landblockToCloneTo << 12);
+                    var newObjCellId = (instance.ObjCellId & 0x0000FFFF) | (landblockToCloneTo << 16);
+
+                    var newInstance = new LandblockInstance
+                    {
+                        AnglesW = instance.AnglesW,
+                        AnglesX = instance.AnglesX,
+                        AnglesY = instance.AnglesY,
+                        AnglesZ = instance.AnglesZ,
+                        Guid = newGuid,
+                        IsLinkChild = instance.IsLinkChild,
+                        ObjCellId = newObjCellId,
+                        OriginX = instance.OriginX,
+                        OriginY = instance.OriginY,
+                        OriginZ = instance.OriginZ,
+                        WeenieClassId = instance.WeenieClassId,
+                        LastModified = DateTime.UtcNow
+                    };
+
+                    foreach (var link in instance.LandblockInstanceLink)
+                    {
+                        var newChildGuid = (link.ChildGuid & 0xF0000FFF) | (landblockToCloneTo << 12);
+                        newInstance.LandblockInstanceLink.Add(new LandblockInstanceLink { ChildGuid = newChildGuid, ParentGuid = newGuid, LastModified = DateTime.UtcNow });
+                    }
+
+                    results.Add(newInstance);
+                }
 
                 return results;
             }
