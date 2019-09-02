@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -403,7 +404,7 @@ namespace PhatACCacheBinParser
         {
             cmdGDLE6LandblocksParse.Enabled = false;
 
-            txtGDLEJSONParser.Text += "Exporting landblock instances and links... please wait. ";
+            txtGDLEJSONParser.Text += "Exporting landblock instances and links... please wait. " + Environment.NewLine;
 
             var trimmedInstances = new List<ACE.Database.Models.World.LandblockInstance>();
 
@@ -417,6 +418,18 @@ namespace PhatACCacheBinParser
                     y.LastModified = DateTime.UtcNow;
 
                 var lbid = (x.ObjCellId & 0xFFFF0000) >> 16;
+
+                var rotate = new Quaternion(x.AnglesX, x.AnglesY, x.AnglesZ, x.AnglesW);
+                if (Math.Abs(1 - rotate.Length()) > 0.001)
+                {
+                    // bad rotation data
+                    txtGDLEJSONParser.Text += $"Warning: BAD ROTATION found for {(Globals.WeenieNames.TryGetValue(x.WeenieClassId, out var wname) ? wname + " " : "")}{x.Guid} - {x.WeenieClassId} - found in landblock 0x{lbid:X4} - W: {x.AnglesW} X: {x.AnglesX} Y: {x.AnglesY} Z: {x.AnglesZ} - defaulting to 1 0 0 0" + Environment.NewLine;
+
+                    x.AnglesW = 1;
+                    x.AnglesX = 0;
+                    x.AnglesY = 0;
+                    x.AnglesZ = 0;
+                }
 
                 var cachedLandblock = Globals.CacheBin.LandBlockData.Landblocks.Where(y => y.Key == lbid).FirstOrDefault();
 
@@ -663,8 +676,8 @@ namespace PhatACCacheBinParser
 
             var landblocks = Globals.ACEDatabase.GetAllLandblockInstances();
 
-            //uint landblockToCloneFrom = 0x003D;
-            //uint landblockToCloneTo = 0x003A;
+            //uint landblockToCloneFrom = 0x01C9;
+            //uint landblockToCloneTo = 0x003C;
             //var landblocks = Globals.ACEDatabase.CloneLandblockToAnother(landblockToCloneFrom, landblockToCloneTo);
 
             LandblockSQLWriter.WriteFiles(landblocks, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames, true);
