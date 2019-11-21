@@ -305,11 +305,24 @@ namespace PhatACCacheBinParser
 
                 // treasureProfile.json
 
+                var worldspawnsFound = false;
                 txtGDLEJSONParser.Text += "Loading worldspawns.json...";
                 if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out Globals.GDLE.Instances, out Globals.GDLE.Links, 1000))
+                {
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Instances.Count} instances and {Globals.GDLE.Links.Count} links found." + Environment.NewLine;
+                    worldspawnsFound = true;
+                }
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
+                if (!worldspawnsFound)
+                {
+                    txtGDLEJSONParser.Text += "Loading \\spawnMaps\\*.json...";
+                    if (ACE.Adapter.GDLE.GDLELoader.TryLoadLandblocksConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "spawnMaps"), out Globals.GDLE.Instances, out Globals.GDLE.Links, 1000))
+                        txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Instances.Count} instances and {Globals.GDLE.Links.Count} links found." + Environment.NewLine;
+                    else
+                        txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+                }
 
                 txtGDLEJSONParser.Text += "Loading \\weenies\\*.json";
                 if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies, chkGDLEApplyEnumShift.Checked))
@@ -453,7 +466,7 @@ namespace PhatACCacheBinParser
                     trimmedInstances.Add(x);
             }
 
-            LandblockSQLWriter.WriteFiles(trimmedInstances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\", Globals.WeenieNames, false);
+            LandblockSQLWriter.WriteFiles(trimmedInstances, Settings.Default["GDLESQLOutputFolder"] + "\\6 LandBlockExtendedData\\SQL\\", Globals.WeenieNames, false);
 
             txtGDLEJSONParser.Text += $"Successfully exported {trimmedInstances.Count} landblock instances and links. {(chkCacheDedupe.Checked ? "Unchanged entries from cache.bin were skipped." : "")}" + Environment.NewLine;
 

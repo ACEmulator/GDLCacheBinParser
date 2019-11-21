@@ -140,6 +140,8 @@ namespace PhatACCacheBinParser
 
             public static void AddToWeenieNames()
             {
+                if (Weenies is null) return;
+
                 foreach (var weenie in Weenies)
                 {
                     string name = null;
