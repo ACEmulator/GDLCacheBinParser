@@ -823,7 +823,7 @@ namespace PhatACCacheBinParser
 
         private void WriteWeenieAsJSON(ACE.Database.Models.World.Weenie weenie, string outputFolder)
         {
-            if (ACE.Adapter.Lifestoned.LifestonedConverter.TryConvertACEWeenieToLSDJSON(weenie, out var jsonString))
+            if (ACE.Adapter.Lifestoned.LifestonedConverter.TryConvertACEWeenieToLSDJSON(weenie, out var jsonString, out var _))
             {
                 var sqlWriter = new ACE.Database.SQLFormatters.World.WeenieSQLWriter();
                 var filename = sqlWriter.GetDefaultFileName(weenie).Replace(".sql", ".json");
