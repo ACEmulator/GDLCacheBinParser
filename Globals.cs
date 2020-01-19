@@ -124,6 +124,11 @@ namespace PhatACCacheBinParser
             // treasureProfile.json
 
             /// <summary>
+            /// wieldedtreasure.json
+            /// </summary>
+            public static List<ACE.Database.Models.World.TreasureWielded> WieldedTreasure;
+
+            /// <summary>
             /// worldspawns.json
             /// </summary>
             public static List<ACE.Database.Models.World.LandblockInstance> Instances;

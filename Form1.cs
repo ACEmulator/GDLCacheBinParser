@@ -305,6 +305,12 @@ namespace PhatACCacheBinParser
 
                 // treasureProfile.json
 
+                txtGDLEJSONParser.Text += "Loading wieldedtreasure.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadWieldedTreasureTableConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "wieldedtreasure.json"), out Globals.GDLE.WieldedTreasure))
+                    txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.WieldedTreasure.Count} entries found." + Environment.NewLine;
+                else
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
                 var worldspawnsFound = false;
                 txtGDLEJSONParser.Text += "Loading worldspawns.json...";
                 if (ACE.Adapter.GDLE.GDLELoader.TryLoadWorldSpawnsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "worldspawns.json"), out Globals.GDLE.Instances, out Globals.GDLE.Links, 1000))
@@ -324,6 +330,18 @@ namespace PhatACCacheBinParser
                         txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
                 }
 
+                txtGDLEJSONParser.Text += "Loading region.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadRegion(Path.Combine(lblGDLEJSONRootFolder.Text, "region.json"), out var region))
+                    txtGDLEJSONParser.Text += $" completed. {region.EncounterMap.Count} entries found." + Environment.NewLine;
+                else
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
+                txtGDLEJSONParser.Text += "Loading encounters.json...";
+                if (ACE.Adapter.GDLE.GDLELoader.TryLoadTerrainData(Path.Combine(lblGDLEJSONRootFolder.Text, "encounters.json"), out var terrainData))
+                    txtGDLEJSONParser.Text += $" completed. {terrainData.Count} entries found." + Environment.NewLine;
+                else
+                    txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
                 txtGDLEJSONParser.Text += "Loading \\weenies\\*.json";
                 if (ACE.Adapter.Lifestoned.LifestonedLoader.TryLoadWeeniesConvertedInParallel(Path.Combine(lblGDLEJSONRootFolder.Text, "weenies"), out Globals.GDLE.Weenies, chkGDLEApplyEnumShift.Checked))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Weenies.Count} entries found." + Environment.NewLine;
@@ -337,19 +355,22 @@ namespace PhatACCacheBinParser
 
                 Globals.GDLE.AddToWeenieNames();
 
+                cmdGDLE1RegionsParse.Enabled = true;
                 if (Globals.GDLE.Spells != null && Globals.GDLE.Spells.Count > 0)
                     cmdGDLE2SpellsParse.Enabled = true;
+                if (Globals.GDLE.WieldedTreasure != null && Globals.GDLE.WieldedTreasure.Count > 0)
+                    cmdGDLE3TreasureParse.Enabled = true;
                 if (Globals.GDLE.Recipes != null && Globals.GDLE.Recipes.Count > 0
                     && Globals.GDLE.RecipePrecursors != null && Globals.GDLE.RecipePrecursors.Count > 0)
                     cmdGDLE4CraftingParse.Enabled = true;
+                if (Globals.GDLE.Instances != null && Globals.GDLE.Instances.Count > 0)
+                    cmdGDLE6LandblocksParse.Enabled = true;
                 if (Globals.GDLE.Quests != null && Globals.GDLE.Quests.Count > 0)
                     cmdGDLE8QuestsParse.Enabled = true;
                 if (Globals.GDLE.Weenies != null && Globals.GDLE.Weenies.Count > 0)
                     cmdGDLE9WeeniesParse.Enabled = true;
                 if (Globals.GDLE.Events != null && Globals.GDLE.Events.Count > 0)
-                    cmdGDLEBEventsParse.Enabled = true;
-                if (Globals.GDLE.Instances != null && Globals.GDLE.Instances.Count > 0)
-                    cmdGDLE6LandblocksParse.Enabled = true;
+                    cmdGDLEBEventsParse.Enabled = true;                
             }
             catch (Exception ex)
             {
@@ -362,7 +383,161 @@ namespace PhatACCacheBinParser
 
         private void cmdGDLE1RegionsParse_Click(object sender, EventArgs e)
         {
+            cmdGDLE1RegionsParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting region... please wait. ";
+
+            //foreach (var x in Globals.GDLE.Spells)
+            //    x.LastModified = DateTime.UtcNow;
+
+
+            ACE.Adapter.GDLE.GDLELoader.TryLoadRegion(Path.Combine(lblGDLEJSONRootFolder.Text, "region.json"), out var regionInput);
+            ACE.Adapter.GDLE.GDLELoader.TryLoadTerrainData(Path.Combine(lblGDLEJSONRootFolder.Text, "encounters.json"), out var terrainData);
+
+            var results = new List<ACE.Database.Models.World.Encounter>();
+
+            //result.Id // This is an Auto Increment field in the ACE schema
+
+            //result.Id = input.Key;
+
+            //result.StartTime = input.Value.StartTime;
+            //result.EndTime = input.Value.EndTime;
+            //result.State = input.Value.EventState;
+
+            //var test = new List<ACE.Adapter.GDLE.Models.Encounter>();
+
+            //foreach (var i in regionInput.Encounters)
+            //{
+            //    foreach (var v in i.Value)
+            //    {
+            //        if (v > 0)
+            //        {
+            //            test.Add(i);
+            //            break;
+            //        }
+            //    }
+            //}
+
+            var modifiedTerrainData = Globals.CacheBin.LandBlockData.TerrainLandblocks.ToList();
+
+            //foreach(var x in terrainData)
+            //{
+            //    var y = terrainData.FirstOrDefault(t => t.Key == x.Key);
+            //    var idx = modifiedTerrainData[(int)y.Key];
+
+            //}
+            for (var landblock = 0; landblock < (255 * 255); landblock++)
+            {
+                var block_x = (landblock & 0xFF00) >> 8;
+                var block_y = (landblock & 0x00FF) >> 0;
+
+                var tbIndex = ((block_x * 255) + block_y);
+
+                var terrain_base = modifiedTerrainData[tbIndex];
+                var terrain_base_ext = terrainData.FirstOrDefault(x => x.Key == tbIndex);
+
+                if (terrain_base_ext != null)
+                {
+                    var td = modifiedTerrainData[tbIndex];
+                    var xx = terrain_base_ext.Value.FirstOrDefault(z => z > 0);
+                    if (xx > 0)
+                        Console.WriteLine($"{xx}");
+                    modifiedTerrainData[tbIndex].Terrain.Clear();
+                    modifiedTerrainData[tbIndex].Terrain.AddRange(terrain_base_ext.Value);
+                }
+            }
+
+            var encounters = new Dictionary<int, List<ACE.Database.Models.World.Encounter>>();
+
+            for (var landblock = 0; landblock < (255 * 255); landblock++)
+            {
+                var block_x = (landblock & 0xFF00) >> 8;
+                var block_y = (landblock & 0x00FF) >> 0;
+
+                //var tbIndex = ((block_x * 255) + block_y) * 9 * 9;
+                //var tbIndex = ((block_x * 255) + block_y) * 9;
+                var tbIndex = ((block_x * 255) + block_y);
+
+                //if (tlIndex > LandBlockData.TerrainLandblocks.Count)
+                //    continue;
+
+                //var terrain_base = landBlockData.TerrainLandblocks[tbIndex];
+                var terrain_base = terrainData.FirstOrDefault(x => x.Key == tbIndex);
+
+                if (terrain_base == null)
+                    continue;
+
+                for (var cell_x = 0; cell_x < 8; cell_x++)
+                {
+                    for (var cell_y = 0; cell_y < 8; cell_y++)
+                    {
+                        //var terrain = terrain_base.Terrain[(cell_x * 9) + cell_y];
+                        var terrain = terrain_base.Value[(cell_x * 9) + cell_y];
+
+                        if (terrain > 0)
+                            Console.WriteLine($"terrain: {terrain}");
+
+                        int encounterIndex = (terrain >> 7) & 0xF;
+
+                        //var encounterMap = regionInput.EncounterMaps[(block_x * 255) + block_y];
+                        var encounterMap = regionInput.EncounterMap[(block_x * 255) + block_y];
+                        //var encounterTable = input.EncounterTables.FirstOrDefault(t => t.Index == encounterMap.Index);
+                        var encounterTable = regionInput.Encounters.FirstOrDefault(t => t.Key == encounterMap);
+
+                        if (encounterMap > 0)
+                            Console.WriteLine($"encounterMap: {encounterMap}");
+
+                        if (encounterTable == null)
+                            continue;
+
+                        //var wcid = encounterTable.Values[encounterIndex];
+                        var wcid = encounterTable.Value[encounterIndex];
+
+                        if (encounterIndex > 0)
+                            Console.WriteLine($"encounterIndex: {encounterIndex}");
+
+                        // System.Diagnostics.Debug.WriteLine($"landblock = {landblock:X4} | terrain = {terrain} | encounterIndex = {encounterIndex} | encounterTable = {encounterMap.Index} | wcid = {wcid}");
+
+                        if (wcid > 0)
+                        {
+                            //var objCellId = (landblock << 16) | 0;
+                            if (wcid > 50000)
+                                Console.WriteLine($"{wcid}");
+
+                            if (!encounters.ContainsKey(landblock))
+                                encounters.Add(landblock, new List<ACE.Database.Models.World.Encounter>());
+
+                            encounters[landblock].Add(new ACE.Database.Models.World.Encounter { Landblock = landblock, WeenieClassId = wcid, CellX = cell_x, CellY = cell_y });
+                        }
+                    }
+                }
+            }
+
+
+            //var results = new List<Encounter>();
+
+            foreach (var kvp in encounters)
+            {
+                foreach (var value in kvp.Value)
+                {
+                    results.Add(new ACE.Database.Models.World.Encounter
+                    {
+                        Landblock = value.Landblock,
+                        WeenieClassId = value.WeenieClassId,
+                        CellX = value.CellX,
+                        CellY = value.CellY,
+                        //LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00)
+                    });
+                }
+            }
+
+            //return results;
+
+            //RegionDescSQLWriter.WriteFiles(aceEncounters, Settings.Default["OutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", Globals.WeenieNames, true);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {Globals.GDLE.Spells.Count} spells." + Environment.NewLine;
+
+            cmdGDLE1RegionsParse.Enabled = true;
         }
 
         private void cmdGDLE2SpellsParse_Click(object sender, EventArgs e)
@@ -383,7 +558,37 @@ namespace PhatACCacheBinParser
 
         private void cmdGDLE3TreasureParse_Click(object sender, EventArgs e)
         {
+            cmdGDLE3TreasureParse.Enabled = false;
 
+            txtGDLEJSONParser.Text += "Exporting wielded treasure... please wait. ";
+
+            foreach (var x in Globals.GDLE.WieldedTreasure)
+                x.LastModified = DateTime.UtcNow;
+
+            var trimmedWieldedTreasure = new List<ACE.Database.Models.World.TreasureWielded>();
+
+            var cachedWieldedTreasure = Globals.CacheBin.TreasureTable.WieldedTreasure;
+
+            if (chkCacheDedupe.Checked)
+            {
+                foreach(var entry in Globals.GDLE.WieldedTreasure)
+                {
+                    if (cachedWieldedTreasure.ContainsKey(entry.TreasureType))
+                    {
+                        //if
+                    }
+                    else
+                        trimmedWieldedTreasure.Add(entry);
+                }
+            }
+            else
+                trimmedWieldedTreasure = Globals.GDLE.WieldedTreasure;
+
+            TreasureSQLWriter.WriteFiles(trimmedWieldedTreasure, Settings.Default["GDLESQLOutputFolder"] + "\\3 TreasureTable\\SQL\\Wielded\\", Globals.WeenieNames, true);
+
+            txtGDLEJSONParser.Text += $"Successfully exported {trimmedWieldedTreasure.Count} wielded tresure entries." + Environment.NewLine;
+
+            cmdGDLE3TreasureParse.Enabled = true;
         }
 
         private void cmdGDLE4CraftingParse_Click(object sender, EventArgs e)
