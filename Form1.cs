@@ -502,11 +502,7 @@ namespace PhatACCacheBinParser
             {
                 foreach(var entry in Globals.GDLE.WieldedTreasure)
                 {
-                    if (cachedWieldedTreasure.ContainsKey(entry.TreasureType))
-                    {
-                        //if
-                    }
-                    else
+                    if (!cachedWieldedTreasure.ContainsKey(entry.TreasureType))
                         trimmedWieldedTreasure.Add(entry);
                 }
             }
