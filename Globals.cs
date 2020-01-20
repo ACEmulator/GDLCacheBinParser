@@ -97,8 +97,7 @@ namespace PhatACCacheBinParser
             /// <summary>
             /// region.json + encounters.json
             /// </summary>
-            public static List<ACE.Database.Models.World.Encounter> Encounters;
-
+            //public static List<ACE.Database.Models.World.Encounter> Encounters;
             public static ACE.Adapter.GDLE.Models.Region Region;
             public static List<ACE.Adapter.GDLE.Models.TerrainData> TerrainData;
 
