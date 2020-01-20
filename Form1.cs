@@ -392,36 +392,12 @@ namespace PhatACCacheBinParser
 
             var results = new List<ACE.Database.Models.World.Encounter>();
 
-            //var mergedTerrainData = Globals.CacheBin.LandBlockData.TerrainLandblocks.ToList();
-            var z = 0;
-            var mergedTerrainData = Globals.CacheBin.LandBlockData.TerrainLandblocks.ToDictionary(i=>z++,i=>i);
-
-            //for (var landblock = 0; landblock < (255 * 255); landblock++)
-            //{
-            //    var block_x = (landblock & 0xFF00) >> 8;
-            //    var block_y = (landblock & 0x00FF) >> 0;
-
-            //    var tbIndex = ((block_x * 255) + block_y);
-
-            //    var terrain_base = mergedTerrainData[tbIndex];
-            //    var terrain_base_ext = Globals.GDLE.TerrainData.FirstOrDefault(x => x.Key == tbIndex);
-
-            //    if (terrain_base_ext != null)
-            //    {
-            //        mergedTerrainData[tbIndex].Terrain.Clear();
-            //        mergedTerrainData[tbIndex].Terrain.AddRange(terrain_base_ext.Value);
-            //    }
-            //}
+            var mTdIdx = 0;
+            var mergedTerrainData = Globals.CacheBin.LandBlockData.TerrainLandblocks.ToDictionary(i => mTdIdx++, i => i);
 
             foreach (var patch in Globals.GDLE.TerrainData)
             {
                 var key = (int)patch.Key;
-                //if (mergedTerrainData[key] == null)
-                //{
-                //    mergedTerrainData[key] = new TerrainData();
-                //}
-                //mergedTerrainData[key].Terrain.Clear();
-                //mergedTerrainData[key].Terrain.AddRange(patch.Value);
                 if (mergedTerrainData.ContainsKey(key))
                 {
                     mergedTerrainData[key].Terrain.Clear();
@@ -429,9 +405,9 @@ namespace PhatACCacheBinParser
                 }
                 else
                 {
-                    var td = new TerrainData();
-                    td.Terrain.AddRange(patch.Value);
-                    mergedTerrainData.Add(key, td);
+                    var tD = new TerrainData();
+                    tD.Terrain.AddRange(patch.Value);
+                    mergedTerrainData.Add(key, tD);
                 }
             }
 
