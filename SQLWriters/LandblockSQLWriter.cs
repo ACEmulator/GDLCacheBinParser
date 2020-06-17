@@ -28,14 +28,6 @@ namespace PhatACCacheBinParser.SQLWriters
 
             sqlWriter.WeenieNames = weenieNames;
 
-            sqlWriter.InstanceNames = new Dictionary<uint, string>();
-
-            foreach (var value in input)
-            {
-                if (weenieNames.TryGetValue(value.WeenieClassId, out var name))
-                    sqlWriter.InstanceNames[value.Guid] = name;
-            }
-
             Parallel.ForEach(sortedInput, kvp =>
             //foreach (var kvp in sortedInput)
             {

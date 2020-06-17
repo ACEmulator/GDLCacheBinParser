@@ -186,7 +186,7 @@ namespace PhatACCacheBinParser
             /// </summary>
             public static WorldDbContext WorldDbContext;
 
-            public static WorldDatabase WorldDatabase = new WorldDatabase();
+            public static WorldDatabaseWithEntityCache WorldDatabase = new WorldDatabaseWithEntityCache();
 
             public static List<ACE.Database.Models.World.Weenie> Weenies;
 

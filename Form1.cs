@@ -283,17 +283,29 @@ namespace PhatACCacheBinParser
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
 
+                var recipesprecursorsFound = File.Exists(Path.Combine(lblGDLEJSONRootFolder.Text, "recipeprecursors.json"));
+                var recipesFound = File.Exists(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes.json")); 
+
                 txtGDLEJSONParser.Text += "Loading recipesprecursors.json...";
                 if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipePrecursorsConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipeprecursors.json"), out Globals.GDLE.RecipePrecursors))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.RecipePrecursors.Count} entries found." + Environment.NewLine;
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
-
+                
                 txtGDLEJSONParser.Text += "Loading recipes.json...";
                 if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipesConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes.json"), out Globals.GDLE.Recipes))
                     txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Recipes.Count} entries found." + Environment.NewLine;
                 else
                     txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+
+                if (!recipesprecursorsFound || !recipesFound)
+                {
+                    txtGDLEJSONParser.Text += "Loading \\recipes\\*.json...";
+                    if (ACE.Adapter.GDLE.GDLELoader.TryLoadRecipeCombinedConverted(Path.Combine(lblGDLEJSONRootFolder.Text, "recipes"), out Globals.GDLE.Recipes, out Globals.GDLE.RecipePrecursors))
+                        txtGDLEJSONParser.Text += $" completed. {Globals.GDLE.Recipes.Count} recipes and {Globals.GDLE.RecipePrecursors.Count} cookbooks found." + Environment.NewLine;
+                    else
+                        txtGDLEJSONParser.Text += " failed." + Environment.NewLine;
+                }
 
                 // restrictedlandblocks.json
 
@@ -528,8 +540,8 @@ namespace PhatACCacheBinParser
             foreach (var x in Globals.GDLE.Recipes)
                 x.LastModified = DateTime.UtcNow;
 
-            if (Globals.GDLE.Recipes.Count != Globals.GDLE.RecipePrecursors.Count)
-                txtGDLEJSONParser.Text += $"Recipe({Globals.GDLE.Recipes.Count}) and Cookbook({Globals.GDLE.RecipePrecursors.Count}) counts do not match! This could be bad. ";
+            //if (Globals.GDLE.Recipes.Count != Globals.GDLE.RecipePrecursors.Count)
+            //    txtGDLEJSONParser.Text += $"Recipe({Globals.GDLE.Recipes.Count}) and Cookbook({Globals.GDLE.RecipePrecursors.Count}) counts do not match! This could be bad. ";
 
             CraftingSQLWriter.WriteFiles(Globals.GDLE.Recipes, Globals.GDLE.RecipePrecursors, Globals.WeenieNames, Settings.Default["GDLESQLOutputFolder"] + "\\4 CraftTable\\SQL\\", true);
 
