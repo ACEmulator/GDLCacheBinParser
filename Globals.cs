@@ -95,6 +95,13 @@ namespace PhatACCacheBinParser
             public static bool IsLoaded;
 
             /// <summary>
+            /// region.json + encounters.json
+            /// </summary>
+            //public static List<ACE.Database.Models.World.Encounter> Encounters;
+            public static ACE.Adapter.GDLE.Models.Region Region;
+            public static List<ACE.Adapter.GDLE.Models.TerrainData> TerrainData;
+
+            /// <summary>
             /// events.json
             /// </summary>
             public static List<ACE.Database.Models.World.Event> Events;
@@ -122,6 +129,11 @@ namespace PhatACCacheBinParser
             public static List<ACE.Database.Models.World.Spell> Spells;
 
             // treasureProfile.json
+
+            /// <summary>
+            /// wieldedtreasure.json
+            /// </summary>
+            public static List<ACE.Database.Models.World.TreasureWielded> WieldedTreasure;
 
             /// <summary>
             /// worldspawns.json
@@ -174,11 +186,11 @@ namespace PhatACCacheBinParser
             /// </summary>
             public static WorldDbContext WorldDbContext;
 
-            public static WorldDatabase WorldDatabase = new WorldDatabase();
+            public static WorldDatabaseWithEntityCache WorldDatabase = new WorldDatabaseWithEntityCache();
 
             public static List<ACE.Database.Models.World.Weenie> Weenies;
 
-            public static List<ACE.Database.Models.World.LandblockInstance> LandblockInstances;
+            //public static List<ACE.Database.Models.World.LandblockInstance> LandblockInstances;
 
             public static bool TryInitWorldDatabaseContext()
             {
