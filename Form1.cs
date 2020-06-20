@@ -437,9 +437,9 @@ namespace PhatACCacheBinParser
                 if (terrain_base == null)
                     continue;
 
-                for (var cell_x = 0; cell_x < 9; cell_x++)
+                for (var cell_x = 0; cell_x < 8; cell_x++)
                 {
-                    for (var cell_y = 0; cell_y < 9; cell_y++)
+                    for (var cell_y = 0; cell_y < 8; cell_y++)
                     {
                         var terrain = terrain_base.Terrain[(cell_x * 9) + cell_y];
 
