@@ -404,25 +404,6 @@ namespace PhatACCacheBinParser
 
             var results = new List<ACE.Database.Models.World.Encounter>();
 
-            var mTdIdx = 0;
-            var mergedTerrainData = Globals.CacheBin.LandBlockData.TerrainLandblocks.ToDictionary(i => mTdIdx++, i => i);
-
-            foreach (var patch in Globals.GDLE.TerrainData)
-            {
-                var key = (int)patch.Key;
-                if (mergedTerrainData.ContainsKey(key))
-                {
-                    mergedTerrainData[key].Terrain.Clear();
-                    mergedTerrainData[key].Terrain.AddRange(patch.Value);
-                }
-                else
-                {
-                    var tD = new TerrainData();
-                    tD.Terrain.AddRange(patch.Value);
-                    mergedTerrainData.Add(key, tD);
-                }
-            }
-
             var encounters = new Dictionary<int, List<ACE.Database.Models.World.Encounter>>();
 
             for (var landblock = 0; landblock < (255 * 255); landblock++)
@@ -432,7 +413,16 @@ namespace PhatACCacheBinParser
 
                 var tbIndex = ((block_x * 255) + block_y);
 
-                var terrain_base = mergedTerrainData[tbIndex];
+                var terrain_base = Globals.CacheBin.LandBlockData.TerrainLandblocks[tbIndex];
+
+                var terrain_base_patch = Globals.GDLE.TerrainData.Where(p => p.Key == landblock).FirstOrDefault();
+
+                if (terrain_base_patch != null)
+                {
+                    var tD = new TerrainData();
+                    tD.Terrain.AddRange(terrain_base_patch.Value);
+                    terrain_base = tD;
+                }
 
                 if (terrain_base == null)
                     continue;
@@ -444,6 +434,9 @@ namespace PhatACCacheBinParser
                         var terrain = terrain_base.Terrain[(cell_x * 9) + cell_y];
 
                         int encounterIndex = (terrain >> 7) & 0xF;
+
+                        if (terrain_base_patch != null)
+                            encounterIndex = terrain;
 
                         var encounterMap = Globals.GDLE.Region.EncounterMap[(block_x * 255) + block_y];
                         var encounterTable = Globals.GDLE.Region.Encounters.FirstOrDefault(t => t.Key == encounterMap);
@@ -467,6 +460,9 @@ namespace PhatACCacheBinParser
 
             foreach (var kvp in encounters)
             {
+                if (Globals.GDLE.TerrainData.FirstOrDefault(p => p.Key == kvp.Key) == null && chkCacheDedupe.Checked == true)
+                    continue;
+
                 foreach (var value in kvp.Value)
                 {
                     value.LastModified = new System.DateTime(2005, 2, 9, 10, 00, 00);
@@ -476,7 +472,7 @@ namespace PhatACCacheBinParser
 
             RegionDescSQLWriter.WriteFiles(results, Settings.Default["GDLESQLOutputFolder"] + "\\1 RegionDescExtendedData\\SQL\\", Globals.WeenieNames, true);
 
-            txtGDLEJSONParser.Text += $"Successfully exported {results.Count} region/encounter instances." + Environment.NewLine;
+            txtGDLEJSONParser.Text += $"Successfully exported {encounters.Count} region/encounter instances." + Environment.NewLine;
 
             cmdGDLE1RegionsParse.Enabled = true;
         }
