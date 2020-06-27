@@ -645,6 +645,11 @@ namespace PhatACCacheBinParser
             foreach (var x in Globals.GDLE.Weenies)
             {
                 x.LastModified = DateTime.UtcNow;
+
+                foreach (var flo in x.WeeniePropertiesFloat)
+                {
+                    flo.Value = Math.Round(flo.Value, 3);
+                }
             }
 
             var aceTreasureWielded = Globals.CacheBin.TreasureTable.WieldedTreasure.ConvertToACE();
